@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 /**
@@ -80,8 +79,8 @@ public class ProfileFragment extends Fragment {
 
        viewModel.getUpcomingMovies();
 
-       viewModel.tal.observe(getViewLifecycleOwner(), upcomingResponse -> {
-           textView.setText(upcomingResponse.name);
-       });
+//       viewModel.tal.observe(getViewLifecycleOwner(), upcomingResponse -> {
+//           textView.setText(upcomingResponse.name);
+//       });
     }
 }

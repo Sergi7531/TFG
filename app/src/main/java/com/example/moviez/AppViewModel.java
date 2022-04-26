@@ -3,25 +3,26 @@ package com.example.moviez;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AppViewModel extends ViewModel {
-    MutableLiveData<Responses.UpcomingResponse> tal = new MutableLiveData<>();
+    static MutableLiveData<Responses.UpcomingResponse> upcomingMoviesResponse = new MutableLiveData<>();
 
-    void getUpcomingMovies() throws IOException {
+
+    static void getUpcomingMovies() {
        IMDB.api.getUpcoming(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.UpcomingResponse>() {
            @Override
            public void onResponse(Call<Responses.UpcomingResponse> call, Response<Responses.UpcomingResponse> response) {
-                tal.postValue(response.body());
+               upcomingMoviesResponse.postValue(response.body());
            }
 
            @Override
            public void onFailure(Call<Responses.UpcomingResponse> call, Throwable t) {
-
+               t.getMessage();
+//               Da error?
+//               Toast.makeText(AppViewModel.this, "Error al obtener las peliculas", Toast.LENGTH_SHORT).show();
            }
        });
     }
