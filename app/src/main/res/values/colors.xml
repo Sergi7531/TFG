@@ -10,4 +10,6 @@
     <color name="secondaryTextColor">#000000</color>
     <color name="buttonColor1">#2DAEA6</color>
     <color name="buttonColor2">#3770A4</color>
+
+    <color name="input_border_box">#fef1ea</color>
 </resources>
