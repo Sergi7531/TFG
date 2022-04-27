@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class Models {
-    class Movie {
+    public static class Movie {
         public boolean adult;
         public String backdrop_path;
         public int budget;
@@ -29,6 +29,12 @@ public class Models {
         public boolean video;
         public double vote_average;
         public int vote_count;
+
+        public Movie(String title, String poster_path) {
+            this.title = title;
+            this.poster_path = poster_path;
+        }
+
     }
 
     public class Genre {

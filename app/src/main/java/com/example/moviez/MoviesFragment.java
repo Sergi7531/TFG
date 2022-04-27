@@ -1,6 +1,8 @@
 package com.example.moviez;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +28,10 @@ public class MoviesFragment extends Fragment {
 
     public RecyclerView recyclerUpcomingMovies;
     public RecyclerView recyclerMoviesInCinemas;
+    public RecyclerView recyclerMoviesSearch;
+    public TextInputEditText searchInputFilm;
+
+    int internPage = 0;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -63,11 +71,40 @@ public class MoviesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerUpcomingMovies = (RecyclerView) getActivity().findViewById(R.id.recyclerUpcomingMovies);
         recyclerMoviesInCinemas = getActivity().findViewById(R.id.recyclerMoviesInCinemas);
+        recyclerMoviesSearch = getActivity().findViewById(R.id.recyclerMoviesSearch);
+        searchInputFilm = getActivity().findViewById(R.id.searchInputFilm);
 
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
-        viewModel.getUpcomingMovies();
+//        Search bar:
 
+
+        searchInputFilm.addTextChangedListener(
+                new TextWatcher() {
+                       @Override
+                       public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                       }
+
+                       @Override
+                       public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                           viewModel.searchMoviesByQuery(charSequence.toString());
+                       }
+
+                       @Override
+                       public void afterTextChanged(Editable editable) {
+                           viewModel.moviesByQuery.observe(getViewLifecycleOwner(), moviesByQuery -> {
+                               if (moviesByQuery != null) {
+                                   recyclerMoviesSearch.setAlpha(1f);
+                                   recyclerMoviesSearch.setAdapter(new MovieSearchResultAdapter(requireActivity(), moviesByQuery.results));
+                                   recyclerMoviesSearch.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
+                               }
+                           });
+                       }
+
+            });
+
+                viewModel.getUpcomingMovies();
         viewModel.getActualCinemaMovies();
 
         viewModel.upcomingMoviesResponse.observe(getViewLifecycleOwner(), upcomingMoviesResponse -> {

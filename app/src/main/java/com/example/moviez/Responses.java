@@ -21,7 +21,6 @@ public class Responses {
 
     }
 
-//    UPCOMING RESPONSE:
     class BillboardResponse {
         public Dates dates;
         public int page;
@@ -34,8 +33,6 @@ public class Responses {
         public String maximum;
         public String minimum;
     }
-
-//    -------------------------------------
 
     class CountryResponse {
 
@@ -71,11 +68,13 @@ public class Responses {
         public String toString() {
             return english_name;
         }
-
     }
 
     class SearchResponse {
-
+        public String page;
+        public List<Models.Movie> results;
+        public String total_pages;
+        public String total_results;
     }
 
 }
