@@ -11,4 +11,5 @@
     <string name="log_in">Log In</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="username">Username</string>
+    <string name="escoge_hasta_3_g_neros_de_preferencia">Escoge hasta 3 géneros de preferencia:</string>
 </resources>

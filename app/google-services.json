@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "592379476855",
+    "project_id": "moviez-19e6b",
+    "storage_bucket": "moviez-19e6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592379476855:android:514040680415d0cac9ff72",
+        "android_client_info": {
+          "package_name": "com.example.moviez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592379476855-vu3jf2d3huon72locl7j09a0508ufdq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.moviez",
+            "certificate_hash": "6eea397445a265e361899d323cffb593562e86da"
+          }
+        },
+        {
+          "client_id": "592379476855-gg1h0iqohcreo51mei0fgqof6h9bfosf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyLSSk7x2VtD4vsD37v12376mBduAFJuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592379476855-gg1h0iqohcreo51mei0fgqof6h9bfosf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
