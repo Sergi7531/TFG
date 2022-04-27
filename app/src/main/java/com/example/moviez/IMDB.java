@@ -22,9 +22,9 @@ public class IMDB {
     public interface Api {
         String apiKey = null;
 
-        default Api(String apiKey) {
-            this.apiKey = apiKey;
-        }
+//        default Api(String apiKey) {
+//            this.apiKey = apiKey;
+//        }
 
 //        @GET("/movie/{movie_id}/credits")
 //        Call<> usoCuota(@Path("movie_id") String texto, @Query("api_key") String api_key);
