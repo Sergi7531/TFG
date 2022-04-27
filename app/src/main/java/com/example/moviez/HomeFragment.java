@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 /**
  * A simple {@link Fragment} subclass.
+ * AAAAAAAAAAAAAAAAAA
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
