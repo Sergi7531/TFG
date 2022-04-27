@@ -1,5 +1,7 @@
 package com.example.moviez;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 
 public class Models {
@@ -14,6 +16,7 @@ public class Models {
         public String original_language;
         public String original_title;
         public String overview;
+//        We will order films by popularity, so we will use popularity instead of vote_average
         public double popularity;
         public String poster_path;
         public String release_date;
@@ -31,26 +34,17 @@ public class Models {
     public class Genre {
         public int id;
         public String name;
+        public @Nullable String imageUrl;
 
         public Genre(int id, String name) {
             this.id = id;
             this.name = name;
         }
 
-        public int getId() {
-            return id;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setId(int id) {
+        public Genre(int id, String name, String imageUrl) {
             this.id = id;
-        }
-
-        public void setName(String name) {
             this.name = name;
+            this.imageUrl = imageUrl;
         }
     }
 }

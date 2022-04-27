@@ -21,32 +21,30 @@ public class IMDB {
 
     public interface Api {
 
-        @GET("movie/{movie_id}/credits?api_key={api_key}&language={language}")
+//        Retrieves the full cast of a film (actors)
+        @GET("movie/{movie_id}/credits")
         Call<Responses.Cast> getCast(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language);
 
-        @GET("movie/{movie_id}?api_key={api_key}&language={language}")
+//        Retrieves the movie details.
+        @GET("movie/{movie_id}")
         Call<Models.Movie> getMovie(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language);
 
-        @GET("movie/{movie_id}/similar?api_key={api_key}&language={language}&page={page}")
-        Call<Responses.SimilarResponse> getSimilar(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
-
-        @GET("movie/now_playing?api_key={api_key}&language={language}&page={page}")
-        Call<Responses.NowPlayingResponse> getNowPlaying(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
-
-        @GET("movie/{movie_id}/recommendations?api_key={api_key}&language={language}&page={page}")
+//        Given a movie (id) gets recommendations (films)
+        @GET("movie/{movie_id}/recommendations")
         Call<Responses.RecommendationResponse> getRecommendations(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
+//        Gets upcoming films (near release)
         @GET("movie/upcoming")
-        Call<Responses.UpcomingResponse> getUpcoming(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
+        Call<Responses.BillboardResponse> getUpcoming(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
-//        Check this one first and then use bottom one to get ALL countries and match the iso_3166_1 to every String in this endpoint's' response.
-        @GET("configuration/primary_translations?api_key={api_key}")
-        Call<String[]> getTranslations(@Query("api_key") String apiKey);
+//      Retrieves films that are on cinemas right now.
+        @GET("movie/now_playing")
+        Call<Responses.BillboardResponse> getNowPlaying(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
-        @GET("configuration/countries?api_key={api_key}")
-        Call<Responses.CountryResponse> getCountries(@Query("api_key") String apiKey);
+//        API language will be set to English by default, but can be changed to another language by adding the language parameter to the request. The language parameter can be changes by switching the enum.
 
-        @GET("search/movie?api_key={api_key}&language={language}&query={query}&page={page}")
+//      Returns movies based on a search query.
+        @GET("search/movie")
         Call<Responses.SearchResponse> search(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") int page);
     }
 

@@ -17,18 +17,12 @@ public class Responses {
         public String credit_id;
     }
 
-    class SimilarResponse {
-
-    }
-    class NowPlayingResponse {
-
-    }
     class RecommendationResponse {
 
     }
 
 //    UPCOMING RESPONSE:
-    class UpcomingResponse {
+    class BillboardResponse {
         public Dates dates;
         public int page;
         public List<Models.Movie> results;

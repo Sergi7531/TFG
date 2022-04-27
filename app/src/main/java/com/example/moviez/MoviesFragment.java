@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -22,6 +23,7 @@ public class MoviesFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     public RecyclerView recyclerUpcomingMovies;
+    public RecyclerView recyclerMoviesInCinemas;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -55,20 +57,30 @@ public class MoviesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movies, container, false);
-
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerUpcomingMovies = (RecyclerView) getActivity().findViewById(R.id.recyclerUpcomingMovies);
+        recyclerMoviesInCinemas = getActivity().findViewById(R.id.recyclerMoviesInCinemas);
 
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
         viewModel.getUpcomingMovies();
 
-        viewModel.upcomingMoviesResponse.observe(getViewLifecycleOwner(), upcomingResponse -> {
-            if (upcomingResponse != null) {
-                recyclerUpcomingMovies.setAdapter(new UpcomingMovieAdapter(upcomingResponse.results, requireContext()));
+        viewModel.getActualCinemaMovies();
+
+        viewModel.upcomingMoviesResponse.observe(getViewLifecycleOwner(), upcomingMoviesResponse -> {
+            if (upcomingMoviesResponse != null) {
+                recyclerUpcomingMovies.setAdapter(new UpcomingMovieAdapter(upcomingMoviesResponse.results, requireContext(), (byte)0));
+                recyclerUpcomingMovies.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+            }
+        });
+
+        viewModel.actualMoviesInCinemaResponse.observe(getViewLifecycleOwner(), actualMoviesResponse -> {
+            if (actualMoviesResponse != null) {
+                recyclerMoviesInCinemas.setAdapter(new UpcomingMovieAdapter(actualMoviesResponse.results, requireContext(), (byte)1));
+                recyclerMoviesInCinemas.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
             }
         });
     }

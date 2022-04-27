@@ -77,7 +77,6 @@ public class ProfileFragment extends Fragment {
         Button button = view.findViewById(R.id.button);
         TextView  textView = view.findViewById(R.id.tv);
 
-       viewModel.getUpcomingMovies();
 
 //       viewModel.tal.observe(getViewLifecycleOwner(), upcomingResponse -> {
 //           textView.setText(upcomingResponse.name);
