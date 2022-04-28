@@ -28,7 +28,7 @@ public class IMDB {
 
 //        Retrieves the movie details.
         @GET("movie/{movie_id}")
-        Call<Models.Movie> getMovie(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language);
+        Call<Models.Film> getMovie(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language);
 
 //        Given a movie (id) gets recommendations (films)
         @GET("movie/{movie_id}/recommendations")

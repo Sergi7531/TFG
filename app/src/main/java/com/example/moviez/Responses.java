@@ -24,7 +24,7 @@ public class Responses {
     class BillboardResponse {
         public Dates dates;
         public int page;
-        public List<Models.Movie> results;
+        public List<Models.Film> results;
         public int total_pages;
         public int total_results;
     }
@@ -72,7 +72,7 @@ public class Responses {
 
     class SearchResponse {
         public String page;
-        public List<Models.Movie> results;
+        public List<Models.Film> results;
         public String total_pages;
         public String total_results;
     }

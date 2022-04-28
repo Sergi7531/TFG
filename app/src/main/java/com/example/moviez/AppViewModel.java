@@ -3,6 +3,7 @@ package com.example.moviez;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -13,6 +14,8 @@ public class AppViewModel extends ViewModel {
     static MutableLiveData<Responses.BillboardResponse> upcomingMoviesResponse = new MutableLiveData<>();
     static MutableLiveData<Responses.BillboardResponse> actualMoviesInCinemaResponse = new MutableLiveData<>();
     static MutableLiveData<Responses.SearchResponse> moviesByQuery = new MutableLiveData<>();
+
+    public Models.User userlogged;
 
 //    MOVIESFRAGMENT:
 
@@ -57,8 +60,8 @@ public class AppViewModel extends ViewModel {
                     Responses.SearchResponse searchResponse = response.body();
                     if (searchResponse.results.size() > 10) {
                         searchResponse.results.subList(10, searchResponse.results.size()).clear();
-                        List<Models.Movie> moviesToShowSearch = searchResponse.results;
-                        moviesToShowSearch.add(new Models.Movie("Más resultados...", "null"));
+                        List<Models.Film> moviesToShowSearch = searchResponse.results;
+                        moviesToShowSearch.add(new Models.Film("Más resultados...", "null"));
 
                         response.body().results = moviesToShowSearch;
                         moviesByQuery.postValue(response.body());

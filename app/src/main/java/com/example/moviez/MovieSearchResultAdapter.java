@@ -16,9 +16,9 @@ import java.util.List;
 
 public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchResultAdapter.MovieSearchResultViewHolder> {
     Context context;
-    List<Models.Movie> movies;
+    List<Models.Film> movies;
 
-    public MovieSearchResultAdapter(Context context, List<Models.Movie> movies) {
+    public MovieSearchResultAdapter(Context context, List<Models.Film> movies) {
         this.context = context;
         this.movies = movies;
     }

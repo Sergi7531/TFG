@@ -16,10 +16,10 @@ import java.util.List;
 
 public class UpcomingMovieAdapter extends RecyclerView.Adapter<UpcomingMovieAdapter.UpcomingMovieViewHolder> {
     Context context;
-    List<Models.Movie> movies;
+    List<Models.Film> movies;
     byte type;
 
-    public UpcomingMovieAdapter(List<Models.Movie> movies, Context context, byte type) {
+    public UpcomingMovieAdapter(List<Models.Film> movies, Context context, byte type) {
         this.movies = movies;
         this.context = context;
         this.type = type;

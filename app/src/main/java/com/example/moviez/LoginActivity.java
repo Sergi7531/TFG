@@ -1,6 +1,7 @@
 package com.example.moviez;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -29,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
         logButton.setOnClickListener(view -> {
-            if (!usernameLog.getText().toString().isEmpty() || !passwordLog.getText().toString().isEmpty()){
+            if (!usernameLog.getText().toString().isEmpty() && !passwordLog.getText().toString().isEmpty()){
 
             }
         });
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameLog = findViewById(R.id.usernameLog);
         passwordLog = findViewById(R.id.passwordLog);
         registerText = findViewById(R.id.registerText);
-        logButton = findViewById(R.id.logButton);
+        logButton = findViewById(R.id.register);
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         if(account == null) return;
@@ -54,6 +56,9 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
     private void accessApp(){
-        
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        AppViewModel viewModel = new ViewModelProvider(this).get(AppViewModel.class);
+
     }
 }
