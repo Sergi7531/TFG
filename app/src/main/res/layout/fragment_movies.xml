@@ -51,7 +51,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="110dp"
         android:text="Cartelera"
-        android:textColor="@color/black"
+        android:textColor="@color/primaryTextColor"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -71,7 +71,7 @@
         android:layout_marginTop="400dp"
         android:gravity="center_vertical"
         android:text="Próximamente en cines"
-        android:textColor="@color/black"
+        android:textColor="@color/primaryTextColor"
         android:textSize="25sp"
         android:textStyle="bold" />
 
