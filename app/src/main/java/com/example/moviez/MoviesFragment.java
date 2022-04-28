@@ -1,11 +1,18 @@
 package com.example.moviez;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +26,13 @@ public class MoviesFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    public RecyclerView recyclerUpcomingMovies;
+    public RecyclerView recyclerMoviesInCinemas;
+    public RecyclerView recyclerMoviesSearch;
+    public TextInputEditText searchInputFilm;
+
+    int internPage = 0;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -27,15 +41,7 @@ public class MoviesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MoviesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static MoviesFragment newInstance(String param1, String param2) {
         MoviesFragment fragment = new MoviesFragment();
         Bundle args = new Bundle();
@@ -59,6 +65,60 @@ public class MoviesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movies, container, false);
+    }
 
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerUpcomingMovies = (RecyclerView) getActivity().findViewById(R.id.recyclerUpcomingMovies);
+        recyclerMoviesInCinemas = getActivity().findViewById(R.id.recyclerMoviesInCinemas);
+        recyclerMoviesSearch = getActivity().findViewById(R.id.recyclerMoviesSearch);
+        searchInputFilm = getActivity().findViewById(R.id.searchInputFilm);
+
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+
+//        Search bar:
+
+
+        searchInputFilm.addTextChangedListener(
+                new TextWatcher() {
+                       @Override
+                       public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                       }
+
+                       @Override
+                       public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                           viewModel.searchMoviesByQuery(charSequence.toString());
+                       }
+
+                       @Override
+                       public void afterTextChanged(Editable editable) {
+                           viewModel.moviesByQuery.observe(getViewLifecycleOwner(), moviesByQuery -> {
+                               if (moviesByQuery != null) {
+                                   recyclerMoviesSearch.setAlpha(1f);
+                                   recyclerMoviesSearch.setAdapter(new MovieSearchResultAdapter(requireActivity(), moviesByQuery.results));
+                                   recyclerMoviesSearch.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
+                               }
+                           });
+                       }
+
+            });
+
+                viewModel.getUpcomingMovies();
+        viewModel.getActualCinemaMovies();
+
+        viewModel.upcomingMoviesResponse.observe(getViewLifecycleOwner(), upcomingMoviesResponse -> {
+            if (upcomingMoviesResponse != null) {
+                recyclerUpcomingMovies.setAdapter(new UpcomingMovieAdapter(upcomingMoviesResponse.results, requireContext(), (byte)0));
+                recyclerUpcomingMovies.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+            }
+        });
+
+        viewModel.actualMoviesInCinemaResponse.observe(getViewLifecycleOwner(), actualMoviesResponse -> {
+            if (actualMoviesResponse != null) {
+                recyclerMoviesInCinemas.setAdapter(new UpcomingMovieAdapter(actualMoviesResponse.results, requireContext(), (byte)1));
+                recyclerMoviesInCinemas.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+            }
+        });
     }
 }
