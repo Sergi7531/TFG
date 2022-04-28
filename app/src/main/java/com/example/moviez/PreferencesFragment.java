@@ -66,14 +66,6 @@ public class PreferencesFragment extends Fragment {
     }
 
     private void initData() {
-        Genre genre = new Genre (
-                28,
-                "Action",
-                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
-                );
-        genres.add(genre);
-
-
         genres = new ArrayList<>(Arrays.asList(new Genre (
                 28,
                 "Action",
@@ -110,7 +102,7 @@ public class PreferencesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        genresRecycler = getActivity().findViewById(R.id.genresRecycler);
+//        genresRecycler = getActivity().findViewById(R.id.genresRecycler);
         initData();
     }
 }
