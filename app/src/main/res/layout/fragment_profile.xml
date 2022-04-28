@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
-        android:id="@+id/button"
+        android:id="@+id/register"
         android:text="tal yc ual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

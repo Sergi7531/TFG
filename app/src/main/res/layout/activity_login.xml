@@ -74,7 +74,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/logButton"
+                android:id="@+id/register"
                 android:layout_width="360dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
