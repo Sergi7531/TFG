@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
 
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
         EditText editText = view.findViewById(R.id.texto);
-        Button button = view.findViewById(R.id.register);
+        Button button = view.findViewById(R.id.button);
         TextView  textView = view.findViewById(R.id.tv);
 
 

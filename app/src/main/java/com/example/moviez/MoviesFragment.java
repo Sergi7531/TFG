@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -111,6 +112,17 @@ public class MoviesFragment extends Fragment {
             if (upcomingMoviesResponse != null) {
                 recyclerUpcomingMovies.setAdapter(new UpcomingMovieAdapter(upcomingMoviesResponse.results, requireContext(), (byte)0));
                 recyclerUpcomingMovies.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+
+//                upcomingMoviesResponse.results.forEach(movie -> {
+//                    FirebaseFirestore.getInstance()
+//                });
+
+
+
+
+
+
+
             }
         });
 
