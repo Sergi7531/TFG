@@ -4,12 +4,10 @@ public class Genre {
 
     private int id;
     private String name;
-    private String imageUrl;
 
-    public Genre(int id, String name, String imageUrl) {
+    public Genre(int id, String name) {
         this.id = id;
         this.name = name;
-        this.imageUrl = imageUrl;
     }
 
     public int getId() {
@@ -26,14 +24,6 @@ public class Genre {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
     }
 
 }
