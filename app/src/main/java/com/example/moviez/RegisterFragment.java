@@ -93,8 +93,6 @@ public class RegisterFragment extends Fragment {
             String passwordValue = password.getText().toString();
             String confirmValue = confirmPassword.getText().toString();
 
-            boolean hasUppercase = false;
-
             if (usernameValue.matches("") || emailValue.matches("") || passwordValue.matches("") || confirmValue.matches("")) {
                 Toast.makeText(getContext(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
             }
@@ -112,6 +110,10 @@ public class RegisterFragment extends Fragment {
 
             if (!passwordValue.equals(confirmValue)) {
                 Toast.makeText(getContext(), "The password field has to match with the repeat password field!", Toast.LENGTH_SHORT).show();
+            }
+
+            if (passwordValue.length() < 8) {
+                Toast.makeText(getContext(), "The password must have at least 8 characters!", Toast.LENGTH_SHORT).show();
             }
 
             else {
