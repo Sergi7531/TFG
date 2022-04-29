@@ -117,4 +117,48 @@ public class LoginFragment extends Fragment {
                 .commit();
 
     }
+    /*
+    public TextInputEditText usernameLog;
+    public TextInputEditText passwordLog;
+    public Button logButton;
+    public TextView registerText;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        hook();
+        registerText.setOnClickListener(view -> {
+        });
+        logButton.setOnClickListener(view -> {
+            if (!usernameLog.getText().toString().isEmpty() && !passwordLog.getText().toString().isEmpty()){
+
+            }
+        });
+
+    }
+
+    private void hook() {
+        usernameLog = findViewById(R.id.usernameLog);
+        passwordLog = findViewById(R.id.passwordLog);
+        registerText = findViewById(R.id.registerText);
+        logButton = findViewById(R.id.register);
+    }
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        if(account == null) return;
+        FirebaseAuth.getInstance().signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null))
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        accessApp();
+                    } else {
+
+                    }
+                });
+    }
+    private void accessApp(){
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+        AppViewModel viewModel = new ViewModelProvider(this).get(AppViewModel.class);
+
+    }
+     */
 }

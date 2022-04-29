@@ -5,6 +5,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -15,46 +19,30 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public TextInputEditText usernameLog;
-    public TextInputEditText passwordLog;
-    public Button logButton;
-    public TextView registerText;
-    @Override
+    private FragmentContainerView fragmentContainer;
+
+    private AnimationFragment animationFragment;
+    private LoginFragment loginFragment;
+    private RegisterFragment registerFragment;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        hook();
-        registerText.setOnClickListener(view -> {
-        });
-        logButton.setOnClickListener(view -> {
-            if (!usernameLog.getText().toString().isEmpty() && !passwordLog.getText().toString().isEmpty()){
-
-            }
-        });
-
+        fragmentInit();
+        setFragment(animationFragment);
     }
 
-    private void hook() {
-        usernameLog = findViewById(R.id.usernameLog);
-        passwordLog = findViewById(R.id.passwordLog);
-        registerText = findViewById(R.id.registerText);
-        logButton = findViewById(R.id.register);
+    private void fragmentInit() {
+        fragmentContainer = findViewById(R.id.fragmentContainer);
+        animationFragment = new AnimationFragment();
+        loginFragment = new LoginFragment();
+        registerFragment = new RegisterFragment();
     }
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        if(account == null) return;
-        FirebaseAuth.getInstance().signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null))
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        accessApp();
-                    } else {
-
-                    }
-                });
-    }
-    private void accessApp(){
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-
-        AppViewModel viewModel = new ViewModelProvider(this).get(AppViewModel.class);
-
+    private void setFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame, fragment);
+        fragmentTransaction.commit();
     }
 }
