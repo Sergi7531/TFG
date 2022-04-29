@@ -74,7 +74,11 @@ public class Models {
             this.lang = lang;
         }
     }
-    public class User {
+
+    public static class User {
+
+
+
         public String userid;
         public String username;
         public String profileImageURL;
@@ -87,6 +91,9 @@ public class Models {
         public List<User> followers;
         public List<User> following;
         public List<Ticket> tickets;
+
+        public User() {
+        }
 
         public User(String username, String profileImageURL, String email, String password) {
             this.username = username;

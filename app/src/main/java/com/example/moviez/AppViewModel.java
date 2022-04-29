@@ -1,5 +1,7 @@
 package com.example.moviez;
 
+import android.net.Uri;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -14,6 +16,8 @@ public class AppViewModel extends ViewModel {
     static MutableLiveData<Responses.BillboardResponse> upcomingMoviesResponse = new MutableLiveData<>();
     static MutableLiveData<Responses.BillboardResponse> actualMoviesInCinemaResponse = new MutableLiveData<>();
     static MutableLiveData<Responses.SearchResponse> moviesByQuery = new MutableLiveData<>();
+    public MutableLiveData<Uri> uriImagenSeleccionada = new MutableLiveData<>();
+
 
     public Models.User userlogged;
 
@@ -77,5 +81,8 @@ public class AppViewModel extends ViewModel {
         });
     }
 
+    public void setUriImagenSeleccionada(Uri uri) {
+        uriImagenSeleccionada.setValue(uri);
+    }
 
 }
