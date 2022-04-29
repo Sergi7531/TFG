@@ -1,12 +1,14 @@
 package com.example.moviez;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -86,11 +88,39 @@ public class RegisterFragment extends Fragment {
         register = view.findViewById(R.id.register);
 
         register.setOnClickListener(v -> {
-            setFragment(new PreferencesFragment());
+            String usernameValue = username.getText().toString();
+            String emailValue = email.getText().toString();
+            String passwordValue = password.getText().toString();
+            String confirmValue = confirmPassword.getText().toString();
+
+            boolean hasUppercase = false;
+
+            if (usernameValue.matches("") || emailValue.matches("") || passwordValue.matches("") || confirmValue.matches("")) {
+                Toast.makeText(getContext(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
+            }
+            if (!emailValue.contains("@")) {
+                Toast.makeText(getContext(), "The email has to contain a @", Toast.LENGTH_SHORT).show();
+            }
+
+            if (!containsUpperCaseLetter(passwordValue)) {
+                Toast.makeText(getContext(), "The password has to contain a capital letter!", Toast.LENGTH_SHORT).show();
+            }
+
+            if (!containsNumber(passwordValue)) {
+                Toast.makeText(getContext(), "The password has to contain a number!", Toast.LENGTH_SHORT).show();
+            }
+
+            if (!passwordValue.equals(confirmValue)) {
+                Toast.makeText(getContext(), "The password field has to match with the repeat password field!", Toast.LENGTH_SHORT).show();
+            }
+
+            else {
+                setFragment(new PreferencesFragment());
+            }
         });
 
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
-            if(uri != null) {
+            if (uri != null) {
                 //appViewModel.setUriImagenSeleccionada(uri);
             }
         });
@@ -106,5 +136,23 @@ public class RegisterFragment extends Fragment {
                 .replace(R.id.landingFrame, fragment)
                 .commit();
 
+    }
+
+    public boolean containsUpperCaseLetter(String s){
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isUpperCase(s.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean containsNumber(String string) {
+        for (int i = 0; i < string.length(); i++) {
+            if (Character.isDigit(string.charAt(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 }
