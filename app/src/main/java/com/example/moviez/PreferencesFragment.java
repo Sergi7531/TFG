@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,8 +25,10 @@ public class PreferencesFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    ArrayList<Genre> genres = new ArrayList<>();
+    ArrayList<Genre> genres;
     private RecyclerView genresRecycler;
+
+    static List<Integer> selectedGenres = new ArrayList<>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -68,6 +72,31 @@ public class PreferencesFragment extends Fragment {
                 "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
                 );
         genres.add(genre);
+
+
+        genres = new ArrayList<>(Arrays.asList(new Genre (
+                28,
+                "Action",
+                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
+        ), new Genre (
+                28,
+                "Action",
+                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
+        ), new Genre (
+                28,
+                "Action",
+                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
+        ), new Genre (
+                28,
+                "Action",
+                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
+        ), new Genre (
+                28,
+                "Action",
+                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
+        )));
+
+
     }
 
     @Override
