@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieZ">
         <activity
-            android:name=".LoginActivity"
+            android:name=".LandingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

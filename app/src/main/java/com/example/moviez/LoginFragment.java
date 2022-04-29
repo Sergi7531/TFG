@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -113,9 +115,8 @@ public class LoginFragment extends Fragment {
     private void setFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frameLogin, fragment)
+                .replace(R.id.landingFrame, fragment)
                 .commit();
-
     }
     /*
     public TextInputEditText usernameLog;

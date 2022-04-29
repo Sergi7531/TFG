@@ -4,29 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_movie_24.xml" value="0.2265" />
-        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2495" />
-        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/movie_holder.xml" value="0.162" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/activity_main.xml" value="0.536" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_movies.xml" value="0.4" />
+        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_movies.xml" value="0.25" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_new_comment.xml" value="0.25" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
-        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/movie_holder.xml" value="0.264" />
-        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/movie_search_holder.xml" value="0.536" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/menu/nav_menu.xml" value="0.264" />
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/border.xml" value="0.1" />
-        <entry key="app/src/main/res/drawable/ic_arrow_right.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.67" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.67" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.67" />
-        <entry key="app/src/main/res/layout/fragment_movies.xml" value="0.20923913043478262" />
-        <entry key="app/src/main/res/layout/fragment_preferences.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.20923913043478262" />
-        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/genre.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/fragment_animation.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/fragment_movies.xml" value="0.190625" />
+        <entry key="app/src/main/res/layout/fragment_preferences.xml" value="0.16614583333333333" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.190625" />
       </map>
     </option>
   </component>

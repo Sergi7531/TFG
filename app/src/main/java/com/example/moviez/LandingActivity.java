@@ -1,6 +1,7 @@
 package com.example.moviez;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,9 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class LoginActivity extends AppCompatActivity {
+public class LandingActivity extends AppCompatActivity {
 
-    private FragmentContainerView fragmentContainer;
 
     private AnimationFragment animationFragment;
     private LoginFragment loginFragment;
@@ -31,10 +31,16 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         fragmentInit();
         setFragment(animationFragment);
+        Handler handler = new Handler();
+        final Runnable r = new Runnable() {
+            public void run() {
+                setFragment(loginFragment);
+            }
+        };
+        handler.postDelayed(r, 2000);
     }
 
     private void fragmentInit() {
-        fragmentContainer = findViewById(R.id.fragmentContainer);
         animationFragment = new AnimationFragment();
         loginFragment = new LoginFragment();
         registerFragment = new RegisterFragment();
@@ -42,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     private void setFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame, fragment);
+        fragmentTransaction.replace(R.id.landingFrame, fragment);
         fragmentTransaction.commit();
     }
 }
