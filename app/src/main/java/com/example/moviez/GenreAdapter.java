@@ -5,7 +5,6 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,8 +51,6 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         });
 
 
-
-
     }
 
     @Override
@@ -63,15 +60,14 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
 
     public class GenreViewHolder extends RecyclerView.ViewHolder {
         public ConstraintLayout constraintLayout;
-        public ImageView imageTriangle;
-        public ImageView image_backgroundHolder;
+//        public ImageView imageTriangle;
+//        public ImageView image_backgroundHolder;
         public TextView titleGenreHolder;
 
         public GenreViewHolder(@NonNull View itemView) {
             super(itemView);
             this.constraintLayout = itemView.findViewById(R.id.genreHolder);
-            this.imageTriangle = itemView.findViewById(R.id.imageTriangle);
-            this.image_backgroundHolder = itemView.findViewById(R.id.image_backgroundHolder);
+//            this.image_backgroundHolder = itemView.findViewById(R.id.image_backgroundHolder);
             this.titleGenreHolder = itemView.findViewById(R.id.titleGenreHolder);
         }
     }
