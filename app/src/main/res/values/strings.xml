@@ -12,4 +12,14 @@
     <string name="log_in">Entra</string>
     <string name="confirm_password">Confirmar contraseña</string>
     <string name="escoge_hasta_3_generos_de_preferencia">Escoge hasta 3 géneros de preferencia:</string>
+    <string name="siguiendo">Siguiendo</string>
+    <string name="seguidores">Seguidores</string>
+    <string name="_0">0</string>
+    <string name="estad_sticas_usuario">Estadísticas Usuario</string>
+    <string name="has_visto">Has visto</string>
+    <string name="pel_culas">Películas</string>
+    <string name="quieres_ver">Quieres ver</string>
+    <string name="favoritas">Favoritas</string>
+    <string name="ltimas_pel_culas_vistas">Últimas películas vistas:</string>
+    <string name="pel_culas_favoritas">Películas favoritas:</string>
 </resources>

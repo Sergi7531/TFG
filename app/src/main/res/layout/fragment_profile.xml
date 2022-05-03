@@ -26,7 +26,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/profilePicture"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:scaleType="centerCrop"
@@ -39,7 +39,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView7"
+                    android:id="@+id/usuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
@@ -49,7 +49,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView8"
+                    android:id="@+id/correo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="3dp"
                         android:gravity="center_horizontal"
-                        android:text="Siguiendo"
+                        android:text="@string/siguiendo"
                         android:textStyle="bold" />
 
                     <TextView
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="3dp"
                         android:gravity="center_horizontal"
-                        android:text="Seguidores"
+                        android:text="@string/seguidores"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -92,7 +92,7 @@
                         android:layout_margin="3dp"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="0" />
+                        android:text="@string/_0" />
 
                     <TextView
                         android:id="@+id/followersNumber"
@@ -101,7 +101,7 @@
                         android:layout_margin="3dp"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="0" />
+                        android:text="@string/_0" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Estadísticas Usuario"
+            android:text="@string/estad_sticas_usuario"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -144,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center_horizontal"
-                    android:text="Has visto" />
+                    android:text="@string/has_visto" />
 
                 <TextView
                     android:id="@+id/watchedNumber"
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:gravity="center_horizontal"
-                    android:text="0"
+                    android:text="@string/_0"
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
@@ -162,7 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
                     android:gravity="center_horizontal"
-                    android:text="Películas" />
+                    android:text="@string/pel_culas" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -177,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center_horizontal"
-                    android:text="Quieres ver" />
+                    android:text="@string/quieres_ver" />
 
                 <TextView
                     android:id="@+id/wantToWatchNumber"
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:gravity="center_horizontal"
-                    android:text="0"
+                    android:text="@string/_0"
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
@@ -195,7 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
                     android:gravity="center_horizontal"
-                    android:text="Películas" />
+                    android:text="@string/pel_culas" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -210,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center_horizontal"
-                    android:text="Favoritas" />
+                    android:text="@string/favoritas" />
 
                 <TextView
                     android:id="@+id/favoriteNumber"
@@ -218,7 +218,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:gravity="center_horizontal"
-                    android:text="0"
+                    android:text="@string/_0"
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
@@ -228,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
                     android:gravity="center_horizontal"
-                    android:text="Películas" />
+                    android:text="@string/pel_culas" />
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
@@ -238,7 +238,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Últimas películas vistas:"
+            android:text="@string/ltimas_pel_culas_vistas"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -255,7 +255,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Películas favoritas:"
+            android:text="@string/pel_culas_favoritas"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -273,12 +273,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center_horizontal"
-            android:text="Siguiendo"
+            android:text="@string/siguiendo"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerWatchedMovies"
+            android:id="@+id/recyclerFollowedMovies"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_margin="10dp" />
