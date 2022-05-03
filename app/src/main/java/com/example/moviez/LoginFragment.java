@@ -33,7 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
  * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -105,14 +105,15 @@ public class LoginFragment extends Fragment {
         registerText.setOnClickListener(view2 -> {
             setFragment(new RegisterFragment());
         });
-        GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build());
         firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(requireContext()));
         logButton.setOnClickListener(view2 -> {
             if (!usernameLog.getText().toString().isEmpty() && !passwordLog.getText().toString().isEmpty()){
-
+                // Check userLog
+                accessApp();
             }
         });
         googleButton.setOnClickListener(view1 -> {
@@ -134,20 +135,21 @@ public class LoginFragment extends Fragment {
         FirebaseAuth.getInstance().signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null))
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        accessApp();
+                        createGoogleAccount();
                     }
                 });
     }
+    private boolean createGoogleAccount(){
+        db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()))
+                .addOnCompleteListener(task -> {
+                    accessApp();
+        });
+        return false;
+    }
     private void accessApp(){
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        firebaseFirestore.collection("users").document(firebaseUser.getUid()).set(new Models.User(firebaseUser.getUid(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl().toString(), firebaseUser.getEmail())).addOnCompleteListener(task -> {
              Intent intent = new Intent(requireContext(), MainActivity.class);
              startActivity(intent);
              requireActivity().finish();
-        });
-
     }
 
     private void setFragment(Fragment fragment) {
