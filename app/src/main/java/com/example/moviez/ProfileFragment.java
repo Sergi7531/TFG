@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,5 +88,24 @@ public class ProfileFragment extends AppFragment {
         } else {
             profilepic.setImageResource(R.drawable.ic_baseline_person_24);
         }
+
+//        lastViewedFilms();
+
+//        favoriteFilms();
+
+//        following();
+
     }
+
+    public void lastViewedFilms() {
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewed").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+
+                }
+            }
+        });
+    }
+
 }

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:background="@color/primaryColor"
     android:orientation="vertical"
     tools:context=".ProfileFragment">
 
@@ -45,6 +45,7 @@
                     android:layout_margin="3dp"
                     android:gravity="center_horizontal"
                     android:text="@string/username"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -54,7 +55,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/email" />
+                    android:text="@string/email"
+                    android:textColor="@color/primaryTextColor" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,6 +70,7 @@
                         android:layout_margin="3dp"
                         android:gravity="center_horizontal"
                         android:text="@string/siguiendo"
+                        android:textColor="@color/primaryTextColor"
                         android:textStyle="bold" />
 
                     <TextView
@@ -77,6 +80,7 @@
                         android:layout_margin="3dp"
                         android:gravity="center_horizontal"
                         android:text="@string/seguidores"
+                        android:textColor="@color/primaryTextColor"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -92,7 +96,8 @@
                         android:layout_margin="3dp"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="@string/_0" />
+                        android:text="@string/_0"
+                        android:textColor="@color/primaryTextColor" />
 
                     <TextView
                         android:id="@+id/followersNumber"
@@ -101,7 +106,8 @@
                         android:layout_margin="3dp"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="@string/_0" />
+                        android:text="@string/_0"
+                        android:textColor="@color/primaryTextColor" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -124,6 +130,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/estad_sticas_usuario"
+            android:textColor="@color/primaryTextColor"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -136,6 +143,8 @@
                 android:layout_width="108dp"
                 android:layout_height="128dp"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/primaryLightColor"
                 app:cardCornerRadius="10dp">
 
                 <TextView
@@ -144,7 +153,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/has_visto" />
+                    android:text="@string/has_visto"
+                    android:textColor="@color/primaryTextColor" />
 
                 <TextView
                     android:id="@+id/watchedNumber"
@@ -153,6 +163,7 @@
                     android:layout_marginTop="40dp"
                     android:gravity="center_horizontal"
                     android:text="@string/_0"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
@@ -162,13 +173,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/pel_culas" />
+                    android:text="@string/pel_culas"
+                    android:textColor="@color/nav_item_colors" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="108dp"
                 android:layout_height="128dp"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/primaryLightColor"
                 app:cardCornerRadius="10dp">
 
                 <TextView
@@ -177,7 +191,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/quieres_ver" />
+                    android:text="@string/quieres_ver"
+                    android:textColor="@color/nav_item_colors" />
 
                 <TextView
                     android:id="@+id/wantToWatchNumber"
@@ -186,6 +201,7 @@
                     android:layout_marginTop="40dp"
                     android:gravity="center_horizontal"
                     android:text="@string/_0"
+                    android:textColor="@color/nav_item_colors"
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
@@ -195,13 +211,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/pel_culas" />
+                    android:text="@string/pel_culas"
+                    android:textColor="@color/primaryTextColor" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="108dp"
                 android:layout_height="128dp"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="@color/primaryLightColor"
                 app:cardCornerRadius="10dp">
 
                 <TextView
@@ -210,7 +229,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/favoritas" />
+                    android:text="@string/favoritas"
+                    android:textColor="@color/nav_item_colors" />
 
                 <TextView
                     android:id="@+id/favoriteNumber"
@@ -219,6 +239,7 @@
                     android:layout_marginTop="40dp"
                     android:gravity="center_horizontal"
                     android:text="@string/_0"
+                    android:textColor="@color/primaryTextColor"
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
@@ -228,7 +249,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="100dp"
                     android:gravity="center_horizontal"
-                    android:text="@string/pel_culas" />
+                    android:text="@string/pel_culas"
+                    android:textColor="@color/primaryTextColor" />
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
@@ -239,6 +261,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/ltimas_pel_culas_vistas"
+            android:textColor="@color/primaryTextColor"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -246,7 +269,7 @@
             android:id="@+id/recyclerWatchedMovies"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_margin="10dp" >
+            android:layout_margin="10dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -256,6 +279,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="@string/pel_culas_favoritas"
+            android:textColor="@color/primaryTextColor"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -274,6 +298,7 @@
             android:layout_margin="10dp"
             android:gravity="center_horizontal"
             android:text="@string/siguiendo"
+            android:textColor="@color/primaryTextColor"
             android:textSize="16sp"
             android:textStyle="bold" />
 
