@@ -1,5 +1,7 @@
 package com.example.moviez;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,14 +9,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -34,6 +44,7 @@ public class LoginFragment extends Fragment {
     public TextInputEditText passwordLog;
     public Button logButton;
     public TextView registerText;
+    public CardView googleButton;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -81,13 +92,31 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         hook(view);
+        ActivityResultLauncher<Intent> signInClient = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        try {
+                            firebaseAuthWithGoogle(GoogleSignIn.getSignedInAccountFromIntent(result.getData()).getResult(ApiException.class));
+                        } catch (ApiException e) {
+
+                        }
+                    }
+                });
         registerText.setOnClickListener(view2 -> {
             setFragment(new RegisterFragment());
         });
+        GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(this, new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build());
+        firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(requireContext()));
         logButton.setOnClickListener(view2 -> {
             if (!usernameLog.getText().toString().isEmpty() && !passwordLog.getText().toString().isEmpty()){
 
             }
+        });
+        googleButton.setOnClickListener(view1 -> {
+            signInClient.launch(googleSignInAccount.getSignInIntent());
         });
 
     }
@@ -97,9 +126,11 @@ public class LoginFragment extends Fragment {
         passwordLog = view.findViewById(R.id.passwordLog);
         registerText = view.findViewById(R.id.registerText);
         logButton = view.findViewById(R.id.register);
+        googleButton = view.findViewById(R.id.googleButton);
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         if(account == null) return;
+
         FirebaseAuth.getInstance().signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null))
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -109,7 +140,14 @@ public class LoginFragment extends Fragment {
     }
     private void accessApp(){
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        AppViewModel viewModel = new ViewModelProvider(this).get(AppViewModel.class);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        firebaseFirestore.collection("users").document(firebaseUser.getUid()).set(new Models.User(firebaseUser.getUid(), firebaseUser.getDisplayName(), firebaseUser.getPhotoUrl().toString(), firebaseUser.getEmail())).addOnCompleteListener(task -> {
+             Intent intent = new Intent(requireContext(), MainActivity.class);
+             startActivity(intent);
+             requireActivity().finish();
+        });
+
     }
 
     private void setFragment(Fragment fragment) {
