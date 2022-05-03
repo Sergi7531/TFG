@@ -2,14 +2,14 @@
     <string name="app_name">MovieZ</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="email">Email</string>
-    <string name="password">Password</string>
-    <string name="forgot_password">Forgot password?</string>
-    <string name="don_t_have_an_account">Don\'t have an account?</string>
-    <string name="register">Register</string>
-    <string name="or_sign_up_with">Or Sign Up With</string>
-    <string name="log_in">Log In</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="username">Username</string>
-    <string name="escoge_hasta_3_g_neros_de_preferencia">Escoge hasta 3 géneros de preferencia:</string>
+    <string name="email">Correo electrónico</string>
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="forgot_password">¿Has olvidado la contraseña?</string>
+    <string name="don_t_have_an_account">¿No tienes cuenta?</string>
+    <string name="register">Regístrate</string>
+    <string name="or_sign_up_with">Accede rápidamente con</string>
+    <string name="log_in">Entra</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="escoge_hasta_3_generos_de_preferencia">Escoge hasta 3 géneros de preferencia:</string>
 </resources>

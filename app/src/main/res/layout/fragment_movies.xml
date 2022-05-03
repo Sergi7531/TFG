@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primaryColor"
     tools:context=".MoviesFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -24,12 +25,12 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        app:cardCornerRadius="35dp">
+        app:cardCornerRadius="14dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="#fef1ea"
+            app:boxBackgroundColor="@color/primaryLightColor"
             app:boxStrokeColor="#fef1ea"
             app:hintTextColor="#000000">
 
