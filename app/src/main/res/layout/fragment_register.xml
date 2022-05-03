@@ -78,7 +78,7 @@
                 android:inputType="textEmailAddress"
                 android:textColorHint="@color/primaryColor"
                 app:hintTextColor="@color/primaryColor"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/mail"

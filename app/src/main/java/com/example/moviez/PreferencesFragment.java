@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -68,24 +69,61 @@ public class PreferencesFragment extends Fragment {
     private void initData() {
         genres = new ArrayList<>(Arrays.asList(new Genre (
                 28,
-                "Action",
-                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
+                "Action"
         ), new Genre (
-                28,
-                "Action",
-                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
+                12,
+                "Adventure"
         ), new Genre (
-                28,
-                "Action",
-                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
+                16,
+                "Animation"
         ), new Genre (
-                28,
-                "Action",
-                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
+                35,
+                "Comedy"
         ), new Genre (
-                28,
-                "Action",
-                "https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk"
+                80,
+                "Crime"
+        ), new Genre (
+                99,
+                "Documentary"
+            ), new Genre (
+                18,
+                "Drama"
+        ), new Genre (
+                10751,
+                "Family"
+        ), new Genre (
+                14,
+                "Fantasy"
+        ), new Genre (
+                36,
+                "History"
+        ), new Genre (
+                27,
+                "Horror"
+        ), new Genre (
+                10402,
+                "Music"
+        ), new Genre (
+                9648,
+                "Mystery"
+        ), new Genre (
+                10749,
+                "Romance"
+        ), new Genre (
+                878,
+                "Sci-fi"
+        ), new Genre (
+                10770,
+                "TV Movie"
+        ), new Genre (
+                53,
+                "Thriller"
+        ), new Genre (
+                10752,
+                "War"
+        ), new Genre (
+                37,
+                "Western"
         )));
 
 
@@ -102,7 +140,11 @@ public class PreferencesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        genresRecycler = getActivity().findViewById(R.id.genresRecycler);
+        genresRecycler = getActivity().findViewById(R.id.recyclerGenres);
         initData();
+        GenreAdapter adapter = new GenreAdapter(getContext(), genres);
+        genresRecycler.setAdapter(adapter);
+        genresRecycler.setLayoutManager(new GridLayoutManager(requireContext(), 2,
+                RecyclerView.VERTICAL, false));
     }
 }
