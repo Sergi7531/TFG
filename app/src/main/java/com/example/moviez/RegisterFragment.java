@@ -15,7 +15,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ import java.util.UUID;
  * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -164,38 +165,51 @@ public class RegisterFragment extends Fragment {
         String usernameValue = username.getText().toString();
         String emailValue = email.getText().toString();
         String passwordValue = password.getText().toString();
-//        String imageUrl = profilePic
-
-
-        Models.User user = new Models.User(usernameValue, emailValue, passwordValue, "");
-
-        FirebaseFirestore.getInstance().collection("users")
-                .add(user)
-                .addOnSuccessListener(documentReference -> {
-                    setFragment(new PreferencesFragment());
-                    Toast.makeText(requireContext(), "User registered.", Toast.LENGTH_SHORT).show();
-                }).addOnFailureListener(e -> {
-            Toast.makeText(requireContext(), "Failed while registering user.", Toast.LENGTH_SHORT).show();
-        });
-
 
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailValue, passwordValue).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                if( != null) {
+                if(uriProfilePic != null) {
                     FirebaseStorage.getInstance().getReference("/profileimgs/"+ UUID.randomUUID()+".jpg")
                             .putFile(uriProfilePic)
                             .continueWithTask(task2 -> task2.getResult().getStorage().getDownloadUrl())
-                            .addOnSuccessListener(imageUrl-> saveUser(imageUrl));
+                            .addOnSuccessListener(imageUrl-> saveUser(auth.getCurrentUser().getUid(), usernameValue, emailValue, passwordValue, imageUrl));
                 } else {
-                    saveUser(null);
+                    saveUser(FirebaseAuth.getInstance().getCurrentUser().getUid(), usernameValue, emailValue, passwordValue, null);
                 }
 
-                navController.navigate(R.id.action_registerFragment_to_postsHomeFragment);
+                setFragment(new PreferencesFragment());
             } else {
                 Toast.makeText(requireContext(), task.getException().getLocalizedMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+    private void saveUser(String userid, String usernameValue, String emailValue, String passwordValue, Uri imageUri) {
+
+        String imageUrl = "";
+
+        if(imageUri == null || imageUri.toString().equals("")) {
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/apifirebase-f6f9e.appspot.com/o/profileimgs%2Fic_baseline_person_24.xml?alt=media&token=896e0cc4-b4af-4800-9a9b-a21b8cac7a0d";
+        } else {
+            imageUrl = imageUri.toString();
+        }
+
+        Models.User userToAdd = new Models.User(userid, usernameValue, emailValue, passwordValue, imageUrl);
+
+        System.out.println("USERID: "  + userToAdd.userid);
+        db.collection("users")
+                .document(auth.getCurrentUser().getUid())
+                .set(userToAdd);
+
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(username.getText().toString())
+                .setPhotoUri(imageUri)
+                .build();
+        auth.getCurrentUser().updateProfile(profileUpdates);
+//        We keep the signed in user here:
+        appViewModel.userlogged = userToAdd;
     }
 }
