@@ -93,16 +93,14 @@ public class RegisterFragment extends AppFragment {
         profilePic = view.findViewById(R.id.profilePic);
         register = view.findViewById(R.id.register);
 
-        register.setOnClickListener( v -> {
-            if(validateData()) {
-                registerNewUser();
-            }
-        });
-
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
             if (uri != null) {
+                uriProfilePic = uri;
                 profilePic.setImageURI(uri);
                 appViewModel.setUriImagenSeleccionada(uri);
+            } else {
+                uriProfilePic = null;
+                Glide.with(profilePic).load(R.drawable.ic_baseline_person_24);
             }
         });
 
@@ -110,13 +108,9 @@ public class RegisterFragment extends AppFragment {
             phoneGallery.launch("image/*");
         });
 
-        appViewModel.uriImagenSeleccionada.observe(getViewLifecycleOwner(), uri -> {
-            if(uri!=null) {
-                uriProfilePic = uri;
-                Glide.with(requireContext()).load(uriProfilePic).into(profilePic);
-            } else {
-                uriProfilePic = null;
-                profilePic.setImageResource(R.drawable.ic_baseline_person_24);
+        register.setOnClickListener( v -> {
+            if(validateData()) {
+                registerNewUser();
             }
         });
     }
@@ -153,7 +147,7 @@ public class RegisterFragment extends AppFragment {
         String passwordValue = password.getText().toString();
         String confirmValue = confirmPassword.getText().toString();
 
-        if (usernameValue.isEmpty() || emailValue.isEmpty() || passwordValue.isEmpty() || confirmValue.isEmpty()) {
+        if (usernameValue.matches("") || emailValue.matches("") || passwordValue.matches("") || confirmValue.matches("")) {
             Toast.makeText(getContext(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
         } else if (!emailValue.contains("@")) {
             Toast.makeText(getContext(), "The email has to contain a @", Toast.LENGTH_SHORT).show();
@@ -201,23 +195,23 @@ public class RegisterFragment extends AppFragment {
 
         String imageUrl = "";
 
-        if(imageUri == null || imageUri.toString().isEmpty()) {
-            imageUrl = "https://firebasestorage.googleapis.com/v0/b/apifirebase-f6f9e.appspot.com/o/profileimgs%2Fic_baseline_person_24.xml?alt=media&token=896e0cc4-b4af-4800-9a9b-a21b8cac7a0d";
+        if(imageUri == null || imageUri.toString().equals("")) {
+//            https://firebasestorage.googleapis.com/v0/b/apifirebase-f6f9e.appspot.com/o/profileimgs%2Fic_baseline_person_24.xml?alt=media&token=896e0cc4-b4af-4800-9a9b-a21b8cac7a0d
+            imageUrl = "";
         } else {
             imageUrl = imageUri.toString();
         }
 
         Models.User userToAdd = new Models.User(userid, usernameValue, emailValue, passwordValue, imageUrl);
 
-        System.out.println("USERID: "  + userToAdd.userid);
         db.collection("users")
                 .document(auth.getCurrentUser().getUid())
                 .set(userToAdd);
 
-        System.out.println(imageUri);
+
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(username.getText().toString())
-                .setPhotoUri(imageUri)
+                .setPhotoUri(Uri.parse(imageUrl))
                 .build();
         auth.getCurrentUser().updateProfile(profileUpdates);
 //        We keep the signed in user here:
