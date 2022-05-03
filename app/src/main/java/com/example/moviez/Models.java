@@ -2,10 +2,8 @@ package com.example.moviez;
 
 import androidx.annotation.Nullable;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Models {
@@ -92,14 +90,19 @@ public class Models {
         public List<User> following;
         public List<Ticket> tickets;
 
-        public User() {
-        }
-
-        public User(String username, String profileImageURL, String email, String password) {
+//        This constructor will be for Google sign-in and will be used when the user registers with Google:
+        public User(String username, String profileImageURL, String email) {
             this.username = username;
             this.profileImageURL = profileImageURL;
             this.email = email;
+        }
+
+//      This will be used when the user registers with email and password (e-mail registration):
+        public User(String username, String email, String password, String profileImageURL) {
+            this.username = username;
+            this.email = email;
             this.password = password;
+            this.profileImageURL = profileImageURL;
         }
     }
 }

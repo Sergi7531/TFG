@@ -1,12 +1,11 @@
 package com.example.moviez;
 
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -15,6 +14,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +31,7 @@ public class RegisterFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private Uri uriProfilePic;
     private TextInputEditText username;
     private TextInputEditText email;
     private TextInputEditText password;
@@ -87,43 +91,16 @@ public class RegisterFragment extends Fragment {
         profilePic = view.findViewById(R.id.profilePic);
         register = view.findViewById(R.id.register);
 
-        register.setOnClickListener(v -> {
-            String usernameValue = username.getText().toString();
-            String emailValue = email.getText().toString();
-            String passwordValue = password.getText().toString();
-            String confirmValue = confirmPassword.getText().toString();
-
-            if (usernameValue.matches("") || emailValue.matches("") || passwordValue.matches("") || confirmValue.matches("")) {
-                Toast.makeText(getContext(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
-            }
-            if (!emailValue.contains("@")) {
-                Toast.makeText(getContext(), "The email has to contain a @", Toast.LENGTH_SHORT).show();
-            }
-
-            if (!containsUpperCaseLetter(passwordValue)) {
-                Toast.makeText(getContext(), "The password has to contain a capital letter!", Toast.LENGTH_SHORT).show();
-            }
-
-            if (!containsNumber(passwordValue)) {
-                Toast.makeText(getContext(), "The password has to contain a number!", Toast.LENGTH_SHORT).show();
-            }
-
-            if (!passwordValue.equals(confirmValue)) {
-                Toast.makeText(getContext(), "The password field has to match with the repeat password field!", Toast.LENGTH_SHORT).show();
-            }
-
-            if (passwordValue.length() < 8) {
-                Toast.makeText(getContext(), "The password must have at least 8 characters!", Toast.LENGTH_SHORT).show();
-            }
-
-            else {
-                setFragment(new PreferencesFragment());
+        register.setOnClickListener( v -> {
+            if(validateData()) {
+                registerNewUser();
             }
         });
 
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
             if (uri != null) {
-                //appViewModel.setUriImagenSeleccionada(uri);
+                profilePic.setImageURI(uri);
+//                appViewModel.setUriImagenSeleccionada(uri);
             }
         });
 
@@ -132,12 +109,12 @@ public class RegisterFragment extends Fragment {
         });
     }
 
+
     private void setFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.landingFrame, fragment)
                 .commit();
-
     }
 
     public boolean containsUpperCaseLetter(String s){
@@ -156,5 +133,69 @@ public class RegisterFragment extends Fragment {
             }
         }
         return false;
+    }
+
+    public boolean validateData() {
+        String usernameValue = username.getText().toString();
+        String emailValue = email.getText().toString();
+        String passwordValue = password.getText().toString();
+        String confirmValue = confirmPassword.getText().toString();
+
+        if (usernameValue.matches("") || emailValue.matches("") || passwordValue.matches("") || confirmValue.matches("")) {
+            Toast.makeText(getContext(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
+        } else if (!emailValue.contains("@")) {
+            Toast.makeText(getContext(), "The email has to contain a @", Toast.LENGTH_SHORT).show();
+        } else if (!containsUpperCaseLetter(passwordValue)) {
+            Toast.makeText(getContext(), "The password has to contain a capital letter!", Toast.LENGTH_SHORT).show();
+        } else if (!containsNumber(passwordValue)) {
+            Toast.makeText(getContext(), "The password has to contain a number!", Toast.LENGTH_SHORT).show();
+        } else if (!passwordValue.equals(confirmValue)) {
+            Toast.makeText(getContext(), "The password field has to match with the repeat password field!", Toast.LENGTH_SHORT).show();
+        } else if (passwordValue.length() < 8) {
+            Toast.makeText(getContext(), "The password must have at least 8 characters!", Toast.LENGTH_SHORT).show();
+        } else {
+            return true;
+        }
+        return false;
+    }
+
+    private void registerNewUser() {
+//        Add a user to the collections users in firebase:
+        String usernameValue = username.getText().toString();
+        String emailValue = email.getText().toString();
+        String passwordValue = password.getText().toString();
+//        String imageUrl = profilePic
+
+
+        Models.User user = new Models.User(usernameValue, emailValue, passwordValue, "");
+
+        FirebaseFirestore.getInstance().collection("users")
+                .add(user)
+                .addOnSuccessListener(documentReference -> {
+                    setFragment(new PreferencesFragment());
+                    Toast.makeText(requireContext(), "User registered.", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(e -> {
+            Toast.makeText(requireContext(), "Failed while registering user.", Toast.LENGTH_SHORT).show();
+        });
+
+
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailValue, passwordValue).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if( != null) {
+                    FirebaseStorage.getInstance().getReference("/profileimgs/"+ UUID.randomUUID()+".jpg")
+                            .putFile(uriProfilePic)
+                            .continueWithTask(task2 -> task2.getResult().getStorage().getDownloadUrl())
+                            .addOnSuccessListener(imageUrl-> saveUser(imageUrl));
+                } else {
+                    saveUser(null);
+                }
+
+                navController.navigate(R.id.action_registerFragment_to_postsHomeFragment);
+            } else {
+                Toast.makeText(requireContext(), task.getException().getLocalizedMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
