@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -92,21 +93,25 @@ public class RegisterFragment extends AppFragment {
         profilePic = view.findViewById(R.id.profilePic);
         register = view.findViewById(R.id.register);
 
-        register.setOnClickListener( v -> {
-            if(validateData()) {
-                registerNewUser();
-            }
-        });
-
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
             if (uri != null) {
+                uriProfilePic = uri;
                 profilePic.setImageURI(uri);
-//                appViewModel.setUriImagenSeleccionada(uri);
+                appViewModel.setUriImagenSeleccionada(uri);
+            } else {
+                uriProfilePic = null;
+                Glide.with(profilePic).load(R.drawable.ic_baseline_person_24);
             }
         });
 
         profilePic.setOnClickListener(v -> {
             phoneGallery.launch("image/*");
+        });
+
+        register.setOnClickListener( v -> {
+            if(validateData()) {
+                registerNewUser();
+            }
         });
     }
 
@@ -191,14 +196,14 @@ public class RegisterFragment extends AppFragment {
         String imageUrl = "";
 
         if(imageUri == null || imageUri.toString().equals("")) {
-            imageUrl = "https://firebasestorage.googleapis.com/v0/b/apifirebase-f6f9e.appspot.com/o/profileimgs%2Fic_baseline_person_24.xml?alt=media&token=896e0cc4-b4af-4800-9a9b-a21b8cac7a0d";
+//            https://firebasestorage.googleapis.com/v0/b/apifirebase-f6f9e.appspot.com/o/profileimgs%2Fic_baseline_person_24.xml?alt=media&token=896e0cc4-b4af-4800-9a9b-a21b8cac7a0d
+            imageUrl = "";
         } else {
             imageUrl = imageUri.toString();
         }
 
         Models.User userToAdd = new Models.User(userid, usernameValue, emailValue, passwordValue, imageUrl);
 
-        System.out.println("USERID: "  + userToAdd.userid);
         db.collection("users")
                 .document(auth.getCurrentUser().getUid())
                 .set(userToAdd);
@@ -206,7 +211,7 @@ public class RegisterFragment extends AppFragment {
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(username.getText().toString())
-                .setPhotoUri(imageUri)
+                .setPhotoUri(Uri.parse(imageUrl))
                 .build();
         auth.getCurrentUser().updateProfile(profileUpdates);
 //        We keep the signed in user here:
