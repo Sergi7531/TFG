@@ -47,23 +47,25 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/LoginTextInputLayoutStyle"
                 android:id="@+id/usernameLayout"
+                style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:textColorHint="@color/primaryColor"
-                app:boxBackgroundMode="outline">
+                android:textColorHint="@color/secondaryTextColor"
+                app:boxBackgroundMode="outline"
+                app:hintTextColor="@color/secondaryTextColor">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    style="@style/LoginTextInputLayoutStyle"
-
                     android:id="@+id/username"
+
+                    style="@style/LoginTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="@string/username"
                     android:text=""
-                    android:textColor="@color/primaryColor"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor"
                     android:textStyle="bold"
                     app:boxStrokeColor="@color/primaryLightColor" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -76,8 +78,8 @@
                 android:layout_marginTop="10dp"
                 android:ems="10"
                 android:inputType="textEmailAddress"
-                android:textColorHint="@color/primaryColor"
-                app:hintTextColor="@color/primaryColor"
+                android:textColorHint="@color/secondaryTextColor"
+                app:hintTextColor="@color/secondaryTextColor"
                 app:passwordToggleEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -86,8 +88,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
                     android:text=""
-                    android:textColor="@color/primaryColor"
-                    android:textColorHint="@color/primaryColor"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,8 +101,8 @@
                 android:layout_marginTop="10dp"
                 android:ems="10"
                 android:inputType="textPassword"
-                android:textColorHint="@color/primaryColor"
-                app:hintTextColor="@color/primaryColor"
+                android:textColorHint="@color/secondaryTextColor"
+                app:hintTextColor="@color/secondaryTextColor"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -109,7 +111,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
                     android:text=""
-                    android:textColor="@color/primaryColor"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,8 +124,8 @@
                 android:layout_marginTop="10dp"
                 android:ems="10"
                 android:inputType="textPassword"
-                android:textColorHint="@color/primaryColor"
-                app:hintTextColor="@color/primaryColor"
+                android:textColorHint="@color/secondaryTextColor"
+                app:hintTextColor="@color/secondaryTextColor"
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -131,7 +134,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
                     android:text=""
-                    android:textColor="@color/primaryColor"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textColorHint="@color/secondaryTextColor"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
