@@ -80,7 +80,8 @@ public class ProfileFragment extends AppFragment {
 
         usuario.setText(auth.getCurrentUser().getDisplayName());
         correo.setText(auth.getCurrentUser().getEmail());
-        //Glide.with(getActivity()).load(auth.getCurrentUser().getPhotoUrl()).circleCrop().into(profilepic);
+        Glide.with(getActivity()).load(auth.getCurrentUser().getPhotoUrl()).circleCrop().into(profilepic);
+        System.out.println(auth.getCurrentUser().getDisplayName());
         //System.out.println(auth.getCurrentUser().getPhotoUrl());
     }
 }

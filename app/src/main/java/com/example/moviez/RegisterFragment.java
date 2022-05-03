@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -101,12 +102,22 @@ public class RegisterFragment extends AppFragment {
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
             if (uri != null) {
                 profilePic.setImageURI(uri);
-//                appViewModel.setUriImagenSeleccionada(uri);
+                appViewModel.setUriImagenSeleccionada(uri);
             }
         });
 
         profilePic.setOnClickListener(v -> {
             phoneGallery.launch("image/*");
+        });
+
+        appViewModel.uriImagenSeleccionada.observe(getViewLifecycleOwner(), uri -> {
+            if(uri!=null) {
+                uriProfilePic = uri;
+                Glide.with(requireContext()).load(uriProfilePic).into(profilePic);
+            } else {
+                uriProfilePic = null;
+                profilePic.setImageResource(R.drawable.ic_baseline_person_24);
+            }
         });
     }
 
@@ -142,7 +153,7 @@ public class RegisterFragment extends AppFragment {
         String passwordValue = password.getText().toString();
         String confirmValue = confirmPassword.getText().toString();
 
-        if (usernameValue.matches("") || emailValue.matches("") || passwordValue.matches("") || confirmValue.matches("")) {
+        if (usernameValue.isEmpty() || emailValue.isEmpty() || passwordValue.isEmpty() || confirmValue.isEmpty()) {
             Toast.makeText(getContext(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
         } else if (!emailValue.contains("@")) {
             Toast.makeText(getContext(), "The email has to contain a @", Toast.LENGTH_SHORT).show();
@@ -190,7 +201,7 @@ public class RegisterFragment extends AppFragment {
 
         String imageUrl = "";
 
-        if(imageUri == null || imageUri.toString().equals("")) {
+        if(imageUri == null || imageUri.toString().isEmpty()) {
             imageUrl = "https://firebasestorage.googleapis.com/v0/b/apifirebase-f6f9e.appspot.com/o/profileimgs%2Fic_baseline_person_24.xml?alt=media&token=896e0cc4-b4af-4800-9a9b-a21b8cac7a0d";
         } else {
             imageUrl = imageUri.toString();
@@ -203,7 +214,7 @@ public class RegisterFragment extends AppFragment {
                 .document(auth.getCurrentUser().getUid())
                 .set(userToAdd);
 
-
+        System.out.println(imageUri);
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(username.getText().toString())
                 .setPhotoUri(imageUri)
