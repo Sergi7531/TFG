@@ -40,19 +40,30 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         holder.genreCard.setOnClickListener(v -> {
 
             for(Genre g : genresList) {
-                for(Integer genreIDInList : PreferencesFragment.selectedGenres) {
-                    if(g.getId() == genreIDInList) {
-                        System.out.println("Removing genre: " + g.getName());
-                        PreferencesFragment.selectedGenres.remove(genreIDInList);
-                        holder.blueBackground.setAlpha(0f);
-                    } else {
+                if  (g.getName().equals(holder.titleGenreHolder.getText())) {
+                    if (!isSelected(g.getId())) {
                         System.out.println("Adding genre: " + g.getName());
                         PreferencesFragment.selectedGenres.add(g.getId());
-                        holder.blueBackground.setAlpha(0.1f);
+                    } else {
+                        System.out.println("Removing genre: " + g.getName());
+                        PreferencesFragment.selectedGenres.remove(g.getId());
                     }
                 }
+
             }
         });
+    }
+
+//    Create isSelected method. This method will be used to check if the genre is selected or not.
+//    Iterate over PreferencesFragment.selectedGenres and check if the genre is in the list.
+
+    public boolean isSelected(int genreID) {
+        for(Integer genreIDInList : PreferencesFragment.selectedGenres) {
+            if(genreID == genreIDInList) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
