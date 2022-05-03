@@ -74,9 +74,6 @@ public class Models {
     }
 
     public static class User {
-
-
-
         public String userid;
         public String username;
         public String profileImageURL;
@@ -91,14 +88,16 @@ public class Models {
         public List<Ticket> tickets;
 
 //        This constructor will be for Google sign-in and will be used when the user registers with Google:
-        public User(String username, String profileImageURL, String email) {
+        public User(String userid, String username, String profileImageURL, String email) {
+            this.userid = userid;
             this.username = username;
             this.profileImageURL = profileImageURL;
             this.email = email;
         }
 
 //      This will be used when the user registers with email and password (e-mail registration):
-        public User(String username, String email, String password, String profileImageURL) {
+        public User(String userid, String username, String email, String password, String profileImageURL) {
+            this.userid = userid;
             this.username = username;
             this.email = email;
             this.password = password;

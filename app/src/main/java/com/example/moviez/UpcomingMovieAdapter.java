@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,31 +34,10 @@ public class UpcomingMovieAdapter extends RecyclerView.Adapter<UpcomingMovieAdap
 
     @Override
     public void onBindViewHolder(@NonNull UpcomingMovieViewHolder holder, int position) {
-
-//        Adapter is going to be reused, so this is why we use this boolean:
-
-//        type == 0 -> Movies Coming Soon (show date)
-//        type == 1 -> Movies Now Playing
-//        type == 2 -> Movies recommendations (show year)
-
-        if(type == 0) {
-            holder.releaseDateHolder.setText(movies.get(position).release_date);
-            holder.releaseDateHolder.setAlpha(1f);
-        }
-
-        if(type == 2) {
-            holder.yearFilmHolder.setText(movies.get(position).release_date.split("-")[0]);
-            holder.yearFilmHolder.setAlpha(1f);
-        }
-
-
-
-
         Glide.with(context)
                 .load("https://image.tmdb.org/t/p/original" + movies.get(position).poster_path)
                 .centerCrop()
                 .into(holder.imageFilmHolder);
-        holder.filmNameHolder.setText(movies.get(position).title);
     }
 
     @Override
@@ -70,16 +48,10 @@ public class UpcomingMovieAdapter extends RecyclerView.Adapter<UpcomingMovieAdap
 
     class UpcomingMovieViewHolder extends RecyclerView.ViewHolder {
         ImageView imageFilmHolder;
-        TextView filmNameHolder;
-        TextView releaseDateHolder;
-        TextView yearFilmHolder;
 
         public UpcomingMovieViewHolder(@NonNull View itemView) {
             super(itemView);
             imageFilmHolder = itemView.findViewById(R.id.imageFilmHolder);
-            filmNameHolder = itemView.findViewById(R.id.filmNameHolder);
-            releaseDateHolder = itemView.findViewById(R.id.releaseDateFilmHolder);
-            yearFilmHolder = itemView.findViewById(R.id.yearFilmHolder);
         }
     }
 }
