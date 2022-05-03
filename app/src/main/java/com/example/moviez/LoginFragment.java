@@ -48,6 +48,7 @@ public class LoginFragment extends AppFragment {
     public TextInputEditText passwordLog;
     public Button logButton;
     public TextView registerText;
+    public TextView forgotPassword;
     public CardView googleButton;
 
     // TODO: Rename and change types of parameters
@@ -136,7 +137,9 @@ public class LoginFragment extends AppFragment {
             signInClient.launch(googleSignInAccount.getSignInIntent());
         });
 
-
+        forgotPassword.setOnClickListener(view1 -> {
+            setFragment(new PasswordFragment());
+        });
     }
 
 
@@ -146,6 +149,7 @@ public class LoginFragment extends AppFragment {
         registerText = view.findViewById(R.id.registerText);
         logButton = view.findViewById(R.id.register);
         googleButton = view.findViewById(R.id.googleButton);
+        forgotPassword = view.findViewById(R.id.forgotPassword);
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         if(account == null) return;
