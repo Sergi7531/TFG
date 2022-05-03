@@ -5,15 +5,15 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHolder> {
     Context context;
@@ -37,20 +37,20 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
     public void onBindViewHolder(@NonNull GenreViewHolder holder, int position) {
         holder.titleGenreHolder.setText(genresList.get(position).getName());
 
-        holder.constraintLayout.setOnClickListener(v -> {
+        holder.genreCard.setOnClickListener(v -> {
 
-            Predicate<Genre> p1 = g -> g.getId() == genresList.get(position).getId();
-
-            if( genresList.stream().anyMatch(p1)) {
-                PreferencesFragment.selectedGenres.remove(genresList.get(position).getId());
-            } else {
-                PreferencesFragment.selectedGenres.add(genresList.get(position).getId());
+            for(Genre g : genresList) {
+                for(Integer genreIDInList : PreferencesFragment.selectedGenres) {
+                    if(g.getId() == genreIDInList) {
+                        PreferencesFragment.selectedGenres.remove(genreIDInList);
+                        holder.blueBackground.setAlpha(0f);
+                    } else {
+                        PreferencesFragment.selectedGenres.add(g.getId());
+                        holder.blueBackground.setAlpha(0.1f);
+                    }
+                }
             }
-
-            PreferencesFragment.selectedGenres.forEach(System.out::println);
         });
-
-
     }
 
     @Override
@@ -58,17 +58,18 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         return genresList.size();
     }
 
-    public class GenreViewHolder extends RecyclerView.ViewHolder {
-        public ConstraintLayout constraintLayout;
-//        public ImageView imageTriangle;
-//        public ImageView image_backgroundHolder;
+    public static class GenreViewHolder extends RecyclerView.ViewHolder {
+        public CardView genreCard;
         public TextView titleGenreHolder;
+        public View blueBackground;
+        public ImageView genre_image;
 
         public GenreViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.constraintLayout = itemView.findViewById(R.id.genreHolder);
-//            this.image_backgroundHolder = itemView.findViewById(R.id.image_backgroundHolder);
+            this.genreCard = itemView.findViewById(R.id.genreCard);
             this.titleGenreHolder = itemView.findViewById(R.id.titleGenreHolder);
+            this.blueBackground = itemView.findViewById(R.id.blueBackground);
+            this.genre_image = itemView.findViewById(R.id.genre_image);
         }
     }
 }

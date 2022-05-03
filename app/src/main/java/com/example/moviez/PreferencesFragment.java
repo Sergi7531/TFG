@@ -1,9 +1,11 @@
 package com.example.moviez;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +30,7 @@ public class PreferencesFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     ArrayList<Genre> genres;
     private RecyclerView genresRecycler;
+    private LinearLayout linearSkip;
 
     static List<Integer> selectedGenres = new ArrayList<>();
 
@@ -66,6 +69,36 @@ public class PreferencesFragment extends Fragment {
         }
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_preferences, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        hook();
+        initData();
+        GenreAdapter adapter = new GenreAdapter(getContext(), genres);
+        genresRecycler.setAdapter(adapter);
+        genresRecycler.setLayoutManager(new GridLayoutManager(requireContext(), 2,
+                RecyclerView.VERTICAL, false));
+
+
+        linearSkip.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void hook() {
+        genresRecycler = getActivity().findViewById(R.id.recyclerGenres);
+        linearSkip = getActivity().findViewById(R.id.linearSkip);
+    }
+
+
     private void initData() {
         genres = new ArrayList<>(Arrays.asList(new Genre (
                 28,
@@ -85,7 +118,7 @@ public class PreferencesFragment extends Fragment {
         ), new Genre (
                 99,
                 "Documentary"
-            ), new Genre (
+        ), new Genre (
                 18,
                 "Drama"
         ), new Genre (
@@ -111,7 +144,7 @@ public class PreferencesFragment extends Fragment {
                 "Romance"
         ), new Genre (
                 878,
-                "Sci-fi"
+                "Science fiction"
         ), new Genre (
                 10770,
                 "TV Movie"
@@ -125,26 +158,5 @@ public class PreferencesFragment extends Fragment {
                 37,
                 "Western"
         )));
-
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_preferences, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        genresRecycler = getActivity().findViewById(R.id.recyclerGenres);
-        initData();
-        GenreAdapter adapter = new GenreAdapter(getContext(), genres);
-        genresRecycler.setAdapter(adapter);
-        genresRecycler.setLayoutManager(new GridLayoutManager(requireContext(), 2,
-                RecyclerView.VERTICAL, false));
     }
 }
