@@ -3,7 +3,6 @@ package com.example.moviez;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,22 +14,15 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -125,7 +117,11 @@ public class LoginFragment extends AppFragment {
                                 passwordLog.getText().toString()
                         ).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        accessApp();
+                        db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
+                            if (documentSnapshot.toObject(Models.User.class).favoriteGenres.size() == 0) {
+                                accessApp(false);
+                            } else accessApp(true);
+                        });
                     } else {
                         Toast.makeText(requireContext(), task.getException().getLocalizedMessage(),
                                 Toast.LENGTH_SHORT).show();
@@ -165,13 +161,18 @@ public class LoginFragment extends AppFragment {
     private void createGoogleAccount(){
         db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()))
                 .addOnCompleteListener(task -> {
-                    accessApp();
+                    accessApp(false);
         });
     }
-    private void accessApp(){
-             Intent intent = new Intent(requireContext(), MainActivity.class);
-             startActivity(intent);
-             requireActivity().finish();
+    private void accessApp(boolean hasGenres) {
+        if (hasGenres) {
+            Intent intent = new Intent(requireContext(), MainActivity.class);
+            startActivity(intent);
+            requireActivity().finish();
+        }
+        else {
+            setFragment(new PreferencesFragment());
+        }
     }
 
     private void setFragment(Fragment fragment) {

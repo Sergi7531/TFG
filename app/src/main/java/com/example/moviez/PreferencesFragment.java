@@ -86,7 +86,6 @@ public class PreferencesFragment extends Fragment {
         genresRecycler.setLayoutManager(new GridLayoutManager(requireContext(), 2,
                 RecyclerView.VERTICAL, false));
 
-
         linearSkip.setOnClickListener(view1 -> {
             Intent intent = new Intent(getContext(), MainActivity.class);
             startActivity(intent);

@@ -109,25 +109,14 @@ public class MoviesFragment extends Fragment {
 
         viewModel.upcomingMoviesResponse.observe(getViewLifecycleOwner(), upcomingMoviesResponse -> {
             if (upcomingMoviesResponse != null) {
-                recyclerUpcomingMovies.setAdapter(new UpcomingMovieAdapter(upcomingMoviesResponse.results, requireContext(), (byte)0));
+                recyclerUpcomingMovies.setAdapter(new FilmAdapter(upcomingMoviesResponse.results, requireContext()));
                 recyclerUpcomingMovies.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
-
-//                upcomingMoviesResponse.results.forEach(movie -> {
-//                    FirebaseFirestore.getInstance()
-//                });
-
-
-
-
-
-
-
             }
         });
 
         viewModel.actualMoviesInCinemaResponse.observe(getViewLifecycleOwner(), actualMoviesResponse -> {
             if (actualMoviesResponse != null) {
-                recyclerMoviesInCinemas.setAdapter(new UpcomingMovieAdapter(actualMoviesResponse.results, requireContext(), (byte)1));
+                recyclerMoviesInCinemas.setAdapter(new FilmAdapter(actualMoviesResponse.results, requireContext()));
                 recyclerMoviesInCinemas.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
             }
         });

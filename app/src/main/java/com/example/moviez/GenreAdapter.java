@@ -42,9 +42,11 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
             for(Genre g : genresList) {
                 for(Integer genreIDInList : PreferencesFragment.selectedGenres) {
                     if(g.getId() == genreIDInList) {
+                        System.out.println("Removing genre: " + g.getName());
                         PreferencesFragment.selectedGenres.remove(genreIDInList);
                         holder.blueBackground.setAlpha(0f);
                     } else {
+                        System.out.println("Adding genre: " + g.getName());
                         PreferencesFragment.selectedGenres.add(g.getId());
                         holder.blueBackground.setAlpha(0.1f);
                     }

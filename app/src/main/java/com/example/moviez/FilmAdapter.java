@@ -13,27 +13,25 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class UpcomingMovieAdapter extends RecyclerView.Adapter<UpcomingMovieAdapter.UpcomingMovieViewHolder> {
+public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmViewHolder> {
     Context context;
     List<Models.Film> movies;
-    byte type;
 
-    public UpcomingMovieAdapter(List<Models.Film> movies, Context context, byte type) {
+    public FilmAdapter(List<Models.Film> movies, Context context) {
         this.movies = movies;
         this.context = context;
-        this.type = type;
     }
 
     @NonNull
     @Override
-    public UpcomingMovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FilmViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.movie_holder, parent, false);
-        return new UpcomingMovieViewHolder(view);
+        return new FilmViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UpcomingMovieViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FilmViewHolder holder, int position) {
         Glide.with(context)
                 .load("https://image.tmdb.org/t/p/original" + movies.get(position).poster_path)
                 .centerCrop()
@@ -46,10 +44,10 @@ public class UpcomingMovieAdapter extends RecyclerView.Adapter<UpcomingMovieAdap
     }
 
 
-    class UpcomingMovieViewHolder extends RecyclerView.ViewHolder {
+    class FilmViewHolder extends RecyclerView.ViewHolder {
         ImageView imageFilmHolder;
 
-        public UpcomingMovieViewHolder(@NonNull View itemView) {
+        public FilmViewHolder(@NonNull View itemView) {
             super(itemView);
             imageFilmHolder = itemView.findViewById(R.id.imageFilmHolder);
         }

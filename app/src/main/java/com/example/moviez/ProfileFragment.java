@@ -10,11 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +34,11 @@ public class ProfileFragment extends AppFragment {
     private TextView usuario;
     private TextView correo;
     private ImageView profilepic;
+    private RecyclerView recyclerLastViewed;
+    private RecyclerView recyclerFavorites;
+    private RecyclerView recyclerFollowing;
+
+    List<Models.Film> films = new ArrayList<>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -77,19 +85,11 @@ public class ProfileFragment extends AppFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        usuario = view.findViewById(R.id.usuario);
-        correo = view.findViewById(R.id.correo);
-        profilepic = view.findViewById(R.id.profilePicture);
+        hook(view);
 
-        usuario.setText(auth.getCurrentUser().getDisplayName());
-        correo.setText(auth.getCurrentUser().getEmail());
-        if (auth.getCurrentUser().getPhotoUrl() != null) {
-                Glide.with(getActivity()).load(auth.getCurrentUser().getPhotoUrl()).circleCrop().into(profilepic);
-        } else {
-            profilepic.setImageResource(R.drawable.ic_baseline_person_24);
-        }
+        setUserDetails();
 
-//        lastViewedFilms();
+        lastViewedFilms();
 
 //        favoriteFilms();
 
@@ -98,14 +98,38 @@ public class ProfileFragment extends AppFragment {
     }
 
     public void lastViewedFilms() {
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewed").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+        List<Models.Film> filmsTemp = new ArrayList<>();
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewed").get().addOnSuccessListener(queryDocumentSnapshots -> {
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-
+                    filmsTemp.add(documentSnapshot.toObject(Models.Film.class));
                 }
-            }
+            films.addAll(filmsTemp);
         });
+        adaptToRecycler(films, recyclerLastViewed);
+    }
+
+    private void adaptToRecycler(List<?> list, RecyclerView recyclerView) {
+        recyclerView.setAdapter(new FilmAdapter((List<Models.Film>) list, requireContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+    }
+
+    private void hook(View view) {
+        usuario = view.findViewById(R.id.usuario);
+        correo = view.findViewById(R.id.correo);
+        profilepic = view.findViewById(R.id.profilePicture);
+        recyclerLastViewed = view.findViewById(R.id.recyclerWatchedMovies);
+        recyclerFavorites = view.findViewById(R.id.recyclerFavoritedMovies);
+        recyclerFollowing = view.findViewById(R.id.recyclerFollowedUsers);
+    }
+
+    private void setUserDetails() {
+        usuario.setText(auth.getCurrentUser().getDisplayName());
+        correo.setText(auth.getCurrentUser().getEmail());
+        if (auth.getCurrentUser().getPhotoUrl() != null) {
+            Glide.with(getActivity()).load(auth.getCurrentUser().getPhotoUrl()).circleCrop().into(profilepic);
+        } else {
+            profilepic.setImageResource(R.drawable.ic_baseline_person_24);
+        }
     }
 
 }

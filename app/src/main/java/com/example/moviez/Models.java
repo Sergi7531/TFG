@@ -87,12 +87,25 @@ public class Models {
         public List<User> following;
         public List<Ticket> tickets;
 
+//        Empty constructor for Firebase:
+        public User() {
+        }
+
+
+
 //        This constructor will be for Google sign-in and will be used when the user registers with Google:
         public User(String userid, String username, String profileImageURL, String email) {
             this.userid = userid;
             this.username = username;
             this.profileImageURL = profileImageURL;
             this.email = email;
+            this.favoriteGenres = new ArrayList<>();
+            this.watchedFilms = new ArrayList<>();
+            this.favoritedFilms = new ArrayList<>();
+            this.viewLaterFilms = new ArrayList<>();
+            this.followers = new ArrayList<>();
+            this.following = new ArrayList<>();
+            this.tickets = new ArrayList<>();
         }
 
 //      This will be used when the user registers with email and password (e-mail registration):
@@ -102,6 +115,109 @@ public class Models {
             this.email = email;
             this.password = password;
             this.profileImageURL = profileImageURL;
+            this.favoriteGenres = new ArrayList<>();
+            this.watchedFilms = new ArrayList<>();
+            this.favoritedFilms = new ArrayList<>();
+            this.viewLaterFilms = new ArrayList<>();
+            this.followers = new ArrayList<>();
+            this.following = new ArrayList<>();
+            this.tickets = new ArrayList<>();
+        }
+
+        public String getUserid() {
+            return userid;
+        }
+
+        public void setUserid(String userid) {
+            this.userid = userid;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public String getProfileImageURL() {
+            return profileImageURL;
+        }
+
+        public void setProfileImageURL(String profileImageURL) {
+            this.profileImageURL = profileImageURL;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
+        }
+
+        public List<Genre> getFavoriteGenres() {
+            return favoriteGenres;
+        }
+
+        public void setFavoriteGenres(List<Genre> favoriteGenres) {
+            this.favoriteGenres = favoriteGenres;
+        }
+
+        public List<Film> getWatchedFilms() {
+            return watchedFilms;
+        }
+
+        public void setWatchedFilms(List<Film> watchedFilms) {
+            this.watchedFilms = watchedFilms;
+        }
+
+        public List<Film> getFavoritedFilms() {
+            return favoritedFilms;
+        }
+
+        public void setFavoritedFilms(List<Film> favoritedFilms) {
+            this.favoritedFilms = favoritedFilms;
+        }
+
+        public List<Film> getViewLaterFilms() {
+            return viewLaterFilms;
+        }
+
+        public void setViewLaterFilms(List<Film> viewLaterFilms) {
+            this.viewLaterFilms = viewLaterFilms;
+        }
+
+        public List<User> getFollowers() {
+            return followers;
+        }
+
+        public void setFollowers(List<User> followers) {
+            this.followers = followers;
+        }
+
+        public List<User> getFollowing() {
+            return following;
+        }
+
+        public void setFollowing(List<User> following) {
+            this.following = following;
+        }
+
+        public List<Ticket> getTickets() {
+            return tickets;
+        }
+
+        public void setTickets(List<Ticket> tickets) {
+            this.tickets = tickets;
         }
     }
 }

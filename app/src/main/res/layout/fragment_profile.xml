@@ -303,7 +303,7 @@
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFollowedMovies"
+            android:id="@+id/recyclerFollowedUsers"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_margin="10dp" />
