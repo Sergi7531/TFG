@@ -3,11 +3,13 @@ package com.example.moviez;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -22,10 +24,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
@@ -50,6 +54,7 @@ public class LoginFragment extends AppFragment {
     private String mParam1;
     private String mParam2;
 
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -69,6 +74,7 @@ public class LoginFragment extends AppFragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -78,6 +84,7 @@ public class LoginFragment extends AppFragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -87,21 +94,21 @@ public class LoginFragment extends AppFragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
+    ActivityResultLauncher<Intent> signInClient = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    try {
+                        firebaseAuthWithGoogle(GoogleSignIn.getSignedInAccountFromIntent(result.getData()).getResult(ApiException.class));
+                    } catch (ApiException e) {
 
+                    }
+                }
+            });
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         hook(view);
-        ActivityResultLauncher<Intent> signInClient = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        try {
-                            firebaseAuthWithGoogle(GoogleSignIn.getSignedInAccountFromIntent(result.getData()).getResult(ApiException.class));
-                        } catch (ApiException e) {
 
-                        }
-                    }
-                });
         registerText.setOnClickListener(view2 -> {
             setFragment(new RegisterFragment());
         });
@@ -109,18 +116,29 @@ public class LoginFragment extends AppFragment {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build());
-        firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(requireContext()));
         logButton.setOnClickListener(view2 -> {
             if (!usernameLog.getText().toString().isEmpty() && !passwordLog.getText().toString().isEmpty()){
-                // Check userLog
-                accessApp();
+                FirebaseAuth.getInstance()
+                        .signInWithEmailAndPassword(
+                                usernameLog.getText().toString(),
+                                passwordLog.getText().toString()
+                        ).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        accessApp();
+                    } else {
+                        Toast.makeText(requireContext(), task.getException().getLocalizedMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         googleButton.setOnClickListener(view1 -> {
             signInClient.launch(googleSignInAccount.getSignInIntent());
         });
 
+
     }
+
 
     private void hook(View view) {
         usernameLog = view.findViewById(R.id.usernameLog);
@@ -139,12 +157,12 @@ public class LoginFragment extends AppFragment {
                     }
                 });
     }
-    private boolean createGoogleAccount(){
+
+    private void createGoogleAccount(){
         db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()))
                 .addOnCompleteListener(task -> {
                     accessApp();
         });
-        return false;
     }
     private void accessApp(){
              Intent intent = new Intent(requireContext(), MainActivity.class);
