@@ -3,19 +3,15 @@ package com.example.moviez;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -67,10 +63,14 @@ public class LandingActivity extends AppCompatActivity {
         appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-        db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()))
-                .addOnCompleteListener(task -> {
-                    accessApp();
-                });
+
+        db.collection("users").document(auth.getUid()).addSnapshotListener((snap, exception) -> {
+           if(snap.exists()) {
+               accessApp();
+           } else {
+               db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()));
+           }
+        });
     }
     private void accessApp(){
         Intent intent = new Intent(this, MainActivity.class);

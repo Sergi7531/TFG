@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,7 @@ import java.util.List;
  * Use the {@link PreferencesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PreferencesFragment extends Fragment {
+public class PreferencesFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,6 +32,8 @@ public class PreferencesFragment extends Fragment {
     ArrayList<Genre> genres;
     private RecyclerView genresRecycler;
     private LinearLayout linearSkip;
+
+    private Button continueButton;
 
     static List<Integer> selectedGenres = new ArrayList<>();
 
@@ -90,11 +93,21 @@ public class PreferencesFragment extends Fragment {
             Intent intent = new Intent(getContext(), MainActivity.class);
             startActivity(intent);
         });
+
+        continueButton.setOnClickListener(v -> {
+                db.collection("users").document(auth.getCurrentUser().getUid()).update("favoriteGenres", selectedGenres).addOnSuccessListener(success -> {
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+            });
+        });
+
+
     }
 
     private void hook() {
         genresRecycler = getActivity().findViewById(R.id.recyclerGenres);
         linearSkip = getActivity().findViewById(R.id.linearSkip);
+        continueButton = getActivity().findViewById(R.id.continueButton);
     }
 
 
