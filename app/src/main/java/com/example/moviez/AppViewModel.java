@@ -16,6 +16,9 @@ public class AppViewModel extends ViewModel {
     static MutableLiveData<Responses.BillboardResponse> upcomingMoviesResponse = new MutableLiveData<>();
     static MutableLiveData<Responses.BillboardResponse> actualMoviesInCinemaResponse = new MutableLiveData<>();
     static MutableLiveData<Responses.SearchResponse> moviesByQuery = new MutableLiveData<>();
+    static MutableLiveData<Responses.SearchResponse> forYouMovies = new MutableLiveData<>();
+
+
     public MutableLiveData<Uri> uriImagenSeleccionada = new MutableLiveData<>();
 
 
@@ -80,6 +83,48 @@ public class AppViewModel extends ViewModel {
             }
         });
     }
+
+    public static void getMoviesForYou(List<Integer> genresUser) {
+
+        IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES").enqueue(new Callback<Responses.SearchResponse>() {
+            @Override
+            public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+                if (response.body() != null) {
+
+                    Responses.SearchResponse moviesForYouResponse = response.body();
+
+//                    For each film, we need to check if any of the user's favorite genres is in the film's genres:
+                    for(Models.Film movie : moviesForYouResponse.results) {
+                        for(Integer genre : genresUser) {
+                            for(int genreMovie : movie.genre_ids) {
+                                if(genreMovie == genre) {
+                                    forYouMovies.postValue(moviesForYouResponse);
+                                }
+                            }
+                        }
+                    }
+
+                    if (moviesForYouResponse.results.size() > 10) {
+                        moviesForYouResponse.results.subList(10, moviesForYouResponse.results.size()).clear();
+                        List<Models.Film> moviesToShowSearch = moviesForYouResponse.results;
+
+                        response.body().results = moviesToShowSearch;
+                        moviesByQuery.postValue(response.body());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
+                        t.getMessage();
+            }
+        });
+
+    }
+
+
+
+
 
     public void setUriImagenSeleccionada(Uri uri) {
         uriImagenSeleccionada.setValue(uri);

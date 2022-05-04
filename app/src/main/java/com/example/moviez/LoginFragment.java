@@ -46,7 +46,7 @@ public class LoginFragment extends AppFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Fragment preferencesFragment = new PreferencesFragment();
+    private Fragment preferencesFragment;
 
 
     public LoginFragment() {
@@ -106,10 +106,12 @@ public class LoginFragment extends AppFragment {
         registerText.setOnClickListener(view2 -> {
             setFragment(new RegisterFragment());
         });
+
         GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build());
+
         logButton.setOnClickListener(view2 -> {
             if (!usernameLog.getText().toString().isEmpty() && !passwordLog.getText().toString().isEmpty()){
                 FirebaseAuth.getInstance()
@@ -121,8 +123,11 @@ public class LoginFragment extends AppFragment {
                         db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
                             if(documentSnapshot.exists()) {
                                 if (!documentSnapshot.toObject(Models.User.class).getFavoriteGenres().isEmpty()) {
-                                    accessApp(true);
-                                } else accessApp(false);
+                                    Intent intent = new Intent(requireContext(), MainActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    setFragment(new PreferencesFragment());
+                                }
                             }
                         });
                     } else {
@@ -132,6 +137,7 @@ public class LoginFragment extends AppFragment {
                 });
             }
         });
+
         googleButton.setOnClickListener(view1 -> {
             signInClient.launch(googleSignInAccount.getSignInIntent());
         });
@@ -163,13 +169,12 @@ public class LoginFragment extends AppFragment {
 
     private void createGoogleAccount() {
 
-        db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (!task.getResult().exists()) {
+        db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot -> {
+                if (!documentSnapshot.exists()) {
                     db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()));
+                    accessApp(true);
                 }
-                accessApp(false);
-            }
+                else accessApp(false);
         });
 
     }
@@ -178,6 +183,7 @@ public class LoginFragment extends AppFragment {
         if (hasGenres) {
             Intent intent = new Intent(requireContext(), MainActivity.class);
             startActivity(intent);
+            requireActivity().finish();
         }
         else {
             setFragment(new PreferencesFragment());
@@ -187,7 +193,7 @@ public class LoginFragment extends AppFragment {
     private void setFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.landingFrame, fragment)
+                .replace(R.id.frameLogin, fragment)
                 .commit();
     }
 }

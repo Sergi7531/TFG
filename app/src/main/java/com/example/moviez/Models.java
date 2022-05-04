@@ -31,6 +31,7 @@ public class Models {
         public boolean video;
         public double vote_average;
         public int vote_count;
+        @Nullable public List<Integer> genre_ids;
 
         public Film(String title, String poster_path) {
             this.title = title;
