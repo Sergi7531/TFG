@@ -22,4 +22,8 @@
     <string name="favoritas">Favoritas</string>
     <string name="ltimas_pel_culas_vistas">Últimas películas vistas:</string>
     <string name="pel_culas_favoritas">Películas favoritas:</string>
+    <string name="home">Home</string>
+    <string name="movies">Movies</string>
+    <string name="tickets">Tickets</string>
+    <string name="profile">Profile</string>
 </resources>

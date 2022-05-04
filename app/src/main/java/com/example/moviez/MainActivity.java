@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nav_bottom = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        nav_bottom = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         mainFrame = (FrameLayout) findViewById(R.id.main_frame);
 
         homeFragment = new HomeFragment();

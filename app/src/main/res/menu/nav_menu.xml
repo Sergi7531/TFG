@@ -3,17 +3,22 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home" />
+        android:title="@string/home" />
     <item
         android:id="@+id/movies"
         android:icon="@drawable/ic_baseline_movie_24"
-        android:title="Movies" />
+        android:title="@string/movies" />
+
+    <item
+        android:id="@+id/placeholder"
+        android:title=""/>
+
     <item
         android:id="@+id/tickets"
-        android:icon="@drawable/tickets"
-        android:title="Tickets" />
+        android:icon="@drawable/ic_baseline_ticket_24"
+        android:title="@string/tickets" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="Profile" />
+        android:title="@string/profile" />
 </menu>
