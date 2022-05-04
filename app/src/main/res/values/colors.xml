@@ -1,15 +1,21 @@
 <!--?xml version="1.0" encoding="UTF-8"?-->
 <resources>
-  <color name="primaryColor">#151515</color>
-  <color name="primaryLightColor">#1E1E1E</color>
-  <color name="primaryDarkColor">#000000</color>
+  <color name="primaryColor">#FFFFFF</color>
+  <color name="primaryLightColor">#F1F1F1</color>
+  <color name="primaryDarkColor">#E4E4E4</color>
   <color name="secondaryColor">#004ee3</color>
   <color name="secondaryLightColor">#647aff</color>
   <color name="secondaryDarkColor">#0027b0</color>
-  <color name="primaryTextColor">#ffffff</color>
-  <color name="secondaryTextColor">#ffffff</color>
-  <color name="buttonColor1">#2DAEA6</color>
-  <color name="buttonColor2">#3770A4</color>
+  <color name="primaryTextColor">#151515</color>
+  <color name="secondaryTextColor">#151515</color>
 
-  <color name="input_border_box">#fef1ea</color>
+  <color name="dprimaryColor">#151515</color>
+  <color name="dprimaryLightColor">#1E1E1E</color>
+  <color name="dprimaryDarkColor">#000000</color>
+  <color name="dsecondaryColor">#004ee3</color>
+  <color name="dsecondaryLightColor">#647aff</color>
+  <color name="dsecondaryDarkColor">#0027b0</color>
+  <color name="dprimaryTextColor">#ffffff</color>
+  <color name="dsecondaryTextColor">#ffffff</color>
+
 </resources>

@@ -146,7 +146,7 @@
                 android:layout_width="360dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="@color/buttonColor2"
+                android:backgroundTint="@color/secondaryColor"
                 android:text="@string/register"
                 android:textAllCaps="false"
                 android:textColor="@color/primaryColor"

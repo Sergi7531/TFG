@@ -5,7 +5,6 @@
     android:id="@+id/frameLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
     tools:context=".LandingActivity">
 
     <LinearLayout
@@ -26,7 +25,7 @@
                 android:id="@+id/imageView2"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/mvoiezlogo" />
+                android:src="@drawable/moviez_logo" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,9 +51,9 @@
                     android:id="@+id/usernameLog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/satoshi"
                     android:hint="@string/email"
-                    android:textColor="@color/primaryTextColor"
-                    android:textColorHint="@android:color/white" />
+                    android:textColorHint="@color/dprimaryColor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -76,6 +75,7 @@
                     android:id="@+id/passwordLog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/satoshi"
                     android:hint="@string/password"
                     android:textColor="@color/primaryTextColor"
                     android:textColorHint="@android:color/white" />
@@ -85,8 +85,10 @@
                 android:id="@+id/forgotPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="12dp"
+                android:alpha="0.5"
                 android:text="@string/forgot_password"
+                android:textAlignment="viewEnd"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="14sp" />
 
@@ -96,6 +98,7 @@
                 android:layout_height="80dp"
                 android:layout_marginTop="34dp"
                 android:backgroundTint="@color/secondaryColor"
+                android:fontFamily="@font/satoshi"
                 android:text="@string/log_in"
                 android:textAllCaps="false"
                 android:textColor="@color/secondaryTextColor"
@@ -109,6 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="18dp"
             android:orientation="horizontal">
 
             <TextView
@@ -116,25 +120,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/satoshi"
                 android:text="@string/don_t_have_an_account"
                 android:textColor="@color/primaryTextColor"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/registerText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="3dp"
+                android:fontFamily="@font/satoshi"
                 android:text="@string/register"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="16sp" />
+                android:textColor="@color/secondaryColor"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="60dp"
             android:orientation="vertical">
 
             <TextView
@@ -142,9 +148,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/satoshi"
                 android:text="@string/or_sign_up_with"
                 android:textColor="@color/secondaryTextColor"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
