@@ -25,14 +25,21 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
+        app:cardBackgroundColor="@color/primaryDarkColor"
         app:cardCornerRadius="14dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="#FFFFFF"
             app:boxBackgroundColor="@color/primaryLightColor"
             app:boxStrokeColor="#fef1ea"
-            app:hintTextColor="#000000">
+            app:counterTextColor="@color/primaryLightColor"
+            app:helperTextTextColor="@color/primaryLightColor"
+            app:hintTextColor="#FFFFFF"
+            app:placeholderTextColor="@color/primaryLightColor"
+            app:prefixTextColor="#FFFFFF"
+            app:suffixTextColor="#FFFFFF">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/searchInputFilm"
@@ -41,7 +48,9 @@
                 android:hint="Search for movies or genres"
                 android:lines="1"
                 android:maxLines="1"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.cardview.widget.CardView>
 
