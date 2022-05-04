@@ -168,7 +168,6 @@ public class LoginFragment extends AppFragment {
         if (hasGenres) {
             Intent intent = new Intent(requireContext(), MainActivity.class);
             startActivity(intent);
-            requireActivity().finish();
         }
         else {
             setFragment(new PreferencesFragment());
