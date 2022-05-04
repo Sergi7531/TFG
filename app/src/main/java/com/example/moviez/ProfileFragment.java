@@ -98,17 +98,34 @@ public class ProfileFragment extends AppFragment {
     }
 
     public void lastViewedFilms() {
-        List<Models.Film> filmsTemp = new ArrayList<>();
+        films.clear();
+        List<Models.Film> lastViewedFilms = new ArrayList<>();
         db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewed").get().addOnSuccessListener(queryDocumentSnapshots -> {
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    filmsTemp.add(documentSnapshot.toObject(Models.Film.class));
+                    lastViewedFilms.add(documentSnapshot.toObject(Models.Film.class));
                 }
-            films.addAll(filmsTemp);
+            films.addAll(lastViewedFilms);
         });
         adaptToRecycler(films, recyclerLastViewed);
     }
 
+//    public void favoriteFilms() {
+//        films.clear();
+//        List<Models.Film> favoriteFilms = new ArrayList<>();
+//        db.collection("users").document(auth.getCurrentUser().getUid()).collection("").get().addOnSuccessListener(queryDocumentSnapshots -> {
+//            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+//                favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
+//            }
+//            films.addAll(favoriteFilms);
+//        });
+//        adaptToRecycler(films, recyclerLastViewed);
+//    }
+
+
+
+
     private void adaptToRecycler(List<?> list, RecyclerView recyclerView) {
+        System.out.println(list.size());
         recyclerView.setAdapter(new FilmAdapter((List<Models.Film>) list, requireContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
     }

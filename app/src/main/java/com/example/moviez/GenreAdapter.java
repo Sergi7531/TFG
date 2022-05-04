@@ -49,9 +49,12 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
                         PreferencesFragment.selectedGenres.remove(g.getId());
                     }
                 }
-
             }
         });
+
+//        We need to update the user favorite genres in the firebase database:
+
+
     }
 
 //    Create isSelected method. This method will be used to check if the genre is selected or not.

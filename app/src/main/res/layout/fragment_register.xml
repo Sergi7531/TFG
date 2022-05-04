@@ -5,7 +5,7 @@
     android:id="@+id/frameRegister"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_cinema"
+    android:background="@color/primaryColor"
     tools:context=".RegisterFragment">
 
     <LinearLayout
@@ -67,7 +67,7 @@
                     android:textColor="@color/secondaryTextColor"
                     android:textColorHint="@color/secondaryTextColor"
                     android:textStyle="bold"
-                    app:boxStrokeColor="@color/primaryLightColor" />
+                    app:boxStrokeColor="@color/primaryTextColor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -103,13 +103,14 @@
                 android:inputType="textPassword"
                 android:textColorHint="@color/secondaryTextColor"
                 app:hintTextColor="@color/secondaryTextColor"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+                    android:password="true"
                     android:text=""
                     android:textColor="@color/secondaryTextColor"
                     android:textColorHint="@color/secondaryTextColor"
@@ -126,13 +127,14 @@
                 android:inputType="textPassword"
                 android:textColorHint="@color/secondaryTextColor"
                 app:hintTextColor="@color/secondaryTextColor"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/confirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
+                    android:password="true"
                     android:text=""
                     android:textColor="@color/secondaryTextColor"
                     android:textColorHint="@color/secondaryTextColor"
