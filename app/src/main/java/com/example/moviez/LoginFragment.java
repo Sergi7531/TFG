@@ -46,6 +46,7 @@ public class LoginFragment extends AppFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Fragment preferencesFragment = new PreferencesFragment();
 
 
     public LoginFragment() {
@@ -118,9 +119,11 @@ public class LoginFragment extends AppFragment {
                         ).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
-                            if (documentSnapshot.toObject(Models.User.class).favoriteGenres.size() == 0) {
-                                accessApp(false);
-                            } else accessApp(true);
+                            if(documentSnapshot.exists()) {
+                                if (!documentSnapshot.toObject(Models.User.class).getFavoriteGenres().isEmpty()) {
+                                    accessApp(true);
+                                } else accessApp(false);
+                            }
                         });
                     } else {
                         Toast.makeText(requireContext(), task.getException().getLocalizedMessage(),
@@ -158,12 +161,19 @@ public class LoginFragment extends AppFragment {
                 });
     }
 
-    private void createGoogleAccount(){
-        db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()))
-                .addOnCompleteListener(task -> {
-                    accessApp(false);
+    private void createGoogleAccount() {
+
+        db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (!task.getResult().exists()) {
+                    db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()));
+                }
+                accessApp(false);
+            }
         });
+
     }
+
     private void accessApp(boolean hasGenres) {
         if (hasGenres) {
             Intent intent = new Intent(requireContext(), MainActivity.class);

@@ -26,6 +26,7 @@ public class HomeFragment extends AppFragment {
     private static final String ARG_PARAM2 = "param2";
 
     private List<Models.Film> films = new ArrayList<>();
+    List<Integer> genresUser = new ArrayList<>();
     private RecyclerView recyclerForYou;
     private RecyclerView recyclerFriends;
 
@@ -77,7 +78,7 @@ public class HomeFragment extends AppFragment {
         hook(view);
 
 
-//        forYou();
+        forYou();
 
 //        filmAdapter.notifyDataSetChanged();
     }
@@ -87,17 +88,23 @@ public class HomeFragment extends AppFragment {
         recyclerForYou = view.findViewById(R.id.recyclerParaTi);
     }
 
-//    public void forYou() {
-//        films.clear();
-//        List<Models.Film> lastViewedFilms = new ArrayList<>();
-//        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewed").get().addOnSuccessListener(queryDocumentSnapshots -> {
-//            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-//                lastViewedFilms.add(documentSnapshot.toObject(Models.Film.class));
-//            }
-//            films.addAll(lastViewedFilms);
-//        });
-//        adaptToRecycler(films, recyclerLastViewed);
-//    }
+    public void forYou() {
+        films.clear();
+        List<Models.Film> forYouFilms = new ArrayList<>();
+
+
+        db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                genresUser = (List<Integer>) documentSnapshot.get("genres");
+            }
+
+//            IMDB.api.getMoviesTopRated();
+
+
+            films.addAll(forYouFilms);
+        });
+        adaptToRecycler(films, recyclerForYou);
+    }
 
     private void adaptToRecycler(List<?> list, RecyclerView recyclerView) {
         System.out.println(list.size());

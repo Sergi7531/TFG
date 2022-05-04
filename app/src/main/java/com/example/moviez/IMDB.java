@@ -42,6 +42,9 @@ public class IMDB {
         @GET("movie/now_playing")
         Call<Responses.BillboardResponse> getNowPlaying(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
+        @GET("/movie/top_rated")
+        Call<Models.Film> getMoviesTopRated(@Query("api_key") String apiKey, @Query("language") String language);
+
 //        API language will be set to English by default, but can be changed to another language by adding the language parameter to the request. The language parameter can be changes by switching the enum.
 
 //      Returns movies based on a search query.
