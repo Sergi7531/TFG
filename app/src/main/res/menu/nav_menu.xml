@@ -15,7 +15,7 @@
 
     <item
         android:id="@+id/tickets"
-        android:icon="@drawable/tickets"
+        android:icon="@drawable/ic_baseline_ticket_24"
         android:title="@string/tickets" />
     <item
         android:id="@+id/profile"
