@@ -128,7 +128,8 @@
                 app:boxBackgroundColor="?attr/colorPrimaryVariant"
                 app:boxStrokeWidth="0dp"
                 app:hintTextColor="?attr/colorOnSecondary"
-                app:passwordToggleEnabled="false">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="?attr/colorOnSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
@@ -154,7 +155,8 @@
                 app:boxBackgroundColor="?attr/colorPrimaryVariant"
                 app:boxStrokeWidth="0dp"
                 app:hintTextColor="?attr/colorOnSecondary"
-                app:passwordToggleEnabled="false">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="?attr/colorOnSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/confirm"

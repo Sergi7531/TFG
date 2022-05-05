@@ -25,4 +25,9 @@
     <string name="pass_recover">Introduce tu correo para recuperar tu contraseña:</string>
     <string name="pass_recover_button">Recuperar contraseña</string>
     <string name="profile_photo">Foto de perfil</string>
+    <string name="release">Estreno</string>
+    <string name="director">Director</string>
+    <string name="casting">Casting</string>
+    <string name="buy">Comprar</string>
+    <string name="info">Información</string>
 </resources>
