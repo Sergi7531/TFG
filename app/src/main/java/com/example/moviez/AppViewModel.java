@@ -5,7 +5,7 @@ import android.net.Uri;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import retrofit2.Call;
@@ -85,6 +85,8 @@ public class AppViewModel extends ViewModel {
     }
 
     public static void getMoviesForYou(List<Integer> genresUser) {
+//      Reset every time:
+        forYouMovies = new MutableLiveData<>();
 
         IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES").enqueue(new Callback<Responses.SearchResponse>() {
             @Override
@@ -99,11 +101,10 @@ public class AppViewModel extends ViewModel {
                         return;
                     }
 
-                    List<Models.Film> filmsToCheck = moviesForYouResponse.results;
+                    LinkedHashSet<Models.Film> filmsToShow = new LinkedHashSet<>();
 
-                    List<Models.Film> filmsToShow = new ArrayList<>();
 //                    For each film, we need to check if any of the user's favorite genres is in the film's genres:
-                    for(Models.Film movie : filmsToCheck) {
+                    for(Models.Film movie : moviesForYouResponse.results) {
                         System.out.println("Checkeamos " + movie.title);
                         for(Integer genre : genresUser) {
                             if(movie.genre_ids.contains(genre)) {
