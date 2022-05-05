@@ -24,4 +24,5 @@
     <string name="pel_culas_favoritas">Películas favoritas:</string>
     <string name="pass_recover">Introduce tu correo para recuperar tu contraseña:</string>
     <string name="pass_recover_button">Recuperar contraseña</string>
+    <string name="profile_photo">Foto de perfil</string>
 </resources>

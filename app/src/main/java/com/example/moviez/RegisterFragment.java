@@ -43,6 +43,7 @@ public class RegisterFragment extends AppFragment {
     private TextInputEditText confirmPassword;
     private ImageView profilePic;
     private Button register;
+    private Button setImageProfile;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -95,9 +96,11 @@ public class RegisterFragment extends AppFragment {
         confirmPassword = view.findViewById(R.id.confirm);
         profilePic = view.findViewById(R.id.profilePic);
         register = view.findViewById(R.id.logInButton);
+        setImageProfile = view.findViewById(R.id.setImageProfile);
 
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
             if (uri != null) {
+                setImageProfile.setAlpha(0f);
                 uriProfilePic = uri;
                 profilePic.setImageURI(uri);
                 appViewModel.setUriImagenSeleccionada(uri);
@@ -107,7 +110,7 @@ public class RegisterFragment extends AppFragment {
             }
         });
 
-        profilePic.setOnClickListener(v -> {
+        setImageProfile.setOnClickListener(v -> {
             phoneGallery.launch("image/*");
         });
 

@@ -46,6 +46,8 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="?attr/colorPrimaryVariant"
+                app:boxStrokeWidth="0dp"
                 app:hintTextColor="?attr/colorOnSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -69,6 +71,8 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="?attr/colorPrimaryVariant"
+                app:boxStrokeWidth="0dp"
                 app:hintTextColor="?attr/colorOnSecondary"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="?attr/colorOnSecondary">
@@ -103,7 +107,7 @@
                 android:fontFamily="@font/satoshi"
                 android:text="@string/log_in"
                 android:textAllCaps="false"
-                android:textColor="?attr/colorOnSecondary"
+                android:textColor="@android:color/white"
                 android:textSize="14sp"
                 app:cornerRadius="14dp" />
 
