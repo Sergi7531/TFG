@@ -1,5 +1,6 @@
 package com.example.moviez;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Responses {
@@ -72,7 +73,7 @@ public class Responses {
 
     class SearchResponse {
         public String page;
-        public List<Models.Film> results;
+        public List<Models.Film> results = new ArrayList<>();
         public String total_pages;
         public String total_results;
     }
