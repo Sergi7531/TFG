@@ -5,7 +5,7 @@ import android.net.Uri;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -93,24 +93,29 @@ public class AppViewModel extends ViewModel {
 
                     Responses.SearchResponse moviesForYouResponse = response.body();
 
+//                    If user has no genre preferences, we will show the most popular movies:
+                    if(genresUser.isEmpty()) {
+                        forYouMovies.postValue(moviesForYouResponse);
+                        return;
+                    }
+
+                    List<Models.Film> filmsToCheck = moviesForYouResponse.results;
+
+                    List<Models.Film> filmsToShow = new ArrayList<>();
 //                    For each film, we need to check if any of the user's favorite genres is in the film's genres:
-                    for(Models.Film movie : moviesForYouResponse.results) {
+                    for(Models.Film movie : filmsToCheck) {
+                        System.out.println("Checkeamos " + movie.title);
                         for(Integer genre : genresUser) {
-                            for(int genreMovie : movie.genre_ids) {
-                                if(genreMovie == genre) {
-                                    forYouMovies.postValue(moviesForYouResponse);
-                                }
+                            if(movie.genre_ids.contains(genre)) {
+                                System.out.println("Se añade " + movie.title);
+                                filmsToShow.add(movie);
                             }
                         }
                     }
 
-                    if (moviesForYouResponse.results.size() > 10) {
-                        moviesForYouResponse.results.subList(10, moviesForYouResponse.results.size()).clear();
-                        List<Models.Film> moviesToShowSearch = moviesForYouResponse.results;
-
-                        response.body().results = moviesToShowSearch;
-                        moviesByQuery.postValue(response.body());
-                    }
+                    moviesForYouResponse.results.clear();
+                    moviesForYouResponse.results.addAll(filmsToShow);
+                    forYouMovies.postValue(moviesForYouResponse);
                 }
             }
 
