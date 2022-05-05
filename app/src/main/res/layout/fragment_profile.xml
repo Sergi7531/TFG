@@ -314,6 +314,22 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/seguidores"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerFollowers"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"/>
+
+        <TextView
             android:id="@+id/estadisticas4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
