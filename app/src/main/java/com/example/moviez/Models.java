@@ -31,6 +31,7 @@ public class Models {
         public boolean video;
         public double vote_average;
         public int vote_count;
+        @Nullable public List<Integer> genre_ids;
 
         public Film(String title, String poster_path) {
             this.title = title;
@@ -79,7 +80,7 @@ public class Models {
         public String profileImageURL;
         public String email;
         public String password;
-        public List<Genre> favoriteGenres;
+        public List<Integer> favoriteGenres;
         public List<Film> watchedFilms;
         public List<Film> favoritedFilms;
         public List<Film> viewLaterFilms;
@@ -164,11 +165,11 @@ public class Models {
             this.password = password;
         }
 
-        public List<Genre> getFavoriteGenres() {
+        public List<Integer> getFavoriteGenres() {
             return favoriteGenres;
         }
 
-        public void setFavoriteGenres(List<Genre> favoriteGenres) {
+        public void setFavoriteGenres(List<Integer> favoriteGenres) {
             this.favoriteGenres = favoriteGenres;
         }
 

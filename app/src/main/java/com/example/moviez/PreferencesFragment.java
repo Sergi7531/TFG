@@ -82,7 +82,7 @@ public class PreferencesFragment extends AppFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        hook();
+        hook(view);
         initData();
         GenreAdapter adapter = new GenreAdapter(getContext(), genres);
         genresRecycler.setAdapter(adapter);
@@ -90,13 +90,13 @@ public class PreferencesFragment extends AppFragment {
                 RecyclerView.VERTICAL, false));
 
         linearSkip.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getContext(), MainActivity.class);
+            Intent intent = new Intent(requireContext(), MainActivity.class);
             startActivity(intent);
         });
 
         continueButton.setOnClickListener(v -> {
                 db.collection("users").document(auth.getCurrentUser().getUid()).update("favoriteGenres", selectedGenres).addOnSuccessListener(success -> {
-                Intent intent = new Intent(getContext(), MainActivity.class);
+                Intent intent = new Intent(requireContext(), MainActivity.class);
                 startActivity(intent);
             });
         });
@@ -104,10 +104,10 @@ public class PreferencesFragment extends AppFragment {
 
     }
 
-    private void hook() {
-        genresRecycler = getActivity().findViewById(R.id.recyclerGenres);
-        linearSkip = getActivity().findViewById(R.id.linearSkip);
-        continueButton = getActivity().findViewById(R.id.continueButton);
+    private void hook(View view) {
+        genresRecycler = view.findViewById(R.id.recyclerGenres);
+        linearSkip = view.findViewById(R.id.linearSkip);
+        continueButton = view.findViewById(R.id.continueButton);
     }
 
 

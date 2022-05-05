@@ -83,6 +83,7 @@ public class LandingActivity extends AppCompatActivity {
         loginFragment = new LoginFragment();
         registerFragment = new RegisterFragment();
     }
+
     private void setFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

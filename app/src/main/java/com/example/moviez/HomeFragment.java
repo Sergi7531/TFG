@@ -1,10 +1,12 @@
 package com.example.moviez;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,7 +27,7 @@ public class HomeFragment extends AppFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private List<Models.Film> films = new ArrayList<>();
+    List<Integer> genresUser = new ArrayList<>();
     private RecyclerView recyclerForYou;
     private RecyclerView recyclerFriends;
 
@@ -71,13 +73,14 @@ public class HomeFragment extends AppFragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         hook(view);
 
 
-//        forYou();
+        forYou();
 
 //        filmAdapter.notifyDataSetChanged();
     }
@@ -87,23 +90,25 @@ public class HomeFragment extends AppFragment {
         recyclerForYou = view.findViewById(R.id.recyclerParaTi);
     }
 
-//    public void forYou() {
-//        films.clear();
-//        List<Models.Film> lastViewedFilms = new ArrayList<>();
-//        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewed").get().addOnSuccessListener(queryDocumentSnapshots -> {
-//            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-//                lastViewedFilms.add(documentSnapshot.toObject(Models.Film.class));
-//            }
-//            films.addAll(lastViewedFilms);
-//        });
-//        adaptToRecycler(films, recyclerLastViewed);
-//    }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void forYou() {
 
-    private void adaptToRecycler(List<?> list, RecyclerView recyclerView) {
-        System.out.println(list.size());
-        recyclerView.setAdapter(new FilmAdapter((List<Models.Film>) list, requireContext()));
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+        db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                genresUser.addAll(documentSnapshot.toObject(Models.User.class).getFavoriteGenres());
+
+                appViewModel.getMoviesForYou(genresUser);
+
+
+                appViewModel.forYouMovies.observe(getViewLifecycleOwner(), filmsByGenreForUser -> {
+                    if (filmsByGenreForUser != null) {
+                        recyclerForYou.setAlpha(1f);
+                        recyclerForYou.setAdapter(new FilmAdapter(filmsByGenreForUser.results, requireActivity()));
+                        recyclerForYou.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+                    }
+                });
+            }
+
+        });
     }
-
-
 }

@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         ticketsFragment = new TicketsFragment();
         profileFragment = new ProfileFragment();
 
+        setFragment(homeFragment);
+
 //        We need to set the default fragme        setFragment(homeFragment);nt to the home fragment:
 
 //        Iterate the mapa variable entries:
