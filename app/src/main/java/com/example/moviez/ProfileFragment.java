@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,14 +34,22 @@ public class ProfileFragment extends AppFragment {
     private TextView usuario;
     private TextView correo;
     private TextView followingNumber;
+    private TextView watchedNumber;
+    private TextView wantToWatchNumber;
+    private TextView favoriteNumber;
+
+
+
     private ImageView profilepic;
     private RecyclerView recyclerLastViewed;
     private RecyclerView recyclerFavorites;
     private RecyclerView recyclerFollowing;
+    private RecyclerView recyclerFollowers;
     private RecyclerView recyclerMoviesToWatch;
 
     List<Models.Film> films = new ArrayList<>();
     List<Models.User> users = new ArrayList<>();
+    List<Models.User> followers = new ArrayList<>();
 
 
     // TODO: Rename and change types of parameters
@@ -101,6 +108,8 @@ public class ProfileFragment extends AppFragment {
 //        favoriteFilms();
 
         following();
+
+        followers();
     }
 
     public void lastViewedFilms() {
@@ -143,6 +152,21 @@ public class ProfileFragment extends AppFragment {
 
     }
 
+    public void followers() {
+        followers.clear();
+        List<Models.User> followers = new ArrayList<>();
+
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("followers").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                followers.add(documentSnapshot.toObject(Models.User.class));
+            }
+            this.followers.addAll(followers);
+            adaptUsersToRecycler(this.followers, recyclerFollowers);
+            followingNumber.setText(this.followers.size() + "");
+        });
+
+    }
+
     public void moviesToWatch() {
         films.clear();
         List<Models.Film> moviesToWatch = new ArrayList<>();
@@ -176,6 +200,7 @@ public class ProfileFragment extends AppFragment {
         recyclerLastViewed = view.findViewById(R.id.recyclerWatchedMovies);
         recyclerFavorites = view.findViewById(R.id.recyclerFavoritedMovies);
         recyclerFollowing = view.findViewById(R.id.recyclerFollowedUsers);
+        recyclerFollowers = view.findViewById(R.id.recyclerFollowers);
         recyclerMoviesToWatch = view.findViewById(R.id.recyclerMoviesToWatch);
         followingNumber = view.findViewById(R.id.followingNumber);
     }
