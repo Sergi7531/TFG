@@ -156,6 +156,7 @@ public class LoginFragment extends AppFragment {
         googleButton = view.findViewById(R.id.googleButton);
         forgotPassword = view.findViewById(R.id.forgotPassword);
     }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         if(account == null) return;
 
