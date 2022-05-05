@@ -1,6 +1,7 @@
 package com.example.moviez;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,8 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -140,12 +143,12 @@ public class LoginFragment extends AppFragment {
 
 
     private void hook(View view) {
-        usernameLog = view.findViewById(R.id.usernameLog);
+        usernameLog = view.findViewById(R.id.mailLog);
         passwordLog = view.findViewById(R.id.passwordLog);
         registerText = view.findViewById(R.id.registerText);
-        logButton = view.findViewById(R.id.register);
+        logButton = view.findViewById(R.id.logInButton);
         googleButton = view.findViewById(R.id.googleButton);
-        forgotPassword = view.findViewById(R.id.forgotPassword);
+        forgotPassword = view.findViewById(R.id.forgotPasswordText);
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         if(account == null) return;
@@ -180,5 +183,17 @@ public class LoginFragment extends AppFragment {
                 .beginTransaction()
                 .replace(R.id.landingFrame, fragment)
                 .commit();
+    }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);
     }
 }

@@ -89,4 +89,5 @@ public class LandingActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.landingFrame, fragment);
         fragmentTransaction.commit();
     }
+
 }
