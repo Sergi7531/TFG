@@ -38,6 +38,9 @@ public class Models {
             this.poster_path = poster_path;
         }
 
+        public Film() {
+        }
+
     }
 
     public class Genre {
@@ -84,8 +87,6 @@ public class Models {
         public List<Film> watchedFilms;
         public List<Film> favoritedFilms;
         public List<Film> viewLaterFilms;
-        public List<User> followers;
-        public List<User> following;
         public List<Ticket> tickets;
 
 //        Empty constructor for Firebase:
@@ -104,8 +105,6 @@ public class Models {
             this.watchedFilms = new ArrayList<>();
             this.favoritedFilms = new ArrayList<>();
             this.viewLaterFilms = new ArrayList<>();
-            this.followers = new ArrayList<>();
-            this.following = new ArrayList<>();
             this.tickets = new ArrayList<>();
         }
 
@@ -120,8 +119,6 @@ public class Models {
             this.watchedFilms = new ArrayList<>();
             this.favoritedFilms = new ArrayList<>();
             this.viewLaterFilms = new ArrayList<>();
-            this.followers = new ArrayList<>();
-            this.following = new ArrayList<>();
             this.tickets = new ArrayList<>();
         }
 
@@ -195,22 +192,6 @@ public class Models {
 
         public void setViewLaterFilms(List<Film> viewLaterFilms) {
             this.viewLaterFilms = viewLaterFilms;
-        }
-
-        public List<User> getFollowers() {
-            return followers;
-        }
-
-        public void setFollowers(List<User> followers) {
-            this.followers = followers;
-        }
-
-        public List<User> getFollowing() {
-            return following;
-        }
-
-        public void setFollowing(List<User> following) {
-            this.following = following;
         }
 
         public List<Ticket> getTickets() {

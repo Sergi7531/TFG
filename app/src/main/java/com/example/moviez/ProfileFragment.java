@@ -34,6 +34,7 @@ public class ProfileFragment extends AppFragment {
     private TextView usuario;
     private TextView correo;
     private TextView followingNumber;
+    private TextView followersNumber;
     private TextView watchedNumber;
     private TextView wantToWatchNumber;
     private TextView favoriteNumber;
@@ -47,7 +48,9 @@ public class ProfileFragment extends AppFragment {
     private RecyclerView recyclerFollowers;
     private RecyclerView recyclerMoviesToWatch;
 
-    List<Models.Film> films = new ArrayList<>();
+    List<Models.Film> lastViewedFilms = new ArrayList<>();
+    List<Models.Film> favoritedFilms = new ArrayList<>();
+    List<Models.Film> toWatch = new ArrayList<>();
     List<Models.User> users = new ArrayList<>();
     List<Models.User> followers = new ArrayList<>();
 
@@ -101,11 +104,11 @@ public class ProfileFragment extends AppFragment {
 
         setUserDetails();
 
-//        lastViewedFilms();
+        lastViewedFilms();
 
-//        moviesToWatch();
+        moviesToWatch();
 
-//        favoriteFilms();
+        favoriteFilms();
 
         following();
 
@@ -113,27 +116,39 @@ public class ProfileFragment extends AppFragment {
     }
 
     public void lastViewedFilms() {
-        films.clear();
-        List<Models.Film> lastViewedFilms = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewed").get().addOnSuccessListener(queryDocumentSnapshots -> {
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    lastViewedFilms.add(documentSnapshot.toObject(Models.Film.class));
-                }
-            films.addAll(lastViewedFilms);
-        });
-        adaptFilmsToRecycler(films, recyclerLastViewed);
-    }
-
-    public void favoriteFilms() {
-        films.clear();
+        lastViewedFilms.clear();
         List<Models.Film> favoriteFilms = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
             }
-            films.addAll(favoriteFilms);
+            lastViewedFilms.addAll(favoriteFilms);
+            adaptFilmsToRecycler(lastViewedFilms, recyclerLastViewed);
         });
-        adaptFilmsToRecycler(films, recyclerFavorites);
+    }
+
+    public void moviesToWatch() {
+        toWatch.clear();
+        List<Models.Film> moviesToWatch = new ArrayList<>();
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("moviesToWatch").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                moviesToWatch.add(documentSnapshot.toObject(Models.Film.class));
+            }
+            toWatch.addAll(moviesToWatch);
+        });
+        adaptFilmsToRecycler(toWatch, recyclerMoviesToWatch);
+    }
+
+    public void favoriteFilms() {
+        favoritedFilms.clear();
+        List<Models.Film> favoriteFilms = new ArrayList<>();
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
+            }
+            favoritedFilms.addAll(favoriteFilms);
+            adaptFilmsToRecycler(favoritedFilms, recyclerFavorites);
+        });
     }
 
     public void following() {
@@ -147,7 +162,6 @@ public class ProfileFragment extends AppFragment {
             users.addAll(following);
             adaptUsersToRecycler(users, recyclerFollowing);
             followingNumber.setText(users.size() + "");
-
         });
 
     }
@@ -162,23 +176,10 @@ public class ProfileFragment extends AppFragment {
             }
             this.followers.addAll(followers);
             adaptUsersToRecycler(this.followers, recyclerFollowers);
-            followingNumber.setText(this.followers.size() + "");
+            followersNumber.setText(this.followers.size() + "");
         });
 
     }
-
-    public void moviesToWatch() {
-        films.clear();
-        List<Models.Film> moviesToWatch = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                moviesToWatch.add(documentSnapshot.toObject(Models.Film.class));
-            }
-            films.addAll(moviesToWatch);
-        });
-        adaptFilmsToRecycler(films, recyclerMoviesToWatch);
-    }
-
 
     private void adaptFilmsToRecycler(List<?> list, RecyclerView recyclerView) {
         recyclerView.setAdapter(new FilmAdapter((List<Models.Film>) list, requireContext()));
@@ -203,6 +204,7 @@ public class ProfileFragment extends AppFragment {
         recyclerFollowers = view.findViewById(R.id.recyclerFollowers);
         recyclerMoviesToWatch = view.findViewById(R.id.recyclerMoviesToWatch);
         followingNumber = view.findViewById(R.id.followingNumber);
+        followersNumber = view.findViewById(R.id.followersNumber);
     }
 
     private void setUserDetails() {
