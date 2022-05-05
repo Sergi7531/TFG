@@ -33,12 +33,27 @@ public class ProfileFragment extends AppFragment {
 
     private TextView usuario;
     private TextView correo;
+    private TextView followingNumber;
+    private TextView followersNumber;
+    private TextView watchedNumber;
+    private TextView wantToWatchNumber;
+    private TextView favoriteNumber;
+
+
+
     private ImageView profilepic;
     private RecyclerView recyclerLastViewed;
     private RecyclerView recyclerFavorites;
     private RecyclerView recyclerFollowing;
+    private RecyclerView recyclerFollowers;
+    private RecyclerView recyclerMoviesToWatch;
 
-    List<Models.Film> films = new ArrayList<>();
+    List<Models.Film> lastViewedFilms = new ArrayList<>();
+    List<Models.Film> favoritedFilms = new ArrayList<>();
+    List<Models.Film> toWatch = new ArrayList<>();
+    List<Models.User> users = new ArrayList<>();
+    List<Models.User> followers = new ArrayList<>();
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -91,44 +106,93 @@ public class ProfileFragment extends AppFragment {
 
         lastViewedFilms();
 
-//        favoriteFilms();
+        moviesToWatch();
 
-//        following();
+        favoriteFilms();
 
+        following();
+
+        followers();
     }
 
     public void lastViewedFilms() {
-        films.clear();
-        List<Models.Film> lastViewedFilms = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewed").get().addOnSuccessListener(queryDocumentSnapshots -> {
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    lastViewedFilms.add(documentSnapshot.toObject(Models.Film.class));
-                }
-            films.addAll(lastViewedFilms);
+        lastViewedFilms.clear();
+        List<Models.Film> favoriteFilms = new ArrayList<>();
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
+            }
+            lastViewedFilms.addAll(favoriteFilms);
+            adaptFilmsToRecycler(lastViewedFilms, recyclerLastViewed);
         });
-        adaptToRecycler(films, recyclerLastViewed);
     }
 
-//    public void favoriteFilms() {
-//        films.clear();
-//        List<Models.Film> favoriteFilms = new ArrayList<>();
-//        db.collection("users").document(auth.getCurrentUser().getUid()).collection("").get().addOnSuccessListener(queryDocumentSnapshots -> {
-//            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-//                favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
-//            }
-//            films.addAll(favoriteFilms);
-//        });
-//        adaptToRecycler(films, recyclerLastViewed);
-//    }
+    public void moviesToWatch() {
+        toWatch.clear();
+        List<Models.Film> moviesToWatch = new ArrayList<>();
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("moviesToWatch").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                moviesToWatch.add(documentSnapshot.toObject(Models.Film.class));
+            }
+            toWatch.addAll(moviesToWatch);
+        });
+        adaptFilmsToRecycler(toWatch, recyclerMoviesToWatch);
+    }
 
+    public void favoriteFilms() {
+        favoritedFilms.clear();
+        List<Models.Film> favoriteFilms = new ArrayList<>();
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
+            }
+            favoritedFilms.addAll(favoriteFilms);
+            adaptFilmsToRecycler(favoritedFilms, recyclerFavorites);
+        });
+    }
 
+    public void following() {
+        users.clear();
+        List<Models.User> following = new ArrayList<>();
 
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                following.add(documentSnapshot.toObject(Models.User.class));
+            }
+            users.addAll(following);
+            adaptUsersToRecycler(users, recyclerFollowing);
+            followingNumber.setText(users.size() + "");
+        });
 
-    private void adaptToRecycler(List<?> list, RecyclerView recyclerView) {
-        System.out.println(list.size());
+    }
+
+    public void followers() {
+        followers.clear();
+        List<Models.User> followers = new ArrayList<>();
+
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("followers").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                followers.add(documentSnapshot.toObject(Models.User.class));
+            }
+            this.followers.addAll(followers);
+            adaptUsersToRecycler(this.followers, recyclerFollowers);
+            followersNumber.setText(this.followers.size() + "");
+        });
+
+    }
+
+    private void adaptFilmsToRecycler(List<?> list, RecyclerView recyclerView) {
         recyclerView.setAdapter(new FilmAdapter((List<Models.Film>) list, requireContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
     }
+
+    private void adaptUsersToRecycler(List<?> list, RecyclerView recyclerView) {
+        recyclerView.setAdapter(new UserAdapter((List<Models.User>) list, requireContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+    }
+
+
+
 
     private void hook(View view) {
         usuario = view.findViewById(R.id.usuario);
@@ -137,6 +201,10 @@ public class ProfileFragment extends AppFragment {
         recyclerLastViewed = view.findViewById(R.id.recyclerWatchedMovies);
         recyclerFavorites = view.findViewById(R.id.recyclerFavoritedMovies);
         recyclerFollowing = view.findViewById(R.id.recyclerFollowedUsers);
+        recyclerFollowers = view.findViewById(R.id.recyclerFollowers);
+        recyclerMoviesToWatch = view.findViewById(R.id.recyclerMoviesToWatch);
+        followingNumber = view.findViewById(R.id.followingNumber);
+        followersNumber = view.findViewById(R.id.followersNumber);
     }
 
     private void setUserDetails() {
@@ -148,5 +216,7 @@ public class ProfileFragment extends AppFragment {
             profilepic.setImageResource(R.drawable.ic_baseline_person_24);
         }
     }
+
+
 
 }

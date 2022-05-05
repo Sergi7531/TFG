@@ -31,10 +31,14 @@ public class Models {
         public boolean video;
         public double vote_average;
         public int vote_count;
+        @Nullable public List<Integer> genre_ids;
 
         public Film(String title, String poster_path) {
             this.title = title;
             this.poster_path = poster_path;
+        }
+
+        public Film() {
         }
 
     }
@@ -79,12 +83,10 @@ public class Models {
         public String profileImageURL;
         public String email;
         public String password;
-        public List<Genre> favoriteGenres;
+        public List<Integer> favoriteGenres;
         public List<Film> watchedFilms;
         public List<Film> favoritedFilms;
         public List<Film> viewLaterFilms;
-        public List<User> followers;
-        public List<User> following;
         public List<Ticket> tickets;
 
 //        Empty constructor for Firebase:
@@ -103,8 +105,6 @@ public class Models {
             this.watchedFilms = new ArrayList<>();
             this.favoritedFilms = new ArrayList<>();
             this.viewLaterFilms = new ArrayList<>();
-            this.followers = new ArrayList<>();
-            this.following = new ArrayList<>();
             this.tickets = new ArrayList<>();
         }
 
@@ -119,8 +119,6 @@ public class Models {
             this.watchedFilms = new ArrayList<>();
             this.favoritedFilms = new ArrayList<>();
             this.viewLaterFilms = new ArrayList<>();
-            this.followers = new ArrayList<>();
-            this.following = new ArrayList<>();
             this.tickets = new ArrayList<>();
         }
 
@@ -164,11 +162,11 @@ public class Models {
             this.password = password;
         }
 
-        public List<Genre> getFavoriteGenres() {
+        public List<Integer> getFavoriteGenres() {
             return favoriteGenres;
         }
 
-        public void setFavoriteGenres(List<Genre> favoriteGenres) {
+        public void setFavoriteGenres(List<Integer> favoriteGenres) {
             this.favoriteGenres = favoriteGenres;
         }
 
@@ -194,22 +192,6 @@ public class Models {
 
         public void setViewLaterFilms(List<Film> viewLaterFilms) {
             this.viewLaterFilms = viewLaterFilms;
-        }
-
-        public List<User> getFollowers() {
-            return followers;
-        }
-
-        public void setFollowers(List<User> followers) {
-            this.followers = followers;
-        }
-
-        public List<User> getFollowing() {
-            return following;
-        }
-
-        public void setFollowing(List<User> following) {
-            this.following = following;
         }
 
         public List<Ticket> getTickets() {

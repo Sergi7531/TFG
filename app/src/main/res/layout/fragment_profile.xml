@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="20dp"
     android:background="@color/primaryColor"
     android:orientation="vertical"
     tools:context=".ProfileFragment">
@@ -65,7 +66,7 @@
 
                     <TextView
                         android:id="@+id/textView9"
-                        android:layout_width="120dp"
+                        android:layout_width="130dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="3dp"
                         android:gravity="center_horizontal"
@@ -75,7 +76,7 @@
 
                     <TextView
                         android:id="@+id/textView10"
-                        android:layout_width="120dp"
+                        android:layout_width="130dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="3dp"
                         android:gravity="center_horizontal"
@@ -268,10 +269,31 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerWatchedMovies"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/estadisticas5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Películas que quieres ver:"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMoviesToWatch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
 
         <TextView
             android:id="@+id/estadisticas3"
@@ -286,10 +308,26 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFavoritedMovies"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
         </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:text="@string/seguidores"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerFollowers"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"/>
 
         <TextView
             android:id="@+id/estadisticas4"
@@ -306,7 +344,9 @@
             android:id="@+id/recyclerFollowedUsers"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 

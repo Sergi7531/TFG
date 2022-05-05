@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView nav_bottom;
     private FrameLayout mainFrame;
+    AppViewModel appViewModel;
 
 //    Fragments:
         private HomeFragment homeFragment;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nav_bottom = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        nav_bottom = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         mainFrame = (FrameLayout) findViewById(R.id.main_frame);
 
         homeFragment = new HomeFragment();
@@ -33,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
         ticketsFragment = new TicketsFragment();
         profileFragment = new ProfileFragment();
 
-//        We need to set the default fragme        setFragment(homeFragment);nt to the home fragment:
+        setFragment(homeFragment);
+
+//        We need to set the default fragment to the home fragment:
 
 //        Iterate the mapa variable entries:
 
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.home:
                     //open the HomeFragment
+//                    get user favoriteGenres:
                     setFragment(homeFragment);
                     return true;
                 case R.id.movies:
