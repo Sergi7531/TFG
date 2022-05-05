@@ -274,6 +274,27 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <TextView
+            android:id="@+id/estadisticas5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Películas que quieres ver:"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMoviesToWatch"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
+
+        <TextView
             android:id="@+id/estadisticas3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -306,7 +327,9 @@
             android:id="@+id/recyclerFollowedUsers"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_margin="10dp" />
+            android:layout_margin="10dp" >
+
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 
