@@ -18,8 +18,10 @@ public class AppViewModel extends ViewModel {
     static MutableLiveData<Responses.SearchResponse> moviesByQuery = new MutableLiveData<>();
     static MutableLiveData<Responses.SearchResponse> forYouMovies = new MutableLiveData<>();
 
-//    We will use this counter in case we need to use the "page" param (so we take control of the results number)
+//    We will use this counters in case we need to use the "page" param (so we take control of the results number)
     public static int contResults = 0;
+    public static int contPage = 0;
+
 
     public MutableLiveData<Uri> uriImagenSeleccionada = new MutableLiveData<>();
 
@@ -88,48 +90,47 @@ public class AppViewModel extends ViewModel {
 
     public static void getMoviesForYou(List<Integer> genresUser) {
 
-        int contPage = 1;
+        if(contPage > 20) contPage = 0;
 
-        while(contResults < 15) {
-            IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
-                @Override
-                public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
-                    if (response.body() != null) {
+        contPage++;
 
-                        Responses.SearchResponse moviesForYouResponse = response.body();
-
+        IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", String.valueOf(contPage)).enqueue(new Callback<Responses.SearchResponse>() {
+            @Override
+            public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+                if (response.body() != null) {
+                    Responses.SearchResponse moviesForYouResponse = response.body();
 //                    If user has no genre preferences, we will show the most popular movies:
-                        if (genresUser.isEmpty()) {
-                            forYouMovies.postValue(moviesForYouResponse);
-                            return;
-                        }
-
-                        LinkedHashSet<Models.Film> filmsToShow = new LinkedHashSet<>();
+                    if (genresUser.isEmpty()) {
+                        forYouMovies.postValue(moviesForYouResponse);
+                        return;
+                    }
+                    LinkedHashSet<Models.Film> filmsToShow = new LinkedHashSet<>();
 
 //                    For each film, we need to check if any of the user's favorite genres is in the film's genres:
-                        for (Models.Film movie : moviesForYouResponse.results) {
-                            System.out.println("Checkeamos " + movie.title);
-                            for (Integer genre : genresUser) {
-                                if (movie.genre_ids.contains(genre)) {
-                                    contResults++;
-                                    filmsToShow.add(movie);
-                                }
+                    for (Models.Film movie : moviesForYouResponse.results) {
+                        System.out.println("Checkeamos " + movie.title);
+                        for (Integer genre : genresUser) {
+                            if (movie.genre_ids.contains(genre)) {
+                                contResults++;
+                                filmsToShow.add(movie);
                             }
                         }
-                        moviesForYouResponse.results.clear();
-                        moviesForYouResponse.results.addAll(filmsToShow);
-                        forYouMovies.postValue(moviesForYouResponse);
                     }
+                    moviesForYouResponse.results.clear();
+                    moviesForYouResponse.results.addAll(filmsToShow);
+                    forYouMovies.postValue(moviesForYouResponse);
+                } else {
+                    System.out.println("respuesta nula papá");
                 }
-                @Override
-                public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
-                    t.getMessage();
-                }
-            });
-            contPage++;
-        }
-    }
+            }
 
+            @Override
+            public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
+                System.out.println("He fallao");
+
+            }
+        });
+    }
 
 
 
