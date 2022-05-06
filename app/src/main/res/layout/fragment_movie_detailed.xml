@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MovieDetailedFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp">
+
+                <ImageView
+                    android:id="@+id/movieBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="313dp"
+                    app:srcCompat="@color/dsecondaryLightColor" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="120dp"
+                    app:cardCornerRadius="12dp">
+
+                    <ImageView
+                        android:id="@+id/movieImage"
+                        android:layout_width="140dp"
+                        android:layout_height="252dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/google" />
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/movieTitle"
+                    android:layout_width="150dp"
+                    android:layout_height="90dp"
+                    android:layout_alignTop="@id/cardMain"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_toRightOf="@id/cardMain"
+                    android:fontFamily="@font/satoshi"
+                    android:text="The Batman"
+                    android:textSize="35sp"
+                    android:textStyle="bold|italic"
+                    app:autoSizeTextType="uniform" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/releaseCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_below="@id/movieTitle"
+                    android:layout_alignLeft="@id/movieTitle"
+                    android:layout_alignRight="@id/movieTitle"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                    app:cardCornerRadius="12dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/releaseText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/satoshi"
+                            android:paddingTop="35dp"
+                            android:text="@string/release"
+                            android:textAlignment="center"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/movieRelease"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="TextView"
+                            android:textAlignment="center"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="12sp"
+                            app:autoSizeTextType="uniform" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/durationCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/movieTitle"
+                    android:layout_alignLeft="@id/movieTitle"
+                    android:layout_alignRight="@id/movieTitle"
+                    android:layout_marginTop="10dp"
+                    app:cardBackgroundColor="?attr/colorOnSecondary"
+                    app:cardCornerRadius="12dp">
+
+                    <TextView
+                        android:id="@+id/movieDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnPrimary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="330dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="12dp">
+
+                <LinearLayout
+                    android:layout_width="350dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="165dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/director"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/satoshi"
+                            android:text="@string/director"
+                            android:textAlignment="center"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/movieDirector"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
+                            android:fontFamily="@font/satoshi"
+                            android:text="TextView"
+                            android:textAlignment="center"
+                            android:textColor="?attr/colorOnSecondary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="165dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/casting"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/satoshi"
+                            android:text="@string/casting"
+                            android:textAlignment="center"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/movieCasting"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/satoshi"
+                            android:text="TextView"
+                            android:textAlignment="center"
+                            android:textColor="?attr/colorOnSecondary" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="330dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="165dp"
+                    android:layout_height="match_parent"
+                    android:background="?attr/colorPrimaryVariant"
+                    android:contentDescription="@string/buy" />
+
+                <Button
+                    android:id="@+id/buyButton"
+                    android:layout_width="160dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="?attr/colorSecondary"
+                    android:fontFamily="@font/satoshi"
+                    android:text="@string/buy"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/infoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/satoshi"
+                android:text="@string/info"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/movieSinopsis"
+                android:layout_width="220dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:text="TextView" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

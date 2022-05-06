@@ -2,10 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
-    android:backgroundTint="@color/primaryColor"
+    android:background="?attr/colorOnPrimary"
+    android:backgroundTint="?attr/colorOnPrimary"
     tools:context=".HomeFragment">
 
 
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:src="@drawable/mvoiezlogo" />
+            android:src="@drawable/moviez_logo" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFriends"
@@ -36,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Para ti"
-            android:textColor="@color/primaryTextColor"
+            android:textColor="?attr/colorOnSecondary"
             android:textSize="20sp" />
 
         <androidx.recyclerview.widget.RecyclerView

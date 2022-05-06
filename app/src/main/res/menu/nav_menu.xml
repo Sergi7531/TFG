@@ -3,11 +3,11 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/home" />
+        android:title="Home" />
     <item
         android:id="@+id/movies"
         android:icon="@drawable/ic_baseline_movie_24"
-        android:title="@string/movies" />
+        android:title="Movies" />
 
     <item
         android:id="@+id/placeholder"
@@ -16,9 +16,9 @@
     <item
         android:id="@+id/tickets"
         android:icon="@drawable/ic_baseline_ticket_24"
-        android:title="@string/tickets" />
+        android:title="Tickets" />
     <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/profile" />
+        android:title="Profile" />
 </menu>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="120dp"
-    android:background="#fef1ea"
+    android:background="@color/dprimaryColor"
     android:padding="10dp">
 
     <LinearLayout
@@ -16,7 +16,7 @@
             android:id="@+id/userImageHolder"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            app:srcCompat="@drawable/ic_baseline_person_24" />
 
         <TextView
             android:id="@+id/usernameHolder"
@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:gravity="center_horizontal"
-            android:text="@string/username" />
+            android:text="@string/username"
+            android:textColor="@color/dprimaryTextColor" />
 
     </LinearLayout>
 

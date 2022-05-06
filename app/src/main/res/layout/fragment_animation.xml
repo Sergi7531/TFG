@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="?attr/colorOnPrimary"
     tools:context=".AnimationFragment">
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_baseline_movie_24" />
+        android:src="@drawable/moviez_logo" />
 </FrameLayout>

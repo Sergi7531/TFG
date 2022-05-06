@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/primaryTextColor</item>
+        <item name="boxStrokeColor">?attr/colorPrimaryVariant</item>
         <item name="fontFamily">Satoshi</item>
     </style>
 </resources>

@@ -5,7 +5,6 @@
     android:id="@+id/frameRegister"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
     tools:context=".RegisterFragment">
 
     <LinearLayout
@@ -15,35 +14,57 @@
 
         <LinearLayout
             android:id="@+id/linearImage"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="start"
-            android:layout_marginTop="10dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="45dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:src="@drawable/imageregister"
-                app:srcCompat="@drawable/imageregister" />
-
-            <ImageView
-                android:id="@+id/profilePic"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/ic_profile_pic" />
+                android:layout_weight="1">
+
+                <Button
+                    android:id="@+id/setImageProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/ic_profile_picture"
+                    android:text="+"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="28sp" />
+
+                <ImageView
+                    android:id="@+id/profilePic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="center" />
+
+            </RelativeLayout>
+
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/satoshi"
+            android:text="@string/profile_photo"
+            android:textAlignment="center" />
 
         <LinearLayout
             android:id="@+id/linearInputs"
-            android:layout_width="360dp"
+            android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginTop="15dp"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -51,23 +72,23 @@
                 style="@style/LoginTextInputLayoutStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColorHint="@color/secondaryTextColor"
-                app:boxBackgroundMode="outline"
-                app:hintTextColor="@color/secondaryTextColor">
+                android:layout_marginTop="10dp"
+                android:textColorHint="?attr/colorOnSecondary"
+                app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                app:boxStrokeWidth="0dp"
+                app:hintTextColor="?attr/colorOnSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/username"
 
-                    style="@style/LoginTextInputLayoutStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/satoshi"
                     android:hint="@string/username"
                     android:text=""
-                    android:textColor="@color/secondaryTextColor"
-                    android:textColorHint="@color/secondaryTextColor"
-                    android:textStyle="bold"
-                    app:boxStrokeColor="@color/primaryTextColor" />
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textColorHint="?attr/colorOnSecondary"
+                    app:boxStrokeColor="?attr/colorOnSecondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -78,19 +99,21 @@
                 android:layout_marginTop="10dp"
                 android:ems="10"
                 android:inputType="textEmailAddress"
-                android:textColorHint="@color/secondaryTextColor"
-                app:hintTextColor="@color/secondaryTextColor"
+                android:textColorHint="?attr/colorOnSecondary"
+                app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                app:boxStrokeWidth="0dp"
+                app:hintTextColor="?attr/colorOnSecondary"
                 app:passwordToggleEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/mail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/satoshi"
                     android:hint="@string/email"
                     android:text=""
-                    android:textColor="@color/secondaryTextColor"
-                    android:textColorHint="@color/secondaryTextColor"
-                    android:textStyle="bold" />
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textColorHint="?attr/colorOnSecondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -101,20 +124,23 @@
                 android:layout_marginTop="10dp"
                 android:ems="10"
                 android:inputType="textPassword"
-                android:textColorHint="@color/secondaryTextColor"
-                app:hintTextColor="@color/secondaryTextColor"
-                app:passwordToggleEnabled="false">
+                android:textColorHint="?attr/colorOnSecondary"
+                app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                app:boxStrokeWidth="0dp"
+                app:hintTextColor="?attr/colorOnSecondary"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="?attr/colorOnSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/satoshi"
                     android:hint="@string/password"
                     android:password="true"
                     android:text=""
                     android:textColor="@color/secondaryTextColor"
-                    android:textColorHint="@color/secondaryTextColor"
-                    android:textStyle="bold" />
+                    android:textColorHint="@color/secondaryTextColor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -125,32 +151,37 @@
                 android:layout_marginTop="10dp"
                 android:ems="10"
                 android:inputType="textPassword"
-                android:textColorHint="@color/secondaryTextColor"
-                app:hintTextColor="@color/secondaryTextColor"
-                app:passwordToggleEnabled="false">
+                android:textColorHint="?attr/colorOnSecondary"
+                app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                app:boxStrokeWidth="0dp"
+                app:hintTextColor="?attr/colorOnSecondary"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="?attr/colorOnSecondary">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/confirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/satoshi"
                     android:hint="@string/confirm_password"
                     android:password="true"
                     android:text=""
-                    android:textColor="@color/secondaryTextColor"
-                    android:textColorHint="@color/secondaryTextColor"
-                    android:textStyle="bold" />
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textColorHint="?attr/colorOnSecondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/register"
-                android:layout_width="360dp"
+                android:id="@+id/logInButton"
+                android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="@color/buttonColor2"
+                android:layout_marginTop="104dp"
+                android:backgroundTint="?attr/colorSecondary"
+                android:fontFamily="@font/satoshi"
                 android:text="@string/register"
                 android:textAllCaps="false"
-                android:textColor="@color/primaryColor"
-                android:textSize="34sp" />
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:cornerRadius="14dp" />
 
 
         </LinearLayout>

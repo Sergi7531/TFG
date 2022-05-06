@@ -1,5 +1,6 @@
 package com.example.moviez;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,8 +10,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -40,6 +43,7 @@ public class RegisterFragment extends AppFragment {
     private TextInputEditText confirmPassword;
     private ImageView profilePic;
     private Button register;
+    private Button setImageProfile;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -91,10 +95,12 @@ public class RegisterFragment extends AppFragment {
         password = view.findViewById(R.id.password);
         confirmPassword = view.findViewById(R.id.confirm);
         profilePic = view.findViewById(R.id.profilePic);
-        register = view.findViewById(R.id.register);
+        register = view.findViewById(R.id.logInButton);
+        setImageProfile = view.findViewById(R.id.setImageProfile);
 
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
             if (uri != null) {
+                setImageProfile.setAlpha(0f);
                 uriProfilePic = uri;
                 profilePic.setImageURI(uri);
                 appViewModel.setUriImagenSeleccionada(uri);
@@ -104,12 +110,12 @@ public class RegisterFragment extends AppFragment {
             }
         });
 
-        profilePic.setOnClickListener(v -> {
+        setImageProfile.setOnClickListener(v -> {
             phoneGallery.launch("image/*");
         });
 
-        register.setOnClickListener( v -> {
-            if(validateData()) {
+        register.setOnClickListener(v -> {
+            if (validateData()) {
                 registerNewUser();
             }
         });
@@ -123,7 +129,7 @@ public class RegisterFragment extends AppFragment {
                 .commit();
     }
 
-    public boolean containsUpperCaseLetter(String s){
+    public boolean containsUpperCaseLetter(String s) {
         for (int i = 0; i < s.length(); i++) {
             if (Character.isUpperCase(s.charAt(i))) {
                 return true;
@@ -173,11 +179,11 @@ public class RegisterFragment extends AppFragment {
 
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailValue, passwordValue).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                if(uriProfilePic != null) {
-                    FirebaseStorage.getInstance().getReference("/profileimgs/"+ UUID.randomUUID()+".jpg")
+                if (uriProfilePic != null) {
+                    FirebaseStorage.getInstance().getReference("/profileimgs/" + UUID.randomUUID() + ".jpg")
                             .putFile(uriProfilePic)
                             .continueWithTask(task2 -> task2.getResult().getStorage().getDownloadUrl())
-                            .addOnSuccessListener(imageUrl-> saveUser(auth.getCurrentUser().getUid(), usernameValue, emailValue, passwordValue, imageUrl));
+                            .addOnSuccessListener(imageUrl -> saveUser(auth.getCurrentUser().getUid(), usernameValue, emailValue, passwordValue, imageUrl));
                 } else {
                     saveUser(FirebaseAuth.getInstance().getCurrentUser().getUid(), usernameValue, emailValue, passwordValue, null);
                 }
@@ -195,7 +201,7 @@ public class RegisterFragment extends AppFragment {
 
         String imageUrl = "";
 
-        if(imageUri == null || imageUri.toString().equals("")) {
+        if (imageUri == null || imageUri.toString().equals("")) {
 //            https://firebasestorage.googleapis.com/v0/b/apifirebase-f6f9e.appspot.com/o/profileimgs%2Fic_baseline_person_24.xml?alt=media&token=896e0cc4-b4af-4800-9a9b-a21b8cac7a0d
             imageUrl = "";
         } else {
@@ -216,5 +222,18 @@ public class RegisterFragment extends AppFragment {
         auth.getCurrentUser().updateProfile(profileUpdates);
 //        We keep the signed in user here:
         appViewModel.userlogged = userToAdd;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                setFragment(new LoginFragment());
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.moviez;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,8 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -46,7 +49,6 @@ public class LoginFragment extends AppFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Fragment preferencesFragment;
 
 
     public LoginFragment() {
@@ -106,12 +108,10 @@ public class LoginFragment extends AppFragment {
         registerText.setOnClickListener(view2 -> {
             setFragment(new RegisterFragment());
         });
-
         GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build());
-
         logButton.setOnClickListener(view2 -> {
             if (!usernameLog.getText().toString().isEmpty() && !passwordLog.getText().toString().isEmpty()){
                 FirebaseAuth.getInstance()
@@ -121,14 +121,9 @@ public class LoginFragment extends AppFragment {
                         ).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
-                            if(documentSnapshot.exists()) {
-                                if (!documentSnapshot.toObject(Models.User.class).getFavoriteGenres().isEmpty()) {
-                                    Intent intent = new Intent(requireContext(), MainActivity.class);
-                                    startActivity(intent);
-                                } else {
-                                    setFragment(new PreferencesFragment());
-                                }
-                            }
+                            if (documentSnapshot.toObject(Models.User.class).favoriteGenres.size() == 0) {
+                                accessApp(false);
+                            } else accessApp(true);
                         });
                     } else {
                         Toast.makeText(requireContext(), task.getException().getLocalizedMessage(),
@@ -137,7 +132,6 @@ public class LoginFragment extends AppFragment {
                 });
             }
         });
-
         googleButton.setOnClickListener(view1 -> {
             signInClient.launch(googleSignInAccount.getSignInIntent());
         });
@@ -149,14 +143,13 @@ public class LoginFragment extends AppFragment {
 
 
     private void hook(View view) {
-        usernameLog = view.findViewById(R.id.usernameLog);
+        usernameLog = view.findViewById(R.id.mailLog);
         passwordLog = view.findViewById(R.id.passwordLog);
         registerText = view.findViewById(R.id.registerText);
-        logButton = view.findViewById(R.id.register);
+        logButton = view.findViewById(R.id.logInButton);
         googleButton = view.findViewById(R.id.googleButton);
-        forgotPassword = view.findViewById(R.id.forgotPassword);
+        forgotPassword = view.findViewById(R.id.forgotPasswordText);
     }
-
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         if(account == null) return;
 
@@ -168,18 +161,12 @@ public class LoginFragment extends AppFragment {
                 });
     }
 
-    private void createGoogleAccount() {
-
-        db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot -> {
-                if (!documentSnapshot.exists()) {
-                    db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()));
-                    accessApp(true);
-                }
-                else accessApp(false);
+    private void createGoogleAccount(){
+        db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()))
+                .addOnCompleteListener(task -> {
+                    accessApp(false);
         });
-
     }
-
     private void accessApp(boolean hasGenres) {
         if (hasGenres) {
             Intent intent = new Intent(requireContext(), MainActivity.class);
@@ -194,7 +181,19 @@ public class LoginFragment extends AppFragment {
     private void setFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frameLogin, fragment)
+                .replace(R.id.landingFrame, fragment)
                 .commit();
+    }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().finish();
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);
     }
 }

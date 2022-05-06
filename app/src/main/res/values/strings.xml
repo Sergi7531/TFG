@@ -8,7 +8,7 @@
     <string name="forgot_password">¿Has olvidado la contraseña?</string>
     <string name="don_t_have_an_account">¿No tienes cuenta?</string>
     <string name="register">Regístrate</string>
-    <string name="or_sign_up_with">Accede rápidamente con</string>
+    <string name="or_sign_up_with">o accede rápidamente con</string>
     <string name="log_in">Entra</string>
     <string name="confirm_password">Confirmar contraseña</string>
     <string name="escoge_hasta_3_generos_de_preferencia">Escoge hasta 3 géneros de preferencia:</string>
@@ -22,8 +22,12 @@
     <string name="favoritas">Favoritas</string>
     <string name="ltimas_pel_culas_vistas">Últimas películas vistas:</string>
     <string name="pel_culas_favoritas">Películas favoritas:</string>
-    <string name="home">Home</string>
-    <string name="movies">Movies</string>
-    <string name="tickets">Tickets</string>
-    <string name="profile">Profile</string>
+    <string name="pass_recover">Introduce tu correo para recuperar tu contraseña:</string>
+    <string name="pass_recover_button">Recuperar contraseña</string>
+    <string name="profile_photo">Foto de perfil</string>
+    <string name="release">Estreno</string>
+    <string name="director">Director</string>
+    <string name="casting">Casting</string>
+    <string name="buy">Comprar</string>
+    <string name="info">Información</string>
 </resources>
