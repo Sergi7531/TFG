@@ -201,5 +201,14 @@ public class Models {
         public void setTickets(List<Ticket> tickets) {
             this.tickets = tickets;
         }
+
+    }
+
+    public class Video {
+        public String name;
+        public String key;
+        public String site;
+        public int size;
+        public String type;
     }
 }

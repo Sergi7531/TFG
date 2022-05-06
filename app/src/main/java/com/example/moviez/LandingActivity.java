@@ -1,8 +1,11 @@
 package com.example.moviez;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -18,11 +21,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LandingActivity extends AppCompatActivity {
 
-
+    public static final String PREF_FILE_NAME = "MySharedFile";
     private AnimationFragment animationFragment;
     private LoginFragment loginFragment;
     private RegisterFragment registerFragment;
-
+    public AppViewModel appViewModel;
+    public FirebaseFirestore db;
+    public FirebaseAuth auth;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +35,40 @@ public class LandingActivity extends AppCompatActivity {
         fragmentInit();
         setFragment(animationFragment);
 
+        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        logWithMail();
         firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(this));
     }
+
+    private void logWithMail() {
+        SharedPreferences sharedPreferences = getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        String usernameLog = sharedPreferences.getString("userMail", "");
+        String passwordLog = sharedPreferences.getString("password", "");
+        if (!usernameLog.isEmpty() && !passwordLog.isEmpty()){
+            FirebaseAuth.getInstance()
+                    .signInWithEmailAndPassword(
+                            usernameLog,
+                            passwordLog
+                    ).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+
+
+                    db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
+
+                        if (documentSnapshot.toObject(Models.User.class).favoriteGenres.size() == 0) {
+                            accessApp();
+                        }
+                    });
+                } else {
+                    Toast.makeText(this, task.getException().getLocalizedMessage(),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
         if(account == null) {
             Handler handler = new Handler();
@@ -57,12 +94,7 @@ public class LandingActivity extends AppCompatActivity {
                 });
     }
     private void createGoogleAccount(){
-        AppViewModel appViewModel;
-        FirebaseFirestore db;
-        FirebaseAuth auth;
-        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
-        db = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
+
 
         db.collection("users").document(auth.getUid()).addSnapshotListener((snap, exception) -> {
            if(snap.exists()) {

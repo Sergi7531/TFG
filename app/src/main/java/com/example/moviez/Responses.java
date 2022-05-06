@@ -18,6 +18,10 @@ public class Responses {
         public String credit_id;
     }
 
+    class Videos {
+        public List<Models.Video> results = new ArrayList<>();
+    }
+
     class RecommendationResponse {
 
     }
