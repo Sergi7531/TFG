@@ -24,7 +24,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="313dp"
                     android:src="@drawable/moviez_logo"
-                    app:tint="#97000000" />
+                    android:tintMode="src_atop"
+                    app:tint="#7C000000" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardMain"
@@ -186,6 +187,7 @@
                             android:id="@+id/movieCasting"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
                             android:fontFamily="@font/satoshi"
                             android:text="TextView"
                             android:textAlignment="center"
@@ -196,10 +198,11 @@
 
             <LinearLayout
                 android:layout_width="330dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:stateListAnimator="@null">
 
                 <Spinner
                     android:id="@+id/spinner"
@@ -212,11 +215,17 @@
 
                 <Button
                     android:id="@+id/buyButton"
-                    android:layout_width="160dp"
+                    android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:backgroundTint="?attr/colorSecondary"
                     android:fontFamily="@font/satoshi"
+                    android:shadowColor="@android:color/transparent"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="0"
+                    android:stateListAnimator="@null"
                     android:text="@string/buy"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"
@@ -304,6 +313,7 @@
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/commentsFragmentMovieDetail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="15dp" />
