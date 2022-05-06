@@ -59,6 +59,7 @@ public class Models {
             this.imageUrl = imageUrl;
         }
     }
+
     public class Ticket{
         public String filmName;
         public int line;

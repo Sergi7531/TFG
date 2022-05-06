@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Responses {
 
-    class Cast {
+    class CastResult {
         public boolean adult;
         public byte gender; //1 for female, 2 for male.
         public int id;
@@ -16,6 +16,14 @@ public class Responses {
         public String profile_path;
         public String character;
         public String credit_id;
+    }
+
+    class CrewResult {
+        public String name;
+        public int id;
+        public String job;
+        public String original_name;
+        public String profile_path;
     }
 
     class RecommendationResponse {
@@ -76,6 +84,12 @@ public class Responses {
         public List<Models.Film> results = new ArrayList<>();
         public String total_pages;
         public String total_results;
+    }
+
+    class FullCastResponse {
+        public String id;
+        public List<CastResult> cast = new ArrayList<>();
+        public List<CrewResult> crew = new ArrayList<>();
     }
 
 }

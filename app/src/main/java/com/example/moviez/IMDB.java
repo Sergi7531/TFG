@@ -23,7 +23,7 @@ public class IMDB {
 
 //        Retrieves the full cast of a film (actors)
         @GET("movie/{movie_id}/credits")
-        Call<Responses.Cast> getCast(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language);
+        Call<Responses.FullCastResponse> getCast(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language);
 
 
 //        Retrieves the movie details.
