@@ -78,11 +78,7 @@ public class HomeFragment extends AppFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         hook(view);
-
-
         forYou();
-
-//        filmAdapter.notifyDataSetChanged();
     }
 
     private void hook(View view) {
@@ -103,12 +99,11 @@ public class HomeFragment extends AppFragment {
                 appViewModel.forYouMovies.observe(getViewLifecycleOwner(), filmsByGenreForUser -> {
                     if (filmsByGenreForUser != null) {
                         recyclerForYou.setAlpha(1f);
-                        recyclerForYou.setAdapter(new FilmAdapter(filmsByGenreForUser.results, requireActivity()));
+                        recyclerForYou.setAdapter(new FilmAdapter(filmsByGenreForUser.results, requireActivity(), HomeFragment.this));
                         recyclerForYou.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
                     }
                 });
             }
-
         });
     }
 }

@@ -17,6 +17,7 @@ public class AppViewModel extends ViewModel {
     static MutableLiveData<Responses.BillboardResponse> actualMoviesInCinemaResponse = new MutableLiveData<>();
     static MutableLiveData<Responses.SearchResponse> moviesByQuery = new MutableLiveData<>();
     static MutableLiveData<Responses.SearchResponse> forYouMovies = new MutableLiveData<>();
+    static MutableLiveData<Models.Film> movieDetails = new MutableLiveData<>();
 
 //    We will use this counters in case we need to use the "page" param (so we take control of the results number)
     public static int contResults = 0;
@@ -108,7 +109,6 @@ public class AppViewModel extends ViewModel {
 
 //                    For each film, we need to check if any of the user's favorite genres is in the film's genres:
                     for (Models.Film movie : moviesForYouResponse.results) {
-                        System.out.println("Checkeamos " + movie.title);
                         for (Integer genre : genresUser) {
                             if (movie.genre_ids.contains(genre)) {
                                 contResults++;
@@ -128,6 +128,23 @@ public class AppViewModel extends ViewModel {
             public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
                 System.out.println("He fallao");
 
+            }
+        });
+    }
+
+//    Create a method to get the movie's details:
+    public static void getMovieDetails(int filmId) {
+        movieDetails = new MutableLiveData<>();
+        IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
+            @Override
+            public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
+                if (response.body() != null) {
+                    movieDetails.postValue(response.body());
+                }
+            }
+            @Override
+            public void onFailure(Call<Models.Film> call, Throwable t) {
+                t.getMessage();
             }
         });
     }

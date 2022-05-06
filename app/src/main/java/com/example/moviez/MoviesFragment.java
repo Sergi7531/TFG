@@ -109,15 +109,15 @@ public class MoviesFragment extends Fragment {
 
         viewModel.upcomingMoviesResponse.observe(getViewLifecycleOwner(), upcomingMoviesResponse -> {
             if (upcomingMoviesResponse != null) {
-                recyclerUpcomingMovies.setAdapter(new FilmAdapter(upcomingMoviesResponse.results, requireContext()));
-                recyclerUpcomingMovies.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+//                recyclerUpcomingMovies.setAdapter(new FilmAdapter(upcomingMoviesResponse.results, requireContext()));
+//                recyclerUpcomingMovies.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
             }
         });
 
         viewModel.actualMoviesInCinemaResponse.observe(getViewLifecycleOwner(), actualMoviesResponse -> {
             if (actualMoviesResponse != null) {
-                recyclerMoviesInCinemas.setAdapter(new FilmAdapter(actualMoviesResponse.results, requireContext()));
-                recyclerMoviesInCinemas.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+//                recyclerMoviesInCinemas.setAdapter(new FilmAdapter(actualMoviesResponse.results, requireContext()));
+//                recyclerMoviesInCinemas.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
             }
         });
     }

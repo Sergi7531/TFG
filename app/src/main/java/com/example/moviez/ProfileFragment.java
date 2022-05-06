@@ -182,7 +182,7 @@ public class ProfileFragment extends AppFragment {
     }
 
     private void adaptFilmsToRecycler(List<?> list, RecyclerView recyclerView) {
-        recyclerView.setAdapter(new FilmAdapter((List<Models.Film>) list, requireContext()));
+        recyclerView.setAdapter(new FilmAdapter((List<Models.Film>) list, requireContext(), ProfileFragment.this));
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
     }
 
