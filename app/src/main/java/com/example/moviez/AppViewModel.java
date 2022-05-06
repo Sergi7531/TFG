@@ -41,8 +41,6 @@ public class AppViewModel extends ViewModel {
            @Override
            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
                t.getMessage();
-//               Da error?
-//               Toast.makeText(AppViewModel.this, "Error al obtener las peliculas", Toast.LENGTH_SHORT).show();
            }
        });
     }
@@ -56,8 +54,6 @@ public class AppViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
                 t.getMessage();
-                //                Da error?
-                //                Toast.makeText(AppViewModel.this, "Error al obtener las peliculas", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -84,8 +80,6 @@ public class AppViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
                 t.getMessage();
-                //                Da error?
-                //                Toast.makeText(AppViewModel.this, "Error al obtener las peliculas", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -121,14 +115,13 @@ public class AppViewModel extends ViewModel {
                     moviesForYouResponse.results.addAll(filmsToShow);
                     forYouMovies.postValue(moviesForYouResponse);
                 } else {
-                    System.out.println("respuesta nula papá");
+                    return;
                 }
             }
 
             @Override
             public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
-                System.out.println("He fallao");
-
+                t.getMessage();
             }
         });
     }
