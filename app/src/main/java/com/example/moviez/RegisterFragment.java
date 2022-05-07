@@ -90,7 +90,7 @@ public class RegisterFragment extends AppFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        username = view.findViewById(R.id.username);
+        username = view.findViewById(R.id.usernameMyUserHolder);
         email = view.findViewById(R.id.mail);
         password = view.findViewById(R.id.password);
         confirmPassword = view.findViewById(R.id.confirm);

@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="140dp"
         android:text="Cartelera"
         android:textColor="@color/primaryTextColor"
         android:textSize="25sp"
@@ -70,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="180dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
     <TextView
@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="430dp"
         android:gravity="center_vertical"
         android:text="Próximamente en cines"
         android:textColor="@color/primaryTextColor"
@@ -90,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:layout_marginTop="440dp"
+        android:layout_marginTop="470dp"
         android:elevation="1dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
 

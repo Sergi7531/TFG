@@ -30,6 +30,7 @@
     <string name="casting">Casting</string>
     <string name="buy">Comprar</string>
     <string name="info">Información</string>
+    <string name="commentary">Comentarios</string>
     <string name="search_for_users">Search for users</string>
     <string name="para_ti">Para ti</string>
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="120dp"
-    android:background="@color/dprimaryColor"
+    android:background="@color/dsecondaryTextColor"
     android:padding="10dp">
 
     <LinearLayout
@@ -25,7 +25,7 @@
             android:layout_marginTop="3dp"
             android:gravity="center_horizontal"
             android:text="@string/username"
-            android:textColor="@color/dprimaryTextColor" />
+            android:textColor="@color/dprimaryDarkColor" />
 
     </LinearLayout>
 

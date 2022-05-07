@@ -18,6 +18,7 @@ public class AppViewModel extends ViewModel {
     static MutableLiveData<Responses.SearchResponse> moviesByQuery = new MutableLiveData<>();
     static MutableLiveData<Responses.SearchResponse> forYouMovies = new MutableLiveData<>();
     static MutableLiveData<Models.Film> movieDetails = new MutableLiveData<>();
+    static MutableLiveData<Responses.FullCastResponse> fullCast = new MutableLiveData<>();
 
 //    We will use this counters in case we need to use the "page" param (so we take control of the results number)
     public static int contResults = 0;
@@ -40,8 +41,6 @@ public class AppViewModel extends ViewModel {
            @Override
            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
                t.getMessage();
-//               Da error?
-//               Toast.makeText(AppViewModel.this, "Error al obtener las peliculas", Toast.LENGTH_SHORT).show();
            }
        });
     }
@@ -55,8 +54,6 @@ public class AppViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
                 t.getMessage();
-                //                Da error?
-                //                Toast.makeText(AppViewModel.this, "Error al obtener las peliculas", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -83,8 +80,6 @@ public class AppViewModel extends ViewModel {
             @Override
             public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
                 t.getMessage();
-                //                Da error?
-                //                Toast.makeText(AppViewModel.this, "Error al obtener las peliculas", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -120,14 +115,13 @@ public class AppViewModel extends ViewModel {
                     moviesForYouResponse.results.addAll(filmsToShow);
                     forYouMovies.postValue(moviesForYouResponse);
                 } else {
-                    System.out.println("respuesta nula papá");
+                    return;
                 }
             }
 
             @Override
             public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
-                System.out.println("He fallao");
-
+                t.getMessage();
             }
         });
     }
@@ -150,6 +144,24 @@ public class AppViewModel extends ViewModel {
     }
 
 
+//    CReate a method to get the movie's cast:
+    public static void getMovieCast(int filmId) {
+        fullCast = new MutableLiveData<>();
+        IMDB.api.getCast(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Responses.FullCastResponse>() {
+            @Override
+            public void onResponse(Call<Responses.FullCastResponse> call, Response<Responses.FullCastResponse> response) {
+                if (response.body() != null) {
+                    fullCast.postValue(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Responses.FullCastResponse> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+
+    }
 
 
     public void setUriImagenSeleccionada(Uri uri) {
