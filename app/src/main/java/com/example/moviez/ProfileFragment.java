@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,14 +42,14 @@ public class ProfileFragment extends AppFragment {
     private TextView wantToWatchNumber;
     private TextView favoriteNumber;
 
-
-
     private ImageView profilepic;
     private RecyclerView recyclerLastViewed;
     private RecyclerView recyclerFavorites;
     private RecyclerView recyclerFollowing;
     private RecyclerView recyclerFollowers;
     private RecyclerView recyclerMoviesToWatch;
+
+    private Button editarPerfil;
 
     List<Models.Film> lastViewedFilms = new ArrayList<>();
     List<Models.Film> favoritedFilms = new ArrayList<>();
@@ -101,6 +104,10 @@ public class ProfileFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
 
         hook(view);
+
+        editarPerfil.setOnClickListener(v -> {
+            setFragment(new EditProfileFragment());
+        });
 
         setUserDetails();
 
@@ -191,12 +198,10 @@ public class ProfileFragment extends AppFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
     }
 
-
-
-
     private void hook(View view) {
         usuario = view.findViewById(R.id.usuario);
         correo = view.findViewById(R.id.correo);
+        editarPerfil = view.findViewById(R.id.editarPerfil);
         profilepic = view.findViewById(R.id.profilePicture);
         recyclerLastViewed = view.findViewById(R.id.recyclerWatchedMovies);
         recyclerFavorites = view.findViewById(R.id.recyclerFavoritedMovies);
@@ -216,6 +221,13 @@ public class ProfileFragment extends AppFragment {
             profilepic.setImageResource(R.drawable.ic_baseline_person_24);
         }
     }
+    private void setFragment(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .commit();
+    }
+
 
 
 

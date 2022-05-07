@@ -3,6 +3,7 @@ package com.example.moviez;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ public class LoginFragment extends AppFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static final String PREF_FILE_NAME = "MySharedFile";
 
     public TextInputEditText usernameLog;
     public TextInputEditText passwordLog;
@@ -105,6 +107,9 @@ public class LoginFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
         hook(view);
 
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         registerText.setOnClickListener(view2 -> {
             setFragment(new RegisterFragment());
         });
@@ -121,6 +126,9 @@ public class LoginFragment extends AppFragment {
                         ).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
+                            editor.putString("userMail", usernameLog.getText().toString());
+                            editor.putString("password", passwordLog.getText().toString());
+                            editor.commit();
                             if (documentSnapshot.toObject(Models.User.class).favoriteGenres.size() == 0) {
                                 accessApp(false);
                             } else accessApp(true);

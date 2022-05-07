@@ -25,6 +25,9 @@ public class Responses {
         public String original_name;
         public String profile_path;
     }
+    class Videos {
+        public List<Models.Video> results = new ArrayList<>();
+    }
 
     class RecommendationResponse {
 
