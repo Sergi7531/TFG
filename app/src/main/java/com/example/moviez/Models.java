@@ -10,7 +10,7 @@ public class Models {
     public static class Film {
         public boolean adult;
         public String backdrop_path;
-        public int budget;
+        public double budget;
         public ArrayList<Genre> genres;
         public String homepage;
         public int id;
@@ -22,7 +22,7 @@ public class Models {
         public double popularity;
         public String poster_path;
         public String release_date;
-        public int revenue;
+        public double revenue;
         public int runtime;
         //        public ArrayList<SpokenLanguage> spoken_languages;
         public String status;
@@ -201,6 +201,56 @@ public class Models {
 
         public void setTickets(List<Ticket> tickets) {
             this.tickets = tickets;
+        }
+    }
+
+    public static class Comment {
+        public String comment;
+        public String imageUrl;
+        public String username;
+        public double rating;
+
+//        Empty constructor for Firebase:
+        public Comment() {
+        }
+
+        public Comment(String comment, String imageUrl, String username, double rating) {
+            this.comment = comment;
+            this.imageUrl = imageUrl;
+            this.username = username;
+            this.rating = rating;
+        }
+
+        public String getComment() {
+            return comment;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public double getRating() {
+            return rating;
+        }
+
+        public void setComment(String comment) {
+            this.comment = comment;
+        }
+
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public void setRating(double rating) {
+            this.rating = rating;
         }
     }
 }

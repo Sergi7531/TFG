@@ -116,7 +116,7 @@ public class LoginFragment extends AppFragment {
             if (!usernameLog.getText().toString().isEmpty() && !passwordLog.getText().toString().isEmpty()){
                 FirebaseAuth.getInstance()
                         .signInWithEmailAndPassword(
-                                usernameLog.getText().toString(),
+                                usernameLog.getText().toString().trim(),
                                 passwordLog.getText().toString()
                         ).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

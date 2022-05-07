@@ -200,7 +200,6 @@
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:stateListAnimator="@null">
 
@@ -237,7 +236,6 @@
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 app:cardBackgroundColor="?attr/colorPrimaryVariant"
                 app:cardCornerRadius="12dp">
 
@@ -276,7 +274,7 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:id="@+id/textView4"
+                                    android:id="@+id/globalUsersRating"
                                     android:layout_width="wrap_content"
                                     android:layout_height="30dp"
                                     android:layout_gravity="right"
@@ -314,7 +312,7 @@
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/commentsFragmentMovieDetail"
-                        android:layout_width="match_parent"
+                        android:layout_width="300dp"
                         android:layout_height="match_parent"
                         android:layout_margin="15dp" />
 

@@ -104,7 +104,7 @@ public class MoviesFragment extends Fragment {
 
             });
 
-                viewModel.getUpcomingMovies();
+        viewModel.getUpcomingMovies();
         viewModel.getActualCinemaMovies();
 
         viewModel.upcomingMoviesResponse.observe(getViewLifecycleOwner(), upcomingMoviesResponse -> {

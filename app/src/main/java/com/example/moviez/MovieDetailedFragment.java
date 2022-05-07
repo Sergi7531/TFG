@@ -1,6 +1,7 @@
 package com.example.moviez;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,12 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +37,11 @@ public class MovieDetailedFragment extends Fragment {
     public static TextView movieRelease;
     public static TextView movieDirector;
     public static TextView movieCasting;
+    public static TextView globalUsersRating;
     private List<Responses.CastResult> actorItems = new ArrayList<>();
     private List<Responses.CrewResult> crewItems = new ArrayList<>();
+    public static RecyclerView commentsFragmentMovieDetail;
+    private List<Models.Comment> comments = new ArrayList<>();
 
 
     public MovieDetailedFragment() {
@@ -83,11 +91,11 @@ public class MovieDetailedFragment extends Fragment {
 
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
+        System.out.println("Probamos ID PELIII: " + filmId);
+
         viewModel.getMovieDetails(filmId);
 
         viewModel.movieDetails.observe(getViewLifecycleOwner(), movie -> {
-            System.out.println(filmId);
-            System.out.println(viewModel.movieDetails.getValue().poster_path);
 
             Glide.with(requireContext())
                     .load("https://image.tmdb.org/t/p/original" + movie.poster_path)
@@ -115,16 +123,43 @@ public class MovieDetailedFragment extends Fragment {
 
             viewModel.getMovieCast(filmId);
 
-//            Get the first 3 actors:
-
             actorItems.clear();
-
 
             viewModel.fullCast.observe(getViewLifecycleOwner(), cast -> { ;
                 loadActors(viewModel, cast);
             });
         });
 
+        getCommentsFromFirebase(filmId);
+    }
+
+    private void getCommentsFromFirebase(int filmId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("films").document(String.valueOf(filmId)).collection("comments").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Models.Comment comment = document.toObject(Models.Comment.class);
+                    comments.add(comment);
+                }
+                commentsFragmentMovieDetail.setLayoutManager(new LinearLayoutManager(getContext()));
+                commentsFragmentMovieDetail.setAdapter(new CommentAdapter(comments, requireContext()));
+
+//                Get the average rating of the film:
+
+
+                double averageRating = 0;
+                for(Models.Comment comment : comments) {
+                    averageRating += comment.rating;
+                }
+                averageRating = averageRating / comments.size();
+
+                globalUsersRating.setText(String.format("%.1f", averageRating));
+
+            } else {
+                Log.d("TAG", "Error getting documents: ", task.getException());
+            }
+        });
     }
 
     private void loadActors(AppViewModel viewModel, Responses.FullCastResponse cast) {
@@ -140,12 +175,8 @@ public class MovieDetailedFragment extends Fragment {
             }
         }
 
-
-
-
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < actorItems.size(); i++) {
-            System.out.println(cast.cast.get(i).name);
             if (i == 2) {
                 sb.append(cast.cast.get(i).name + "\n");
             } else {
@@ -163,5 +194,7 @@ public class MovieDetailedFragment extends Fragment {
         movieRelease = view.findViewById(R.id.movieRelease);
         movieDirector = view.findViewById(R.id.movieDirector);
         movieCasting = view.findViewById(R.id.movieCasting);
+        globalUsersRating = view.findViewById(R.id.globalUsersRating);
+        commentsFragmentMovieDetail = view.findViewById(R.id.commentsFragmentMovieDetail);
     }
 }
