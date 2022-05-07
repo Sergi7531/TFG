@@ -2,7 +2,6 @@ package com.example.moviez;
 
 import androidx.annotation.Nullable;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,21 +59,33 @@ public class Models {
         }
     }
 
-    public class Ticket{
+    public class Ticket {
+        public String ticketid;
         public String filmName;
-        public int line;
+        public String tagline;
+        public String filmImage;
+        public String cinemaName;
+        public String cinemaCoords;
+        public String date;
+        public String time;
+        public double duration;
+        public int row;
         public int seat;
         public int room;
-        public LocalDateTime hour;
-        public String lang;
 
-        public Ticket(String filmName, int line, int seat, int room, LocalDateTime hour, String lang) {
+//        Empty constructor for Firebase:
+        public Ticket() {}
+
+        public Ticket(String ticketid, String filmName, String cinemaName, String date, String time, double duration, int row, int seat, int room) {
+            this.ticketid = ticketid;
             this.filmName = filmName;
-            this.line = line;
+            this.cinemaName = cinemaName;
+            this.date = date;
+            this.time = time;
+            this.duration = duration;
+            this.row = row;
             this.seat = seat;
             this.room = room;
-            this.hour = hour;
-            this.lang = lang;
         }
     }
 
