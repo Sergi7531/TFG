@@ -17,7 +17,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="400dp">
+                android:layout_height="380dp">
 
                 <ImageView
                     android:id="@+id/movieBackground"
@@ -54,7 +54,7 @@
                     android:fontFamily="@font/satoshi"
                     android:text="The Batman"
                     android:textColor="@android:color/white"
-                    android:textSize="35sp"
+                    android:textSize="32sp"
                     android:textStyle="bold|italic"
                     app:autoSizeTextType="uniform" />
 
@@ -236,6 +236,7 @@
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="60dp"
                 app:cardBackgroundColor="?attr/colorPrimaryVariant"
                 app:cardCornerRadius="12dp">
 
@@ -268,6 +269,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/linearRatingOver5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -314,7 +316,20 @@
                         android:id="@+id/commentsFragmentMovieDetail"
                         android:layout_width="300dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="15dp" />
+                        android:layout_margin="15dp" >
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <TextView
+                        android:id="@+id/noComments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="No hay comentarios."
+                        android:textColor="@color/dprimaryColor"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 

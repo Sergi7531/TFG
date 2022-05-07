@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -38,6 +40,12 @@ public class MovieDetailedFragment extends Fragment {
     public static TextView movieDirector;
     public static TextView movieCasting;
     public static TextView globalUsersRating;
+    public static TextView noComments;
+    public static RatingBar ratingBar;
+
+//    Intent to BuyTicketsFragment:
+    public static Button buyButton;
+
     private List<Responses.CastResult> actorItems = new ArrayList<>();
     private List<Responses.CrewResult> crewItems = new ArrayList<>();
     public static RecyclerView commentsFragmentMovieDetail;
@@ -91,7 +99,6 @@ public class MovieDetailedFragment extends Fragment {
 
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
-        System.out.println("Probamos ID PELIII: " + filmId);
 
         viewModel.getMovieDetails(filmId);
 
@@ -101,7 +108,6 @@ public class MovieDetailedFragment extends Fragment {
                     .load("https://image.tmdb.org/t/p/original" + movie.poster_path)
                     .centerCrop()
                     .into(movieImage);
-
 
             Glide.with(requireContext())
                     .load("https://image.tmdb.org/t/p/original" + movie.backdrop_path)
@@ -135,7 +141,6 @@ public class MovieDetailedFragment extends Fragment {
 
     private void getCommentsFromFirebase(int filmId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
         db.collection("films").document(String.valueOf(filmId)).collection("comments").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
@@ -145,16 +150,23 @@ public class MovieDetailedFragment extends Fragment {
                 commentsFragmentMovieDetail.setLayoutManager(new LinearLayoutManager(getContext()));
                 commentsFragmentMovieDetail.setAdapter(new CommentAdapter(comments, requireContext()));
 
-//                Get the average rating of the film:
-
-
                 double averageRating = 0;
                 for(Models.Comment comment : comments) {
                     averageRating += comment.rating;
                 }
-                averageRating = averageRating / comments.size();
 
-                globalUsersRating.setText(String.format("%.1f", averageRating));
+                if(comments.size() > 0) {
+                    averageRating = averageRating / comments.size();
+                    globalUsersRating.setText(String.format("%.1f", averageRating));
+                    ratingBar.setRating((float) averageRating);
+                    commentsFragmentMovieDetail.setVisibility(View.VISIBLE);
+                    noComments.setVisibility(View.GONE);
+                } else {
+                    globalUsersRating.setText(" - ");
+                    commentsFragmentMovieDetail.setVisibility(View.GONE);
+                    noComments.setVisibility(View.VISIBLE);
+                }
+
 
             } else {
                 Log.d("TAG", "Error getting documents: ", task.getException());
@@ -164,7 +176,11 @@ public class MovieDetailedFragment extends Fragment {
 
     private void loadActors(AppViewModel viewModel, Responses.FullCastResponse cast) {
         actorItems = viewModel.fullCast.getValue().cast;
-        actorItems = actorItems.subList(0, 3);
+
+        if (actorItems.size() > 4) {
+            actorItems = actorItems.subList(0, 4);
+        }
+
 
         crewItems = viewModel.fullCast.getValue().crew;
 
@@ -177,7 +193,7 @@ public class MovieDetailedFragment extends Fragment {
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < actorItems.size(); i++) {
-            if (i == 2) {
+            if (i == actorItems.size()-1) {
                 sb.append(cast.cast.get(i).name + "\n");
             } else {
                 sb.append(cast.cast.get(i).name + ",\n");
@@ -196,5 +212,7 @@ public class MovieDetailedFragment extends Fragment {
         movieCasting = view.findViewById(R.id.movieCasting);
         globalUsersRating = view.findViewById(R.id.globalUsersRating);
         commentsFragmentMovieDetail = view.findViewById(R.id.commentsFragmentMovieDetail);
+        noComments = view.findViewById(R.id.noComments);
+        ratingBar = view.findViewById(R.id.ratingBar);
     }
 }
