@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +95,7 @@ public class TicketsFragment extends AppFragment {
                     tickets.add(document.toObject(Models.Ticket.class));
                     ImageView imageView = new ImageView(getContext());
                     imageView.setImageResource(R.drawable.ic_baseline_circle_24);
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams(12, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams(15, ViewGroup.LayoutParams.WRAP_CONTENT));
                     linearPages.addView(imageView);
                 }
 
