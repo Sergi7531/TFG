@@ -257,6 +257,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
                             android:layout_marginTop="20dp"
+                            android:layout_weight="5"
                             android:fontFamily="@font/satoshi"
                             android:text="@string/commentary"
                             android:textColor="?attr/colorOnSecondary"
@@ -265,9 +266,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="80dp"
                             android:layout_marginTop="15dp"
-                            android:layout_marginRight="30dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <LinearLayout
