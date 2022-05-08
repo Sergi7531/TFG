@@ -108,11 +108,11 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
     private void passInfoToQR(@NonNull TicketViewHolder holder, String ticketInfo) throws WriterException {
 
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(ticketInfo, BarcodeFormat.QR_CODE, 120, 120);
-        Bitmap bitmap = Bitmap.createBitmap(120, 120, Bitmap.Config.RGB_565);
+        BitMatrix bitMatrix = qrCodeWriter.encode(ticketInfo, BarcodeFormat.QR_CODE, 170, 170);
+        Bitmap bitmap = Bitmap.createBitmap(170, 170, Bitmap.Config.RGB_565);
 
-        for (int x = 0; x < 120; x++) {
-            for (int y = 0; y < 120; y++) {
+        for (int x = 0; x < 170; x++) {
+            for (int y = 0; y < 170; y++) {
                 bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
             }
         }
