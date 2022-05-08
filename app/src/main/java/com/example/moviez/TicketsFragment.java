@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,5 +114,7 @@ public class TicketsFragment extends AppFragment {
     private void hook(View view) {
         recyclerTickets = view.findViewById(R.id.recyclerTickets);
         linearPages = view.findViewById(R.id.linearPages);
+
     }
+
 }
