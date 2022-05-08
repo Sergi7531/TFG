@@ -15,9 +15,9 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmViewHolder> {
-    Context context;
-    List<Models.Film> movies;
-    Fragment currentFragment;
+    public Context context;
+    public List<Models.Film> movies;
+    public Fragment currentFragment;
 
     public FilmAdapter(List<Models.Film> movies, Context context, Fragment currentFragment) {
         this.movies = movies;

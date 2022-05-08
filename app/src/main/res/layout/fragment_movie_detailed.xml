@@ -226,6 +226,7 @@
                     android:shadowRadius="0"
                     android:stateListAnimator="@null"
                     android:text="@string/buy"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -244,6 +245,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/addCommentMovie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/dsecondaryColor"
+                        android:shadowRadius="0"
+                        android:stateListAnimator="@null"
+                        android:text="Añade un comentario..."
+                        android:textAllCaps="false"
+                        app:cornerRadius="12sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -315,8 +327,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/commentsFragmentMovieDetail"
                         android:layout_width="300dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="15dp" >
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
 

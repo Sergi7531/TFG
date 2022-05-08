@@ -15,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public abstract class AppFragment extends Fragment {
-    public AppViewModel appViewModel;
+    public static AppViewModel appViewModel;
     public FirebaseFirestore db;
     public FirebaseAuth auth;
     public MutableLiveData<Uri> uriImagenSeleccionada = new MutableLiveData<>();

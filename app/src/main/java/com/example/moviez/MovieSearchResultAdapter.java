@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +19,7 @@ import java.util.List;
 public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchResultAdapter.MovieSearchResultViewHolder> {
     Context context;
     List<Models.Film> movies;
+    Fragment currentFragment;
 
     public MovieSearchResultAdapter(Context context, List<Models.Film> movies) {
         this.context = context;
@@ -38,8 +41,21 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
                 .centerCrop()
                 .into(holder.imageFilmHolder);
 
-
         holder.filmNameHolder.setText(movies.get(position).title);
+
+        holder.searchHolderLayout.setOnClickListener(view -> {
+            MovieDetailedFragment movieDetailedFragment = new MovieDetailedFragment(movies.get(position).id);
+            setFragment(movieDetailedFragment);
+        });
+    }
+
+    private void setFragment(Fragment fragment) {
+        currentFragment
+                .getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .addToBackStack(HomeFragment.class.getSimpleName())
+                .commit();
     }
 
     @Override
@@ -49,11 +65,13 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
 
 
     class MovieSearchResultViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout searchHolderLayout;
         ImageView imageFilmHolder;
         TextView filmNameHolder;
 
         public MovieSearchResultViewHolder(@NonNull View itemView) {
             super(itemView);
+            searchHolderLayout = itemView.findViewById(R.id.searchHolderLayout);
             imageFilmHolder = itemView.findViewById(R.id.filmImageSearchHolder);
             filmNameHolder = itemView.findViewById(R.id.filmTitleSearchHolder);
         }

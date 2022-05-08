@@ -42,6 +42,7 @@ public class MovieDetailedFragment extends Fragment {
     public static TextView globalUsersRating;
     public static TextView noComments;
     public static RatingBar ratingBar;
+    public static Button addCommentMovie;
 
 //    Intent to BuyTicketsFragment:
     public static Button buyButton;
@@ -136,7 +137,18 @@ public class MovieDetailedFragment extends Fragment {
             });
         });
 
+        addCommentMovie.setOnClickListener(v -> {
+//            setFragment(new AddCommentFragment(filmId));
+        });
+
         getCommentsFromFirebase(filmId);
+    }
+
+    private void setFragment(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_home, fragment)
+                .commit();
     }
 
     private void getCommentsFromFirebase(int filmId) {
@@ -214,5 +226,6 @@ public class MovieDetailedFragment extends Fragment {
         commentsFragmentMovieDetail = view.findViewById(R.id.commentsFragmentMovieDetail);
         noComments = view.findViewById(R.id.noComments);
         ratingBar = view.findViewById(R.id.ratingBar);
+        addCommentMovie = view.findViewById(R.id.addCommentMovie);
     }
 }

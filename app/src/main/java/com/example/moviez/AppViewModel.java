@@ -13,12 +13,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AppViewModel extends ViewModel {
-    static MutableLiveData<Responses.BillboardResponse> upcomingMoviesResponse = new MutableLiveData<>();
-    static MutableLiveData<Responses.BillboardResponse> actualMoviesInCinemaResponse = new MutableLiveData<>();
-    static MutableLiveData<Responses.SearchResponse> moviesByQuery = new MutableLiveData<>();
-    static MutableLiveData<Responses.SearchResponse> forYouMovies = new MutableLiveData<>();
-    static MutableLiveData<Models.Film> movieDetails = new MutableLiveData<>();
-    static MutableLiveData<Responses.FullCastResponse> fullCast = new MutableLiveData<>();
+    public static MutableLiveData<Responses.BillboardResponse> upcomingMoviesResponse = new MutableLiveData<>();
+    public static MutableLiveData<Responses.BillboardResponse> actualMoviesInCinemaResponse = new MutableLiveData<>();
+    public static MutableLiveData<Responses.SearchResponse> moviesByQuery = new MutableLiveData<>();
+    public static MutableLiveData<Responses.SearchResponse> forYouMovies = new MutableLiveData<>();
+    public static MutableLiveData<Models.Film> movieDetails = new MutableLiveData<>();
+    public static MutableLiveData<Responses.FullCastResponse> fullCast = new MutableLiveData<>();
 
 //    We will use this counters in case we need to use the "page" param (so we take control of the results number)
     public static int contResults = 0;

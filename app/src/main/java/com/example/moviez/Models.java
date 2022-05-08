@@ -232,16 +232,18 @@ public class Models {
         public String imageUrl;
         public String username;
         public double rating;
+        public boolean spoiler;
 
 //        Empty constructor for Firebase:
         public Comment() {
         }
 
-        public Comment(String comment, String imageUrl, String username, double rating) {
+        public Comment(String comment, String imageUrl, String username, double rating, boolean spoiler) {
             this.comment = comment;
             this.imageUrl = imageUrl;
             this.username = username;
             this.rating = rating;
+            this.spoiler = spoiler;
         }
 
         public String getComment() {

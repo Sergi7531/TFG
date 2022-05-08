@@ -11,8 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -131,6 +129,7 @@ public class ProfileFragment extends AppFragment {
             }
             lastViewedFilms.addAll(favoriteFilms);
             adaptFilmsToRecycler(lastViewedFilms, recyclerLastViewed);
+            watchedNumber.setText(String.valueOf(lastViewedFilms.size()));
         });
     }
 
@@ -142,8 +141,9 @@ public class ProfileFragment extends AppFragment {
                 moviesToWatch.add(documentSnapshot.toObject(Models.Film.class));
             }
             toWatch.addAll(moviesToWatch);
+            adaptFilmsToRecycler(toWatch, recyclerMoviesToWatch);
+            wantToWatchNumber.setText(String.valueOf(toWatch.size()));
         });
-        adaptFilmsToRecycler(toWatch, recyclerMoviesToWatch);
     }
 
     public void favoriteFilms() {
@@ -155,6 +155,7 @@ public class ProfileFragment extends AppFragment {
             }
             favoritedFilms.addAll(favoriteFilms);
             adaptFilmsToRecycler(favoritedFilms, recyclerFavorites);
+            favoriteNumber.setText(String.valueOf(favoritedFilms.size()));
         });
     }
 
@@ -210,6 +211,9 @@ public class ProfileFragment extends AppFragment {
         recyclerMoviesToWatch = view.findViewById(R.id.recyclerMoviesToWatch);
         followingNumber = view.findViewById(R.id.followingNumber);
         followersNumber = view.findViewById(R.id.followersNumber);
+        watchedNumber = view.findViewById(R.id.watchedNumber);
+        wantToWatchNumber = view.findViewById(R.id.wantToWatchNumber);
+        favoriteNumber = view.findViewById(R.id.favoriteNumber);
     }
 
     private void setUserDetails() {

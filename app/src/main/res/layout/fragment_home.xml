@@ -38,7 +38,7 @@
             app:suffixTextColor="#FFFFFF">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/searchInputFilm"
+                android:id="@+id/searchInputUsers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
