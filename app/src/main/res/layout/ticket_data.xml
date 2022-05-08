@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/imageTicketDetail"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="140dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,8 +19,8 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="270dp"
-        android:layout_margin="20dp"
+        android:layout_height="220dp"
+        android:layout_margin="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,14 +45,14 @@
             android:id="@+id/cinemaNameTicketDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:text="Nombre cine"
             android:textColor="@color/dprimaryTextColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -60,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="end"
+                android:gravity="start"
                 android:text="TextView"
                 android:textColor="@color/dprimaryTextColor" />
 
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:gravity="end"
+                android:gravity="start"
                 android:text="TextView"
                 android:textColor="@color/dprimaryTextColor" />
 
@@ -79,20 +79,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="end"
+                android:gravity="start"
                 android:text="TextView"
                 android:textColor="@color/dprimaryTextColor" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -107,7 +107,7 @@
                     android:id="@+id/roomTicketDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="TextView"
                     android:textColor="@color/dprimaryTextColor"
@@ -116,7 +116,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -131,7 +131,7 @@
                     android:id="@+id/rowTicketDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="TextView"
                     android:textColor="@color/dprimaryTextColor"
@@ -140,7 +140,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -155,7 +155,7 @@
                     android:id="@+id/seatTicketDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="TextView"
                     android:textColor="@color/dprimaryTextColor"
@@ -177,12 +177,21 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_margin="20dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_margin="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <ImageView
+            android:id="@+id/qrCode"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@android:drawable/screen_background_light" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
