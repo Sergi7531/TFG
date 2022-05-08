@@ -95,7 +95,7 @@ public class TicketsFragment extends AppFragment {
                     tickets.add(document.toObject(Models.Ticket.class));
                     ImageView imageView = new ImageView(getContext());
                     imageView.setImageResource(R.drawable.ic_baseline_circle_24);
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams(15, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
                     linearPages.addView(imageView);
                 }
 
