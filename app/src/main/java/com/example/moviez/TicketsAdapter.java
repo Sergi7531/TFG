@@ -48,6 +48,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         holder.cinemaNameTicketDetail.setText(ticket.cinemaName);
         holder.dayTicketDetail.setText(ticket.date);
         holder.timeTicketDetail.setText(ticket.time);
+        holder.hourTicketDetail.setText(String.valueOf(ticket.duration));
         holder.roomTicketDetail.setText(ticket.room + "");
         holder.rowTicketDetail.setText(ticket.row + "");
         holder.seatTicketDetail.setText(ticket.seat + "");
@@ -79,6 +80,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         public TextView taglineTicket;
         public TextView cinemaNameTicketDetail;
         public TextView dayTicketDetail;
+        public TextView hourTicketDetail;
         public TextView timeTicketDetail;
         public TextView durationTicket;
         public TextView roomTicketDetail;
@@ -91,6 +93,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
             imageTicketDetail = itemView.findViewById(R.id.imageTicketDetail);
             filmNameTicketDetail = itemView.findViewById(R.id.filmNameTicketDetail);
             taglineTicket = itemView.findViewById(R.id.taglineTicket);
+            hourTicketDetail = itemView.findViewById(R.id.hourTicketDetail);
             cinemaNameTicketDetail = itemView.findViewById(R.id.cinemaNameTicketDetail);
             dayTicketDetail = itemView.findViewById(R.id.dayTicketDetail);
             timeTicketDetail = itemView.findViewById(R.id.durationTicket);
