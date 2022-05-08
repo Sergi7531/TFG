@@ -40,7 +40,7 @@ public class MovieDetailedFragment extends Fragment {
     public static TextView movieDirector;
     public static TextView movieCasting;
     public static TextView globalUsersRating;
-    public static TextView noComments;
+    public static TextView comentariosTextDetail;
     public static RatingBar ratingBar;
     public static Button addCommentMovie;
 
@@ -172,11 +172,11 @@ public class MovieDetailedFragment extends Fragment {
                     globalUsersRating.setText(String.format("%.1f", averageRating));
                     ratingBar.setRating((float) averageRating);
                     commentsFragmentMovieDetail.setVisibility(View.VISIBLE);
-                    noComments.setVisibility(View.GONE);
+                    comentariosTextDetail.setText("Comentarios");
                 } else {
                     globalUsersRating.setText(" - ");
                     commentsFragmentMovieDetail.setVisibility(View.GONE);
-                    noComments.setVisibility(View.VISIBLE);
+                    comentariosTextDetail.setText("No hay comentarios");
                 }
 
 
@@ -224,7 +224,7 @@ public class MovieDetailedFragment extends Fragment {
         movieCasting = view.findViewById(R.id.movieCasting);
         globalUsersRating = view.findViewById(R.id.globalUsersRating);
         commentsFragmentMovieDetail = view.findViewById(R.id.commentsFragmentMovieDetail);
-        noComments = view.findViewById(R.id.noComments);
+        comentariosTextDetail = view.findViewById(R.id.comentariosTextDetail);
         ratingBar = view.findViewById(R.id.ratingBar);
         addCommentMovie = view.findViewById(R.id.addCommentMovie);
     }

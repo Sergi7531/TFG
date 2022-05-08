@@ -237,7 +237,7 @@
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="60dp"
+                android:layout_marginBottom="80dp"
                 app:cardBackgroundColor="?attr/colorPrimaryVariant"
                 app:cardCornerRadius="12dp">
 
@@ -246,24 +246,13 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/addCommentMovie"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/dsecondaryColor"
-                        android:shadowRadius="0"
-                        android:stateListAnimator="@null"
-                        android:text="Añade un comentario..."
-                        android:textAllCaps="false"
-                        app:cornerRadius="12sp" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView3"
+                            android:id="@+id/comentariosTextDetail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
@@ -276,8 +265,9 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="90dp"
+                            android:layout_marginLeft="80dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginRight="30dp"
                             android:orientation="vertical">
 
                             <LinearLayout
@@ -324,28 +314,39 @@
 
                     </LinearLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/commentsFragmentMovieDetail"
-                        android:layout_width="300dp"
+                    <Button
+                        android:id="@+id/addCommentMovie"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="15dp">
+                        android:backgroundTint="@color/dsecondaryColor"
+                        android:shadowRadius="0"
+                        android:stateListAnimator="@null"
+                        android:text="Añade un comentario..."
+                        android:textAllCaps="false"
+                        app:cornerRadius="12sp" />
 
-                    </androidx.recyclerview.widget.RecyclerView>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TextView
-                        android:id="@+id/noComments"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="No hay comentarios."
-                        android:textColor="@color/dprimaryColor"
-                        android:textSize="20sp" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/commentsFragmentMovieDetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="15dp">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </RelativeLayout>
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
         </LinearLayout>
     </ScrollView>
 

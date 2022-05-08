@@ -3,12 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Raul/AndroidStudioProjects/TFG/app/src/main/res/layout/fragment_register.xml" value="0.1" />
-        <entry key="..\:/Users/Raul/AndroidStudioProjects/TFG/app/src/main/res/layout/fragment_tickets.xml" value="0.1" />
-        <entry key="..\:/Users/Raul/AndroidStudioProjects/TFG/app/src/main/res/layout/movie_holder.xml" value="0.1" />
-        <entry key="..\:/Users/Raul/AndroidStudioProjects/TFG/app/src/main/res/layout/movie_search_holder.xml" value="0.1" />
-        <entry key="..\:/Users/Raul/AndroidStudioProjects/TFG/app/src/main/res/layout/ticket_data.xml" value="0.22" />
-        <entry key="..\:/Users/Raul/AndroidStudioProjects/TFG/app/src/main/res/layout/user_holder.xml" value="0.13645833333333332" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.2495" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.16" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_incomplete_circle_24.xml" value="0.182" />
@@ -35,7 +29,7 @@
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_preferences.xml" value="0.264" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_register.xml" value="0.264" />
-        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_tickets.xml" value="0.536" />
+        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_tickets.xml" value="0.264" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/genre_data.xml" value="0.72" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/movie_holder.xml" value="0.4" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/movie_search_holder.xml" value="0.536" />
