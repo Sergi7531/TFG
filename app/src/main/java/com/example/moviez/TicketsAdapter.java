@@ -35,7 +35,6 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
     public void onBindViewHolder(@NonNull TicketViewHolder holder, int position) {
         Models.Ticket ticket = tickets.get(position);
 
-        System.out.println("https://image.tmdb.org/t/p/original" + ticket.filmImage);
         Glide.with(context).load("https://image.tmdb.org/t/p/original" + ticket.filmImage).into(holder.imageTicketDetail);
 
         holder.filmNameTicketDetail.setText(ticket.filmName);

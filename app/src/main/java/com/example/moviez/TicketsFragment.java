@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,6 +31,7 @@ public class TicketsFragment extends AppFragment {
     private static final String ARG_PARAM2 = "param2";
 
     public static RecyclerView recyclerTickets;
+    public static LinearLayout linearPages;
 
 
     // TODO: Rename and change types of parameters
@@ -90,6 +93,10 @@ public class TicketsFragment extends AppFragment {
             if(!collection.isEmpty()) {
                 for (DocumentSnapshot document : collection.getDocuments()) {
                     tickets.add(document.toObject(Models.Ticket.class));
+                    ImageView imageView = new ImageView(getContext());
+                    imageView.setImageResource(R.drawable.ic_baseline_circle_24);
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams(12, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    linearPages.addView(imageView);
                 }
 
                 recyclerTickets.setAdapter(new TicketsAdapter(tickets, requireContext()));
@@ -103,7 +110,6 @@ public class TicketsFragment extends AppFragment {
 
     private void hook(View view) {
         recyclerTickets = view.findViewById(R.id.recyclerTickets);
-
-
+        linearPages = view.findViewById(R.id.linearPages);
     }
 }
