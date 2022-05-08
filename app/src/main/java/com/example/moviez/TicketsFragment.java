@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -27,24 +28,7 @@ public class TicketsFragment extends AppFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
-
-    public static ViewPager2 viewPagerTickets;
-    public static TicketsAdapter adapterTickets;
-
-    public static ImageView imageTicketDetail;
-    public static TextView filmNameTicketDetail;
-    public static TextView taglineTicket;
-    public static TextView cinemaNameTicketDetail;
-    public static TextView dayTicketDetail;
-    public static TextView timeTicketDetail;
-    public static TextView durationTicket;
-    public static TextView roomTicketDetail;
-    public static TextView rowTicketDetail;
-    public static TextView seatTicketDetail;
-    public static TextView seatTicketDetail;
-
-
+    public static RecyclerView recyclerTickets;
 
 
     // TODO: Rename and change types of parameters
@@ -101,30 +85,24 @@ public class TicketsFragment extends AppFragment {
     }
 
     private void getTicketsFromFirebase() {
-        db.collection("users").document(appViewModel.userlogged.userid).collection("tickets").get().addOnSuccessListener(collection -> {
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("tickets").get().addOnSuccessListener(collection -> {
             tickets.clear();
             if(!collection.isEmpty()) {
                 for (DocumentSnapshot document : collection.getDocuments()) {
                     tickets.add(document.toObject(Models.Ticket.class));
                 }
-                adapterTickets = new TicketsAdapter(tickets, requireContext());
-                viewPagerTickets.setAdapter(adapterTickets);
+
+                recyclerTickets.setAdapter(new TicketsAdapter(tickets, requireContext()));
+                LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                SnapHelper snapHelper = new PagerSnapHelper();
+                recyclerTickets.setLayoutManager(layoutManager);
+                snapHelper.attachToRecyclerView(recyclerTickets);
             }
         });
     }
 
     private void hook(View view) {
-        viewPagerTickets = view.findViewById(R.id.viewPagerTickets);
-        imageTicketDetail = view.findViewById(R.id.imageTicketDetail);
-        filmNameTicketDetail = view.findViewById(R.id.filmNameTicketDetail);
-        taglineTicket = view.findViewById(R.id.taglineTicket);
-        cinemaNameTicketDetail = view.findViewById(R.id.cinemaNameTicketDetail);
-        dayTicketDetail = view.findViewById(R.id.dayTicketDetail);
-        timeTicketDetail = view.findViewById(R.id.durationTicket);
-        durationTicket = view.findViewById(R.id.durationTicket);
-        roomTicketDetail = view.findViewById(R.id.roomTicketDetail);
-        rowTicketDetail = view.findViewById(R.id.rowTicketDetail);
-        seatTicketDetail = view.findViewById(R.id.seatTicketDetail);
+        recyclerTickets = view.findViewById(R.id.recyclerTickets);
 
 
     }

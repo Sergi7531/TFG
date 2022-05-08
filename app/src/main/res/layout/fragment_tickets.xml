@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".TicketsFragment">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPagerTickets"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerTickets"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="30dp"

@@ -59,7 +59,7 @@ public class Models {
         }
     }
 
-    public class Ticket {
+    public static class Ticket {
         public String ticketid;
         public String filmName;
         public String tagline;
@@ -76,10 +76,13 @@ public class Models {
 //        Empty constructor for Firebase:
         public Ticket() {}
 
-        public Ticket(String ticketid, String filmName, String cinemaName, String date, String time, double duration, int row, int seat, int room) {
+        public Ticket(String ticketid, String filmName, String tagline, String filmImage, String cinemaName, String cinemaCoords, String date, String time, double duration, int row, int seat, int room) {
             this.ticketid = ticketid;
             this.filmName = filmName;
+            this.tagline = tagline;
+            this.filmImage = filmImage;
             this.cinemaName = cinemaName;
+            this.cinemaCoords = cinemaCoords;
             this.date = date;
             this.time = time;
             this.duration = duration;
