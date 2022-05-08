@@ -177,8 +177,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -187,8 +187,8 @@
 
         <ImageView
             android:id="@+id/qrCode"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             android:layout_gravity="center_horizontal"
             app:srcCompat="@android:drawable/screen_background_light" />
 
