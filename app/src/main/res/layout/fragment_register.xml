@@ -39,12 +39,18 @@
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="28sp" />
 
-                <ImageView
-                    android:id="@+id/profilePic"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="center" />
+                    app:cardBackgroundColor="#00FFFFFF"
+                    app:cardCornerRadius="60dp">
+
+                    <ImageView
+                        android:id="@+id/profilePic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="center" />
+                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
 
