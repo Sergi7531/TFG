@@ -43,11 +43,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmViewHolder
 
         holder.imageFilmHolder.setOnClickListener(view -> {
             MovieDetailedFragment movieDetailedFragment = new MovieDetailedFragment(movies.get(position).id);
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("filmId", movies.get(position).id);
-//            movieDetailedFragment.setArguments(bundle);
             setFragment(movieDetailedFragment);
-
         });
     }
 

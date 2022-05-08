@@ -50,6 +50,12 @@
             android:layout_height="wrap_content"
             android:text="TextView" />
 
+        <CheckBox
+            android:id="@+id/spoilerCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spoiler" />
+
         <Button
             android:id="@+id/publishButton"
             android:layout_width="match_parent"
