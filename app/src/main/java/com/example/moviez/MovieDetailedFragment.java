@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -51,6 +52,8 @@ public class MovieDetailedFragment extends Fragment {
     private List<Responses.CrewResult> crewItems = new ArrayList<>();
     public static RecyclerView commentsFragmentMovieDetail;
     private List<Models.Comment> comments = new ArrayList<>();
+
+    private FrameLayout frame_detail;
 
 
     public MovieDetailedFragment() {
@@ -138,16 +141,18 @@ public class MovieDetailedFragment extends Fragment {
         });
 
         addCommentMovie.setOnClickListener(v -> {
-//            setFragment(new AddCommentFragment(filmId));
+            NewCommentFragment newCommentFragment = new NewCommentFragment(filmId);
+            setFragment(newCommentFragment);
         });
 
         getCommentsFromFirebase(filmId);
     }
 
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
+        getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_home, fragment)
+                .replace(R.id.frame_detail, fragment)
+                .addToBackStack(HomeFragment.class.getSimpleName())
                 .commit();
     }
 
@@ -215,6 +220,7 @@ public class MovieDetailedFragment extends Fragment {
     }
 
     private void hook(View view) {
+        frame_detail = view.findViewById(R.id.frame_detail);
         movieImage = view.findViewById(R.id.movieImage);
         movieBackground = view.findViewById(R.id.movieBackground);
         movieTitle = view.findViewById(R.id.movieTitle);
