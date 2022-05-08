@@ -6,22 +6,35 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TicketsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TicketsFragment extends Fragment {
+public class TicketsFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    public static RecyclerView recyclerTickets;
+
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private List<Models.Ticket> tickets = new ArrayList<>();
 
     public TicketsFragment() {
         // Required empty public constructor
@@ -66,5 +79,31 @@ public class TicketsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 //        ViewPager2 etc...
+
+        hook(view);
+        getTicketsFromFirebase();
+    }
+
+    private void getTicketsFromFirebase() {
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("tickets").get().addOnSuccessListener(collection -> {
+            tickets.clear();
+            if(!collection.isEmpty()) {
+                for (DocumentSnapshot document : collection.getDocuments()) {
+                    tickets.add(document.toObject(Models.Ticket.class));
+                }
+
+                recyclerTickets.setAdapter(new TicketsAdapter(tickets, requireContext()));
+                LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                SnapHelper snapHelper = new PagerSnapHelper();
+                recyclerTickets.setLayoutManager(layoutManager);
+                snapHelper.attachToRecyclerView(recyclerTickets);
+            }
+        });
+    }
+
+    private void hook(View view) {
+        recyclerTickets = view.findViewById(R.id.recyclerTickets);
+
+
     }
 }
