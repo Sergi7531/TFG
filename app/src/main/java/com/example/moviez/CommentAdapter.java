@@ -42,11 +42,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         }
 
         holder.username.setText(comment.getUsername());
+        holder.spoilerImage.setAlpha(1f);
 
         if(comment.spoiler) {
             holder.comment.setText("Este comentario contiene spoilers.\nPulsa el icono para verlo.");
             holder.rating.setText("-");
-            holder.spoilerImage.setAlpha(1f);
             holder.spoilerImage.setOnClickListener(view -> {
                 holder.comment.setText(comment.comment);
                 holder.rating.setText(String.valueOf(comment.getRating()));

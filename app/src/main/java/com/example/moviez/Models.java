@@ -59,6 +59,23 @@ public class Models {
         }
     }
 
+    public class Cinema {
+        public String cinemaid;
+        public String name;
+        public String coords;
+        public String address;
+
+//        Empty constructor for Firebase:
+        public Cinema() {}
+
+        public Cinema(String cinemaid, String name, String coords, String address) {
+            this.cinemaid = cinemaid;
+            this.name = name;
+            this.coords = coords;
+            this.address = address;
+        }
+    }
+
     public static class Ticket {
         public String ticketid;
         public String filmName;

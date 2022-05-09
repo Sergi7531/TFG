@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MovieDetailedFragment">
@@ -284,7 +285,6 @@
                                     android:layout_gravity="right"
                                     android:fontFamily="@font/satoshi"
                                     android:text="0.0"
-                                    android:textAlignment="center"
                                     android:textColor="?attr/colorOnSecondary"
                                     android:textSize="20sp"
                                     android:textStyle="bold" />
