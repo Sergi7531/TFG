@@ -33,5 +33,10 @@
     <string name="commentary">Comentarios</string>
     <string name="search_for_users">Search for users</string>
     <string name="para_ti">Para ti</string>
+    <string name="add_comment">Añade un comentario</string>
+    <string name="comment_hint">Escribe tu comentario aquí...</string>
+    <string name="buy_ticket">Comprar ticket</string>
+
     <string name="scan_something">Scan something...</string>
+
 </resources>

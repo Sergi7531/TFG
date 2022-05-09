@@ -41,7 +41,6 @@
                         android:id="@+id/movieImage"
                         android:layout_width="140dp"
                         android:layout_height="252dp"
-                        android:scaleType="fitXY"
                         android:src="@drawable/google" />
                 </androidx.cardview.widget.CardView>
 
@@ -122,7 +121,7 @@
                         android:fontFamily="@font/satoshi"
                         android:text="TextView"
                         android:textAlignment="center"
-                        android:textColor="?attr/colorOnPrimary"
+                        android:textColor="?attr/backgroundColor"
                         android:textSize="16sp"
                         android:textStyle="bold" />
                 </androidx.cardview.widget.CardView>

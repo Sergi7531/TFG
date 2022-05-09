@@ -8,6 +8,7 @@
   <color name="secondaryDarkColor">#0027b0</color>
   <color name="primaryTextColor">#151515</color>
   <color name="secondaryTextColor">#151515</color>
+  <color name="secondaryTextColor2">#40151515</color>
 
   <color name="dprimaryColor">#151515</color>
   <color name="dprimaryLightColor">#1E1E1E</color>
@@ -17,5 +18,6 @@
   <color name="dsecondaryDarkColor">#0027b0</color>
   <color name="dprimaryTextColor">#ffffff</color>
   <color name="dsecondaryTextColor">#ffffff</color>
+  <color name="dsecondaryTextColor2">#40FFFFFF</color>
 
 </resources>
