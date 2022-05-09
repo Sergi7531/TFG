@@ -2,15 +2,16 @@ package com.example.moviez;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,7 +19,10 @@ import android.widget.Toast;
  * create an instance of this fragment.
  */
 
-public class PasswordFragment extends Fragment {
+public class PasswordFragment extends AppFragment {
+
+    public Button recoverPassword;
+    public TextInputEditText mailRecovery;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,6 +77,32 @@ public class PasswordFragment extends Fragment {
                 .replace(R.id.landingFrame, fragment)
                 .commit();
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recoverPassword = view.findViewById(R.id.recoverPassword);
+        mailRecovery = view.findViewById(R.id.mail);
+
+
+        recoverPassword.setOnClickListener(view1 -> {
+            if(auth.getCurrentUser() != null) {
+                if(auth.getCurrentUser().getEmail().equals(mailRecovery.getText().toString().trim())) {
+                    auth.sendPasswordResetEmail(auth.getCurrentUser().getEmail());
+                    setFragment(new LoginFragment());
+                }
+            } else {
+                auth.sendPasswordResetEmail(mailRecovery.getText().toString().trim());
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+    }
+
+
+
+
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
