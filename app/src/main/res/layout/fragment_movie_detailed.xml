@@ -39,7 +39,6 @@
                         android:id="@+id/movieImage"
                         android:layout_width="140dp"
                         android:layout_height="252dp"
-                        android:scaleType="fitXY"
                         android:src="@drawable/google" />
                 </androidx.cardview.widget.CardView>
 

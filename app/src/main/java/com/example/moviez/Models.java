@@ -25,6 +25,7 @@ public class Models {
         public int runtime;
         //        public ArrayList<SpokenLanguage> spoken_languages;
         public String status;
+        public String sinopsis;
         public String tagline;
         public String title;
         public boolean video;
