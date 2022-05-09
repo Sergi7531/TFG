@@ -5,22 +5,15 @@
     android:layout_width="320dp"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="@color/dprimaryColor"><![CDATA[
+    android:background="?attr/colorPrimaryVariant"><![CDATA[
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    ]]>
 
-    <ImageView
-        android:id="@+id/spoilerImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="50dp"
-        android:elevation="10dp"
-        tools:srcCompat="@drawable/ic_baseline_warning_amber_24" />
+
+
+
+    ]]>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"
@@ -44,7 +37,7 @@
         android:layout_toRightOf="@id/imageCard"
         android:fontFamily="@font/satoshi"
         android:text="TextView"
-        android:textColor="@color/dprimaryTextColor"
+        android:textColor="?attr/colorOnSecondary"
         android:textSize="20sp" />
 
     <TextView
@@ -56,7 +49,7 @@
         android:layout_marginRight="50dp"
         android:fontFamily="@font/satoshi"
         android:text="/5.0"
-        android:textColor="@color/dprimaryTextColor" />
+        android:textColor="?attr/colorOnSecondary" />
 
     <TextView
         android:id="@+id/userRatingHolder"
@@ -67,19 +60,27 @@
         android:layout_toLeftOf="@id/textView7"
         android:fontFamily="@font/satoshi"
         android:text="0.0"
-        android:textColor="@color/dprimaryTextColor" />
+        android:textColor="?attr/colorOnSecondary" />
 
     <TextView
         android:id="@+id/commentUserHolder"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/usernameMyUserHolder"
         android:layout_alignLeft="@id/usernameMyUserHolder"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="70dp"
         android:alpha="0.7"
         android:fontFamily="@font/satoshi"
         android:text="TextView"
-        android:textColor="@color/dprimaryTextColor" />
+        android:textColor="?attr/colorOnSecondary" />
+
+    <ImageView
+        android:id="@+id/spoilerImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView7"
+        android:layout_alignTop="@id/commentUserHolder"
+        android:layout_alignRight="@id/textView7"
+        tools:srcCompat="@drawable/ic_baseline_warning_amber_24" />
 
 </RelativeLayout>

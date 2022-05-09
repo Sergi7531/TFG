@@ -11,7 +11,9 @@
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/primaryColor</item>
-        <!-- Customize your theme here. -->
+        <!-- Project Colors -->
+        <item name="backgroundColor">@color/primaryColor</item>
+        <item name="hintTextColor">@color/secondaryTextColor2</item>
         <item name="android:navigationBarColor">@color/primaryColor</item>
     </style>
 
