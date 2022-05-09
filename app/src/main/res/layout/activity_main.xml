@@ -20,6 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginStart="-19dp"
             app:backgroundTint="@color/primaryLightColor"
             app:fabCradleMargin="10dp"
             app:fabCradleRoundedCornerRadius="10dp"
@@ -37,6 +38,7 @@
         </com.google.android.material.bottomappbar.BottomAppBar>
 
         <ImageView
+            android:id="@+id/imageView8"
             android:layout_width="85dp"
             android:layout_height="65dp"
             android:layout_gravity="bottom|center"
@@ -48,10 +50,12 @@
             android:id="@+id/fab"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_sum"
-            app:elevation="15dp"
-            app:layout_anchor="@id/bottomAppBar" />
+            app:elevation="20dp"
+            app:layout_anchor="@+id/imageView8"
+            app:layout_anchorGravity="center" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

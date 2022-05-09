@@ -34,4 +34,17 @@
     <string name="search_for_users">Search for users</string>
     <string name="para_ti">Para ti</string>
     <string name="scan_something">Scan something...</string>
+    <string name="editar_perfil">Editar Perfil</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
+    <string name="cr_ditos">Créditos</string>
+    <string name="modo_oscuro">Modo Oscuro</string>
+    <string name="cambiar_contrase_a">Cambiar Contraseña</string>
+    <string name="cambiar_nombre_de_perfil">Cambiar Nombre de Perfil</string>
+    <string name="actualizar_nombre_de_perfil">Actualizar nombre de perfil</string>
+    <string name="nuevo_nombre">Nuevo Nombre</string>
+    <string name="confirmar_nombre">Confirmar Nombre</string>
+    <string name="confirma">Confirma</string>
+    <string name="confirmar_contrase_a">Confirmar Contraseña</string>
+    <string name="nueva_contrase_a">Nueva Contraseña</string>
+    <string name="actualizar_contrase_a">Actualizar contraseña</string>
 </resources>
