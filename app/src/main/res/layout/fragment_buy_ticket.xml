@@ -158,7 +158,6 @@
             android:backgroundTint="?attr/colorSecondary"
             android:fontFamily="@font/satoshi"
             android:shadowColor="@android:color/transparent"
-            android:text="@string/buy_ticket"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:textStyle="bold"

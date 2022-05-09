@@ -120,6 +120,7 @@ public class Models {
             return
                     ticketid +
                     ";;" + filmid +
+                    ";;" + userid +
                     ";;" + filmName +
                     ";;" + tagline +
                     ";;" + filmImage +

@@ -32,7 +32,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/satoshi"
-                android:text="@string/add_comment"
                 android:textAlignment="center"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="24sp"
@@ -63,7 +62,6 @@
                 android:layout_height="300dp"
                 android:fontFamily="@font/satoshi"
                 android:gravity="start|top"
-                android:text="@string/comment_hint"
                 android:textAlignment="viewStart"
                 android:textColor="?attr/colorOnSecondary"
                 android:textColorHint="?attr/hintTextColor" />

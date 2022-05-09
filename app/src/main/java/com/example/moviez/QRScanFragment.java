@@ -115,27 +115,36 @@ public class QRScanFragment extends AppFragment {
 
                         ticket.ticketid = resultSplitted[0];
                         ticket.filmid = Integer.parseInt(resultSplitted[1]);
-                        ticket.filmName = resultSplitted[2];
-                        ticket.tagline = resultSplitted[3];
-                        ticket.filmImage = resultSplitted[4];
-                        ticket.cinemaName = resultSplitted[5];
-                        ticket.cinemaCoords = resultSplitted[6];
-                        ticket.date = resultSplitted[7];
-                        ticket.time = resultSplitted[8];
-                        ticket.duration = Integer.parseInt(resultSplitted[9]);
-                        ticket.row = Integer.parseInt(resultSplitted[10]);
-                        ticket.seat = Integer.parseInt(resultSplitted[11]);
-                        ticket.room = Integer.parseInt(resultSplitted[12]);
+                        ticket.userid = resultSplitted[2];
+                        ticket.filmName = resultSplitted[3];
+                        ticket.tagline = resultSplitted[4];
+                        ticket.filmImage = resultSplitted[5];
+                        ticket.cinemaName = resultSplitted[6];
+                        ticket.cinemaCoords = resultSplitted[7];
+                        ticket.date = resultSplitted[8];
+                        ticket.time = resultSplitted[9];
+                        ticket.duration = Integer.parseInt(resultSplitted[10]);
+                        ticket.row = Integer.parseInt(resultSplitted[11]);
+                        ticket.seat = Integer.parseInt(resultSplitted[12]);
+                        ticket.room = Integer.parseInt(resultSplitted[13]);
 
-                        db.collection("users").document(auth.getCurrentUser().getUid()).collection("tickets").document(ticket.ticketid).set(ticket).addOnSuccessListener(success -> {
+//                            When the ticket is added, we need to remove it from the user with the ticket.userid:
+
+                        db.collection("users").document(ticket.userid).collection("tickets").document(ticket.ticketid).delete().addOnSuccessListener(success1 -> {
+
+//                            Set the ticket to the user with the ticket.userid:
+
+                            ticket.userid = auth.getCurrentUser().getUid();
+
+
+                            db.collection("users").document(ticket.userid).collection("tickets").document(ticket.ticketid).set(ticket).addOnSuccessListener(success -> {
                             Toast.makeText(getContext(), "Ticket added", Toast.LENGTH_SHORT).show();
-//                            Go to ticketsfragment
 
+                            });
+
+//                            Go back:
                             setFragment();
-
-                            Toast.makeText(getContext(), result.getText(), Toast.LENGTH_SHORT).show();
                         });
-
                     }
                 });
             }
