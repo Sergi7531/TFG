@@ -141,7 +141,7 @@ public class Models {
         public String profileImageURL;
         public String email;
         public String password;
-        public List<Integer> favoriteGenres;
+        public List<Integer> favoriteGenres = new ArrayList<>();
         public List<Film> watchedFilms;
         public List<Film> favoritedFilms;
         public List<Film> viewLaterFilms;

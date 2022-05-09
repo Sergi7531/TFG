@@ -53,11 +53,8 @@ public class LandingActivity extends AppCompatActivity {
                             passwordLog
                     ).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-
-
                     db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
-
-                        if (documentSnapshot.toObject(Models.User.class).favoriteGenres.size() == 0) {
+                        if (documentSnapshot.toObject(Models.User.class).favoriteGenres.isEmpty() || documentSnapshot.toObject(Models.User.class).favoriteGenres == null) {
                             accessApp();
                         }
                     });
@@ -122,5 +119,4 @@ public class LandingActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.landingFrame, fragment);
         fragmentTransaction.commit();
     }
-
 }
