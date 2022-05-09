@@ -285,7 +285,6 @@
                                     android:layout_gravity="right"
                                     android:fontFamily="@font/satoshi"
                                     android:text="0.0"
-                                    android:textAlignment="center"
                                     android:textColor="?attr/colorOnSecondary"
                                     android:textSize="20sp"
                                     android:textStyle="bold" />

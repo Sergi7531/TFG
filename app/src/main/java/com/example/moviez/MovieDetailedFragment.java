@@ -145,6 +145,13 @@ public class MovieDetailedFragment extends AppFragment {
         });
 
         getCommentsFromFirebase(filmId);
+
+        buyButton.setOnClickListener(v -> {
+            BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId);
+            setFragment(buyTicketFragment);
+        });
+
+
     }
 
     private void setFragment(Fragment fragment) {
@@ -231,5 +238,6 @@ public class MovieDetailedFragment extends AppFragment {
         comentariosTextDetail = view.findViewById(R.id.comentariosTextDetail);
         ratingBar = view.findViewById(R.id.ratingBar);
         addCommentMovie = view.findViewById(R.id.addCommentMovie);
+        buyButton = view.findViewById(R.id.buyButton);
     }
 }
