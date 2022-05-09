@@ -1,14 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="0dp"
+    tools:context=".BuyTicketFragment">
+
+    <RelativeLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp">
+
+        <Spinner
+            android:id="@+id/spinnerCinema"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/style_spinner"
+            android:contentDescription="@string/buy" />
+
+        <Spinner
+            android:id="@+id/spinnerDay"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/spinnerCinema"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/style_spinner"
+            android:contentDescription="@string/buy" />
+
+        <Spinner
+            android:id="@+id/spinnerHour"
+            android:layout_width="180dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/spinnerCinema"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@id/spinnerDay"
+            android:background="@drawable/style_spinner"
+            android:contentDescription="@string/buy" />
+
+        <Spinner
+            android:id="@+id/spinnerMovie"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/spinnerDay"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/style_spinner"
+            android:contentDescription="@string/buy" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinnerMovie"
+            android:layout_margin="10dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="?attr/colorPrimaryVariant"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardCornerRadius="12dp">
+
+                    <ImageView
+                        android:id="@+id/movieImage"
+                        android:layout_width="100dp"
+                        android:layout_height="180dp"
+                        android:src="@drawable/moviez_logo" />
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@id/cardMain"
+                    android:fontFamily="@font/satoshi"
+                    android:text="@string/info"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/movieSinopsis"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/info"
+                    android:layout_alignLeft="@id/info"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/satoshi"
+                    android:text="TextView"
+                    android:textColor="?attr/colorOnSecondary" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/durationCard"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cardMain"
+                    android:layout_alignLeft="@id/cardMain"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="?attr/hintTextColor"
+                    app:cardCornerRadius="12dp">
+
+                    <TextView
+                        android:id="@+id/movieDuration"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/buyButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/cardInfo"
+            android:layout_marginTop="40dp"
+            android:backgroundTint="?attr/colorSecondary"
+            android:fontFamily="@font/satoshi"
+            android:shadowColor="@android:color/transparent"
+            android:text="@string/buy_ticket"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp" />
+    </RelativeLayout>
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BuyTicketFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

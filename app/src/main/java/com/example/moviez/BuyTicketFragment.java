@@ -1,6 +1,11 @@
 package com.example.moviez;
 
 import android.os.Bundle;
+
+
+import androidx.fragment.app.Fragment;
+
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +17,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link BuyTicketFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class BuyTicketFragment extends AppFragment {
 
     private static int filmId = 0;
@@ -26,6 +33,7 @@ public class BuyTicketFragment extends AppFragment {
     List<Models.Cinema> cinemasNamesToShow = new ArrayList<>();
 
     Models.Cinema selectedCinema = new Models.Cinema();
+
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -41,9 +49,9 @@ public class BuyTicketFragment extends AppFragment {
         // Required empty public constructor
     }
 
+
     public BuyTicketFragment(int param1) {
         filmId = param1;
-    }
 
     /**
      * Use this factory method to create a new instance of
@@ -78,6 +86,7 @@ public class BuyTicketFragment extends AppFragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_buy_ticket, container, false);
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -124,5 +133,4 @@ public class BuyTicketFragment extends AppFragment {
 
         });
     }
-
 }

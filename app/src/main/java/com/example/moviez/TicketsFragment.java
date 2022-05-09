@@ -1,7 +1,6 @@
 package com.example.moviez;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,11 +96,13 @@ public class TicketsFragment extends AppFragment {
             tickets.clear();
             if(!collection.isEmpty()) {
                 for (DocumentSnapshot document : collection.getDocuments()) {
-                    tickets.add(document.toObject(Models.Ticket.class));
-                    ImageView imageView = new ImageView(getContext());
-                    imageView.setImageResource(R.drawable.ic_baseline_circle_24);
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
-                    linearPages.addView(imageView);
+                    if(document.toObject(Models.Ticket.class).valid) {
+                        tickets.add(document.toObject(Models.Ticket.class));
+                        ImageView imageView = new ImageView(getContext());
+                        imageView.setImageResource(R.drawable.ic_baseline_circle_24);
+                        imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
+                        linearPages.addView(imageView);
+                    }
                 }
 
                 recyclerTickets.setAdapter(new TicketsAdapter(tickets, requireContext()));

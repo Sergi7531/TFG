@@ -25,6 +25,7 @@ public class Models {
         public int runtime;
         //        public ArrayList<SpokenLanguage> spoken_languages;
         public String status;
+        public String sinopsis;
         public String tagline;
         public String title;
         public boolean video;
@@ -78,6 +79,8 @@ public class Models {
 
     public static class Ticket {
         public String ticketid;
+        public int filmid;
+        public String userid = "";
         public String filmName;
         public String tagline;
         public String filmImage;
@@ -85,16 +88,19 @@ public class Models {
         public String cinemaCoords;
         public String date;
         public String time;
-        public double duration;
+        public int duration;
         public int row;
         public int seat;
         public int room;
+        public boolean valid;
 
 //        Empty constructor for Firebase:
         public Ticket() {}
 
-        public Ticket(String ticketid, String filmName, String tagline, String filmImage, String cinemaName, String cinemaCoords, String date, String time, double duration, int row, int seat, int room) {
+        public Ticket(String ticketid, int filmid, String userid, String filmName, String tagline, String filmImage, String cinemaName, String cinemaCoords, String date, String time, int duration, int row, int seat, int room, boolean valid) {
             this.ticketid = ticketid;
+            this.filmid = filmid;
+            this.userid = userid;
             this.filmName = filmName;
             this.tagline = tagline;
             this.filmImage = filmImage;
@@ -106,6 +112,26 @@ public class Models {
             this.row = row;
             this.seat = seat;
             this.room = room;
+            this.valid = valid;
+        }
+
+        @Override
+        public String toString() {
+            return
+                    ticketid +
+                    ";;" + filmid +
+                    ";;" + filmName +
+                    ";;" + tagline +
+                    ";;" + filmImage +
+                    ";;" + cinemaName +
+                    ";;" + cinemaCoords +
+                    ";;" + date +
+                    ";;" + time +
+                    ";;" + duration +
+                    ";;" + row +
+                    ";;" + seat +
+                    ";;" + room +
+                    ";;" + valid;
         }
     }
 

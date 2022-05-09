@@ -47,15 +47,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         if(comment.spoiler) {
             holder.comment.setText("Este comentario contiene spoilers.\nPulsa el icono para verlo.");
             holder.rating.setText("-");
-            holder.spoilerImage.setOnClickListener(view -> {
-                holder.comment.setText(comment.comment);
-                holder.rating.setText(String.valueOf(comment.getRating()));
-            });
+            holder.spoilerImage.setImageResource(R.drawable.ic_baseline_warning_amber_24);
         } else {
-            holder.spoilerImage.setAlpha(0f);
             holder.comment.setText(comment.getComment());
             holder.rating.setText(String.valueOf(comment.getRating()));
         }
+        holder.spoilerImage.setOnClickListener(view -> {
+            holder.spoilerImage.setAlpha(0f);
+            holder.comment.setText(comment.comment);
+            holder.rating.setText(String.valueOf(comment.getRating()));
+        });
     }
 
     @Override

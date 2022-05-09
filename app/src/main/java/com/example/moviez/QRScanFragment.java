@@ -4,16 +4,17 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
@@ -27,7 +28,7 @@ import com.google.zxing.Result;
  */
 
 
-public class QRScanFragment extends Fragment {
+public class QRScanFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -107,7 +108,34 @@ public class QRScanFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(), result.getText(), Toast.LENGTH_SHORT).show();
+
+                        String[] resultSplitted = result.getText().split(";;");
+
+                        Models.Ticket ticket = new Models.Ticket();
+
+                        ticket.ticketid = resultSplitted[0];
+                        ticket.filmid = Integer.parseInt(resultSplitted[1]);
+                        ticket.filmName = resultSplitted[2];
+                        ticket.tagline = resultSplitted[3];
+                        ticket.filmImage = resultSplitted[4];
+                        ticket.cinemaName = resultSplitted[5];
+                        ticket.cinemaCoords = resultSplitted[6];
+                        ticket.date = resultSplitted[7];
+                        ticket.time = resultSplitted[8];
+                        ticket.duration = Integer.parseInt(resultSplitted[9]);
+                        ticket.row = Integer.parseInt(resultSplitted[10]);
+                        ticket.seat = Integer.parseInt(resultSplitted[11]);
+                        ticket.room = Integer.parseInt(resultSplitted[12]);
+
+                        db.collection("users").document(auth.getCurrentUser().getUid()).collection("tickets").document(ticket.ticketid).set(ticket).addOnSuccessListener(success -> {
+                            Toast.makeText(getContext(), "Ticket added", Toast.LENGTH_SHORT).show();
+//                            Go to ticketsfragment
+
+                            setFragment();
+
+                            Toast.makeText(getContext(), result.getText(), Toast.LENGTH_SHORT).show();
+                        });
+
                     }
                 });
             }
@@ -118,6 +146,14 @@ public class QRScanFragment extends Fragment {
                 codeScanner.startPreview();
             }
         });
+    }
+
+    private void setFragment() {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        TicketsFragment ticketsFragment = new TicketsFragment();
+        fragmentTransaction.replace(R.id.main_frame, ticketsFragment);
+        fragmentTransaction.commit();
     }
 
     private void askCameraPermission(View view) {
