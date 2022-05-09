@@ -143,7 +143,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/closeSession"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorSecondary"
