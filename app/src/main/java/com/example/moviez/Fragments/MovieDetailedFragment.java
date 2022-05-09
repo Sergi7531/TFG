@@ -152,8 +152,8 @@ public class MovieDetailedFragment extends AppFragment {
         getCommentsFromFirebase(filmId);
 
         buyButton.setOnClickListener(v -> {
-            //BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId);
-            //setFragment(buyTicketFragment);
+            BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId);
+            setFragment(buyTicketFragment);
         });
 
 
