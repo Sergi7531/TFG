@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +17,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviez.Activities.AppViewModel;
+import com.example.moviez.Adapters.CommentAdapter;
+import com.example.moviez.Models;
+import com.example.moviez.R;
+import com.example.moviez.Responses;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;

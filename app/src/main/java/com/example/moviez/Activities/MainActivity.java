@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Activities;
 
 import android.os.Bundle;
 import android.widget.FrameLayout;
@@ -8,6 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.moviez.Fragments.HomeFragment;
+import com.example.moviez.Fragments.MoviesFragment;
+import com.example.moviez.Fragments.ProfileFragment;
+import com.example.moviez.Fragments.TicketsFragment;
+import com.example.moviez.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

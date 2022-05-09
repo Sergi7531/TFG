@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dprimaryColor"
-    tools:context=".TicketsFragment">
+    tools:context=".Fragments.TicketsFragment">
 
     <Button
         android:id="@+id/qrButton"

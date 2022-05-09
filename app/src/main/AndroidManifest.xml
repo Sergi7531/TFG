@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieZ">
         <activity
-            android:name=".LandingActivity"
+            android:name=".Activities.LandingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Fragments;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +12,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviez.Activities.AppViewModel;
+import com.example.moviez.Adapters.FilmAdapter;
+import com.example.moviez.Adapters.MovieSearchResultAdapter;
+import com.example.moviez.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**

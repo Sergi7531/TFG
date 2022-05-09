@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.moviez.Activities.AppViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 

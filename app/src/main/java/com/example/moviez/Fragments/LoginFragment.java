@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,6 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.example.moviez.Activities.MainActivity;
+import com.example.moviez.Models;
+import com.example.moviez.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

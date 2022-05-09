@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.moviez.Fragments.AnimationFragment;
+import com.example.moviez.Fragments.LoginFragment;
+import com.example.moviez.Fragments.RegisterFragment;
+import com.example.moviez.Models;
+import com.example.moviez.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;

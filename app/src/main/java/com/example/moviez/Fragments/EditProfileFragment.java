@@ -1,24 +1,25 @@
-package com.example.moviez;
+package com.example.moviez.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
+
+import com.example.moviez.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PasswordFragment#newInstance} factory method to
+ * Use the {@link EditProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-
-public class PasswordFragment extends Fragment {
+public class EditProfileFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +30,13 @@ public class PasswordFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public PasswordFragment() {
+    public CardView profileName;
+    public CardView passwordName;
+    public CardView theme;
+    public CardView credits;
+    public Button closeSession;
+
+    public EditProfileFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +46,11 @@ public class PasswordFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PasswordFragment.
+     * @return A new instance of fragment EditProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PasswordFragment newInstance(String param1, String param2) {
-        PasswordFragment fragment = new PasswordFragment();
+    public static EditProfileFragment newInstance(String param1, String param2) {
+        EditProfileFragment fragment = new EditProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,28 +69,45 @@ public class PasswordFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        hook(view);
+
+        profileName.setOnClickListener(v -> {
+            setFragment(new ChangeUsernameFragment());
+        });
+
+        passwordName.setOnClickListener(v -> {
+            setFragment(new PasswordFragment());
+        });
+
+        closeSession.setOnClickListener(v -> {
+            auth.signOut();
+            setFragment(new LoginFragment());
+        });
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_password, container, false);
+        return inflater.inflate(R.layout.fragment_edit_profile, container, false);
     }
+
+    public void hook(View view) {
+        profileName = view.findViewById(R.id.changeName);
+        passwordName = view.findViewById(R.id.changePassword);
+        theme = view.findViewById(R.id.changeDarkLightTheme);
+        credits = view.findViewById(R.id.credits);
+        closeSession = view.findViewById(R.id.closeSession);
+    }
+
     private void setFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.landingFrame, fragment)
+                .replace(R.id.main_frame, fragment)
                 .commit();
     }
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                setFragment(new LoginFragment());
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);
-    }
-
 }

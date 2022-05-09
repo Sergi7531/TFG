@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Adapters;
 
 import android.content.Context;
 import android.os.Build;
@@ -13,13 +13,18 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviez.Fragments.PreferencesFragment;
+import com.example.moviez.Models;
+import com.example.moviez.Models.Genre;
+import com.example.moviez.R;
+
 import java.util.List;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHolder> {
     Context context;
     List<Genre> genresList;
 
-    public GenreAdapter(Context context, List<Genre> genresList) {
+    public GenreAdapter(Context context, List<Models.Genre> genresList) {
         this.context = context;
         this.genresList = genresList;
     }

@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.moviez.Models;
+import com.example.moviez.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;

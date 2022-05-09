@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Responses {
 
-    class CastResult {
+    public class CastResult {
         public boolean adult;
         public byte gender; //1 for female, 2 for male.
         public int id;
@@ -18,7 +18,7 @@ public class Responses {
         public String credit_id;
     }
 
-    class CrewResult {
+    public class CrewResult {
         public String name;
         public int id;
         public String job;
@@ -33,7 +33,7 @@ public class Responses {
 
     }
 
-    class BillboardResponse {
+    public class BillboardResponse {
         public Dates dates;
         public int page;
         public List<Models.Film> results;
@@ -82,7 +82,7 @@ public class Responses {
         }
     }
 
-    class SearchResponse {
+    public class SearchResponse {
         public String page;
         public List<Models.Film> results = new ArrayList<>();
         public String total_pages;
@@ -105,7 +105,7 @@ public class Responses {
         }
     }
 
-    class FullCastResponse {
+    public class FullCastResponse {
         public String id;
         public List<CastResult> cast = new ArrayList<>();
         public List<CrewResult> crew = new ArrayList<>();

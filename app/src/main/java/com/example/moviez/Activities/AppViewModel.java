@@ -1,9 +1,13 @@
-package com.example.moviez;
+package com.example.moviez.Activities;
 
 import android.net.Uri;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.moviez.IMDB;
+import com.example.moviez.Models;
+import com.example.moviez.Responses;
 
 import java.util.LinkedHashSet;
 import java.util.List;

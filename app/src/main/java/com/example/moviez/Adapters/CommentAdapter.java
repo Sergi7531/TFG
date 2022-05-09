@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviez.Models;
+import com.example.moviez.R;
 
 import java.util.List;
 

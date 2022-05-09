@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviez.Models;
+import com.example.moviez.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;

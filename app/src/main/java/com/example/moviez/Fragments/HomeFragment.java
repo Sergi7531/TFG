@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Fragments;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +10,10 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.moviez.Adapters.FilmAdapter;
+import com.example.moviez.Models;
+import com.example.moviez.R;
 
 import java.util.ArrayList;
 import java.util.List;
