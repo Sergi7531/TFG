@@ -4,4 +4,5 @@
         <item name="boxStrokeColor">?attr/colorPrimaryVariant</item>
         <item name="fontFamily">Satoshi</item>
     </style>
+
 </resources>

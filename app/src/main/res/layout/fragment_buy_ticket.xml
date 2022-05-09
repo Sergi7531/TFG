@@ -19,8 +19,10 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/style_spinner"
             android:contentDescription="@string/buy" />
 
@@ -30,7 +32,10 @@
             android:layout_height="60dp"
             android:layout_below="@id/spinnerCinema"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/style_spinner"
             android:contentDescription="@string/buy" />
 

@@ -11,6 +11,8 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.moviez.Fragments.AppFragment;
+import com.example.moviez.Fragments.LoginFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
