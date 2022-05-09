@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:orientation="vertical">
 
         <ImageView
@@ -25,29 +26,27 @@
             android:src="@drawable/moviez_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/LoginTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="#FFFFFF"
-            app:boxBackgroundColor="@color/primaryLightColor"
-            app:boxStrokeColor="#fef1ea"
-            app:counterTextColor="@color/primaryLightColor"
-            app:helperTextTextColor="@color/primaryLightColor"
-            app:hintTextColor="#FFFFFF"
-            app:placeholderTextColor="@color/primaryLightColor"
-            app:prefixTextColor="#FFFFFF"
-            app:suffixTextColor="#FFFFFF">
+            android:textColorHint="?attr/colorOnSecondary"
+            app:boxBackgroundColor="?attr/colorPrimaryVariant"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="?attr/colorPrimaryVariant"
+            app:boxStrokeWidth="0dp"
+            app:hintTextColor="?attr/colorOnSecondary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/searchInputUsers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:drawableRight="@drawable/ic_baseline_search"
+                android:fontFamily="@font/satoshi"
                 android:hint="@string/search_for_users"
-                android:lines="1"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#FFFFFF" />
+                android:textColorHint="?attr/colorOnSecondary" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView

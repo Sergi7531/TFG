@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.moviez.Activities.MainActivity;
 import com.example.moviez.Models;
+import com.example.moviez.PasswordFragment;
 import com.example.moviez.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
