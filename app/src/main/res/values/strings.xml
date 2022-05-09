@@ -33,4 +33,5 @@
     <string name="commentary">Comentarios</string>
     <string name="search_for_users">Search for users</string>
     <string name="para_ti">Para ti</string>
+    <string name="scan_something">Scan something...</string>
 </resources>

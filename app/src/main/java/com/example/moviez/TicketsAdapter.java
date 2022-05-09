@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -67,6 +69,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         int hour = Integer.parseInt(time[0]);
         int minute = Integer.parseInt(time[1]);
         holder.durationTicket.setText(hour + ":" + minute);
+
     }
 
     @Override
@@ -119,4 +122,5 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
 
         holder.qrCode.setImageBitmap(bitmap);
     }
+
 }

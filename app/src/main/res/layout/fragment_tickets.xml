@@ -7,6 +7,14 @@
     android:background="@color/dprimaryColor"
     tools:context=".TicketsFragment">
 
+    <Button
+        android:id="@+id/qrButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="Scan QR"
+        android:textColor="@color/primaryTextColor" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerTickets"
         android:layout_width="match_parent"

@@ -1,9 +1,11 @@
 package com.example.moviez;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -33,11 +35,11 @@ public class TicketsFragment extends AppFragment {
     public static RecyclerView recyclerTickets;
     public static LinearLayout linearPages;
 
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private List<Models.Ticket> tickets = new ArrayList<>();
+    public Button button;
 
     public TicketsFragment() {
         // Required empty public constructor
@@ -84,6 +86,9 @@ public class TicketsFragment extends AppFragment {
 //        ViewPager2 etc...
 
         hook(view);
+        button.setOnClickListener(v -> {
+            setFragment(new QRScanFragment());
+        });
         getTicketsFromFirebase();
     }
 
@@ -111,7 +116,13 @@ public class TicketsFragment extends AppFragment {
     private void hook(View view) {
         recyclerTickets = view.findViewById(R.id.recyclerTickets);
         linearPages = view.findViewById(R.id.linearPages);
-
+        button = view.findViewById(R.id.qrButton);
     }
 
+    private void setFragment(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .commit();
+    }
 }
