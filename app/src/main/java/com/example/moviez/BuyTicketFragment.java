@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,8 +21,11 @@ public class BuyTicketFragment extends AppFragment {
 
     private static int filmId = 0;
 
+    private static int roomsInSelectedCinema = 0;
+    List<Models.Cinema> allCinemas = new ArrayList<>();
+    List<Models.Cinema> cinemasNamesToShow = new ArrayList<>();
 
-    List<Models.Cinema> cinemasNamesToShow;
+    Models.Cinema selectedCinema = new Models.Cinema();
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -83,19 +87,37 @@ public class BuyTicketFragment extends AppFragment {
         db.collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 Models.Cinema cinema = documentSnapshot.toObject(Models.Cinema.class);
-                cinemasNamesToShow.add(cinema);
+                allCinemas.add(cinema);
             }
+
+//            TODO: Finish this part
 
 //            Cuando el cine esté seleccionado en el dropdown, se muestra la lista de salas:
 //            spinnerCinemas.setOnItemSelectedListener((adapterView, view1, i, l) -> {
 //                Models.Cinema cinema = cinemasNamesToShow.get(i);
 //                db.collection("cinemas").document(cinema.cinemaid).collection("rooms").get().addOnSuccessListener(queryDocumentSnapshotsRooms -> {
-//                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshotsRooms.getDocuments()) {
-//                      TODO: Añadir las salas a la lista de salas.
-//                      TODO: Añadir las sesiones a la lista de sesiones.
-//                    }
+//                    roomsInSelectedCinema = queryDocumentSnapshotsRooms.getDocuments().size();
+//                    selectedCinema = allCinemas.get(i);
 //                });
+//
 //            });
+//
+//            for(int i = 0; i < allCinemas.size(); i++) {
+//                db.collection("cinemas")
+//                        .document(cinemasNamesToShow.get().cinemaid)
+//                        .collection("rooms")
+//                        .document(String.valueOf(i)).collection("films").get()
+//                        .addOnSuccessListener(queryDocumentSnapshotsRooms -> {
+//
+////                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshotsRooms.getDocuments()) {
+////                                if (documentSnapshot.getId().equals(String.valueOf(filmId))) {
+////
+////                                }
+////                            }
+//
+//                        });
+//            }
+
 
 
 

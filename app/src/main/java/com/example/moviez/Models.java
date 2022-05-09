@@ -59,7 +59,7 @@ public class Models {
         }
     }
 
-    public class Cinema {
+    public static class Cinema {
         public String cinemaid;
         public String name;
         public String coords;
