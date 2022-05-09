@@ -10,11 +10,12 @@
     <ImageView
         android:id="@+id/imageTicketDetail"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="200dp"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@color/ic_launcher_background" />
+        tools:srcCompat="@drawable/facebook" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -100,6 +101,7 @@
                     android:id="@+id/textView16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="Sala"
                     android:textColor="@color/dprimaryTextColor" />
 
@@ -124,6 +126,7 @@
                     android:id="@+id/textView18"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="Fila"
                     android:textColor="@color/dprimaryTextColor" />
 
@@ -148,6 +151,7 @@
                     android:id="@+id/textView20"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="Asiento"
                     android:textColor="@color/dprimaryTextColor" />
 

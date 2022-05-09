@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ import java.util.List;
  * Use the {@link MovieDetailedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MovieDetailedFragment extends Fragment {
+public class MovieDetailedFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -157,8 +156,7 @@ public class MovieDetailedFragment extends Fragment {
     }
 
     private void getCommentsFromFirebase(int filmId) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("films").document(String.valueOf(filmId)).collection("comments").get().addOnCompleteListener(task -> {
+        db.collection("comments").document(String.valueOf(filmId)).collection("comments").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Models.Comment comment = document.toObject(Models.Comment.class);

@@ -45,19 +45,10 @@ public class NewCommentFragment extends AppFragment {
 
 //    Constructor for the fragment with filmId:
 
-    public NewCommentFragment(int param1) {
+    public NewCommentFragment(int mParam1) {
         filmId = mParam1;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NewCommentFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static NewCommentFragment newInstance(String param1, String param2) {
         NewCommentFragment fragment = new NewCommentFragment();
         Bundle args = new Bundle();
@@ -92,30 +83,48 @@ public class NewCommentFragment extends AppFragment {
 
 
         userRatingBar.setOnTouchListener(new View.OnTouchListener() {
-                                             @Override
-                                             public boolean onTouch(View view, MotionEvent motionEvent) {
-                                                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                                                     actualRating.setText(String.valueOf(userRatingBar.getRating()));
-                                                     System.out.println(userRatingBar.getRating());
-                                                     return true;
-                                                 }
-                                                 return false;
-                                             }
-                                         });
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    float touchPositionX = event.getX();
+                    float width = userRatingBar.getWidth();
+                    float starsf = (touchPositionX / width) * 5.0f;
+                    int stars = (int)starsf + 1;
+                    userRatingBar.setRating(stars);
+                    actualRating.setText(String.valueOf(stars));
+                    v.setPressed(false);
+                }
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    v.setPressed(true);
+                }
 
-        if(!commentText.getText().toString().isEmpty() && userRatingBar.getRating() != 0) {
-            publishButton.setOnClickListener(view1 -> {
+                if (event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    v.setPressed(false);
+                }
+                return true;
+            }
+        });
+
+        publishButton.setOnClickListener(view1 -> {
+            if(!commentText.getText().toString().isEmpty() && userRatingBar.getRating() != 0) {
                 String comment = commentText.getText().toString();
                 float rating = userRatingBar.getNumStars();
                 String ratingString = String.valueOf(rating);
 
                 boolean spoiler = spoilerCheckBox.isChecked();
 
-                db.collection("films").document(String.valueOf(filmId)).collection("comments").add(new Models.Comment(comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), Double.parseDouble(ratingString), spoiler));
-//                Go back to the movie page:
+                if(auth.getCurrentUser().getPhotoUrl() != null) {
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").add(new Models.Comment(comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), Double.parseDouble(ratingString), spoiler));
+                    System.out.println("Coment added: " + filmId);
+                } else {
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").add(new Models.Comment(comment, "", auth.getCurrentUser().getDisplayName(), Double.parseDouble(ratingString), spoiler));
+                    System.out.println("Coment added without imageUrl: " + filmId);
+                }
+
+                //                Go back to the movie page:
                 getActivity().getSupportFragmentManager().popBackStack();
-            });
-        }
+            }
+        });
 
     }
 

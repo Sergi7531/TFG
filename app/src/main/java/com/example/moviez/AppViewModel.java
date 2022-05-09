@@ -86,7 +86,7 @@ public class AppViewModel extends ViewModel {
 
     public static void getMoviesForYou(List<Integer> genresUser) {
 
-        if(contPage > 20) contPage = 0;
+        if(contPage > 5) contPage = 0;
 
         contPage++;
 
