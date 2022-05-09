@@ -10,14 +10,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link EditProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EditProfileFragment extends Fragment {
+public class EditProfileFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,6 +35,7 @@ public class EditProfileFragment extends Fragment {
     public CardView passwordName;
     public CardView theme;
     public CardView credits;
+    public Button closeSession;
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -79,6 +83,10 @@ public class EditProfileFragment extends Fragment {
             setFragment(new PasswordFragment());
         });
 
+        closeSession.setOnClickListener(v -> {
+            auth.signOut();
+            setFragment(new LoginFragment());
+        });
 
     }
 
@@ -94,6 +102,7 @@ public class EditProfileFragment extends Fragment {
         passwordName = view.findViewById(R.id.changePassword);
         theme = view.findViewById(R.id.changeDarkLightTheme);
         credits = view.findViewById(R.id.credits);
+        closeSession = view.findViewById(R.id.closeSession);
     }
 
     private void setFragment(Fragment fragment) {
