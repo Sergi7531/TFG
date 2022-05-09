@@ -80,7 +80,7 @@ public class Models {
     public static class Ticket {
         public String ticketid;
         public int filmid;
-        public String userid = "";
+        public String userid;
         public String filmName;
         public String tagline;
         public String filmImage;
@@ -92,7 +92,6 @@ public class Models {
         public int row;
         public int seat;
         public int room;
-        public boolean valid;
 
 //        Empty constructor for Firebase:
         public Ticket() {}
@@ -112,7 +111,6 @@ public class Models {
             this.row = row;
             this.seat = seat;
             this.room = room;
-            this.valid = valid;
         }
 
         @Override
@@ -131,8 +129,7 @@ public class Models {
                     ";;" + duration +
                     ";;" + row +
                     ";;" + seat +
-                    ";;" + room +
-                    ";;" + valid;
+                    ";;" + room;
         }
     }
 

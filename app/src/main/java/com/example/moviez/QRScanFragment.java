@@ -138,7 +138,6 @@ public class QRScanFragment extends AppFragment {
 
 
                             db.collection("users").document(ticket.userid).collection("tickets").document(ticket.ticketid).set(ticket).addOnSuccessListener(success -> {
-                            Toast.makeText(getContext(), "Ticket added", Toast.LENGTH_SHORT).show();
 
                             });
 

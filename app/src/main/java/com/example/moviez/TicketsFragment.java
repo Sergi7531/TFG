@@ -96,7 +96,7 @@ public class TicketsFragment extends AppFragment {
             tickets.clear();
             if(!collection.isEmpty()) {
                 for (DocumentSnapshot document : collection.getDocuments()) {
-                    if(document.toObject(Models.Ticket.class).valid) {
+                    if(document.toObject(Models.Ticket.class).userid.equals(auth.getCurrentUser().getUid())) {
                         tickets.add(document.toObject(Models.Ticket.class));
                         ImageView imageView = new ImageView(getContext());
                         imageView.setImageResource(R.drawable.ic_baseline_circle_24);

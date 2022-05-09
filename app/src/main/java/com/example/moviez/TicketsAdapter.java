@@ -58,8 +58,6 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
 
         //Implementar campo 'valid' para tickets:
 
-//aaa
-
         holder.filmNameTicketDetail.setText(ticket.filmName);
         holder.taglineTicket.setText(ticket.tagline);
         holder.cinemaNameTicketDetail.setText(ticket.cinemaName);
