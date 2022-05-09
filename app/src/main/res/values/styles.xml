@@ -4,4 +4,11 @@
         <item name="boxStrokeColor">?attr/colorPrimaryVariant</item>
         <item name="fontFamily">Satoshi</item>
     </style>
+    <style name="ratingBarStyle" parent="android:Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/myratingbar</item>
+        <item name="android:minHeight">20dp</item>
+        <item name="android:maxHeight">20dp</item>
+        <item name="android:minWidth">20dp</item>
+        <item name="android:maxWidth">20dp</item>
+    </style>
 </resources>

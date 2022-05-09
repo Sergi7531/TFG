@@ -12,6 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/dprimaryColor</item>
         <!-- Customize your theme here. -->
+        <item name="backgroundColor">@color/dprimaryColor</item>
+        <item name="hintTextColor">@color/dsecondaryTextColor2</item>
         <item name="android:navigationBarColor">@color/dprimaryColor</item>
     </style>
 
