@@ -6,10 +6,12 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -67,6 +69,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         int hour = Integer.parseInt(time[0]);
         int minute = Integer.parseInt(time[1]);
         holder.durationTicket.setText(hour + ":" + minute);
+
     }
 
     @Override
@@ -108,15 +111,16 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
     private void passInfoToQR(@NonNull TicketViewHolder holder, String ticketInfo) throws WriterException {
 
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(ticketInfo, BarcodeFormat.QR_CODE, 120, 120);
-        Bitmap bitmap = Bitmap.createBitmap(120, 120, Bitmap.Config.RGB_565);
+        BitMatrix bitMatrix = qrCodeWriter.encode(ticketInfo, BarcodeFormat.QR_CODE, 170, 170);
+        Bitmap bitmap = Bitmap.createBitmap(170, 170, Bitmap.Config.RGB_565);
 
-        for (int x = 0; x < 120; x++) {
-            for (int y = 0; y < 120; y++) {
+        for (int x = 0; x < 170; x++) {
+            for (int y = 0; y < 170; y++) {
                 bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
             }
         }
 
         holder.qrCode.setImageBitmap(bitmap);
     }
+
 }

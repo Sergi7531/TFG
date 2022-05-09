@@ -1,12 +1,13 @@
 package com.example.moviez;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +35,11 @@ public class TicketsFragment extends AppFragment {
     public static RecyclerView recyclerTickets;
     public static LinearLayout linearPages;
 
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private List<Models.Ticket> tickets = new ArrayList<>();
+    public Button button;
 
     public TicketsFragment() {
         // Required empty public constructor
@@ -87,6 +86,9 @@ public class TicketsFragment extends AppFragment {
 //        ViewPager2 etc...
 
         hook(view);
+        button.setOnClickListener(v -> {
+            setFragment(new QRScanFragment());
+        });
         getTicketsFromFirebase();
     }
 
@@ -98,7 +100,7 @@ public class TicketsFragment extends AppFragment {
                     tickets.add(document.toObject(Models.Ticket.class));
                     ImageView imageView = new ImageView(getContext());
                     imageView.setImageResource(R.drawable.ic_baseline_circle_24);
-                    imageView.setLayoutParams(new LinearLayout.LayoutParams(12, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    imageView.setLayoutParams(new LinearLayout.LayoutParams(30, 30));
                     linearPages.addView(imageView);
                 }
 
@@ -114,7 +116,13 @@ public class TicketsFragment extends AppFragment {
     private void hook(View view) {
         recyclerTickets = view.findViewById(R.id.recyclerTickets);
         linearPages = view.findViewById(R.id.linearPages);
-
+        button = view.findViewById(R.id.qrButton);
     }
 
+    private void setFragment(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .commit();
+    }
 }

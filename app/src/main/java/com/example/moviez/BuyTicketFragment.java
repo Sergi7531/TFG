@@ -2,18 +2,39 @@ package com.example.moviez;
 
 import android.os.Bundle;
 
+
 import androidx.fragment.app.Fragment;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link BuyTicketFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BuyTicketFragment extends Fragment {
+
+public class BuyTicketFragment extends AppFragment {
+
+    private static int filmId = 0;
+
+    private static int roomsInSelectedCinema = 0;
+    List<Models.Cinema> allCinemas = new ArrayList<>();
+    List<Models.Cinema> cinemasNamesToShow = new ArrayList<>();
+
+    Models.Cinema selectedCinema = new Models.Cinema();
+
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +48,10 @@ public class BuyTicketFragment extends Fragment {
     public BuyTicketFragment() {
         // Required empty public constructor
     }
+
+
+    public BuyTicketFragment(int param1) {
+        filmId = param1;
 
     /**
      * Use this factory method to create a new instance of
@@ -60,5 +85,52 @@ public class BuyTicketFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_buy_ticket, container, false);
+    }
+
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+//      Consulta a firebase (coleccion cinemas):
+        db.collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                Models.Cinema cinema = documentSnapshot.toObject(Models.Cinema.class);
+                allCinemas.add(cinema);
+            }
+
+//            TODO: Finish this part
+
+//            Cuando el cine esté seleccionado en el dropdown, se muestra la lista de salas:
+//            spinnerCinemas.setOnItemSelectedListener((adapterView, view1, i, l) -> {
+//                Models.Cinema cinema = cinemasNamesToShow.get(i);
+//                db.collection("cinemas").document(cinema.cinemaid).collection("rooms").get().addOnSuccessListener(queryDocumentSnapshotsRooms -> {
+//                    roomsInSelectedCinema = queryDocumentSnapshotsRooms.getDocuments().size();
+//                    selectedCinema = allCinemas.get(i);
+//                });
+//
+//            });
+//
+//            for(int i = 0; i < allCinemas.size(); i++) {
+//                db.collection("cinemas")
+//                        .document(cinemasNamesToShow.get().cinemaid)
+//                        .collection("rooms")
+//                        .document(String.valueOf(i)).collection("films").get()
+//                        .addOnSuccessListener(queryDocumentSnapshotsRooms -> {
+//
+////                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshotsRooms.getDocuments()) {
+////                                if (documentSnapshot.getId().equals(String.valueOf(filmId))) {
+////
+////                                }
+////                            }
+//
+//                        });
+//            }
+
+
+
+
+
+        });
     }
 }

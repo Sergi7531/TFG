@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -16,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import java.util.List;
  * Use the {@link MovieDetailedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MovieDetailedFragment extends Fragment {
+public class MovieDetailedFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,7 +40,7 @@ public class MovieDetailedFragment extends Fragment {
     public static TextView movieDirector;
     public static TextView movieCasting;
     public static TextView globalUsersRating;
-    public static TextView noComments;
+    public static TextView comentariosTextDetail;
     public static RatingBar ratingBar;
     public static Button addCommentMovie;
 
@@ -51,6 +51,8 @@ public class MovieDetailedFragment extends Fragment {
     private List<Responses.CrewResult> crewItems = new ArrayList<>();
     public static RecyclerView commentsFragmentMovieDetail;
     private List<Models.Comment> comments = new ArrayList<>();
+
+    private FrameLayout frame_detail;
 
 
     public MovieDetailedFragment() {
@@ -138,22 +140,30 @@ public class MovieDetailedFragment extends Fragment {
         });
 
         addCommentMovie.setOnClickListener(v -> {
-//            setFragment(new AddCommentFragment(filmId));
+            NewCommentFragment newCommentFragment = new NewCommentFragment(filmId);
+            setFragment(newCommentFragment);
         });
 
         getCommentsFromFirebase(filmId);
+
+        buyButton.setOnClickListener(v -> {
+            BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId);
+            setFragment(buyTicketFragment);
+        });
+
+
     }
 
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
+        getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_home, fragment)
+                .replace(R.id.frame_detail, fragment)
+                .addToBackStack(HomeFragment.class.getSimpleName())
                 .commit();
     }
 
     private void getCommentsFromFirebase(int filmId) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("films").document(String.valueOf(filmId)).collection("comments").get().addOnCompleteListener(task -> {
+        db.collection("comments").document(String.valueOf(filmId)).collection("comments").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Models.Comment comment = document.toObject(Models.Comment.class);
@@ -172,11 +182,11 @@ public class MovieDetailedFragment extends Fragment {
                     globalUsersRating.setText(String.format("%.1f", averageRating));
                     ratingBar.setRating((float) averageRating);
                     commentsFragmentMovieDetail.setVisibility(View.VISIBLE);
-                    noComments.setVisibility(View.GONE);
+                    comentariosTextDetail.setText("Comentarios");
                 } else {
                     globalUsersRating.setText(" - ");
                     commentsFragmentMovieDetail.setVisibility(View.GONE);
-                    noComments.setVisibility(View.VISIBLE);
+                    comentariosTextDetail.setText("No hay comentarios");
                 }
 
 
@@ -215,6 +225,7 @@ public class MovieDetailedFragment extends Fragment {
     }
 
     private void hook(View view) {
+        frame_detail = view.findViewById(R.id.frame_detail);
         movieImage = view.findViewById(R.id.movieImage);
         movieBackground = view.findViewById(R.id.movieBackground);
         movieTitle = view.findViewById(R.id.movieTitle);
@@ -224,8 +235,9 @@ public class MovieDetailedFragment extends Fragment {
         movieCasting = view.findViewById(R.id.movieCasting);
         globalUsersRating = view.findViewById(R.id.globalUsersRating);
         commentsFragmentMovieDetail = view.findViewById(R.id.commentsFragmentMovieDetail);
-        noComments = view.findViewById(R.id.noComments);
+        comentariosTextDetail = view.findViewById(R.id.comentariosTextDetail);
         ratingBar = view.findViewById(R.id.ratingBar);
         addCommentMovie = view.findViewById(R.id.addCommentMovie);
+        buyButton = view.findViewById(R.id.buyButton);
     }
 }
