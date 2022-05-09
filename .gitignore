@@ -11,5 +11,6 @@
 /build
 /captures
 .externalNativeBuild
-.cxx
+.cxx\
+/.idea/misc.xml
 local.properties
