@@ -42,6 +42,7 @@ public class NewCommentFragment extends AppFragment {
 
     public RatingBar userRatingBar;
     public TextView actualRating;
+    private float starsf = 0.0f;
 
     public NewCommentFragment() {
         // Required empty public constructor
@@ -97,7 +98,7 @@ public class NewCommentFragment extends AppFragment {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     float touchPositionX = event.getX();
                     float width = userRatingBar.getWidth();
-                    float starsf = (touchPositionX / width) * 5.0f;
+                    starsf = (touchPositionX / width) * 5.0f;
 //                    Set stars to 1 decimal place:
                     starsf = (float) Math.round(starsf * 10) / 10;
                     if(starsf <=5 && starsf >= 1) {
