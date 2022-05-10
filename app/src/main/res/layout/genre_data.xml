@@ -27,7 +27,7 @@
             android:id="@+id/genre_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/image_action" />
+            app:srcCompat="@drawable/moviez_logo" />
 
         <TextView
             android:id="@+id/titleGenreHolder"
@@ -35,17 +35,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:elevation="12dp"
+            android:fontFamily="@font/satoshi"
             android:text="Género"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="22sp" />
+            android:textColor="@android:color/white"
+            android:textSize="19sp" />
 
-        <View
-            android:id="@+id/blueBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0"
-            android:background="@color/secondaryLightColor"
-            android:elevation="0dp" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/blueLayer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            app:cardBackgroundColor="?attr/colorSecondary" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
