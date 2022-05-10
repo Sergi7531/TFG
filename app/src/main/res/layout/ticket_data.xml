@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ticketDataLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dprimaryColor">
+    android:layout_height="wrap_content"
+    android:background="@color/dprimaryTextColor">
 
     <ImageView
         android:id="@+id/imageTicketDetail"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nombre peli"
-            android:textColor="@color/dprimaryTextColor"
+            android:textColor="@color/dprimaryColor"
             android:textSize="22sp" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textColor="@color/dprimaryTextColor" />
+            android:textColor="@color/dprimaryColor" />
 
         <LinearLayout
             android:id="@+id/linearCinema"
@@ -53,14 +53,16 @@
                 android:id="@+id/imageView8"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                tools:srcCompat="@drawable/ic_baseline_location_on_24" />
+                app:srcCompat="@drawable/ic_baseline_location_on_24" />
 
             <TextView
                 android:id="@+id/cinemaNameTicketDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="5dp"
                 android:text="Nombre cine"
-                android:textColor="@color/dprimaryTextColor" />
+                android:textColor="@color/dprimaryColor" />
         </LinearLayout>
 
         <LinearLayout
@@ -76,7 +78,7 @@
                 android:layout_weight="1"
                 android:gravity="start"
                 android:text="TextView"
-                android:textColor="@color/dprimaryTextColor" />
+                android:textColor="@color/dprimaryColor" />
 
             <TextView
                 android:id="@+id/timeTicketDetail"
@@ -86,7 +88,7 @@
                 android:layout_weight="1"
                 android:gravity="start"
                 android:text="TextView"
-                android:textColor="@color/dprimaryTextColor" />
+                android:textColor="@color/dprimaryColor" />
 
             <TextView
                 android:id="@+id/durationTicket"
@@ -95,7 +97,7 @@
                 android:layout_weight="1"
                 android:gravity="start"
                 android:text="TextView"
-                android:textColor="@color/dprimaryTextColor" />
+                android:textColor="@color/dprimaryColor" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Sala"
-                    android:textColor="@color/dprimaryTextColor" />
+                    android:textColor="@color/dprimaryColor" />
 
                 <TextView
                     android:id="@+id/roomTicketDetail"
@@ -125,7 +127,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="TextView"
-                    android:textColor="@color/dprimaryTextColor"
+                    android:textColor="@color/dprimaryColor"
                     android:textSize="22sp" />
             </LinearLayout>
 
@@ -141,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Fila"
-                    android:textColor="@color/dprimaryTextColor" />
+                    android:textColor="@color/dprimaryColor" />
 
                 <TextView
                     android:id="@+id/rowTicketDetail"
@@ -150,7 +152,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="TextView"
-                    android:textColor="@color/dprimaryTextColor"
+                    android:textColor="@color/dprimaryColor"
                     android:textSize="22sp" />
             </LinearLayout>
 
@@ -166,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Asiento"
-                    android:textColor="@color/dprimaryTextColor" />
+                    android:textColor="@color/dprimaryColor" />
 
                 <TextView
                     android:id="@+id/seatTicketDetail"
@@ -175,7 +177,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="TextView"
-                    android:textColor="@color/dprimaryTextColor"
+                    android:textColor="@color/dprimaryColor"
                     android:textSize="22sp" />
             </LinearLayout>
         </LinearLayout>
@@ -184,7 +186,7 @@
 
     <View
         android:id="@+id/divider"
-        android:layout_width="300dp"
+        android:layout_width="320dp"
         android:layout_height="3dp"
         android:background="@color/dprimaryColor"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
@@ -204,8 +206,8 @@
 
         <ImageView
             android:id="@+id/qrCode"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
             app:srcCompat="@android:drawable/screen_background_light" />
 

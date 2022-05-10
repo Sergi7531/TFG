@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="backgroundColor">@color/dprimaryColor</item>
         <item name="hintTextColor">@color/dsecondaryTextColor2</item>
-        <item name="android:navigationBarColor">@color/dprimaryColor</item>
+        <item name="android:navigationBarColor">@color/dprimaryDarkColor</item>
     </style>
 
 

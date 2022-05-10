@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginStart="-19dp"
-            app:backgroundTint="@color/primaryLightColor"
+            app:backgroundTint="?attr/colorPrimary"
+            app:elevation="0dp"
             app:fabCradleMargin="10dp"
             app:fabCradleRoundedCornerRadius="10dp"
             app:fabCradleVerticalOffset="10dp">
@@ -30,9 +31,10 @@
                 android:id="@+id/bottomNavigationView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/primaryLightColor"
-                app:itemIconTint="@color/primaryTextColor"
-                app:itemTextColor="@color/primaryTextColor"
+                android:background="?attr/colorPrimary"
+                app:elevation="0dp"
+                app:itemIconTint="@drawable/checked_color"
+                app:itemTextColor="?attr/colorOnSecondary"
                 app:menu="@menu/nav_menu" />
 
         </com.google.android.material.bottomappbar.BottomAppBar>
@@ -47,7 +49,7 @@
             android:src="@drawable/ic_baseline_incomplete_circle_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/buyMovie"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"

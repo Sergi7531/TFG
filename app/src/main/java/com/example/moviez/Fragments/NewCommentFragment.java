@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -37,9 +38,11 @@ public class NewCommentFragment extends AppFragment {
     private TextInputEditText commentText;
     public Button publishButton;
     public CheckBox spoilerCheckBox;
+    public ImageView backButton;
 
     public RatingBar userRatingBar;
     public TextView actualRating;
+    private float starsf = 0.0f;
 
     public NewCommentFragment() {
         // Required empty public constructor
@@ -83,6 +86,11 @@ public class NewCommentFragment extends AppFragment {
 
 //        Upload comment to firebase and go back to the movie page:
 
+        backButton.setOnClickListener(view1 -> {
+            getActivity().getSupportFragmentManager().popBackStack();
+        });
+
+        userRatingBar.setRating(5);
 
         userRatingBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -90,11 +98,14 @@ public class NewCommentFragment extends AppFragment {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     float touchPositionX = event.getX();
                     float width = userRatingBar.getWidth();
-                    float starsf = (touchPositionX / width) * 5.0f;
-                    int stars = (int)starsf + 1;
-                    userRatingBar.setRating(stars);
-                    actualRating.setText(String.valueOf(stars));
-                    v.setPressed(false);
+                    starsf = (touchPositionX / width) * 5.0f;
+//                    Set stars to 1 decimal place:
+                    starsf = (float) Math.round(starsf * 10) / 10;
+                    if(starsf <=5 && starsf >= 1) {
+                        userRatingBar.setRating(starsf);
+                        actualRating.setText(String.valueOf(starsf));
+                        v.setPressed(false);
+                    }
                 }
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     v.setPressed(true);
@@ -116,10 +127,10 @@ public class NewCommentFragment extends AppFragment {
                 boolean spoiler = spoilerCheckBox.isChecked();
 
                 if(auth.getCurrentUser().getPhotoUrl() != null) {
-                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").add(new Models.Comment(comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), Double.parseDouble(ratingString), spoiler));
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
                     System.out.println("Coment added: " + filmId);
                 } else {
-                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").add(new Models.Comment(comment, "", auth.getCurrentUser().getDisplayName(), Double.parseDouble(ratingString), spoiler));
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(comment, "", auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
                     System.out.println("Coment added without imageUrl: " + filmId);
                 }
 
@@ -136,6 +147,7 @@ public class NewCommentFragment extends AppFragment {
         actualRating = view.findViewById(R.id.actualRating);
         publishButton = view.findViewById(R.id.publishButton);
         spoilerCheckBox = view.findViewById(R.id.spoilerCheckBox);
+        backButton = view.findViewById(R.id.backButton);
     }
 
 }

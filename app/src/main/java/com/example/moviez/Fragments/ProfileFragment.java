@@ -127,7 +127,7 @@ public class ProfileFragment extends AppFragment {
     public void lastViewedFilms() {
         lastViewedFilms.clear();
         List<Models.Film> favoriteFilms = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("watchedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
             }

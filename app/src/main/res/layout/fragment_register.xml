@@ -57,7 +57,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/text22"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
@@ -103,7 +103,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:ems="10"
                 android:inputType="textEmailAddress"
                 android:textColorHint="?attr/colorOnSecondary"
                 app:boxBackgroundColor="?attr/colorPrimaryVariant"
@@ -128,7 +127,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:ems="10"
                 android:inputType="textPassword"
                 android:textColorHint="?attr/colorOnSecondary"
                 app:boxBackgroundColor="?attr/colorPrimaryVariant"

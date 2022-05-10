@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -27,16 +31,27 @@ public class BuyTicketFragment extends AppFragment {
 
     private static int roomsInSelectedCinema = 0;
     List<Models.Cinema> allCinemas = new ArrayList<>();
-    List<Models.Cinema> cinemasNamesToShow = new ArrayList<>();
+    List<String> cinemasNamesToShow = new ArrayList<>();
 
     Models.Cinema selectedCinema = new Models.Cinema();
 
+    List<String> filmsNamesToShow = new ArrayList<>();
+
+    boolean isFilmAvailable = false;
+
+    Spinner spinnerCinema;
+    Spinner spinnerDay;
+    Spinner spinnerHour;
+    Spinner spinnerMovie;
 
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+
+    String cinemaId;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -89,12 +104,53 @@ public class BuyTicketFragment extends AppFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        hook(view);
+
 //      Consulta a firebase (coleccion cinemas):
         db.collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 Models.Cinema cinema = documentSnapshot.toObject(Models.Cinema.class);
                 allCinemas.add(cinema);
             }
+
+//            Adapt the spinner with the cinemas names:
+
+            for (Models.Cinema cinema : allCinemas) {
+                cinemasNamesToShow.add(cinema.name);
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
+
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            spinnerCinema.setAdapter(adapter);
+
+            spinnerCinema.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    for(Models.Cinema cinema : allCinemas) {
+                        if(cinema.name.equals(spinnerCinema.getSelectedItem().toString())) {
+                            cinemaId = cinema.cinemaid;
+                            Toast.makeText(getContext(), cinemaId, Toast.LENGTH_SHORT).show();
+                            checkFilms(cinemaId);
+                        }
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    for(Models.Cinema cinema : allCinemas) {
+                        if(cinema.name.equals(cinemasNamesToShow.get(0))) {
+                            cinemaId = cinema.cinemaid;
+                            Toast.makeText(getContext(), cinemaId, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
+
+
+
+
 
 //            TODO: Finish this part
 
@@ -129,5 +185,28 @@ public class BuyTicketFragment extends AppFragment {
 
 
         });
+    }
+
+    private void checkFilms(String cinemaId) {
+//        TODO: Check if the film is in the cinema:
+        //        db.collection("cinemas").document(cinemaId).collection("rooms").get().addOnSuccessListener(queryDocumentSnapshotsRooms -> {
+////            For each room in the cinema, get the sessions. Then, for each session, get the film on that session.
+//            for(DocumentSnapshot room : queryDocumentSnapshotsRooms.getDocuments()) {
+//                db.collection("cinemas").document(cinemaId).collection("rooms").document(room.getId()).collection("sessions").get().addOnSuccessListener(queryDocumentSnapshotsSessions -> {
+////                    For each session, get the film on that session:
+//                    for(DocumentSnapshot session : queryDocumentSnapshotsSessions.getDocuments()) {
+//                       session.toObject(Models.Session.class);
+//                    }
+//                });
+//            }
+//        });
+    }
+
+    private void hook(View view) {
+        spinnerCinema = view.findViewById(R.id.spinnerCinema);
+        spinnerDay = view.findViewById(R.id.spinnerDay);
+        spinnerHour = view.findViewById(R.id.spinnerHour);
+        spinnerMovie = view.findViewById(R.id.spinnerMovie);
+
     }
 }
