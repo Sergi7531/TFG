@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -19,6 +20,8 @@ import com.example.moviez.Models.Genre;
 import com.example.moviez.R;
 
 import java.util.List;
+
+import kotlin.jvm.internal.SpreadBuilder;
 
 public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHolder> {
     Context context;
@@ -48,8 +51,13 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
                 if  (g.getName().equals(holder.titleGenreHolder.getText())) {
                     if (!isSelected(g.getId())) {
                         PreferencesFragment.selectedGenres.add(g.getId());
+                        Toast.makeText(context, "asd", Toast.LENGTH_SHORT).show();
                     } else {
-                        PreferencesFragment.selectedGenres.remove(g.getId());
+                        for (int i = 0 ; i < PreferencesFragment.selectedGenres.size() -1 ; i++){
+                            if (PreferencesFragment.selectedGenres.get(i) == g.getId()){
+                                PreferencesFragment.selectedGenres.remove(i);
+                            }
+                        }
                     }
                 }
             }

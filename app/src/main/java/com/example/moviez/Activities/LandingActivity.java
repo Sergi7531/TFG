@@ -33,6 +33,7 @@ public class LandingActivity extends AppCompatActivity {
     public AppViewModel appViewModel;
     public FirebaseFirestore db;
     public FirebaseAuth auth;
+    private boolean mailLogin;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +44,9 @@ public class LandingActivity extends AppCompatActivity {
         appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        mailLogin = false;
         logWithMail();
-        firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(this));
+        if (mailLogin) firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(this));
     }
 
     private void logWithMail() {
@@ -54,14 +56,13 @@ public class LandingActivity extends AppCompatActivity {
         if (!usernameLog.isEmpty() && !passwordLog.isEmpty()){
             FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(
-                            usernameLog,
+                            usernameLog.trim(),
                             passwordLog
                     ).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
-                        if (documentSnapshot.toObject(Models.User.class).favoriteGenres.isEmpty() || documentSnapshot.toObject(Models.User.class).favoriteGenres == null) {
-                            accessApp();
-                        }
+                        accessApp();
+                        mailLogin = true;
                     });
                 } else {
                     Toast.makeText(this, task.getException().getLocalizedMessage(),
