@@ -6,14 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.moviez.R;
-import com.example.moviez.Fragments.AppFragment;
-import com.example.moviez.Fragments.LoginFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
@@ -26,6 +25,7 @@ public class PasswordFragment extends AppFragment {
 
     public Button recoverPassword;
     public TextInputEditText mailRecovery;
+    public ImageView goBackPassword;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,7 +77,7 @@ public class PasswordFragment extends AppFragment {
     private void setFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.landingFrame, fragment)
+                .replace(R.id.main_frame, fragment)
                 .commit();
     }
 
@@ -85,9 +85,11 @@ public class PasswordFragment extends AppFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recoverPassword = view.findViewById(R.id.recoverPassword);
-        mailRecovery = view.findViewById(R.id.mail);
+        hook(view);
 
+        goBackPassword.setOnClickListener(v -> {
+            setFragment(new EditProfileFragment());
+        });
 
         recoverPassword.setOnClickListener(view1 -> {
             if(auth.getCurrentUser() != null) {
@@ -102,9 +104,11 @@ public class PasswordFragment extends AppFragment {
         });
     }
 
-
-
-
+    public void hook(View view) {
+        recoverPassword = view.findViewById(R.id.recoverPassword);
+        mailRecovery = view.findViewById(R.id.mail);
+        goBackPassword = view.findViewById(R.id.goBackPassword);
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
