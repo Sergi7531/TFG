@@ -37,11 +37,27 @@
                     android:layout_marginTop="120dp"
                     app:cardCornerRadius="12dp">
 
-                    <ImageView
-                        android:id="@+id/movieImage"
-                        android:layout_width="140dp"
-                        android:layout_height="252dp"
-                        android:src="@drawable/google" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/movieImage"
+                            android:layout_width="140dp"
+                            android:layout_height="252dp"
+                            android:src="@drawable/google" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/floatingActionButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="70dp"
+                            android:layout_marginTop="185dp"
+                            android:clickable="true"
+                            android:src="@drawable/heart"
+                            tools:ignore="SpeakableTextPresentCheck" />
+                    </RelativeLayout>
+
                 </androidx.cardview.widget.CardView>
 
                 <TextView
