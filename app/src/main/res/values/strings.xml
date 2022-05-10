@@ -52,4 +52,9 @@
     <string name="new_comment">Añade un comentario</string>
     <string name="add_comment_button">Añadir comentario...</string>
     <string name="comment_hint">Comentario...</string>
+
+    <string-array name="movie_status">
+        <item>Vista</item>
+        <item>Ver más tarde</item>
+    </string-array>
 </resources>
