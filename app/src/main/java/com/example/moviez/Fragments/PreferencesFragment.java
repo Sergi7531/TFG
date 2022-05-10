@@ -119,61 +119,80 @@ public class PreferencesFragment extends AppFragment {
     private void initData() {
         genres = new ArrayList<>(Arrays.asList(new Genre (
                 28,
-                "Action"
+                "Action",
+                "https://i.imgur.com/tfdEAnz.jpeg"
         ), new Genre (
                 12,
-                "Adventure"
+                "Adventure",
+                "https://i.imgur.com/EUPXWvb.jpeg"
         ), new Genre (
                 16,
-                "Animation"
+                "Animation",
+                "https://i.imgur.com/CHVJiYL.png"
         ), new Genre (
                 35,
-                "Comedy"
+                "Comedy",
+                "https://i.imgur.com/uqQn41U.jpeg"
         ), new Genre (
                 80,
-                "Crime"
+                "Crime",
+                "https://i.imgur.com/GmuVmpa.jpeg"
         ), new Genre (
                 99,
-                "Documentary"
+                "Documentary",
+                "https://i.imgur.com/Fjzk0Ka.jpeg"
         ), new Genre (
                 18,
-                "Drama"
+                "Drama",
+                "https://i.imgur.com/0gBcYaP.jpeg"
         ), new Genre (
                 10751,
-                "Family"
+                "Family",
+                "https://i.imgur.com/YEwVs1Y.jpeg"
         ), new Genre (
                 14,
-                "Fantasy"
+                "Fantasy",
+                "https://i.imgur.com/gcYoXbA.jpeg"
         ), new Genre (
                 36,
-                "History"
+                "History",
+                "https://i.imgur.com/xjdllMr.png"
         ), new Genre (
                 27,
-                "Horror"
+                "Horror",
+                "https://i.imgur.com/0JpQkFU.jpeg"
         ), new Genre (
                 10402,
-                "Music"
+                "Music",
+                "https://i.imgur.com/F8bWJgE.jpeg"
         ), new Genre (
                 9648,
-                "Mystery"
+                "Mystery",
+                "https://i.imgur.com/FbKtb5a.jpeg"
         ), new Genre (
                 10749,
-                "Romance"
+                "Romance",
+                "https://i.imgur.com/pNRN9fM.png"
         ), new Genre (
                 878,
-                "Science fiction"
+                "Science fiction",
+                "https://i.imgur.com/r5HRKFM.jpeg"
         ), new Genre (
                 10770,
-                "TV Movie"
+                "TV Movie",
+                "https://i.imgur.com/RmuFdPk.jpeg"
         ), new Genre (
                 53,
-                "Thriller"
+                "Thriller",
+                "https://i.imgur.com/UbJ45Fr.jpeg"
         ), new Genre (
                 10752,
-                "War"
+                "War",
+                "https://i.imgur.com/Q0ADIKm.jpeg"
         ), new Genre (
                 37,
-                "Western"
+                "Western",
+                "https://i.imgur.com/duXc5At.jpeg"
         )));
     }
 }
