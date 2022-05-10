@@ -184,15 +184,6 @@ public class MovieDetailedFragment extends AppFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selected = parent.getItemAtPosition(position).toString();
                 if (selected.equals("Ver más tarde")) {
-//                    db.collection("users").document(auth.getCurrentUser().getUid()).collection("moviesToWatch").get().addOnCompleteListener(task -> {
-//                        if (task.isSuccessful()) {
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                Models.Film film = document.toObject(Models.Film.class);
-//                                watchedMovies.add(film);
-//                            }
-//                        }
-//                    });
-
 
                     IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
                         @Override
@@ -203,6 +194,12 @@ public class MovieDetailedFragment extends AppFragment {
                                     .collection("moviesToWatch")
                                     .document(String.valueOf(filmId))
                                     .set(film);
+
+                            db.collection("users")
+                                    .document(auth.getCurrentUser().getUid())
+                                    .collection("watchedFilms")
+                                    .document(String.valueOf(filmId))
+                                    .delete();
                         }
 
                         @Override
@@ -211,9 +208,29 @@ public class MovieDetailedFragment extends AppFragment {
                         }
                     });
 
+                } else if (selected.equals("Vista")) {
+                        IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
+                            @Override
+                            public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
+                                film = new Models.Film(response.body().title, response.body().poster_path);
+                                db.collection("users")
+                                        .document(auth.getCurrentUser().getUid())
+                                        .collection("watchedFilms")
+                                        .document(String.valueOf(filmId))
+                                        .set(film);
 
+                                db.collection("users")
+                                        .document(auth.getCurrentUser().getUid())
+                                        .collection("moviesToWatch")
+                                        .document(String.valueOf(filmId))
+                                        .delete();
+                            }
 
+                            @Override
+                            public void onFailure(Call<Models.Film> call, Throwable t) {
 
+                            }
+                        });
                 }
              //   Toast.makeText(getActivity(), selected, Toast.LENGTH_SHORT).show();
             }
