@@ -118,10 +118,12 @@ public class LoginFragment extends AppFragment {
         registerText.setOnClickListener(view2 -> {
             setFragment(new RegisterFragment());
         });
+
         GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build());
+
         logButton.setOnClickListener(view2 -> {
             if (!usernameLog.getText().toString().isEmpty() && !passwordLog.getText().toString().isEmpty()){
                 FirebaseAuth.getInstance()

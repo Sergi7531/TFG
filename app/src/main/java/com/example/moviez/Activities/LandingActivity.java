@@ -33,18 +33,33 @@ public class LandingActivity extends AppCompatActivity {
     public AppViewModel appViewModel;
     public FirebaseFirestore db;
     public FirebaseAuth auth;
+    private boolean googleLogin;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         fragmentInit();
         setFragment(animationFragment);
+        SharedPreferences sharedPreferences = this.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
         appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
-        logWithMail();
+        googleLogin = true;
+
         firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(this));
+        if (!googleLogin) logWithMail();
+//        if (!mailLogin) {
+//            Handler handler = new Handler();
+//            Runnable run = new Runnable() {
+//                @Override
+//                public void run() {
+//                    setFragment(loginFragment);
+//                }
+//            };
+//            handler.postDelayed(run, 2000);
+//        }
     }
 
     private void logWithMail() {
@@ -54,25 +69,21 @@ public class LandingActivity extends AppCompatActivity {
         if (!usernameLog.isEmpty() && !passwordLog.isEmpty()){
             FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(
-                            usernameLog,
+                            usernameLog.trim(),
                             passwordLog
                     ).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
-                        if (documentSnapshot.toObject(Models.User.class).favoriteGenres.isEmpty() || documentSnapshot.toObject(Models.User.class).favoriteGenres == null) {
-                            accessApp();
-                        }
+
+                        accessApp();
+
                     });
                 } else {
                     Toast.makeText(this, task.getException().getLocalizedMessage(),
                             Toast.LENGTH_SHORT).show();
                 }
             });
-        }
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
-        if(account == null) {
+        } else {
             Handler handler = new Handler();
             Runnable run = new Runnable() {
                 @Override
@@ -81,19 +92,28 @@ public class LandingActivity extends AppCompatActivity {
                 }
             };
             handler.postDelayed(run, 2000);
+        }
+    }
 
-            return;
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        if(account == null) {
+            googleLogin = false;
+        }
+        else {
+            FirebaseAuth.getInstance().signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null))
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+
+                            googleLogin = true;
+                            createGoogleAccount();
+                        } else {
+                            setFragment(loginFragment);
+                        }
+                    });
         }
 
 
-        FirebaseAuth.getInstance().signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null))
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        createGoogleAccount();
-                    } else {
-                        setFragment(loginFragment);
-                    }
-                });
+
     }
     private void createGoogleAccount(){
 

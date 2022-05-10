@@ -98,15 +98,12 @@ public class PreferencesFragment extends AppFragment {
             Intent intent = new Intent(requireContext(), MainActivity.class);
             startActivity(intent);
         });
-
         continueButton.setOnClickListener(v -> {
                 db.collection("users").document(auth.getCurrentUser().getUid()).update("favoriteGenres", selectedGenres).addOnSuccessListener(success -> {
                 Intent intent = new Intent(requireContext(), MainActivity.class);
                 startActivity(intent);
             });
         });
-
-
     }
 
     private void hook(View view) {

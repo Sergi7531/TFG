@@ -48,8 +48,14 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
                 if  (g.getName().equals(holder.titleGenreHolder.getText())) {
                     if (!isSelected(g.getId())) {
                         PreferencesFragment.selectedGenres.add(g.getId());
+                        holder.blueLayer.setAlpha(1f);
                     } else {
-                        PreferencesFragment.selectedGenres.remove(g.getId());
+                        holder.blueLayer.setAlpha(0.4f);
+                        for (int i = 0 ; i < PreferencesFragment.selectedGenres.size() -1 ; i++){
+                            if (PreferencesFragment.selectedGenres.get(i) == g.getId()){
+                                PreferencesFragment.selectedGenres.remove(i);
+                            }
+                        }
                     }
                 }
             }
@@ -80,14 +86,14 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
     public static class GenreViewHolder extends RecyclerView.ViewHolder {
         public CardView genreCard;
         public TextView titleGenreHolder;
-        public View blueBackground;
+        public CardView blueLayer;
         public ImageView genre_image;
 
         public GenreViewHolder(@NonNull View itemView) {
             super(itemView);
             this.genreCard = itemView.findViewById(R.id.genreCard);
             this.titleGenreHolder = itemView.findViewById(R.id.titleGenreHolder);
-            this.blueBackground = itemView.findViewById(R.id.blueBackground);
+            this.blueLayer = itemView.findViewById(R.id.blueLayer);
             this.genre_image = itemView.findViewById(R.id.genre_image);
         }
     }
