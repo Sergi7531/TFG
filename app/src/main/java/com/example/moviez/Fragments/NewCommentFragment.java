@@ -127,10 +127,10 @@ public class NewCommentFragment extends AppFragment {
                 boolean spoiler = spoilerCheckBox.isChecked();
 
                 if(auth.getCurrentUser().getPhotoUrl() != null) {
-                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").add(new Models.Comment(comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
                     System.out.println("Coment added: " + filmId);
                 } else {
-                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").add(new Models.Comment(comment, "", auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(comment, "", auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
                     System.out.println("Coment added without imageUrl: " + filmId);
                 }
 
