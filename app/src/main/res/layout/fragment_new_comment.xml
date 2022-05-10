@@ -87,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
+                    android:stepSize="0.1"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
@@ -127,7 +128,7 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="?attr/colorSecondary"
             android:fontFamily="@font/satoshi"
-            android:text="@string/pass_recover_button"
+            android:text="@string/add_comment_button"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="14sp"

@@ -13,7 +13,9 @@
         <entry key="..\:/Users/Raul/AndroidStudioProjects/TFG/app/src/main/res/layout/user_holder.xml" value="0.13645833333333332" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.2495" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.16" />
+        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_circle_blue_24.xml" value="0.241" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_incomplete_circle_24.xml" value="0.182" />
+        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.241" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_movie_24.xml" value="0.2265" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.182" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/drawable/ic_baseline_ticket_24.xml" value="0.182" />
@@ -27,24 +29,24 @@
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/comment_holder.xml" value="0.4" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_animation.xml" value="0.2" />
+        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_buy_ticket.xml" value="0.2" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_home.xml" value="0.4" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_login.xml" value="0.2" />
-        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_movie_detailed.xml" value="0.264" />
+        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_movie_detailed.xml" value="0.176" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_movies.xml" value="0.264" />
-        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_new_comment.xml" value="0.25" />
+        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_new_comment.xml" value="0.264" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_password.xml" value="0.25" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_preferences.xml" value="0.264" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_register.xml" value="0.264" />
-        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_tickets.xml" value="0.536" />
+        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/fragment_tickets.xml" value="0.264" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/genre_data.xml" value="0.72" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/movie_holder.xml" value="0.4" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/movie_search_holder.xml" value="0.536" />
-        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/ticket_data.xml" value="0.264" />
+        <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/ticket_data.xml" value="0.4" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/layout/user_holder.xml" value="0.536" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/menu/nav_menu.xml" value="0.264" />
         <entry key="..\:/Users/Sergi/Documents/GitHub/MovieZ/app/src/main/res/xml/network_security_config.xml" value="0.18796296296296297" />
-        <entry key="..\:/Users/jordi/Documents/TFG/app/src/main/res/menu/nav_menu.xml" value="0.3546875" />
         <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.152" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_buy_ticket.xml" value="0.33" />

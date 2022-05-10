@@ -1,4 +1,4 @@
-package com.example.moviez;
+package com.example.moviez.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.moviez.R;
 import com.example.moviez.Fragments.AppFragment;
 import com.example.moviez.Fragments.LoginFragment;
 import com.google.android.material.textfield.TextInputEditText;

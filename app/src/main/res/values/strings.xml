@@ -48,6 +48,7 @@
     <string name="nueva_contrase_a">Nueva Contraseña</string>
     <string name="actualizar_contrase_a">Actualizar contraseña</string>
     <string name="buy_ticket">Comprar ticket</string>
-    <string name="add_comment">Añade un comentario</string>
+    <string name="new_comment">Añade un comentario</string>
+    <string name="add_comment_button">Añadir comentario...</string>
     <string name="comment_hint">Comentario...</string>
 </resources>
