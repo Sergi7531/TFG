@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.example.moviez.PasswordFragment;
 import com.example.moviez.R;
 
 /**
