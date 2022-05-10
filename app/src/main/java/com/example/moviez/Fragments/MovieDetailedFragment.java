@@ -163,7 +163,7 @@ public class MovieDetailedFragment extends AppFragment {
         getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_detail, fragment)
-                .addToBackStack(HomeFragment.class.getSimpleName())
+                .addToBackStack(MovieDetailedFragment.class.getSimpleName())
                 .commit();
     }
 

@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import com.example.moviez.Adapters.TicketsAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
-import com.example.moviez.Adapters.TicketsAdapter;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;

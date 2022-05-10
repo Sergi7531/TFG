@@ -344,4 +344,11 @@ public class Models {
             this.rating = rating;
         }
     }
+
+    public class Session {
+        public String filmid;
+        public String filmname;
+        public String day;
+        public String time;
+    }
 }
