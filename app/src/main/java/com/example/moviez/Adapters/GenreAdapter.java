@@ -86,14 +86,14 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
     public static class GenreViewHolder extends RecyclerView.ViewHolder {
         public CardView genreCard;
         public TextView titleGenreHolder;
-        public View blueLayer;
+        public CardView blueLayer;
         public ImageView genre_image;
 
         public GenreViewHolder(@NonNull View itemView) {
             super(itemView);
             this.genreCard = itemView.findViewById(R.id.genreCard);
             this.titleGenreHolder = itemView.findViewById(R.id.titleGenreHolder);
-            this.blueLayer = itemView.findViewById(R.id.blueBackground);
+            this.blueLayer = itemView.findViewById(R.id.blueLayer);
             this.genre_image = itemView.findViewById(R.id.genre_image);
         }
     }
