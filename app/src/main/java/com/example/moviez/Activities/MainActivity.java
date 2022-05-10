@@ -1,6 +1,7 @@
 package com.example.moviez.Activities;
 
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,16 +9,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.moviez.Fragments.BuyTicketFragment;
 import com.example.moviez.Fragments.HomeFragment;
 import com.example.moviez.Fragments.MoviesFragment;
 import com.example.moviez.Fragments.ProfileFragment;
 import com.example.moviez.Fragments.TicketsFragment;
 import com.example.moviez.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView nav_bottom;
+    private FloatingActionButton buyMovie;
     private FrameLayout mainFrame;
     AppViewModel appViewModel;
 
@@ -26,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         private MoviesFragment moviesFragment;
         private TicketsFragment ticketsFragment;
         private ProfileFragment profileFragment;
+        private BuyTicketFragment buyTicketFragment;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         moviesFragment = new MoviesFragment();
         ticketsFragment = new TicketsFragment();
         profileFragment = new ProfileFragment();
+        buyTicketFragment = new BuyTicketFragment();
+
+        buyMovie = findViewById(R.id.buyMovie);
 
         setFragment(homeFragment);
 
@@ -67,6 +75,10 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     return false;
             }
+        });
+
+        buyMovie.setOnClickListener(v -> {
+            setFragment(buyTicketFragment);
         });
     }
 

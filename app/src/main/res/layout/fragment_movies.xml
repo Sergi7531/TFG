@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/ic_baseline_search"
                 android:fontFamily="@font/satoshi"
-                android:hint="@string/search_for_users"
+                android:hint="@string/search_for_movies"
                 android:textColorHint="?attr/colorOnSecondary" />
         </com.google.android.material.textfield.TextInputLayout>
 
