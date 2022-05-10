@@ -49,7 +49,7 @@
             android:src="@drawable/ic_baseline_incomplete_circle_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/buyMovie"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"

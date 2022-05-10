@@ -16,9 +16,11 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.example.moviez.Activities.LandingActivity;
 import com.example.moviez.Activities.MainActivity;
 import com.example.moviez.Models;
 import com.example.moviez.R;
@@ -133,8 +135,8 @@ public class LoginFragment extends AppFragment {
                             editor.putString("password", passwordLog.getText().toString());
                             editor.commit();
                             if (documentSnapshot.toObject(Models.User.class).favoriteGenres.size() == 0) {
-                                accessApp(false);
-                            } else accessApp(true);
+                                accessApp(false, null);
+                            } else accessApp(true, view);
                         });
                     } else {
                         Toast.makeText(requireContext(), task.getException().getLocalizedMessage(),
@@ -175,14 +177,15 @@ public class LoginFragment extends AppFragment {
     private void createGoogleAccount(){
         db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()))
                 .addOnCompleteListener(task -> {
-                    accessApp(false);
+                    accessApp(false, null);
         });
     }
-    private void accessApp(boolean hasGenres) {
+    private void accessApp(boolean hasGenres, @Nullable View view) {
         if (hasGenres) {
-            Intent intent = new Intent(requireContext(), MainActivity.class);
-            startActivity(intent);
-            requireActivity().finish();
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), MainActivity.class);
+            getActivity().startActivity(intent);
+           // requireActivity().finish();
         }
         else {
             setFragment(new PreferencesFragment());

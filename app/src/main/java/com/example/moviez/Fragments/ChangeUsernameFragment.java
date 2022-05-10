@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -115,14 +116,25 @@ public class ChangeUsernameFragment extends AppFragment {
                                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
 
                                     db.collection("comments").document(documentSnapshot.getId()).collection("comments").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshots, e) -> {
-                                        if (documentSnapshots.exists()) {
                                             Models.Comment comment = documentSnapshots.toObject(Models.Comment.class);
                                             comment.username = name;
-                                        }
+                                            db.collection("comments")
+                                                    .document(documentSnapshot.getId())
+                                                    .collection("comments")
+                                                    .document(auth.getCurrentUser().getUid())
+                                                    .set(comment);
                                     });
                                 }
                             });
-                            setFragment(new ProfileFragment());
+
+//                            db.collection("comments").get().addOnSuccessListener(collectionDocumentSnapshots -> {
+//                                for (DocumentSnapshot documentSnapshot : collectionDocumentSnapshots) {
+//                                    db.collection("comments").document(documentSnapshot.getId()).collection("comments").get(auth.getCurrentUser().getUid())
+//                                }
+//                            });
+
+
+                                    //           setFragment(new ProfileFragment());
                         }
                     }
                 });
