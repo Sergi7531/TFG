@@ -64,7 +64,7 @@ public class MovieDetailedFragment extends AppFragment {
     public static FloatingActionButton favoriteFloatingButton;
     public static RecyclerView similarFilmsRecyclerView;
 
-//    Intent to BuyTicketsFragment:
+    //    Intent to BuyTicketsFragment:
     public static Button buyButton;
 
     private Spinner spinner;
@@ -176,7 +176,6 @@ public class MovieDetailedFragment extends AppFragment {
                         }
                     }
                 });
-
             });
 
             IMDB.api.getRecommendations(movie.id, IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.SearchResponse>() {
@@ -212,6 +211,27 @@ public class MovieDetailedFragment extends AppFragment {
         });
 
         getCommentsFromFirebase(filmId);
+
+//      Consulta IMDB.api.getNowPlaying para obtener las películas en cartelera. Si la película con id = filmId está en la lista, se muestra un botón buyButton:
+
+//        IMDB.api.getNowPlaying(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
+//            @RequiresApi(api = Build.VERSION_CODES.N)
+//            @Override
+//            public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
+//                if (response.body() != null) {
+//                    if (response.body().results.size() > 10) {
+//                        response.body().results.subList(0, 10);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
+//                t.getMessage();
+//            }
+//        });
+
+
 
         buyButton.setOnClickListener(v -> {
             BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId);
@@ -259,30 +279,30 @@ public class MovieDetailedFragment extends AppFragment {
                     });
 
                 } else if (selected.equals("Vista")) {
-                        IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
-                            @Override
-                            public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
-                                if (response.body() != null) {
-                                    film = new Models.Film(response.body().id, response.body().title, response.body().poster_path);
-                                    db.collection("users")
-                                            .document(auth.getCurrentUser().getUid())
-                                            .collection("watchedFilms")
-                                            .document(String.valueOf(filmId))
-                                            .set(film);
+                    IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
+                        @Override
+                        public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
+                            if (response.body() != null) {
+                                film = new Models.Film(response.body().id, response.body().title, response.body().poster_path);
+                                db.collection("users")
+                                        .document(auth.getCurrentUser().getUid())
+                                        .collection("watchedFilms")
+                                        .document(String.valueOf(filmId))
+                                        .set(film);
 
-                                    db.collection("users")
-                                            .document(auth.getCurrentUser().getUid())
-                                            .collection("moviesToWatch")
-                                            .document(String.valueOf(filmId))
-                                            .delete();
-                                }
+                                db.collection("users")
+                                        .document(auth.getCurrentUser().getUid())
+                                        .collection("moviesToWatch")
+                                        .document(String.valueOf(filmId))
+                                        .delete();
                             }
+                        }
 
-                            @Override
-                            public void onFailure(Call<Models.Film> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<Models.Film> call, Throwable t) {
 
-                            }
-                        });
+                        }
+                    });
                 } else {
 //                    Delete from both collections (moviesToWatch and watchedFilms):
                     db.collection("users")
@@ -297,7 +317,7 @@ public class MovieDetailedFragment extends AppFragment {
                             .document(String.valueOf(filmId))
                             .delete();
                 }
-             //   Toast.makeText(getActivity(), selected, Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(getActivity(), selected, Toast.LENGTH_SHORT).show();
             }
 
             @Override

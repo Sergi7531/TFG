@@ -1,15 +1,12 @@
 package com.example.moviez.Fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.moviez.R;
 
@@ -19,6 +16,8 @@ import com.example.moviez.R;
  * create an instance of this fragment.
  */
 public class ChangePasswordFragment extends Fragment {
+
+    public static ImageView goBackPassword2;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,5 +66,26 @@ public class ChangePasswordFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_change_password, container, false);
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        goBackPassword2 = view.findViewById(R.id.goBackPassword2);
+
+
+        goBackPassword2.setOnClickListener(v -> {
+            setFragment(new EditProfileFragment());
+        });
+
+    }
+
+    private void setFragment(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .commit();
+    }
+
 
 }
