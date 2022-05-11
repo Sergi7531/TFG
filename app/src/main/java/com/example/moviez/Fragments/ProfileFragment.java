@@ -114,6 +114,9 @@ public class ProfileFragment extends AppFragment {
 
         if(userId != auth.getCurrentUser().getUid()) {
             editarPerfil.setText("Seguir");
+            editarPerfil.setOnClickListener(v -> {
+                addToFollowing(userId);
+            });
         }
 
         setUserDetails(userId);
@@ -153,6 +156,33 @@ public class ProfileFragment extends AppFragment {
             adaptFilmsToRecycler(toWatch, recyclerMoviesToWatch);
             wantToWatchNumber.setText(String.valueOf(toWatch.size()));
         });
+    }
+
+    public void addToFollowing(String userid) {
+        db.collection("users").document(userid).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Models.User usuarioASeguir = documentSnapshot.toObject(Models.User.class);
+
+                db.collection("users")
+                        .document(auth.getCurrentUser().getUid())
+                        .collection("following").document(userid)
+                        .set(usuarioASeguir);
+
+                db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot1 -> {
+                    db.collection("users")
+                            .document(userId)
+                            .collection("followers").document(auth.getCurrentUser().getUid())
+                            .set(documentSnapshot1.toObject(Models.User.class));
+                });
+
+
+
+                following(userId);
+
+                followersNumber.setText(this.followers.size() + "");
+            }
+        });
+
     }
 
     public void favoriteFilms(String userId) {

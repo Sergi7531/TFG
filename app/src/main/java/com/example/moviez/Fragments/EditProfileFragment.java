@@ -144,7 +144,7 @@ public class EditProfileFragment extends AppFragment {
                     FirebaseStorage.getInstance().getReference("/profileimgs/" + UUID.randomUUID() + ".jpg")
                             .putFile(uri)
                             .continueWithTask(task2 -> task2.getResult().getStorage().getDownloadUrl())
-                            .addOnSuccessListener(imageUrl -> saveUser(auth.getCurrentUser().getUid(), uri));
+                            .addOnSuccessListener(imageUrl -> saveUser(auth.getCurrentUser().getUid(), imageUrl));
                 }
             });
         });

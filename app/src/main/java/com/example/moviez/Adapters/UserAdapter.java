@@ -49,7 +49,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                     .into(holder.userImageHolder);
         } else {
             Glide.with(context)
-                    .load(users.get(position).getProfileImageURL())
+                    .load(users.get(position).profileImageURL)
                     .centerCrop()
                     .into(holder.userImageHolder);
         }
