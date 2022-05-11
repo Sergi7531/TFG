@@ -6,15 +6,13 @@
     android:id="@+id/frame_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorOnPrimary"
     tools:context=".Fragments.ProfileFragment">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp"
-        android:background="@color/dprimaryColor"
         android:orientation="vertical"
         tools:context=".Fragments.ProfileFragment">
 
@@ -54,7 +52,7 @@
                         android:layout_margin="3dp"
                         android:gravity="center_horizontal"
                         android:text="@string/username"
-                        android:textColor="@color/dprimaryTextColor"
+                        android:textColor="?attr/colorOnSecondary"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
@@ -65,7 +63,7 @@
                         android:layout_margin="3dp"
                         android:gravity="center_horizontal"
                         android:text="@string/email"
-                        android:textColor="@color/dprimaryTextColor" />
+                        android:textColor="?attr/colorOnSecondary" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -79,7 +77,7 @@
                             android:layout_margin="3dp"
                             android:gravity="center_horizontal"
                             android:text="@string/siguiendo"
-                            android:textColor="@color/dprimaryTextColor"
+                            android:textColor="?attr/colorOnSecondary"
                             android:textStyle="bold" />
 
                         <TextView
@@ -89,7 +87,7 @@
                             android:layout_margin="3dp"
                             android:gravity="center_horizontal"
                             android:text="@string/seguidores"
-                            android:textColor="@color/dprimaryTextColor"
+                            android:textColor="?attr/colorOnSecondary"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -106,7 +104,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/_0"
-                            android:textColor="@color/dprimaryTextColor" />
+                            android:textColor="?attr/colorOnSecondary" />
 
                         <TextView
                             android:id="@+id/followersNumber"
@@ -116,7 +114,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal"
                             android:text="@string/_0"
-                            android:textColor="@color/dprimaryTextColor" />
+                            android:textColor="?attr/colorOnSecondary" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -139,7 +137,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="@string/estad_sticas_usuario"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -270,7 +268,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="@string/ltimas_pel_culas_vistas"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -288,7 +286,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Películas que quieres ver:"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -309,7 +307,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="@string/pel_culas_favoritas"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -327,7 +325,7 @@
                 android:layout_margin="10dp"
                 android:gravity="center_horizontal"
                 android:text="@string/seguidores"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -344,7 +342,7 @@
                 android:layout_margin="10dp"
                 android:gravity="center_horizontal"
                 android:text="@string/siguiendo"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
