@@ -50,6 +50,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMoviesSearch"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/searchBar"
+            android:alpha="0"
+            android:elevation="10dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFriends"
             android:layout_width="match_parent"
             android:layout_height="250dp"

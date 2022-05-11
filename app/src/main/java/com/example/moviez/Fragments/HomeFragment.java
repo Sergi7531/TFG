@@ -2,18 +2,24 @@ package com.example.moviez.Fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviez.Activities.AppViewModel;
 import com.example.moviez.Adapters.FilmAdapter;
+import com.example.moviez.Adapters.MovieSearchResultAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +40,9 @@ public class HomeFragment extends AppFragment {
     List<Integer> genresUser = new ArrayList<>();
     private RecyclerView recyclerForYou;
     private RecyclerView recyclerFriends;
+
+    public TextInputEditText searchInputUser;
+    public RecyclerView recyclerViewUserSearch;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -83,11 +92,41 @@ public class HomeFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
         hook(view);
         forYou();
+
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+
+        recyclerViewUserSearch = getActivity().findViewById(R.id.recyclerMoviesSearch);
+
+        searchInputUser.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                        viewModel.searchMoviesByQuery(charSequence.toString());
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+                        viewModel.moviesByQuery.observe(getViewLifecycleOwner(), moviesByQuery -> {
+                            if (moviesByQuery != null) {
+                                recyclerViewUserSearch.setAlpha(1f);
+                                recyclerViewUserSearch.setAdapter(new MovieSearchResultAdapter(requireActivity(), moviesByQuery.results));
+                                recyclerViewUserSearch.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
+                            }
+                        });
+                    }
+
+                });
     }
 
     private void hook(View view) {
         recyclerFriends = view.findViewById(R.id.recyclerFriends);
         recyclerForYou = view.findViewById(R.id.recyclerParaTi);
+        searchInputUser = view.findViewById(R.id.searchInputUsers);
+        recyclerViewUserSearch = view.findViewById(R.id.recyclerMoviesSearch);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
