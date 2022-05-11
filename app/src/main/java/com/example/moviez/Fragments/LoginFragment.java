@@ -20,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.example.moviez.Activities.LandingActivity;
 import com.example.moviez.Activities.MainActivity;
 import com.example.moviez.Models;
 import com.example.moviez.R;
@@ -161,7 +160,7 @@ public class LoginFragment extends AppFragment {
         usernameLog = view.findViewById(R.id.mailLog);
         passwordLog = view.findViewById(R.id.passwordLog);
         registerText = view.findViewById(R.id.registerText);
-        logButton = view.findViewById(R.id.logInButton);
+        logButton = view.findViewById(R.id.goTicketButton);
         googleButton = view.findViewById(R.id.googleButton);
         forgotPassword = view.findViewById(R.id.forgotPasswordText);
     }
