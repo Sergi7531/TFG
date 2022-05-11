@@ -20,6 +20,12 @@ public class Models {
             this.poster_path = poster_path;
         }
 
+        public Film(int id, String title, String poster_path) {
+            this.id = id;
+            this.title = title;
+            this.poster_path = poster_path;
+        }
+
         public Film() {
         }
 

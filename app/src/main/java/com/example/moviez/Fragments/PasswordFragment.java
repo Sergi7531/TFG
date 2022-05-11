@@ -95,6 +95,7 @@ public class PasswordFragment extends AppFragment {
             if(auth.getCurrentUser() != null) {
                 if(auth.getCurrentUser().getEmail().equals(mailRecovery.getText().toString().trim())) {
                     auth.sendPasswordResetEmail(auth.getCurrentUser().getEmail());
+
                     setFragment(new LoginFragment());
                 }
             } else {
