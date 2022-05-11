@@ -55,4 +55,8 @@
     <string name="end_buy">Finalizar compra</string>
     <string name="go_tickets">Ir a tickets</string>
     <string name="buy_done">Tu compra se ha realizado correctamente</string>
+    <string name="screen">Pantalla</string>
+    <string name="available">Disponible</string>
+    <string name="busy">Reservado</string>
+    <string name="selected">Seleccionado</string>
 </resources>

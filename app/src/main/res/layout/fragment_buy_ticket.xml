@@ -6,7 +6,7 @@
     android:id="@+id/frame_buy"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorOnPrimary"
+    android:background="?attr/backgroundColor"
     android:elevation="0dp"
     tools:context=".Fragments.BuyTicketFragment">
 
@@ -165,6 +165,7 @@
             android:backgroundTint="?attr/colorSecondary"
             android:fontFamily="@font/satoshi"
             android:shadowColor="@android:color/transparent"
+            android:text="@string/buy"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:textStyle="bold"

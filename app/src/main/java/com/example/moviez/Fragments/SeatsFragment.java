@@ -5,6 +5,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.example.moviez.Adapters.SeatAdapter;
+import com.example.moviez.Models;
 import com.example.moviez.R;
 
 import java.util.ArrayList;
@@ -29,13 +36,13 @@ public class SeatsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    GridView seatsGrid;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private GridView gridView;
+    private RecyclerView seatsGrid;
     private Button buyButton2;
-    ArrayList<ArrayList<Integer>> seats = new ArrayList<ArrayList<Integer>>();
+    List<Models.Seats> seats = new ArrayList<>();
 
     public SeatsFragment() {
         // Required empty public constructor
@@ -67,7 +74,6 @@ public class SeatsFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
     }
 
     private void hook(View view) {
@@ -87,21 +93,29 @@ public class SeatsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         hook(view);
         insertDefaultSeats();
+        showSeats();
         buyButton2.setOnClickListener(view1 -> {
             setFragment(new TicketListBoughtFragment());
+            //TODO
+            //Set seats to busy state
         });
+    }
+
+    private void showSeats() {
+        seatsGrid.setAdapter(new SeatAdapter(seats, requireContext()));
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 8, RecyclerView.VERTICAL, false);
+        seatsGrid.setLayoutManager(gridLayoutManager);
+        seatsGrid.setNestedScrollingEnabled(false);
     }
 
 
     private void insertDefaultSeats() {
         seats.clear();
-        ArrayList<Integer> seatsLine = new ArrayList<>();
         for (int i = 0; i < 8 ; i++){
-            seatsLine.clear();
             for (int j = 0; j < 8 ; j++){
-                seatsLine.add(j+1);
+                seats.add(new Models.Seats("SeatID" + i + j, i, j));
             }
-            seats.add(seatsLine);
         }
     }
     private void setFragment(Fragment fragment) {

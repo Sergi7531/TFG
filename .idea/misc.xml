@@ -45,6 +45,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_confirmation_number_24.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_incomplete_circle_24.xml" value="0.175" />
+        <entry key="app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.33" />
         <entry key="app/src/main/res/drawable/ic_baseline_movie_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_semicircle_24.xml" value="0.175" />
@@ -55,10 +56,11 @@
         <entry key="app/src/main/res/drawable/ic_vector.xml" value="0.189" />
         <entry key="app/src/main/res/drawable/moviez_logo.xml" value="0.189" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.24270833333333333" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/comment_holder.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_animation.xml" value="0.30648148148148147" />
         <entry key="app/src/main/res/layout/fragment_buy_ticket.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_change_password.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/fragment_edit_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2869791666666667" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5" />
@@ -70,12 +72,15 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_seats.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_ticket_bought_finished.xml" value="0.35520833333333335" />
+        <entry key="app/src/main/res/layout/fragment_ticket_list_bought.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/fragment_tickets.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/fragment_tickets_buy.xml" value="0.14375" />
         <entry key="app/src/main/res/layout/genre.xml" value="0.18072916666666666" />
         <entry key="app/src/main/res/layout/genre_data.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/movie_holder.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/movie_search_holder.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/seat_holder.xml" value="0.5" />
         <entry key="app/src/main/res/layout/user_holder.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/menu/nav_menu.xml" value="0.33" />
       </map>

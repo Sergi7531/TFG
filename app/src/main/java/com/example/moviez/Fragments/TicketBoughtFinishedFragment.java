@@ -2,11 +2,14 @@ package com.example.moviez.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.moviez.R;
 
@@ -21,6 +24,7 @@ public class TicketBoughtFinishedFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    Button goTicketButton;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,5 +66,20 @@ public class TicketBoughtFinishedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_ticket_bought_finished, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        goTicketButton = view.findViewById(R.id.goTicketButton);
+        goTicketButton.setOnClickListener(view1 -> {
+            setFragment(new TicketsFragment());
+        });
+    }
+    private void setFragment(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .commit();
     }
 }

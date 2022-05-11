@@ -351,4 +351,29 @@ public class Models {
         public String day;
         public String time;
     }
+    public enum SeatState{
+        BUSY,
+        FREE,
+        SELECTED
+    }
+    public static class Seats {
+        public String id;
+        public int row;
+        public int column;
+        public SeatState state;
+
+        public Seats(String id, int row, int column) {
+            this.id = id;
+            this.row = row;
+            this.column = column;
+            this.state = SeatState.FREE;
+        }
+        public Seats(String id, int row, int column, SeatState state) {
+            this.id = id;
+            this.row = row;
+            this.column = column;
+            this.state = state;
+        }
+
+    }
 }
