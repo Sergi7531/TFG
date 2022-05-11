@@ -36,7 +36,7 @@ public class ProfileFragment extends AppFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static String userId = "0";
+    private static String userId = "";
 
     private TextView usuario;
     private TextView correo;
@@ -121,23 +121,21 @@ public class ProfileFragment extends AppFragment {
 
         setUserDetails(userId);
 
-        lastViewedFilms();
+        lastViewedFilms(userId);
 
-        moviesToWatch();
+        moviesToWatch(userId);
 
-        favoriteFilms();
+        favoriteFilms(userId);
 
-        following();
+        following(userId);
 
-        followers();
-
-
+        followers(userId);
     }
 
-    public void lastViewedFilms() {
+    public void lastViewedFilms(String userId) {
         lastViewedFilms.clear();
         List<Models.Film> favoriteFilms = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("watchedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(userId).collection("watchedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
             }
@@ -147,10 +145,10 @@ public class ProfileFragment extends AppFragment {
         });
     }
 
-    public void moviesToWatch() {
+    public void moviesToWatch(String userId) {
         toWatch.clear();
         List<Models.Film> moviesToWatch = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("moviesToWatch").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(userId).collection("moviesToWatch").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 moviesToWatch.add(documentSnapshot.toObject(Models.Film.class));
             }
@@ -160,10 +158,10 @@ public class ProfileFragment extends AppFragment {
         });
     }
 
-    public void favoriteFilms() {
+    public void favoriteFilms(String userId) {
         favoritedFilms.clear();
         List<Models.Film> favoriteFilms = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(userId).collection("favoritedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
             }
@@ -173,11 +171,11 @@ public class ProfileFragment extends AppFragment {
         });
     }
 
-    public void following() {
+    public void following(String userId) {
         users.clear();
         List<Models.User> following = new ArrayList<>();
 
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(userId).collection("following").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 following.add(documentSnapshot.toObject(Models.User.class));
             }
@@ -188,11 +186,11 @@ public class ProfileFragment extends AppFragment {
 
     }
 
-    public void followers() {
+    public void followers(String userId) {
         followers.clear();
         List<Models.User> followers = new ArrayList<>();
 
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("followers").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(userId).collection("followers").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 followers.add(documentSnapshot.toObject(Models.User.class));
             }
