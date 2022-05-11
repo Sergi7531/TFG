@@ -29,10 +29,6 @@ public class Responses {
         public List<Models.Video> results = new ArrayList<>();
     }
 
-    class RecommendationResponse {
-
-    }
-
     public class BillboardResponse {
         public Dates dates;
         public int page;
@@ -87,22 +83,6 @@ public class Responses {
         public List<Models.Film> results = new ArrayList<>();
         public String total_pages;
         public String total_results;
-
-        public String getPage() {
-            return page;
-        }
-
-        public List<Models.Film> getResults() {
-            return results;
-        }
-
-        public String getTotal_pages() {
-            return total_pages;
-        }
-
-        public String getTotal_results() {
-            return total_results;
-        }
     }
 
     public class FullCastResponse {

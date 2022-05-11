@@ -31,6 +31,7 @@
     <string name="buy">Comprar</string>
     <string name="info">Información</string>
     <string name="commentary">Comentarios</string>
+    <string name="related_movies">Películas similares:</string>
     <string name="search_for_users">Search for users</string>
     <string name="search_for_movies">Search for movies</string>
     <string name="para_ti">Para ti</string>
@@ -59,4 +60,8 @@
     <string name="available">Disponible</string>
     <string name="busy">Reservado</string>
     <string name="selected">Seleccionado</string>
+    <string-array name="movie_status">
+        <item>Vista</item>
+        <item>Ver más tarde</item>
+    </string-array>
 </resources>

@@ -1,353 +1,362 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="20dp"
-    android:background="@color/dprimaryColor"
-    android:orientation="vertical"
     tools:context=".Fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginBottom="20dp"
+        android:background="@color/dprimaryColor"
+        android:orientation="vertical"
+        tools:context=".Fragments.ProfileFragment">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/profilePicture"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_baseline_person_24" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/usuario"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/username"
-                    android:textColor="@color/dprimaryTextColor"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/correo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/email"
-                    android:textColor="@color/dprimaryTextColor" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="130dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:gravity="center_horizontal"
-                        android:text="@string/siguiendo"
-                        android:textColor="@color/dprimaryTextColor"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="130dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:gravity="center_horizontal"
-                        android:text="@string/seguidores"
-                        android:textColor="@color/dprimaryTextColor"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/followingNumber"
-                        android:layout_width="135dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:text="@string/_0"
-                        android:textColor="@color/dprimaryTextColor" />
-
-                    <TextView
-                        android:id="@+id/followersNumber"
-                        android:layout_width="135dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:text="@string/_0"
-                        android:textColor="@color/dprimaryTextColor" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/editarPerfil"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:backgroundTint="@color/secondaryColor"
-            android:text="Editar Perfil"
-            android:textAllCaps="false"
-            android:textColor="@color/secondaryTextColor"
-            app:cornerRadius="10dp" />
-
-        <TextView
-            android:id="@+id/estadisticas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/estad_sticas_usuario"
-            android:textColor="@color/dprimaryTextColor"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="108dp"
-                android:layout_height="128dp"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/dprimaryLightColor"
-                app:cardCornerRadius="10dp">
-
-                <TextView
-                    android:id="@+id/textView13"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/has_visto"
-                    android:textColor="@color/dprimaryTextColor" />
-
-                <TextView
-                    android:id="@+id/watchedNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/_0"
-                    android:textColor="@color/dprimaryTextColor"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/pel_culas"
-                    android:textColor="@color/dprimaryTextColor" />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="108dp"
-                android:layout_height="128dp"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/dprimaryLightColor"
-                app:cardCornerRadius="10dp">
-
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/quieres_ver"
-                    android:textColor="@color/dprimaryTextColor" />
-
-                <TextView
-                    android:id="@+id/wantToWatchNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/_0"
-                    android:textColor="@color/dprimaryTextColor"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/pel_culas"
-                    android:textColor="@color/dprimaryTextColor" />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="108dp"
-                android:layout_height="128dp"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/dprimaryLightColor"
-                app:cardCornerRadius="10dp">
-
-                <TextView
-                    android:id="@+id/textView15"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/favoritas"
-                    android:textColor="@color/dprimaryTextColor" />
-
-                <TextView
-                    android:id="@+id/favoriteNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/_0"
-                    android:textColor="@color/dprimaryTextColor"
-                    android:textSize="34sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/pel_culas"
-                    android:textColor="@color/dprimaryTextColor" />
-            </androidx.cardview.widget.CardView>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/estadisticas2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/ltimas_pel_culas_vistas"
-            android:textColor="@color/dprimaryTextColor"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerWatchedMovies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <TextView
-            android:id="@+id/estadisticas5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Películas que quieres ver:"
-            android:textColor="@color/dprimaryTextColor"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerMoviesToWatch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
+        <!-- TODO: Update blank fragment layout -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/estadisticas3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/pel_culas_favoritas"
-            android:textColor="@color/dprimaryTextColor"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFavoritedMovies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+                <ImageView
+                    android:id="@+id/profilePicture"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_baseline_person_24" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center_horizontal"
-            android:text="@string/seguidores"
-            android:textColor="@color/dprimaryTextColor"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/usuario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/username"
+                        android:textColor="@color/dprimaryTextColor"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFollowers"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="10dp" />
+                    <TextView
+                        android:id="@+id/correo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/email"
+                        android:textColor="@color/dprimaryTextColor" />
 
-        <TextView
-            android:id="@+id/estadisticas4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center_horizontal"
-            android:text="@string/siguiendo"
-            android:textColor="@color/dprimaryTextColor"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFollowedUsers"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="10dp">
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:gravity="center_horizontal"
+                            android:text="@string/siguiendo"
+                            android:textColor="@color/dprimaryTextColor"
+                            android:textStyle="bold" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:gravity="center_horizontal"
+                            android:text="@string/seguidores"
+                            android:textColor="@color/dprimaryTextColor"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
-    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-</ScrollView>
+                        <TextView
+                            android:id="@+id/followingNumber"
+                            android:layout_width="135dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="@string/_0"
+                            android:textColor="@color/dprimaryTextColor" />
+
+                        <TextView
+                            android:id="@+id/followersNumber"
+                            android:layout_width="135dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:text="@string/_0"
+                            android:textColor="@color/dprimaryTextColor" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/editarPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/secondaryColor"
+                android:text="Editar Perfil"
+                android:textAllCaps="false"
+                android:textColor="@color/secondaryTextColor"
+                app:cornerRadius="10dp" />
+
+            <TextView
+                android:id="@+id/estadisticas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/estad_sticas_usuario"
+                android:textColor="@color/dprimaryTextColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="108dp"
+                    android:layout_height="128dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/dprimaryLightColor"
+                    app:cardCornerRadius="10dp">
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/has_visto"
+                        android:textColor="@color/dprimaryTextColor" />
+
+                    <TextView
+                        android:id="@+id/watchedNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/_0"
+                        android:textColor="@color/dprimaryTextColor"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/pel_culas"
+                        android:textColor="@color/dprimaryTextColor" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="108dp"
+                    android:layout_height="128dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/dprimaryLightColor"
+                    app:cardCornerRadius="10dp">
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/quieres_ver"
+                        android:textColor="@color/dprimaryTextColor" />
+
+                    <TextView
+                        android:id="@+id/wantToWatchNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/_0"
+                        android:textColor="@color/dprimaryTextColor"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView19"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/pel_culas"
+                        android:textColor="@color/dprimaryTextColor" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="108dp"
+                    android:layout_height="128dp"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/dprimaryLightColor"
+                    app:cardCornerRadius="10dp">
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/favoritas"
+                        android:textColor="@color/dprimaryTextColor" />
+
+                    <TextView
+                        android:id="@+id/favoriteNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/_0"
+                        android:textColor="@color/dprimaryTextColor"
+                        android:textSize="34sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/pel_culas"
+                        android:textColor="@color/dprimaryTextColor" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/estadisticas2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/ltimas_pel_culas_vistas"
+                android:textColor="@color/dprimaryTextColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerWatchedMovies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/estadisticas5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Películas que quieres ver:"
+                android:textColor="@color/dprimaryTextColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerMoviesToWatch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+            <TextView
+                android:id="@+id/estadisticas3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/pel_culas_favoritas"
+                android:textColor="@color/dprimaryTextColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerFavoritedMovies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/seguidores"
+                android:textColor="@color/dprimaryTextColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerFollowers"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="10dp" />
+
+            <TextView
+                android:id="@+id/estadisticas4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center_horizontal"
+                android:text="@string/siguiendo"
+                android:textColor="@color/dprimaryTextColor"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerFollowedUsers"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="10dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </ScrollView>
+</FrameLayout>

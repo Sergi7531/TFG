@@ -32,7 +32,7 @@ public class IMDB {
 
 //        Given a movie (id) gets recommendations (films)
         @GET("movie/{movie_id}/recommendations")
-        Call<Responses.RecommendationResponse> getRecommendations(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
+        Call<Responses.SearchResponse> getRecommendations(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
 //        Gets upcoming films (near release)
         @GET("movie/upcoming")

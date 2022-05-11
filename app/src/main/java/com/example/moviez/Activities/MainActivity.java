@@ -17,6 +17,7 @@ import com.example.moviez.Fragments.TicketsFragment;
 import com.example.moviez.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.profile:
                     //open the ProfileFragment
+                    profileFragment.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     setFragment(profileFragment);
                     return true;
                 default:

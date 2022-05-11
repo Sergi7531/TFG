@@ -3,23 +3,34 @@ package com.example.moviez.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.Navigator;
 
+import com.bumptech.glide.Glide;
 import com.example.moviez.Activities.LandingActivity;
+import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,8 +52,12 @@ public class EditProfileFragment extends AppFragment {
     public CardView profileName;
     public CardView passwordName;
     public CardView theme;
+    public CardView editPicture;
     public CardView credits;
     public Button closeSession;
+    public ImageView goBackButton;
+
+    private MutableLiveData<Uri> uriProfilePic = new MutableLiveData<>();
 
     public EditProfileFragment() {
         // Required empty public constructor
@@ -109,7 +124,56 @@ public class EditProfileFragment extends AppFragment {
 
         });
 
+        goBackButton.setOnClickListener(v -> {
+           setFragment(new ProfileFragment());
+        });
+
+        final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
+            if (uri != null) {
+                uriProfilePic.postValue(uri);
+                appViewModel.setUriImagenSeleccionada(uri);
+            } else {
+                uriProfilePic = null;
+            }
+        });
+
+        editPicture.setOnClickListener(v -> {
+            phoneGallery.launch("image/*");
+            uriProfilePic.observe(getViewLifecycleOwner(), uri -> {
+                if (uri != null) {
+                    FirebaseStorage.getInstance().getReference("/profileimgs/" + UUID.randomUUID() + ".jpg")
+                            .putFile(uri)
+                            .continueWithTask(task2 -> task2.getResult().getStorage().getDownloadUrl())
+                            .addOnSuccessListener(imageUrl -> saveUser(auth.getCurrentUser().getUid(), imageUrl));
+                }
+            });
+        });
+
+
+
+
     }
+
+    private void saveUser(String userid, Uri imageUri) {
+
+        String imageUrl = "";
+
+        if (imageUri != null && !imageUri.toString().equals("")) {
+            imageUrl = imageUri.toString();
+        }
+
+        db.collection("users")
+                .document(auth.getCurrentUser().getUid())
+                .update("profileImageURL", imageUrl);
+
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setPhotoUri(Uri.parse(imageUrl))
+                .build();
+        auth.getCurrentUser().updateProfile(profileUpdates);
+
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,7 +187,9 @@ public class EditProfileFragment extends AppFragment {
         passwordName = view.findViewById(R.id.changePassword);
         theme = view.findViewById(R.id.changeDarkLightTheme);
         credits = view.findViewById(R.id.credits);
+        editPicture = view.findViewById(R.id.changePicture);
         closeSession = view.findViewById(R.id.closeSession);
+        goBackButton = view.findViewById(R.id.goBackButton);
     }
 
     private void setFragment(Fragment fragment) {

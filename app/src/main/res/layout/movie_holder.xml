@@ -24,7 +24,8 @@
         <ImageView
             android:id="@+id/imageFilmHolder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/moviez_logo" />
 
     </androidx.cardview.widget.CardView>
 

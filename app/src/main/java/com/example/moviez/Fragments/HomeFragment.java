@@ -97,8 +97,7 @@ public class HomeFragment extends AppFragment {
             if (documentSnapshot.exists()) {
                 genresUser.addAll(documentSnapshot.toObject(Models.User.class).getFavoriteGenres());
 
-                appViewModel.getMoviesForYou(genresUser);
-
+                appViewModel.getMoviesForYou();
 
                 appViewModel.forYouMovies.observe(getViewLifecycleOwner(), filmsByGenreForUser -> {
                     if (filmsByGenreForUser != null) {

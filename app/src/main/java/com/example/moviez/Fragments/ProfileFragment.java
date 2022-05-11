@@ -19,6 +19,7 @@ import com.example.moviez.Adapters.FilmAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.example.moviez.Adapters.UserAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -30,11 +31,6 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends AppFragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     private TextView usuario;
     private TextView correo;
@@ -59,13 +55,16 @@ public class ProfileFragment extends AppFragment {
     List<Models.User> users = new ArrayList<>();
     List<Models.User> followers = new ArrayList<>();
 
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public static String userId = "";
 
     public ProfileFragment() {
         // Required empty public constructor
+        this.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    public ProfileFragment(String userid) {
+        // Required empty public constructor
+        this.userId = userid;
     }
 
     /**
@@ -73,25 +72,27 @@ public class ProfileFragment extends AppFragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
+    public static ProfileFragment newInstance(String param1) {
         ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        if(param1 != FirebaseAuth.getInstance().getCurrentUser().getUid()) {
+            Bundle args = new Bundle();
+            args.putString(param1, userId);
+            fragment.setArguments(args);
+        } else {
+            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
         return fragment;
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            userId = getArguments().getString("userid");
         }
     }
 
@@ -111,23 +112,30 @@ public class ProfileFragment extends AppFragment {
             setFragment(new EditProfileFragment());
         });
 
-        setUserDetails();
+        if(userId != auth.getCurrentUser().getUid()) {
+            editarPerfil.setText("Seguir");
+            editarPerfil.setOnClickListener(v -> {
+                addToFollowing(userId);
+            });
+        }
 
-        lastViewedFilms();
+        setUserDetails(userId);
 
-        moviesToWatch();
+        lastViewedFilms(userId);
 
-        favoriteFilms();
+        moviesToWatch(userId);
 
-        following();
+        favoriteFilms(userId);
 
-        followers();
+        following(userId);
+
+        followers(userId);
     }
 
-    public void lastViewedFilms() {
+    public void lastViewedFilms(String userId) {
         lastViewedFilms.clear();
         List<Models.Film> favoriteFilms = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(userId).collection("watchedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
             }
@@ -137,10 +145,10 @@ public class ProfileFragment extends AppFragment {
         });
     }
 
-    public void moviesToWatch() {
+    public void moviesToWatch(String userId) {
         toWatch.clear();
         List<Models.Film> moviesToWatch = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("moviesToWatch").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(userId).collection("moviesToWatch").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 moviesToWatch.add(documentSnapshot.toObject(Models.Film.class));
             }
@@ -150,10 +158,37 @@ public class ProfileFragment extends AppFragment {
         });
     }
 
-    public void favoriteFilms() {
+    public void addToFollowing(String userid) {
+        db.collection("users").document(userid).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Models.User usuarioASeguir = documentSnapshot.toObject(Models.User.class);
+
+                db.collection("users")
+                        .document(auth.getCurrentUser().getUid())
+                        .collection("following").document(userid)
+                        .set(usuarioASeguir);
+
+                db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot1 -> {
+                    db.collection("users")
+                            .document(userId)
+                            .collection("followers").document(auth.getCurrentUser().getUid())
+                            .set(documentSnapshot1.toObject(Models.User.class));
+                });
+
+
+
+                following(userId);
+
+                followersNumber.setText(this.followers.size() + "");
+            }
+        });
+
+    }
+
+    public void favoriteFilms(String userId) {
         favoritedFilms.clear();
         List<Models.Film> favoriteFilms = new ArrayList<>();
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(userId).collection("favoritedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 favoriteFilms.add(documentSnapshot.toObject(Models.Film.class));
             }
@@ -163,11 +198,11 @@ public class ProfileFragment extends AppFragment {
         });
     }
 
-    public void following() {
+    public void following(String userId) {
         users.clear();
         List<Models.User> following = new ArrayList<>();
 
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(userId).collection("following").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 following.add(documentSnapshot.toObject(Models.User.class));
             }
@@ -178,11 +213,11 @@ public class ProfileFragment extends AppFragment {
 
     }
 
-    public void followers() {
+    public void followers(String userId) {
         followers.clear();
         List<Models.User> followers = new ArrayList<>();
 
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("followers").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        db.collection("users").document(userId).collection("followers").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 followers.add(documentSnapshot.toObject(Models.User.class));
             }
@@ -199,7 +234,7 @@ public class ProfileFragment extends AppFragment {
     }
 
     private void adaptUsersToRecycler(List<?> list, RecyclerView recyclerView) {
-        recyclerView.setAdapter(new UserAdapter((List<Models.User>) list, requireContext()));
+        recyclerView.setAdapter(new UserAdapter((List<Models.User>) list, requireContext(), ProfileFragment.this));
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
     }
 
@@ -220,14 +255,20 @@ public class ProfileFragment extends AppFragment {
         favoriteNumber = view.findViewById(R.id.favoriteNumber);
     }
 
-    private void setUserDetails() {
-        usuario.setText(auth.getCurrentUser().getDisplayName());
-        correo.setText(auth.getCurrentUser().getEmail());
-        if (auth.getCurrentUser().getPhotoUrl() != null) {
-            Glide.with(getActivity()).load(auth.getCurrentUser().getPhotoUrl()).circleCrop().into(profilepic);
-        } else {
-            profilepic.setImageResource(R.drawable.ic_baseline_person_24);
-        }
+    private void setUserDetails(String userid) {
+        db.collection("users").document(userid).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Models.User user = documentSnapshot.toObject(Models.User.class);
+                usuario.setText(user.username);
+                correo.setText(user.email);
+                if (user.profileImageURL != null) {
+                    Glide.with(getActivity()).load(user.profileImageURL).circleCrop().into(profilepic);
+                } else {
+                    profilepic.setImageResource(R.drawable.ic_baseline_person_24);
+                }
+            }
+        });
+
     }
     private void setFragment(Fragment fragment) {
         getFragmentManager()

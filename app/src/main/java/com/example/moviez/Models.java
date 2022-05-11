@@ -7,33 +7,21 @@ import java.util.List;
 
 public class Models {
     public static class Film {
-        public boolean adult;
         public String backdrop_path;
-        public double budget;
-        public ArrayList<Genre> genres;
-        public String homepage;
         public int id;
-        public String imdb_id;
-        public String original_language;
-        public String original_title;
-        public String overview;
-//        We will order films by popularity, so we will use popularity instead of vote_average
-        public double popularity;
         public String poster_path;
         public String release_date;
-        public double revenue;
         public int runtime;
-        //        public ArrayList<SpokenLanguage> spoken_languages;
-        public String status;
-        public String sinopsis;
-        public String tagline;
         public String title;
-        public boolean video;
-        public double vote_average;
-        public int vote_count;
         @Nullable public List<Integer> genre_ids;
 
         public Film(String title, String poster_path) {
+            this.title = title;
+            this.poster_path = poster_path;
+        }
+
+        public Film(int id, String title, String poster_path) {
+            this.id = id;
             this.title = title;
             this.poster_path = poster_path;
         }
