@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.SnapHelper;
 import com.example.moviez.Adapters.TicketsAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class TicketsFragment extends AppFragment {
     private String mParam1;
     private String mParam2;
     private List<Models.Ticket> tickets = new ArrayList<>();
-    public Button button;
+    public FloatingActionButton button;
 
     public TicketsFragment() {
         // Required empty public constructor
