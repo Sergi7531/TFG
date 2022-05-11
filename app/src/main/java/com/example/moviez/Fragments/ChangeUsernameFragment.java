@@ -19,7 +19,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -162,7 +161,7 @@ public class ChangeUsernameFragment extends AppFragment {
         newName = view.findViewById(R.id.newName);
         confirmName = view.findViewById(R.id.confirmName);
         confirm_button = view.findViewById(R.id.confirm_button);
-        goBackUsername = view.findViewById(R.id.goBackUsername);
+        goBackUsername = view.findViewById(R.id.goBackButton);
     }
 
     @Override
