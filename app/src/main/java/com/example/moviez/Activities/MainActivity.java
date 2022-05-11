@@ -17,6 +17,7 @@ import com.example.moviez.Fragments.TicketsFragment;
 import com.example.moviez.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         moviesFragment = new MoviesFragment();
         ticketsFragment = new TicketsFragment();
-        profileFragment = new ProfileFragment();
+        profileFragment = new ProfileFragment(FirebaseAuth.getInstance().getCurrentUser().getUid());
         buyTicketFragment = new BuyTicketFragment();
 
         buyMovie = findViewById(R.id.buyMovie);

@@ -8,9 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviez.Fragments.HomeFragment;
+import com.example.moviez.Fragments.MovieDetailedFragment;
+import com.example.moviez.Fragments.ProfileFragment;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 
@@ -19,10 +23,12 @@ import java.util.List;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     Context context;
     List<Models.User> users;
+    public Fragment currentFragment;
 
-    public UserAdapter(List<Models.User> users, Context context) {
+    public UserAdapter(List<Models.User> users, Context context, Fragment currentFragment) {
         this.users = users;
         this.context = context;
+        this.currentFragment = currentFragment;
     }
 
     @NonNull
@@ -50,6 +56,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         holder.usernameHolder.setText(users.get(position).username);
 
+        holder.userImageHolder.setOnClickListener(view -> {
+            ProfileFragment profileFragment = new ProfileFragment(users.get(position).userid);
+            setFragment(profileFragment);
+        });
+    }
+
+    private void setFragment(Fragment fragment) {
+        currentFragment
+                .getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .addToBackStack(HomeFragment.class.getSimpleName())
+                .commit();
     }
 
     @Override

@@ -36,6 +36,8 @@ public class ProfileFragment extends AppFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static String userId = "0";
+
     private TextView usuario;
     private TextView correo;
     private TextView followingNumber;
@@ -68,20 +70,23 @@ public class ProfileFragment extends AppFragment {
         // Required empty public constructor
     }
 
+    public ProfileFragment(String userid) {
+        // Required empty public constructor
+        userId = userid;
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
+    public static ProfileFragment newInstance(String param1) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(param1, userId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -90,8 +95,7 @@ public class ProfileFragment extends AppFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            userId = getArguments().getString("userId");
         }
     }
 
@@ -111,7 +115,7 @@ public class ProfileFragment extends AppFragment {
             setFragment(new EditProfileFragment());
         });
 
-        setUserDetails();
+        setUserDetails(userId);
 
         lastViewedFilms();
 
@@ -199,7 +203,7 @@ public class ProfileFragment extends AppFragment {
     }
 
     private void adaptUsersToRecycler(List<?> list, RecyclerView recyclerView) {
-        recyclerView.setAdapter(new UserAdapter((List<Models.User>) list, requireContext()));
+        recyclerView.setAdapter(new UserAdapter((List<Models.User>) list, requireContext(), ProfileFragment.this));
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
     }
 
@@ -220,14 +224,20 @@ public class ProfileFragment extends AppFragment {
         favoriteNumber = view.findViewById(R.id.favoriteNumber);
     }
 
-    private void setUserDetails() {
-        usuario.setText(auth.getCurrentUser().getDisplayName());
-        correo.setText(auth.getCurrentUser().getEmail());
-        if (auth.getCurrentUser().getPhotoUrl() != null) {
-            Glide.with(getActivity()).load(auth.getCurrentUser().getPhotoUrl()).circleCrop().into(profilepic);
-        } else {
-            profilepic.setImageResource(R.drawable.ic_baseline_person_24);
-        }
+    private void setUserDetails(String userid) {
+        db.collection("users").document(userid).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Models.User user = documentSnapshot.toObject(Models.User.class);
+                usuario.setText(user.username);
+                correo.setText(user.email);
+                if (user.profileImageURL != null) {
+                    Glide.with(getActivity()).load(user.profileImageURL).circleCrop().into(profilepic);
+                } else {
+                    profilepic.setImageResource(R.drawable.ic_baseline_person_24);
+                }
+            }
+        });
+
     }
     private void setFragment(Fragment fragment) {
         getFragmentManager()
