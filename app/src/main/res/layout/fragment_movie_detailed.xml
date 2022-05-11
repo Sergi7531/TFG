@@ -48,7 +48,7 @@
                             android:src="@drawable/google" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/floatingActionButton"
+                            android:id="@+id/favoriteFloatingButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="70dp"
@@ -254,7 +254,7 @@
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="80dp"
+                android:layout_marginBottom="50dp"
                 app:cardBackgroundColor="?attr/colorPrimaryVariant"
                 app:cardCornerRadius="12dp">
 
@@ -362,6 +362,34 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="330dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="120dp"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="12dp">>
+
+                <TextView
+                    android:id="@+id/titleMoviesRelated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/satoshi"
+                    android:text="@string/related_movies"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="20sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/similarFilmsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="60dp" />
+            </androidx.cardview.widget.CardView>
+
+
 
         </LinearLayout>
     </ScrollView>

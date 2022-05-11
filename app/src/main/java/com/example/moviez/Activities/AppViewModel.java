@@ -1,13 +1,18 @@
 package com.example.moviez.Activities;
 
 import android.net.Uri;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.moviez.IMDB;
 import com.example.moviez.Models;
 import com.example.moviez.Responses;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -21,10 +26,17 @@ public class AppViewModel extends ViewModel {
     public static MutableLiveData<Responses.BillboardResponse> actualMoviesInCinemaResponse = new MutableLiveData<>();
     public static MutableLiveData<Responses.SearchResponse> moviesByQuery = new MutableLiveData<>();
     public static MutableLiveData<Responses.SearchResponse> forYouMovies = new MutableLiveData<>();
+    public static MutableLiveData<Responses.SearchResponse> similarMovies = new MutableLiveData<>();
     public static MutableLiveData<Models.Film> movieDetails = new MutableLiveData<>();
     public static MutableLiveData<Responses.FullCastResponse> fullCast = new MutableLiveData<>();
 
-//    We will use this counters in case we need to use the "page" param (so we take control of the results number)
+//    public static List<Models.Film> lastViewedFilms = new ArrayList<>();
+//    public static List<Models.Film> moviesToWatch = new ArrayList<>();
+
+    public static LinkedHashSet<Models.Film> filmsToShow = new LinkedHashSet<>();
+
+
+    //    We will use this counters in case we need to use the "page" param (so we take control of the results number)
     public static int contResults = 0;
     public static int contPage = 0;
 
@@ -37,16 +49,16 @@ public class AppViewModel extends ViewModel {
 //    MOVIESFRAGMENT:
 
     public static void getUpcomingMovies() {
-       IMDB.api.getUpcoming(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
-           @Override
-           public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
-               upcomingMoviesResponse.postValue(response.body());
-           }
-           @Override
-           public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
-               t.getMessage();
-           }
-       });
+        IMDB.api.getUpcoming(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
+            @Override
+            public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
+                upcomingMoviesResponse.postValue(response.body());
+            }
+            @Override
+            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
+                t.getMessage();
+            }
+        });
     }
 
     public static void getActualCinemaMovies() {
@@ -74,7 +86,7 @@ public class AppViewModel extends ViewModel {
                     if (searchResponse.results.size() > 10) {
                         searchResponse.results.subList(10, searchResponse.results.size()).clear();
                         List<Models.Film> moviesToShowSearch = searchResponse.results;
-                        moviesToShowSearch.add(new Models.Film("Más resultados...", "null"));
+                        moviesToShowSearch.add(new Models.Film( "Más resultados...", "null"));
 
                         response.body().results = moviesToShowSearch;
                         moviesByQuery.postValue(response.body());
@@ -88,49 +100,107 @@ public class AppViewModel extends ViewModel {
         });
     }
 
-    public static void getMoviesForYou(List<Integer> genresUser) {
+    public static void getMoviesForYou() {
 
-        if(contPage > 5) contPage = 0;
+        contPage = (int) (Math.random() * 3) + 1;
 
-        contPage++;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", String.valueOf(contPage)).enqueue(new Callback<Responses.SearchResponse>() {
-            @Override
-            public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
-                if (response.body() != null) {
-                    Responses.SearchResponse moviesForYouResponse = response.body();
-//                    If user has no genre preferences, we will show the most popular movies:
-                    if (genresUser.isEmpty()) {
-                        forYouMovies.postValue(moviesForYouResponse);
-                        return;
-                    }
-                    LinkedHashSet<Models.Film> filmsToShow = new LinkedHashSet<>();
 
-//                    For each film, we need to check if any of the user's favorite genres is in the film's genres:
-                    for (Models.Film movie : moviesForYouResponse.results) {
-                        for (Integer genre : genresUser) {
-                            if (movie.genre_ids.contains(genre)) {
-                                contResults++;
-                                filmsToShow.add(movie);
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                IMDB.api.getRecommendations(Integer.parseInt(documentSnapshot.getId()), IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+                        if (response.body() != null) {
+                            if (response.body().results.size() > 10) {
+                                response.body().results.subList(0, 10/queryDocumentSnapshots.size());
                             }
+                            forYouMovies.postValue(response.body());
                         }
                     }
-                    moviesForYouResponse.results.clear();
-                    moviesForYouResponse.results.addAll(filmsToShow);
-                    forYouMovies.postValue(moviesForYouResponse);
-                } else {
-                    return;
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
-                t.getMessage();
+                    @Override
+                    public void onFailure (Call < Responses.SearchResponse > call, Throwable t) {
+                        t.getMessage();
+                    }
+                });
+
             }
         });
+
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                IMDB.api.getRecommendations(Integer.parseInt(documentSnapshot.getId()), IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+                        if (response.body() != null) {
+                            if (response.body().results.size() > 10) {
+                                response.body().results.subList(0, 10/queryDocumentSnapshots.size());
+                            }
+                            forYouMovies.postValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure (Call < Responses.SearchResponse > call, Throwable t) {
+                        t.getMessage();
+                    }
+                });
+
+            }
+        });
+
+//        Now we have the movies that the user has watched, we need to retrieve the movies the user has not watched yet (In Firebase, moviesToWatch):
+
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("moviesToWatch").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                IMDB.api.getRecommendations(Integer.parseInt(documentSnapshot.getId()), IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+                        if (response.body() != null) {
+                            if (response.body().results.size() > 10) {
+                                response.body().results.subList(0, 10/queryDocumentSnapshots.size());
+                            }
+                            forYouMovies.postValue(response.body());
+                        }
+                    }
+                    @Override
+                    public void onFailure (Call < Responses.SearchResponse > call, Throwable t) {
+                        t.getMessage();
+                    }
+                });
+            }
+        });
+
+
+//
+//        if(forYouMovies.getValue() == null) {
+//
+//            IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", String.valueOf(contPage)).enqueue(new Callback<Responses.SearchResponse>() {
+//                @Override
+//                public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+//                    if (response.body() != null) {
+//                        if (response.body().results.size() > 6) {
+//                            response.body().results.subList(0, 6);
+//                        }
+//                        forYouMovies.postValue(response.body());
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
+//                    t.getMessage();
+//                }
+//            });
+//        }
     }
 
-//    Create a method to get the movie's details:
+    //    Create a method to get the movie's details:
     public static void getMovieDetails(int filmId) {
         movieDetails = new MutableLiveData<>();
         IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
@@ -148,7 +218,7 @@ public class AppViewModel extends ViewModel {
     }
 
 
-//    CReate a method to get the movie's cast:
+    //    CReate a method to get the movie's cast:
     public static void getMovieCast(int filmId) {
         fullCast = new MutableLiveData<>();
         IMDB.api.getCast(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Responses.FullCastResponse>() {

@@ -29,10 +29,6 @@ public class Responses {
         public List<Models.Video> results = new ArrayList<>();
     }
 
-    class RecommendationResponse {
-
-    }
-
     public class BillboardResponse {
         public Dates dates;
         public int page;

@@ -1,5 +1,6 @@
 package com.example.moviez.Fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,12 +24,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.moviez.Activities.AppViewModel;
-import com.example.moviez.Activities.MainActivity;
 import com.example.moviez.Adapters.CommentAdapter;
+import com.example.moviez.Adapters.FilmAdapter;
 import com.example.moviez.IMDB;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.example.moviez.Responses;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -58,6 +61,8 @@ public class MovieDetailedFragment extends AppFragment {
     public static TextView comentariosTextDetail;
     public static RatingBar ratingBar;
     public static Button addCommentMovie;
+    public static FloatingActionButton favoriteFloatingButton;
+    public static RecyclerView similarFilmsRecyclerView;
 
 //    Intent to BuyTicketsFragment:
     public static Button buyButton;
@@ -146,8 +151,11 @@ public class MovieDetailedFragment extends AppFragment {
 //            Convert date in string (format YYYY-MM-DD) to DD-MM-YYYY:
             String date = movie.release_date;
             String[] parts = date.split("-");
-            movieRelease.setText(parts[2] + "-" + parts[1] + "-" + parts[0]);
-
+            if(parts.length == 3) {
+                movieRelease.setText(parts[2] + "-" + parts[1] + "-" + parts[0]);
+            } else {
+                movieRelease.setText("Fecha no disponible.");
+            }
 
             viewModel.getMovieCast(filmId);
 
@@ -156,7 +164,47 @@ public class MovieDetailedFragment extends AppFragment {
             viewModel.fullCast.observe(getViewLifecycleOwner(), cast -> { ;
                 loadActors(viewModel, cast);
             });
+
+            favoriteFloatingButton.setOnClickListener(v -> {
+
+                db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().exists()) {
+                            db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).delete();
+                        } else {
+                            db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).set(movie);
+                        }
+                    }
+                });
+
+            });
+
+            IMDB.api.getRecommendations(movie.id, IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.SearchResponse>() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+                    if (response.body() != null) {
+                        if (response.body().results.size() > 10) {
+                            response.body().results.subList(0, 10);
+                        }
+                        viewModel.similarMovies.postValue(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure (Call < Responses.SearchResponse > call, Throwable t) {
+                    t.getMessage();
+                }
+            });
+
+            viewModel.similarMovies.observe(getViewLifecycleOwner(), similarMovies -> {
+                if (similarMovies != null) {
+                    similarFilmsRecyclerView.setAdapter(new FilmAdapter(similarMovies.results, requireContext(), MovieDetailedFragment.this));
+                    similarFilmsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+                }
+            });
         });
+
 
         addCommentMovie.setOnClickListener(v -> {
             NewCommentFragment newCommentFragment = new NewCommentFragment(filmId);
@@ -188,18 +236,20 @@ public class MovieDetailedFragment extends AppFragment {
                     IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
                         @Override
                         public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
-                            film = new Models.Film(response.body().title, response.body().poster_path);
-                            db.collection("users")
-                                    .document(auth.getCurrentUser().getUid())
-                                    .collection("moviesToWatch")
-                                    .document(String.valueOf(filmId))
-                                    .set(film);
+                            if (response.body() != null) {
+                                film = new Models.Film(response.body().id, response.body().title, response.body().poster_path);
+                                db.collection("users")
+                                        .document(auth.getCurrentUser().getUid())
+                                        .collection("moviesToWatch")
+                                        .document(String.valueOf(filmId))
+                                        .set(film);
 
-                            db.collection("users")
-                                    .document(auth.getCurrentUser().getUid())
-                                    .collection("watchedFilms")
-                                    .document(String.valueOf(filmId))
-                                    .delete();
+                                db.collection("users")
+                                        .document(auth.getCurrentUser().getUid())
+                                        .collection("watchedFilms")
+                                        .document(String.valueOf(filmId))
+                                        .delete();
+                            }
                         }
 
                         @Override
@@ -212,18 +262,20 @@ public class MovieDetailedFragment extends AppFragment {
                         IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
                             @Override
                             public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
-                                film = new Models.Film(response.body().title, response.body().poster_path);
-                                db.collection("users")
-                                        .document(auth.getCurrentUser().getUid())
-                                        .collection("watchedFilms")
-                                        .document(String.valueOf(filmId))
-                                        .set(film);
+                                if (response.body() != null) {
+                                    film = new Models.Film(response.body().id, response.body().title, response.body().poster_path);
+                                    db.collection("users")
+                                            .document(auth.getCurrentUser().getUid())
+                                            .collection("watchedFilms")
+                                            .document(String.valueOf(filmId))
+                                            .set(film);
 
-                                db.collection("users")
-                                        .document(auth.getCurrentUser().getUid())
-                                        .collection("moviesToWatch")
-                                        .document(String.valueOf(filmId))
-                                        .delete();
+                                    db.collection("users")
+                                            .document(auth.getCurrentUser().getUid())
+                                            .collection("moviesToWatch")
+                                            .document(String.valueOf(filmId))
+                                            .delete();
+                                }
                             }
 
                             @Override
@@ -231,6 +283,19 @@ public class MovieDetailedFragment extends AppFragment {
 
                             }
                         });
+                } else {
+//                    Delete from both collections (moviesToWatch and watchedFilms):
+                    db.collection("users")
+                            .document(auth.getCurrentUser().getUid())
+                            .collection("moviesToWatch")
+                            .document(String.valueOf(filmId))
+                            .delete();
+
+                    db.collection("users")
+                            .document(auth.getCurrentUser().getUid())
+                            .collection("watchedFilms")
+                            .document(String.valueOf(filmId))
+                            .delete();
                 }
              //   Toast.makeText(getActivity(), selected, Toast.LENGTH_SHORT).show();
             }
@@ -327,7 +392,9 @@ public class MovieDetailedFragment extends AppFragment {
         comentariosTextDetail = view.findViewById(R.id.comentariosTextDetail);
         ratingBar = view.findViewById(R.id.ratingBar);
         addCommentMovie = view.findViewById(R.id.addCommentMovie);
+        favoriteFloatingButton = view.findViewById(R.id.favoriteFloatingButton);
+        similarFilmsRecyclerView = view.findViewById(R.id.similarFilmsRecyclerView);
         buyButton = view.findViewById(R.id.buyButton);
-        spinner = (Spinner) view.findViewById(R.id.spinner);
+        spinner = view.findViewById(R.id.spinner);
     }
 }
