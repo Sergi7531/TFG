@@ -4,49 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorOnPrimary"
+    android:background="@color/dprimaryColor"
     tools:context=".Fragments.TicketsFragment">
 
-    <RelativeLayout
+    <Button
+        android:id="@+id/qrButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="Scan QR"
+        android:textColor="@color/primaryTextColor" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerTickets"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="120dp"
+        android:overScrollMode="never">
 
-        <LinearLayout
-            android:id="@+id/linearPages"
-            android:layout_width="wrap_content"
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/linearPages"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="75dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="75dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                tools:src="@drawable/ic_baseline_circle_24" />
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerTickets"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="120dp"
-            android:overScrollMode="never">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/qrButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="320dp"
-            android:layout_marginTop="640dp"
-            android:clickable="true"
-            android:src="@drawable/ic_baseline_qr_code_24" />
-    </RelativeLayout>
-
+            android:layout_weight="1"
+            tools:src="@drawable/ic_baseline_circle_24" />
+    </LinearLayout>
 </FrameLayout>
