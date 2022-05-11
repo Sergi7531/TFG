@@ -115,6 +115,10 @@ public class ProfileFragment extends AppFragment {
             setFragment(new EditProfileFragment());
         });
 
+        if(userId != auth.getCurrentUser().getUid()) {
+            editarPerfil.setText("Seguir");
+        }
+
         setUserDetails(userId);
 
         lastViewedFilms();
@@ -126,6 +130,8 @@ public class ProfileFragment extends AppFragment {
         following();
 
         followers();
+
+
     }
 
     public void lastViewedFilms() {
