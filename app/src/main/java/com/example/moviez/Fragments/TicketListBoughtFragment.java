@@ -2,20 +2,23 @@ package com.example.moviez.Fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.moviez.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TicketsBuyFragment#newInstance} factory method to
+ * Use the {@link TicketListBoughtFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TicketsBuyFragment extends Fragment {
+public class TicketListBoughtFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,8 +28,9 @@ public class TicketsBuyFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    Button goTicketButton;
 
-    public TicketsBuyFragment() {
+    public TicketListBoughtFragment() {
         // Required empty public constructor
     }
 
@@ -36,11 +40,11 @@ public class TicketsBuyFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TicketsBuyFragment.
+     * @return A new instance of fragment TicketListBoughtFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TicketsBuyFragment newInstance(String param1, String param2) {
-        TicketsBuyFragment fragment = new TicketsBuyFragment();
+    public static TicketListBoughtFragment newInstance(String param1, String param2) {
+        TicketListBoughtFragment fragment = new TicketListBoughtFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,6 +65,21 @@ public class TicketsBuyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tickets_buy, container, false);
+        return inflater.inflate(R.layout.fragment_ticket_list_bought, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        goTicketButton = view.findViewById(R.id.goTicketButton);
+        goTicketButton.setOnClickListener(view1 -> {
+            setFragment(new TicketBoughtFinishedFragment());
+        });
+    }
+    private void setFragment(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .commit();
     }
 }

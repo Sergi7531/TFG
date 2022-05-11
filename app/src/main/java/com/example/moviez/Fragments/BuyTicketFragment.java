@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class BuyTicketFragment extends AppFragment {
     Spinner spinnerDay;
     Spinner spinnerHour;
     Spinner spinnerMovie;
+    Button buyButton;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -185,6 +187,9 @@ public class BuyTicketFragment extends AppFragment {
 
 
         });
+        buyButton.setOnClickListener(view1 -> {
+            setFragment(new SeatsFragment());
+        });
     }
 
     private void checkFilms(String cinemaId) {
@@ -207,6 +212,13 @@ public class BuyTicketFragment extends AppFragment {
         spinnerDay = view.findViewById(R.id.spinnerDay);
         spinnerHour = view.findViewById(R.id.spinnerHour);
         spinnerMovie = view.findViewById(R.id.spinnerMovie);
+        buyButton = view.findViewById(R.id.goTicketButton);
 
+    }
+    private void setFragment(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .commit();
     }
 }
