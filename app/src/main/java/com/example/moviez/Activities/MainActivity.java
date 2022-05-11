@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         moviesFragment = new MoviesFragment();
         ticketsFragment = new TicketsFragment();
-        profileFragment = new ProfileFragment(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        profileFragment = new ProfileFragment();
         buyTicketFragment = new BuyTicketFragment();
 
         buyMovie = findViewById(R.id.buyMovie);
@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.profile:
                     //open the ProfileFragment
+                    profileFragment.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     setFragment(profileFragment);
                     return true;
                 default:

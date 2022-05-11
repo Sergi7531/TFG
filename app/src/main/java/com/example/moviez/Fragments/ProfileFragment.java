@@ -19,6 +19,7 @@ import com.example.moviez.Adapters.FilmAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.example.moviez.Adapters.UserAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -30,13 +31,6 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends AppFragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private static String userId = "";
 
     private TextView usuario;
     private TextView correo;
@@ -61,18 +55,16 @@ public class ProfileFragment extends AppFragment {
     List<Models.User> users = new ArrayList<>();
     List<Models.User> followers = new ArrayList<>();
 
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public static String userId = "";
 
     public ProfileFragment() {
         // Required empty public constructor
+        this.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     public ProfileFragment(String userid) {
         // Required empty public constructor
-        userId = userid;
+        this.userId = userid;
     }
 
     /**
@@ -85,17 +77,22 @@ public class ProfileFragment extends AppFragment {
     // TODO: Rename and change types and number of parameters
     public static ProfileFragment newInstance(String param1) {
         ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(param1, userId);
-        fragment.setArguments(args);
+        if(param1 != FirebaseAuth.getInstance().getCurrentUser().getUid()) {
+            Bundle args = new Bundle();
+            args.putString(param1, userId);
+            fragment.setArguments(args);
+        } else {
+            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
         return fragment;
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            userId = getArguments().getString("userId");
+            userId = getArguments().getString("userid");
         }
     }
 
