@@ -243,6 +243,6 @@ public class MovieDetailedFragment extends AppFragment {
         comentariosTextDetail = view.findViewById(R.id.comentariosTextDetail);
         ratingBar = view.findViewById(R.id.ratingBar);
         addCommentMovie = view.findViewById(R.id.addCommentMovie);
-        buyButton = view.findViewById(R.id.buyButton);
+        buyButton = view.findViewById(R.id.goTicketButton);
     }
 }

@@ -52,4 +52,7 @@
     <string name="new_comment">Añade un comentario</string>
     <string name="add_comment_button">Añadir comentario...</string>
     <string name="comment_hint">Comentario...</string>
+    <string name="end_buy">Finalizar compra</string>
+    <string name="go_tickets">Ir a tickets</string>
+    <string name="buy_done">Tu compra se ha realizado correctamente</string>
 </resources>

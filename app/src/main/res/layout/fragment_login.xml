@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/satoshi"
                     android:hint="@string/email"
-                    android:textColorHint="@color/dprimaryColor" />
+                    android:textColorHint="?attr/colorOnSecondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -99,7 +99,7 @@
                 android:textSize="14sp" />
 
             <Button
-                android:id="@+id/logInButton"
+                android:id="@+id/goTicketButton"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginTop="34dp"
