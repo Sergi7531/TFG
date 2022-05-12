@@ -28,6 +28,7 @@ public class AppViewModel extends ViewModel {
     public static MutableLiveData<Responses.SearchResponse> forYouMovies = new MutableLiveData<>();
     public static MutableLiveData<Responses.SearchResponse> similarMovies = new MutableLiveData<>();
     public static MutableLiveData<Models.Film> movieDetails = new MutableLiveData<>();
+    public static MutableLiveData<Models.User> userDetails = new MutableLiveData<>();
     public static MutableLiveData<Responses.FullCastResponse> fullCast = new MutableLiveData<>();
 
 //    public static List<Models.Film> lastViewedFilms = new ArrayList<>();
@@ -39,7 +40,6 @@ public class AppViewModel extends ViewModel {
     //    We will use this counters in case we need to use the "page" param (so we take control of the results number)
     public static int contResults = 0;
     public static int contPage = 0;
-
 
     public MutableLiveData<Uri> uriImagenSeleccionada = new MutableLiveData<>();
 
@@ -199,6 +199,8 @@ public class AppViewModel extends ViewModel {
 //            });
 //        }
     }
+
+
 
     //    Create a method to get the movie's details:
     public static void getMovieDetails(int filmId) {

@@ -51,7 +51,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerMoviesSearch"
+            android:id="@+id/recyclerViewUserSearch"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@id/searchBar"

@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:text="Movie title"
+        android:text="@string/username"
         app:layout_constraintBottom_toBottomOf="@+id/userProfilePic"
         app:layout_constraintStart_toEndOf="@+id/userProfilePic"
         app:layout_constraintTop_toTopOf="@+id/userProfilePic" />

@@ -12,8 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.moviez.Fragments.HomeFragment;
-import com.example.moviez.Fragments.MovieDetailedFragment;
 import com.example.moviez.Fragments.ProfileFragment;
 import com.example.moviez.Models;
 import com.example.moviez.R;
@@ -67,8 +65,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 .getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_frame, fragment)
-                .addToBackStack(HomeFragment.class.getSimpleName())
                 .commit();
+
     }
 
     @Override

@@ -76,8 +76,8 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
         public MovieSearchResultViewHolder(@NonNull View itemView) {
             super(itemView);
             searchHolderLayout = itemView.findViewById(R.id.searchHolderLayout);
-            imageFilmHolder = itemView.findViewById(R.id.filmImageSearchHolder);
-            filmNameHolder = itemView.findViewById(R.id.filmTitleSearchHolder);
+            imageFilmHolder = itemView.findViewById(R.id.userProfilePic);
+            filmNameHolder = itemView.findViewById(R.id.usernameSearch);
         }
     }
 }
