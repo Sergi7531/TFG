@@ -28,7 +28,6 @@ public class AppViewModel extends ViewModel {
     public static MutableLiveData<Responses.SearchResponse> forYouMovies = new MutableLiveData<>();
     public static MutableLiveData<Responses.SearchResponse> similarMovies = new MutableLiveData<>();
     public static MutableLiveData<Models.Film> movieDetails = new MutableLiveData<>();
-    public static MutableLiveData<Models.User> userDetails = new MutableLiveData<>();
     public static MutableLiveData<Responses.FullCastResponse> fullCast = new MutableLiveData<>();
 
 //    public static List<Models.Film> lastViewedFilms = new ArrayList<>();

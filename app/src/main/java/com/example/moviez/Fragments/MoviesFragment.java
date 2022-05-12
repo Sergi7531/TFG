@@ -87,23 +87,32 @@ public class MoviesFragment extends AppFragment {
                 new TextWatcher() {
                        @Override
                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                           recyclerMoviesSearch.setAlpha(0f);
                        }
 
                        @Override
                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
                            viewModel.searchMoviesByQuery(charSequence.toString());
+                           recyclerMoviesSearch.setAlpha(1f);
+                           viewModel.moviesByQuery.observe(getViewLifecycleOwner(), moviesByQuery -> {
+
+                               //if (moviesByQuery != null) {
+
+                               recyclerMoviesSearch.setAdapter(new MovieSearchResultAdapter(requireActivity(), moviesByQuery.results, MoviesFragment.this));
+                               recyclerMoviesSearch.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
+                               if (charSequence.toString().isEmpty()) {
+                                   recyclerMoviesSearch.setAlpha(0f);
+                               }
+                               else {
+                                   recyclerMoviesSearch.setAlpha(1f);
+                               }
+                               //}
+                           });
                        }
 
                        @Override
                        public void afterTextChanged(Editable editable) {
-                           viewModel.moviesByQuery.observe(getViewLifecycleOwner(), moviesByQuery -> {
-                               if (moviesByQuery != null) {
-                                   recyclerMoviesSearch.setAlpha(1f);
-                                   recyclerMoviesSearch.setAdapter(new MovieSearchResultAdapter(requireActivity(), moviesByQuery.results, MoviesFragment.this));
-                                   recyclerMoviesSearch.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
-                               }
-                           });
+
                        }
 
             });
