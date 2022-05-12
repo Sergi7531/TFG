@@ -23,7 +23,7 @@ import com.google.android.material.textfield.TextInputEditText;
  * Use the {@link MoviesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MoviesFragment extends Fragment {
+public class MoviesFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,7 +75,7 @@ public class MoviesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerUpcomingMovies = (RecyclerView) getActivity().findViewById(R.id.recyclerUpcomingMovies);
         recyclerMoviesInCinemas = getActivity().findViewById(R.id.recyclerMoviesInCinemas);
-        recyclerMoviesSearch = getActivity().findViewById(R.id.recyclerMoviesSearch);
+        recyclerMoviesSearch = getActivity().findViewById(R.id.recyclerViewUserSearch);
         searchInputFilm = getActivity().findViewById(R.id.searchInputFilm);
 
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);

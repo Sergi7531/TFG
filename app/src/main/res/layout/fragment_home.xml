@@ -39,11 +39,11 @@
                 android:layout_marginBottom="30dp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerMoviesSearch"
+                android:id="@+id/recyclerViewUserSearch"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_below="@id/searchBox"
-                android:alpha="0"
+                android:alpha="1"
                 android:elevation="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
@@ -77,7 +77,7 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recyclerMoviesSearch"
+                android:layout_below="@id/recyclerViewUserSearch"
                 android:layout_marginTop="40dp"
                 android:text="@string/para_ti"
                 android:textColor="?attr/colorOnSecondary"
