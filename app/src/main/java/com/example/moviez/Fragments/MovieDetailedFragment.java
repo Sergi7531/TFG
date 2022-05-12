@@ -415,6 +415,7 @@ public class MovieDetailedFragment extends AppFragment {
         favoriteFloatingButton = view.findViewById(R.id.favoriteFloatingButton);
         similarFilmsRecyclerView = view.findViewById(R.id.similarFilmsRecyclerView);
         buyButton = view.findViewById(R.id.goTicketButton);
+        spinner = view.findViewById(R.id.spinner);
 
     }
 }

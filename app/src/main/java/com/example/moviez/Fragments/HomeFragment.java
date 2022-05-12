@@ -44,6 +44,8 @@ public class HomeFragment extends AppFragment {
     public TextInputEditText searchInputUser;
     public RecyclerView recyclerViewUserSearch;
 
+    public static String userId = "";
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
