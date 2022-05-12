@@ -100,7 +100,7 @@ public class MoviesFragment extends AppFragment {
                            viewModel.moviesByQuery.observe(getViewLifecycleOwner(), moviesByQuery -> {
                                if (moviesByQuery != null) {
                                    recyclerMoviesSearch.setAlpha(1f);
-                                   recyclerMoviesSearch.setAdapter(new MovieSearchResultAdapter(requireActivity(), moviesByQuery.results));
+                                   recyclerMoviesSearch.setAdapter(new MovieSearchResultAdapter(requireActivity(), moviesByQuery.results, MoviesFragment.this));
                                    recyclerMoviesSearch.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
                                }
                            });

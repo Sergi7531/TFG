@@ -61,22 +61,31 @@ public class HomeFragment extends AppFragment {
 
         recyclerViewUserSearch = view.findViewById(R.id.recyclerViewUserSearch);
 
-        recyclerViewUserSearch.setAdapter(adapter = new UserSearchResultAdapter(requireActivity(), users));
+        recyclerViewUserSearch.setAdapter(adapter = new UserSearchResultAdapter(requireActivity(), users, HomeFragment.this));
         recyclerViewUserSearch.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
 
         searchInputUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                recyclerViewUserSearch.setAlpha(0f);
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                System.out.println("TEXT CHANGED");
-                firebaseUserSearch(charSequence.toString());
+               recyclerViewUserSearch.setAlpha(1f);
+               System.out.println("TEXT CHANGED");
+               firebaseUserSearch(charSequence.toString());
+               if (charSequence.toString().isEmpty()) {
+                   recyclerViewUserSearch.setAlpha(0f);
+               }
+               else {
+                   recyclerViewUserSearch.setAlpha(1f);
+               }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+
             }
         });
     }
@@ -93,12 +102,14 @@ public class HomeFragment extends AppFragment {
                     System.out.println("FIN CONSULTA");
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Models.User user = document.toObject(Models.User.class);
-                        users.add(user);
-                        System.out.println("ENCONTRADO!: " + user.username);
+                        if (user.username.contains(query)) {
+                            users.add(user);
+                            System.out.println("ENCONTRADO!: " + user.username);
+                        }
                     }
                     adapter.notifyDataSetChanged();
                 } else {
-                    System.out.println("MIERDAAAAA");
+                    System.out.println("Not found");
                 }
 
             }

@@ -25,9 +25,10 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
     List<Models.Film> movies;
     Fragment currentFragment;
 
-    public MovieSearchResultAdapter(Context context, List<Models.Film> movies) {
+    public MovieSearchResultAdapter(Context context, List<Models.Film> movies, Fragment currentFragment) {
         this.context = context;
         this.movies = movies;
+        this.currentFragment = currentFragment;
     }
 
     @NonNull

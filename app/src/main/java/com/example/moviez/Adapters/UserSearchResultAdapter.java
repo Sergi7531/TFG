@@ -8,11 +8,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviez.Activities.AppViewModel;
 import com.example.moviez.Fragments.HomeFragment;
 import com.example.moviez.Fragments.ProfileFragment;
 import com.example.moviez.Models;
@@ -20,14 +24,15 @@ import com.example.moviez.R;
 
 import java.util.List;
 
-public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResultAdapter.UserSearchResultViewHolder> {
+public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResultAdapter.UserSearchResultViewHolder>{
     Context context;
     List<Models.User> users;
     Fragment currentFragment;
 
-    public UserSearchResultAdapter(Context context, List<Models.User> users) {
+    public UserSearchResultAdapter(Context context, List<Models.User> users, Fragment currentFragment) {
         this.context = context;
         this.users = users;
+        this.currentFragment = currentFragment;
     }
 
 
@@ -62,7 +67,6 @@ public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResu
                 .getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_frame, fragment)
-                .addToBackStack(HomeFragment.class.getSimpleName())
                 .commit();
     }
 
