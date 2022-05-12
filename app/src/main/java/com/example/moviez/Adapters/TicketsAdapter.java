@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import java.util.List;
 public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketViewHolder> {
     private List<Models.Ticket> tickets;
     public Context context;
+    public boolean qrShown = false;
 
     public TicketsAdapter(List<Models.Ticket> tickets, Context context) {
         this.tickets = tickets;
@@ -47,6 +49,17 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         Models.Ticket ticket = tickets.get(position);
 
         Glide.with(context).load("https://image.tmdb.org/t/p/original" + ticket.filmImage).into(holder.imageTicketDetail);
+
+        holder.qrButton.setOnClickListener(view -> {
+            if (!qrShown){
+                qrShown = true;
+                holder.qrCode.setAlpha(1f);
+            } else {
+                qrShown = false;
+                holder.qrCode.setAlpha(0f);
+            }
+
+        });
 
         holder.linearCinema.setOnClickListener(v -> {
 //      Intent to google maps with the cinema location (cinemaCoords):
@@ -72,7 +85,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         int minutes = duration % 60;
 
         String durationString = hours + "h " + minutes + "m";
-        holder.durationTicket.setText(durationString);
+        //holder.durationTicket.setText(durationString);
         holder.roomTicketDetail.setText(ticket.room + "");
         holder.rowTicketDetail.setText(ticket.row + "");
         holder.seatTicketDetail.setText(ticket.seat + "");
@@ -86,7 +99,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         String[] time = ticket.time.split(":");
         int hour = Integer.parseInt(time[0]);
         int minute = Integer.parseInt(time[1]);
-        holder.durationTicket.setText(hour + ":" + minute);
+        //holder.durationTicket.setText(hour + ":" + minute);
 
     }
 
@@ -107,22 +120,24 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         public TextView rowTicketDetail;
         public TextView seatTicketDetail;
         public ImageView qrCode;
-        public LinearLayout linearCinema;
+        public TextView linearCinema;
+        public Button qrButton;
 
         public TicketViewHolder(@NonNull View itemView) {
             super(itemView);
             imageTicketDetail = itemView.findViewById(R.id.imageTicketDetail);
             filmNameTicketDetail = itemView.findViewById(R.id.filmNameTicketDetail);
             taglineTicket = itemView.findViewById(R.id.taglineTicket);
-            cinemaNameTicketDetail = itemView.findViewById(R.id.cinemaNameTicketDetail);
+            cinemaNameTicketDetail = itemView.findViewById(R.id.linearCinema);
             dayTicketDetail = itemView.findViewById(R.id.dayTicketDetail);
             timeTicketDetail = itemView.findViewById(R.id.timeTicketDetail);
-            durationTicket = itemView.findViewById(R.id.durationTicket);
+            //durationTicket = itemView.findViewById(R.id.durationTicket);
             roomTicketDetail = itemView.findViewById(R.id.roomTicketDetail);
             rowTicketDetail = itemView.findViewById(R.id.rowTicketDetail);
             seatTicketDetail = itemView.findViewById(R.id.seatTicketDetail);
             qrCode = itemView.findViewById(R.id.qrCode);
             linearCinema = itemView.findViewById(R.id.linearCinema);
+            qrButton = itemView.findViewById(R.id.qrButton);
         }
     }
 
