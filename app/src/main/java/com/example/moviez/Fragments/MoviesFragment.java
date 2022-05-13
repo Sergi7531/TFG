@@ -75,7 +75,7 @@ public class MoviesFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerUpcomingMovies = (RecyclerView) getActivity().findViewById(R.id.recyclerUpcomingMovies);
         recyclerMoviesInCinemas = getActivity().findViewById(R.id.recyclerMoviesInCinemas);
-        recyclerMoviesSearch = getActivity().findViewById(R.id.recyclerViewUserSearch);
+        recyclerMoviesSearch = getActivity().findViewById(R.id.recyclerViewMovieSearch);
         searchInputFilm = getActivity().findViewById(R.id.searchInputFilm);
 
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
@@ -92,10 +92,9 @@ public class MoviesFragment extends AppFragment {
 
                        @Override
                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                           viewModel.searchMoviesByQuery(charSequence.toString());
                            recyclerMoviesSearch.setAlpha(1f);
+                           viewModel.searchMoviesByQuery(charSequence.toString());
                            viewModel.moviesByQuery.observe(getViewLifecycleOwner(), moviesByQuery -> {
-
                                //if (moviesByQuery != null) {
 
                                recyclerMoviesSearch.setAdapter(new MovieSearchResultAdapter(requireActivity(), moviesByQuery.results, MoviesFragment.this));
@@ -112,7 +111,6 @@ public class MoviesFragment extends AppFragment {
 
                        @Override
                        public void afterTextChanged(Editable editable) {
-
                        }
 
             });
