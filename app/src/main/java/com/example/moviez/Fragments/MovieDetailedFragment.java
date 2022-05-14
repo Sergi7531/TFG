@@ -380,7 +380,6 @@ public class MovieDetailedFragment extends AppFragment {
 
         crewItems = viewModel.fullCast.getValue().crew;
 
-//        Get the director:
         for (int i = 0; i < crewItems.size(); i++) {
             if (crewItems.get(i).job.equals("Director")) {
                 movieDirector.setText(crewItems.get(i).name);
@@ -414,7 +413,7 @@ public class MovieDetailedFragment extends AppFragment {
         addCommentMovie = view.findViewById(R.id.addCommentMovie);
         favoriteFloatingButton = view.findViewById(R.id.favoriteFloatingButton);
         similarFilmsRecyclerView = view.findViewById(R.id.similarFilmsRecyclerView);
-        buyButton = view.findViewById(R.id.goTicketButton);
+        buyButton = view.findViewById(R.id.buyButton);
         spinner = view.findViewById(R.id.spinner);
 
     }

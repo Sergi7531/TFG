@@ -117,6 +117,8 @@ public class ProfileFragment extends AppFragment {
             editarPerfil.setOnClickListener(v -> {
                 addToFollowing(userId);
             });
+        } else {
+            editarPerfil.setText("Editar perfil");
         }
 
         setUserDetails(userId);
