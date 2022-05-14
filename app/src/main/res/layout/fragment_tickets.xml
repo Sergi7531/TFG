@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="120dp"
+            android:layout_marginBottom="40dp"
             android:overScrollMode="never">
 
         </androidx.recyclerview.widget.RecyclerView>
@@ -44,7 +44,9 @@
             android:layout_marginLeft="320dp"
             android:layout_marginTop="640dp"
             android:clickable="true"
-            android:src="@drawable/ic_baseline_qr_code_24" />
+            android:src="@drawable/ic_baseline_qr_code_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
     </RelativeLayout>
 
 </FrameLayout>

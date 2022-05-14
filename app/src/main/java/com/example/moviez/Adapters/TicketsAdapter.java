@@ -1,5 +1,6 @@
 package com.example.moviez.Adapters;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +32,8 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
     private List<Models.Ticket> tickets;
     public Context context;
     public boolean qrShown = false;
+    ObjectAnimator objectAnimator;
+
 
     public TicketsAdapter(List<Models.Ticket> tickets, Context context) {
         this.tickets = tickets;
@@ -53,10 +57,14 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         holder.qrButton.setOnClickListener(view -> {
             if (!qrShown){
                 qrShown = true;
-                holder.qrCode.setAlpha(1f);
+                objectAnimator = ObjectAnimator.ofFloat(holder.qrCard, "alpha", 0f, 1f).setDuration(300);
+                objectAnimator.start();
+                holder.qrButton.setText(R.string.qr_hide);
             } else {
                 qrShown = false;
-                holder.qrCode.setAlpha(0f);
+                holder.qrButton.setText(R.string.qr_show);
+                objectAnimator = ObjectAnimator.ofFloat(holder.qrCard, "alpha", 1f, 0f).setDuration(300);
+                objectAnimator.start();
             }
 
         });
@@ -121,7 +129,8 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         public TextView seatTicketDetail;
         public ImageView qrCode;
         public TextView linearCinema;
-        public Button qrButton;
+        public TextView qrButton;
+        public CardView qrCard;
 
         public TicketViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -138,6 +147,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
             qrCode = itemView.findViewById(R.id.qrCode);
             linearCinema = itemView.findViewById(R.id.linearCinema);
             qrButton = itemView.findViewById(R.id.qrButton);
+            qrCard = itemView.findViewById(R.id.qrCard);
         }
     }
 
