@@ -10,9 +10,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.moviez.Fragments.BuyTicketFragment;
+import com.example.moviez.Fragments.ChangeUsernameFragment;
+import com.example.moviez.Fragments.EditProfileFragment;
 import com.example.moviez.Fragments.HomeFragment;
+import com.example.moviez.Fragments.MovieDetailedFragment;
 import com.example.moviez.Fragments.MoviesFragment;
+import com.example.moviez.Fragments.NewCommentFragment;
+import com.example.moviez.Fragments.PasswordFragment;
 import com.example.moviez.Fragments.ProfileFragment;
+import com.example.moviez.Fragments.QRScanFragment;
 import com.example.moviez.Fragments.TicketsFragment;
 import com.example.moviez.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         private TicketsFragment ticketsFragment;
         private ProfileFragment profileFragment;
         private BuyTicketFragment buyTicketFragment;
+        private EditProfileFragment editProfileFragment;
+        private MovieDetailedFragment movieDetailedFragment;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         ticketsFragment = new TicketsFragment();
         profileFragment = new ProfileFragment();
         buyTicketFragment = new BuyTicketFragment();
+        editProfileFragment = new EditProfileFragment();
+        movieDetailedFragment = new MovieDetailedFragment();
 
         buyMovie = findViewById(R.id.buyMovie);
 
@@ -84,10 +94,50 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_frame);
+        if (fragment instanceof MoviesFragment || fragment instanceof TicketsFragment || fragment instanceof BuyTicketFragment || fragment instanceof ProfileFragment) {
+            setFragment(homeFragment);
+            nav_bottom.setSelectedItemId(R.id.home);
+        }
+        else if (fragment instanceof QRScanFragment) {
+            setFragment(ticketsFragment);
+            nav_bottom.setSelectedItemId(R.id.tickets);
+        }
+        else if (fragment instanceof EditProfileFragment) {
+            setFragment(profileFragment);
+        }
+        else if (fragment instanceof ChangeUsernameFragment) {
+            setFragment(editProfileFragment);
+        }
+        else if (fragment instanceof PasswordFragment) {
+            setFragment(editProfileFragment);
+        }
+        else if (fragment instanceof MovieDetailedFragment) {
+            setFragment(moviesFragment);
+        }
+        else if (fragment instanceof NewCommentFragment) {
+            setFragment(movieDetailedFragment);
+        }
+
+        /*
+        if (nav_bottom.getSelectedItemId() == R.id.home) {
+            super.onBackPressed();
+            finish();
+        }
+        else {
+            nav_bottom.setSelectedItemId(R.id.home);
+        }
+        */
+    }
+
     private void setFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
+        fragmentTransaction.addToBackStack("tag");
         fragmentTransaction.commit();
     }
 }
