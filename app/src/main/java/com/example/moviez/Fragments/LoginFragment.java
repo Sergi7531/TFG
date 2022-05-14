@@ -160,7 +160,7 @@ public class LoginFragment extends AppFragment {
         usernameLog = view.findViewById(R.id.mailLog);
         passwordLog = view.findViewById(R.id.passwordLog);
         registerText = view.findViewById(R.id.registerText);
-        logButton = view.findViewById(R.id.goTicketButton);
+        logButton = view.findViewById(R.id.buyButton);
         googleButton = view.findViewById(R.id.googleButton);
         forgotPassword = view.findViewById(R.id.forgotPasswordText);
     }

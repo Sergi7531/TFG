@@ -127,11 +127,11 @@ public class NewCommentFragment extends AppFragment {
                 boolean spoiler = spoilerCheckBox.isChecked();
 
                 if(auth.getCurrentUser().getPhotoUrl() != null) {
-                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
-                    System.out.println("Coment added: " + filmId);
+                    db.collection("comments").document(String.valueOf(filmId)).set(new Models.Film(filmId));
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(auth.getCurrentUser().getUid(), comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
                 } else {
-                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(comment, "", auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
-                    System.out.println("Coment added without imageUrl: " + filmId);
+                    db.collection("comments").document(String.valueOf(filmId)).set(new Models.Film(filmId));
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(auth.getCurrentUser().getUid(), comment, "", auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
                 }
 
                 //                Go back to the movie page:

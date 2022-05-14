@@ -97,7 +97,7 @@ public class RegisterFragment extends AppFragment {
         password = view.findViewById(R.id.password);
         confirmPassword = view.findViewById(R.id.confirm);
         profilePic = view.findViewById(R.id.profilePic);
-        register = view.findViewById(R.id.goTicketButton);
+        register = view.findViewById(R.id.buyButton);
         setImageProfile = view.findViewById(R.id.setImageProfile);
 
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {

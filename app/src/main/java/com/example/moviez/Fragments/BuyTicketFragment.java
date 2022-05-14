@@ -212,7 +212,7 @@ public class BuyTicketFragment extends AppFragment {
         spinnerDay = view.findViewById(R.id.spinnerDay);
         spinnerHour = view.findViewById(R.id.spinnerHour);
         spinnerMovie = view.findViewById(R.id.spinnerMovie);
-        buyButton = view.findViewById(R.id.goTicketButton);
+        buyButton = view.findViewById(R.id.buyButton);
 
     }
     private void setFragment(Fragment fragment) {

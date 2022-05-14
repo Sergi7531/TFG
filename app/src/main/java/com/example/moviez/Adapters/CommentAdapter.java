@@ -52,7 +52,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             holder.spoilerImage.setImageResource(R.drawable.ic_baseline_warning_amber_24);
         } else {
             holder.comment.setText(comment.getComment());
-            holder.rating.setText(String.valueOf(comment.getRating()));
+            holder.rating.setText(String.format("%.1f", comment.getRating()));
         }
         holder.spoilerImage.setOnClickListener(view -> {
             holder.spoilerImage.setAlpha(0f);
