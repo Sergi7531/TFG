@@ -91,6 +91,7 @@ public class AppViewModel extends ViewModel {
                         moviesByQuery.postValue(response.body());
                     }
                 }
+
             }
             @Override
             public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {

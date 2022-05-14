@@ -1,5 +1,8 @@
 package com.example.moviez.Fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
@@ -34,6 +39,8 @@ public class TicketsFragment extends AppFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private static final int CAMERA_REQUEST_CODE = 101;
 
     public static RecyclerView recyclerTickets;
     public static LinearLayout linearPages;
@@ -90,6 +97,7 @@ public class TicketsFragment extends AppFragment {
 
         hook(view);
         button.setOnClickListener(v -> {
+            askCameraPermission();
             setFragment(new QRScanFragment());
         });
         getTicketsFromFirebase();
@@ -129,5 +137,20 @@ public class TicketsFragment extends AppFragment {
                 .beginTransaction()
                 .replace(R.id.main_frame, fragment)
                 .commit();
+    }
+
+    private void askCameraPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},
+                        CAMERA_REQUEST_CODE);
+            } else {
+                setFragment(new QRScanFragment());
+            }
+        }
+        else {
+            setFragment(new QRScanFragment());
+        }
     }
 }
