@@ -79,7 +79,7 @@
                 android:src="@drawable/moviez_logo" />
 
             <Button
-                android:id="@+id/goTicketButton"
+                android:id="@+id/buyButton"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginTop="64dp"

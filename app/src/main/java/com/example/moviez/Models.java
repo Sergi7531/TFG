@@ -29,6 +29,9 @@ public class Models {
         public Film() {
         }
 
+        public Film(int id) {
+            this.id = id;
+        }
     }
 
     public static class Genre {
@@ -282,6 +285,7 @@ public class Models {
     }
 
     public static class Comment {
+        public String userid;
         public String comment;
         public String imageUrl;
         public String username;
@@ -292,7 +296,8 @@ public class Models {
         public Comment() {
         }
 
-        public Comment(String comment, String imageUrl, String username, double rating, boolean spoiler) {
+        public Comment(String userid, String comment, String imageUrl, String username, double rating, boolean spoiler) {
+            this.userid = userid;
             this.comment = comment;
             this.imageUrl = imageUrl;
             this.username = username;

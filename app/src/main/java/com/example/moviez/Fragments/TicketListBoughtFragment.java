@@ -71,7 +71,7 @@ public class TicketListBoughtFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        goTicketButton = view.findViewById(R.id.goTicketButton);
+        goTicketButton = view.findViewById(R.id.buyButton);
         goTicketButton.setOnClickListener(view1 -> {
             setFragment(new TicketBoughtFinishedFragment());
         });

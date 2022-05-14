@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,16 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.moviez.Activities.LandingActivity;
+import com.example.moviez.Adapters.CommentAdapter;
+import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -127,7 +130,7 @@ public class EditProfileFragment extends AppFragment {
         });
 
         goBackButton.setOnClickListener(v -> {
-           setFragment(new ProfileFragment());
+            setFragment(new ProfileFragment());
         });
 
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
@@ -173,29 +176,40 @@ public class EditProfileFragment extends AppFragment {
         String finalImageUrl = imageUrl;
 
 
-//        Get all documents in the collection:
-
-        db.collection("comments")
-            .get().addOnCompleteListener(task -> {
-                if(task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        db.collection("comments").document(document.getId()).collection("comments").get().addOnSuccessListener(queryDocumentSnapshots2 -> {
-                            queryDocumentSnapshots2.getDocuments().forEach(documentSnapshot2 -> {
-                                if (documentSnapshot2.getId().equals(userid)) {
-                                    db.collection("comments").document(document.getId()).collection("comments").document(documentSnapshot2.getId()).update("imageUrl", finalImageUrl);
-                                }
-                            });
-                        });
-                    }
-                }
-        });
-
-
-
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setPhotoUri(Uri.parse(imageUrl))
                 .build();
         auth.getCurrentUser().updateProfile(profileUpdates);
+
+//        Get all documents in the collection:
+//
+        db.collection("comments")
+                .get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    db.collection("comments").document(document.getId()).collection("comments").get().addOnCompleteListener(task2 -> {
+                        if (task2.isSuccessful()) {
+                            Models.Comment comment = document.toObject(Models.Comment.class);
+                            if (comment.userid.equals(userid)) {
+                                db.collection("comments").document(document.getId()).collection("comments").document(comment.userid).update("imageUrl", finalImageUrl);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+
+//        db.collection("comments").document(String.valueOf(299534)).collection("comments").get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                for (QueryDocumentSnapshot document : task.getResult()) {
+//                    if (document.toObject(Models.User.class).userid.equals(userid)) {
+//                        db.collection("comments").document(String.valueOf(299534)).collection("comments").document(document.getId()).update("imageUrl", finalImageUrl);
+//                    }
+//                }
+//            }
+//        });
+
 
     }
 
