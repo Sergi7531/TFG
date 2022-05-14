@@ -115,10 +115,10 @@ public class AppViewModel extends ViewModel {
                     @Override
                     public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
                         if (response.body() != null) {
-                            if (response.body().results.size() > 10) {
-                                response.body().results.subList(0, 10/queryDocumentSnapshots.size());
+                            if(response.body().results.size() > 5) {
+                                response.body().results.subList(0, 5);
+                                forYouMovies.postValue(response.body());
                             }
-                            forYouMovies.postValue(response.body());
                         }
                     }
 
@@ -138,10 +138,10 @@ public class AppViewModel extends ViewModel {
                     @Override
                     public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
                         if (response.body() != null) {
-                            if (response.body().results.size() > 10) {
-                                response.body().results.subList(0, 10/queryDocumentSnapshots.size());
+                            if(response.body().results.size() > 5) {
+                                response.body().results.subList(0, 5);
+                                forYouMovies.postValue(response.body());
                             }
-                            forYouMovies.postValue(response.body());
                         }
                     }
 
@@ -163,10 +163,10 @@ public class AppViewModel extends ViewModel {
                     @Override
                     public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
                         if (response.body() != null) {
-                            if (response.body().results.size() > 10) {
-                                response.body().results.subList(0, 10/queryDocumentSnapshots.size());
+                            if (response.body().results.size() > 5) {
+                                response.body().results.subList(0, 5);
+                                forYouMovies.postValue(response.body());
                             }
-                            forYouMovies.postValue(response.body());
                         }
                     }
                     @Override
@@ -178,26 +178,25 @@ public class AppViewModel extends ViewModel {
         });
 
 
-//
-//        if(forYouMovies.getValue() == null) {
-//
-//            IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", String.valueOf(contPage)).enqueue(new Callback<Responses.SearchResponse>() {
-//                @Override
-//                public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
-//                    if (response.body() != null) {
-//                        if (response.body().results.size() > 6) {
-//                            response.body().results.subList(0, 6);
-//                        }
-//                        forYouMovies.postValue(response.body());
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
-//                    t.getMessage();
-//                }
-//            });
-//        }
+        if(forYouMovies.getValue() == null) {
+
+            IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
+                @Override
+                public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+                    if (response.body() != null) {
+                        if (response.body().results.size() > 6) {
+                            response.body().results.subList(0, 6);
+                        }
+                        forYouMovies.postValue(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
+                    t.getMessage();
+                }
+            });
+        }
     }
 
 
