@@ -57,6 +57,7 @@ public class ProfileFragment extends AppFragment {
     List<Models.User> followers = new ArrayList<>();
 
     public static String userId = "";
+    public static boolean isFollowing = false;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -114,10 +115,31 @@ public class ProfileFragment extends AppFragment {
         });
 
         if(userId != auth.getCurrentUser().getUid()) {
-            editarPerfil.setText("Seguir");
-            editarPerfil.setOnClickListener(v -> {
-                addToFollowing(userId);
+            db.collection("users").document(auth.getCurrentUser().getUid())
+                    .collection("following").get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                            if (documentSnapshot.toObject(Models.User.class).userid.equals(userId)) {
+                                isFollowing = true;
+                            }
+                            else {
+                                editarPerfil.setText("Seguir");
+                                editarPerfil.setOnClickListener(v -> {
+                                    addToFollowing(userId);
+                                });
+                            }
+
+                            if (isFollowing) {
+                                editarPerfil.setText("Dejar de seguir");
+                                editarPerfil.setOnClickListener(v -> {
+                                    unfollow(userId);
+                                    isFollowing = false;
+                                });
+                            }
+
+                        }
             });
+
         } else {
             editarPerfil.setText("Editar perfil");
         }
@@ -135,6 +157,11 @@ public class ProfileFragment extends AppFragment {
         following(userId);
 
         followers(userId);
+    }
+
+    public void unfollow(String userId) {
+        db.collection("users").document(auth.getCurrentUser().getUid())
+                .collection("following").document(userId).delete();
     }
 
     public void lastViewedFilms(String userId) {
@@ -179,8 +206,6 @@ public class ProfileFragment extends AppFragment {
                             .collection("followers").document(auth.getCurrentUser().getUid())
                             .set(documentSnapshot1.toObject(Models.User.class));
                 });
-
-
 
                 following(userId);
 
