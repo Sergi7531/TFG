@@ -35,7 +35,6 @@ public class QRScanFragment extends AppFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static final int CAMERA_REQUEST_CODE = 101;
     private CodeScanner codeScanner;
 
     // TODO: Rename and change types of parameters
@@ -77,8 +76,7 @@ public class QRScanFragment extends AppFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        askCameraPermission(view);
+        openCamera(view);
     }
 
     @Override
@@ -101,6 +99,7 @@ public class QRScanFragment extends AppFragment {
     }
 
     private void openCamera(View view) {
+
         CodeScannerView scannerView = view.findViewById(R.id.scanner_view);
         codeScanner = new CodeScanner(getContext(), scannerView);
         codeScanner.setDecodeCallback(new DecodeCallback() {
@@ -165,18 +164,5 @@ public class QRScanFragment extends AppFragment {
         fragmentTransaction.commit();
     }
 
-    private void askCameraPermission(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},
-                        CAMERA_REQUEST_CODE);
-            } else {
-                openCamera(view);
-            }
-        }
-        else {
-            openCamera(view);
-        }
-    }
+
 }
