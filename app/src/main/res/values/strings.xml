@@ -62,6 +62,7 @@
     <string name="selected">Seleccionado</string>
     <string name="qr_show">Mostrar QR</string>
     <string name="qr_hide">Esconder QR</string>
+    <string name="friends_activity">Actividad amigos</string>
     <string-array name="movie_status">
         <item>Vista</item>
         <item>Ver más tarde</item>
