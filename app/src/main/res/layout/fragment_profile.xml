@@ -8,13 +8,11 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.ProfileFragment">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp"
-        android:background="@color/dprimaryColor"
+        android:background="?attr/backgroundColor"
         android:orientation="vertical"
         tools:context=".Fragments.ProfileFragment">
 
@@ -51,25 +49,27 @@
                         android:id="@+id/usuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:gravity="center_horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/satoshi"
                         android:text="@string/username"
-                        android:textColor="@color/dprimaryTextColor"
-                        android:textSize="24sp"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="26sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/correo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:gravity="center_horizontal"
+                        android:layout_marginLeft="20dp"
+                        android:alpha="0.7"
+                        android:fontFamily="@font/satoshi"
                         android:text="@string/email"
-                        android:textColor="@color/dprimaryTextColor" />
+                        android:textColor="?attr/colorOnSecondary" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:orientation="horizontal">
 
                         <TextView
@@ -77,9 +77,11 @@
                             android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/satoshi"
                             android:gravity="center_horizontal"
                             android:text="@string/siguiendo"
-                            android:textColor="@color/dprimaryTextColor"
+                            android:textColor="?attr/colorOnSecondary"
                             android:textStyle="bold" />
 
                         <TextView
@@ -87,9 +89,11 @@
                             android:layout_width="130dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="3dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/satoshi"
                             android:gravity="center_horizontal"
                             android:text="@string/seguidores"
-                            android:textColor="@color/dprimaryTextColor"
+                            android:textColor="?attr/colorOnSecondary"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -104,9 +108,10 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="3dp"
                             android:layout_weight="1"
+                            android:fontFamily="@font/satoshi"
                             android:gravity="center_horizontal"
                             android:text="@string/_0"
-                            android:textColor="@color/dprimaryTextColor" />
+                            android:textColor="?attr/colorOnSecondary" />
 
                         <TextView
                             android:id="@+id/followersNumber"
@@ -114,9 +119,10 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="3dp"
                             android:layout_weight="1"
+                            android:fontFamily="@font/satoshi"
                             android:gravity="center_horizontal"
                             android:text="@string/_0"
-                            android:textColor="@color/dprimaryTextColor" />
+                            android:textColor="?attr/colorOnSecondary" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -125,27 +131,33 @@
             <Button
                 android:id="@+id/editarPerfil"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="30dp"
                 android:backgroundTint="@color/secondaryColor"
                 android:text="Editar Perfil"
                 android:textAllCaps="false"
-                android:textColor="@color/secondaryTextColor"
+                android:textColor="@android:color/white"
                 app:cornerRadius="10dp" />
 
             <TextView
                 android:id="@+id/estadisticas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:text="@string/estad_sticas_usuario"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -153,7 +165,7 @@
                     android:layout_height="128dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/dprimaryLightColor"
+                    app:cardBackgroundColor="?attr/colorPrimaryVariant"
                     app:cardCornerRadius="10dp">
 
                     <TextView
@@ -161,18 +173,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
+                        android:fontFamily="@font/satoshi"
                         android:gravity="center_horizontal"
                         android:text="@string/has_visto"
-                        android:textColor="@color/dprimaryTextColor" />
+                        android:textColor="?attr/colorOnSecondary" />
 
                     <TextView
                         android:id="@+id/watchedNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
+                        android:fontFamily="@font/satoshi"
                         android:gravity="center_horizontal"
                         android:text="@string/_0"
-                        android:textColor="@color/dprimaryTextColor"
+                        android:textColor="?attr/colorOnSecondary"
                         android:textSize="34sp"
                         android:textStyle="bold" />
 
@@ -181,9 +195,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="100dp"
+                        android:fontFamily="@font/satoshi"
                         android:gravity="center_horizontal"
                         android:text="@string/pel_culas"
-                        android:textColor="@color/dprimaryTextColor" />
+                        android:textColor="?attr/colorOnSecondary" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -191,7 +206,7 @@
                     android:layout_height="128dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/dprimaryLightColor"
+                    app:cardBackgroundColor="?attr/colorPrimaryVariant"
                     app:cardCornerRadius="10dp">
 
                     <TextView
@@ -199,18 +214,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
+                        android:fontFamily="@font/satoshi"
                         android:gravity="center_horizontal"
                         android:text="@string/quieres_ver"
-                        android:textColor="@color/dprimaryTextColor" />
+                        android:textColor="?attr/colorOnSecondary" />
 
                     <TextView
                         android:id="@+id/wantToWatchNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
+                        android:fontFamily="@font/satoshi"
                         android:gravity="center_horizontal"
                         android:text="@string/_0"
-                        android:textColor="@color/dprimaryTextColor"
+                        android:textColor="?attr/colorOnSecondary"
                         android:textSize="34sp"
                         android:textStyle="bold" />
 
@@ -219,9 +236,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="100dp"
+                        android:fontFamily="@font/satoshi"
                         android:gravity="center_horizontal"
                         android:text="@string/pel_culas"
-                        android:textColor="@color/dprimaryTextColor" />
+                        android:textColor="?attr/colorOnSecondary" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -229,7 +247,7 @@
                     android:layout_height="128dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/dprimaryLightColor"
+                    app:cardBackgroundColor="?attr/colorPrimaryVariant"
                     app:cardCornerRadius="10dp">
 
                     <TextView
@@ -237,18 +255,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
+                        android:fontFamily="@font/satoshi"
                         android:gravity="center_horizontal"
                         android:text="@string/favoritas"
-                        android:textColor="@color/dprimaryTextColor" />
+                        android:textColor="?attr/colorOnSecondary" />
 
                     <TextView
                         android:id="@+id/favoriteNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
+                        android:fontFamily="@font/satoshi"
                         android:gravity="center_horizontal"
                         android:text="@string/_0"
-                        android:textColor="@color/dprimaryTextColor"
+                        android:textColor="?attr/colorOnSecondary"
                         android:textSize="34sp"
                         android:textStyle="bold" />
 
@@ -257,9 +277,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="100dp"
+                        android:fontFamily="@font/satoshi"
                         android:gravity="center_horizontal"
                         android:text="@string/pel_culas"
-                        android:textColor="@color/dprimaryTextColor" />
+                        android:textColor="?attr/colorOnSecondary" />
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>
@@ -268,17 +289,22 @@
                 android:id="@+id/estadisticas2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/satoshi"
                 android:text="@string/ltimas_pel_culas_vistas"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerWatchedMovies"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_height="220dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -286,17 +312,23 @@
                 android:id="@+id/estadisticas5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/satoshi"
                 android:text="Películas que quieres ver:"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerMoviesToWatch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
+                android:layout_height="220dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -307,27 +339,35 @@
                 android:id="@+id/estadisticas3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/satoshi"
                 android:text="@string/pel_culas_favoritas"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerFavoritedMovies"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_height="220dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="center_horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/satoshi"
                 android:text="@string/seguidores"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -335,16 +375,22 @@
                 android:id="@+id/recyclerFollowers"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_margin="10dp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp" />
 
             <TextView
                 android:id="@+id/estadisticas4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="center_horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/satoshi"
                 android:text="@string/siguiendo"
-                android:textColor="@color/dprimaryTextColor"
+                android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -352,7 +398,10 @@
                 android:id="@+id/recyclerFollowedUsers"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_margin="10dp">
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 

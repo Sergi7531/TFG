@@ -55,7 +55,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         Glide.with(context).load("https://image.tmdb.org/t/p/original" + ticket.filmImage).into(holder.imageTicketDetail);
 
         holder.qrButton.setOnClickListener(view -> {
-            if (!qrShown){
+            if (holder.qrCard.getAlpha() == 0.0){
                 qrShown = true;
                 objectAnimator = ObjectAnimator.ofFloat(holder.qrCard, "alpha", 0f, 1f).setDuration(300);
                 objectAnimator.start();
