@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -37,6 +38,7 @@ public class HomeFragment extends AppFragment {
     public List<Models.User> users = new ArrayList<>();
     public TextInputEditText searchInputUser;
     public RecyclerView recyclerViewUserSearch;
+    public ProgressBar animacionCarga;
 
     public static String userId = "";
     private UserSearchResultAdapter adapter;
@@ -122,6 +124,7 @@ public class HomeFragment extends AppFragment {
         recyclerForYou = view.findViewById(R.id.recyclerParaTi);
         searchInputUser = view.findViewById(R.id.searchInputUsers);
         recyclerViewUserSearch = view.findViewById(R.id.recyclerViewUserSearch);
+        animacionCarga = view.findViewById(R.id.animacionCarga);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -135,9 +138,10 @@ public class HomeFragment extends AppFragment {
 
                 appViewModel.forYouMovies.observe(getViewLifecycleOwner(), filmsByGenreForUser -> {
                     if (filmsByGenreForUser != null) {
-                        recyclerForYou.setAlpha(1f);
-                        recyclerForYou.setAdapter(new FilmAdapter(filmsByGenreForUser.results, requireActivity(), HomeFragment.this));
+                        recyclerForYou.setAdapter(new FilmAdapter(filmsByGenreForUser.results, requireActivity(), this));
                         recyclerForYou.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+                        animacionCarga.setAlpha(0f);
+                        recyclerForYou.setAlpha(1f);
                     }
                 });
             }

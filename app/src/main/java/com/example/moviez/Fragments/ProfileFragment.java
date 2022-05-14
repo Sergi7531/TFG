@@ -279,9 +279,9 @@ public class ProfileFragment extends AppFragment {
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_frame, fragment)
+                .addToBackStack(ProfileFragment.class.getSimpleName())
                 .commit();
     }
-
 
 
 

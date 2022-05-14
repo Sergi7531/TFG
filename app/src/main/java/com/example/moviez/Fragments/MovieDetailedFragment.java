@@ -127,6 +127,7 @@ public class MovieDetailedFragment extends AppFragment {
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
 
+        System.out.println("Details:  " + filmId);
         viewModel.getMovieDetails(filmId);
 
         viewModel.movieDetails.observe(getViewLifecycleOwner(), movie -> {
