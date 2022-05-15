@@ -185,6 +185,7 @@ public class BuyTicketFragment extends AppFragment {
                     }, year, month, day);
 
             picker.show();
+//            a
         });
 
 //        ArrayAdapter<String> cinemaAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
