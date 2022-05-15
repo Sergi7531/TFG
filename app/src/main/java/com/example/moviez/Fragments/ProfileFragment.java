@@ -304,7 +304,4 @@ public class ProfileFragment extends AppFragment {
                 .addToBackStack(ProfileFragment.class.getSimpleName())
                 .commit();
     }
-
-
-
 }

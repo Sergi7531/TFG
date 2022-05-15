@@ -134,6 +134,7 @@ public class ChangeUsernameFragment extends AppFragment {
 
 
                                     //           setFragment(new ProfileFragment());
+                            setFragment(new ProfileFragment(auth.getCurrentUser().getUid()));
                         }
                     }
                 });
