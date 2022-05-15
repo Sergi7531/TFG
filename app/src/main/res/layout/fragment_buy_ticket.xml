@@ -137,7 +137,8 @@
                     android:layout_alignLeft="@id/cardMain"
                     android:layout_marginBottom="10dp"
                     app:cardBackgroundColor="?attr/hintTextColor"
-                    app:cardCornerRadius="12dp">
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
 
                     <TextView
                         android:id="@+id/movieDuration"

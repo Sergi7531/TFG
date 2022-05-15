@@ -7,7 +7,7 @@
     android:layout_height="100dp"
     android:layout_marginRight="25dp"
     android:layout_marginBottom="15dp"
-    android:background="@color/primaryColor"
+    android:background="?attr/backgroundColor"
     android:elevation="5dp">
 
     <androidx.cardview.widget.CardView

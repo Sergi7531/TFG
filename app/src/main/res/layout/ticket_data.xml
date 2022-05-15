@@ -274,7 +274,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="-80dp"
             app:srcCompat="@drawable/ic_baseline_incomplete_circle_24"
-            app:tint="?attr/backgroundColor" />
+            app:tint="?attr/colorOnPrimary" />
 
         <ImageView
             android:id="@+id/imageView21"
@@ -284,7 +284,7 @@
             android:layout_marginBottom="-80dp"
             android:rotation="180"
             app:srcCompat="@drawable/ic_baseline_incomplete_circle_24"
-            app:tint="?attr/backgroundColor" />
+            app:tint="?attr/colorOnPrimary" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/qrCard"
@@ -321,7 +321,7 @@
             android:layout_marginRight="-26dp"
             android:rotation="90"
             app:srcCompat="@drawable/ic_baseline_incomplete_circle_24"
-            app:tint="?attr/backgroundColor" />
+            app:tint="?attr/colorOnPrimary" />
 
         <ImageView
             android:id="@+id/imageView20"
@@ -331,7 +331,7 @@
             android:layout_marginTop="500dp"
             android:rotation="270"
             app:srcCompat="@drawable/ic_baseline_incomplete_circle_24"
-            app:tint="?attr/backgroundColor" />
+            app:tint="?attr/colorOnPrimary" />
 
     </androidx.cardview.widget.CardView>
 
