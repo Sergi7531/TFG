@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -188,24 +189,20 @@ public class HomeFragment extends AppFragment {
 
         users.clear();
 
-        System.out.println("BUSCANDO: " + query);
         db.collection("users").orderBy("username").startAt(query).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    System.out.println("FIN CONSULTA");
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Models.User user = document.toObject(Models.User.class);
                         if (user.username.contains(query)) {
                             users.add(user);
-                            System.out.println("ENCONTRADO!: " + user.username);
                         }
                     }
                     adapter.notifyDataSetChanged();
                 } else {
-                    System.out.println("Not found");
+                    Log.d("TAG", "Error getting documents: ", task.getException());
                 }
-
             }
         });
     }

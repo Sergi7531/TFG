@@ -105,11 +105,10 @@ public class ChangeUsernameFragment extends AppFragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getContext(), "Username updated!", Toast.LENGTH_SHORT).show();
-                            System.out.println(name);
                             DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
                             userDoc.update("username", name);
 
-                            //      Update username in all comments:
+//                          Update username in all comments:
 
                             db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
                                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
@@ -131,7 +130,7 @@ public class ChangeUsernameFragment extends AppFragment {
 //                                    db.collection("comments").document(documentSnapshot.getId()).collection("comments").get(auth.getCurrentUser().getUid())
 //                                }
 //                            });
-                            setFragment(new ProfileFragment(auth.getCurrentUser().getUid()));
+//                            setFragment(new ProfileFragment(auth.getCurrentUser().getUid()));
                         }
                     }
                 });

@@ -169,6 +169,54 @@ public class Models {
             this.cinemaImg = cinemaImg;
             this.cinemaURL = cinemaURL;
         }
+
+        public String getCinemaid() {
+            return cinemaid;
+        }
+
+        public void setCinemaid(String cinemaid) {
+            this.cinemaid = cinemaid;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getCoords() {
+            return coords;
+        }
+
+        public void setCoords(String coords) {
+            this.coords = coords;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getCinemaImg() {
+            return cinemaImg;
+        }
+
+        public void setCinemaImg(String cinemaImg) {
+            this.cinemaImg = cinemaImg;
+        }
+
+        public String getCinemaURL() {
+            return cinemaURL;
+        }
+
+        public void setCinemaURL(String cinemaURL) {
+            this.cinemaURL = cinemaURL;
+        }
     }
 
     public static class Ticket {
