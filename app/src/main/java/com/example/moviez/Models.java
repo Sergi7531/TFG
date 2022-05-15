@@ -385,6 +385,10 @@ public class Models {
             this.hourText = hourText;
         }
 
+        public UserActivity() {
+
+        }
+
         public String getUserImage() {
             return userImage;
         }

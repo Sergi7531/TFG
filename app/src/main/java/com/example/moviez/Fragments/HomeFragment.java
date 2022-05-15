@@ -96,24 +96,42 @@ public class HomeFragment extends AppFragment {
 
         recyclerFriends = view.findViewById(R.id.recyclerFriends);
 
-        recyclerFriends.setAdapter(userActivityAdapter = new UserActivityAdapter(userActivities, requireActivity()));
-        recyclerFriends.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
-
         List<Models.User> following = new ArrayList<>();
         List<Models.UserActivity> userActivities = new ArrayList<>();
+
+        recyclerFriends.setAdapter(userActivityAdapter = new UserActivityAdapter(userActivities, requireActivity()));
+        recyclerFriends.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
 /*
         db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 following.add(documentSnapshot.toObject(Models.User.class));
                 for (Models.User followedUser : following) {
                     for (Models.Film film : followedUser.favoritedFilms) {
+                        Models.UserActivity userActivity = new Models.UserActivity();
 
+                        userActivity.setUserImage(followedUser.profileImageURL);
+                        userActivity.setMovieImage(film.poster_path);
+                        userActivity.setMovieName(film.title);
+
+                        userActivities.add(userActivity);
                     }
                     for (Models.Film film : followedUser.viewLaterFilms) {
+                        Models.UserActivity userActivity = new Models.UserActivity();
 
+                        userActivity.setUserImage(followedUser.profileImageURL);
+                        userActivity.setMovieImage(film.poster_path);
+                        userActivity.setMovieName(film.title);
+
+                        userActivities.add(userActivity);
                     }
                     for (Models.Film film : followedUser.watchedFilms) {
+                        Models.UserActivity userActivity = new Models.UserActivity();
 
+                        userActivity.setUserImage(followedUser.profileImageURL);
+                        userActivity.setMovieImage(film.poster_path);
+                        userActivity.setMovieName(film.title);
+
+                        userActivities.add(userActivity);
                     }
                 }
             }
