@@ -16,10 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.moviez.Adapters.FilmAdapter;
+import com.example.moviez.Adapters.UserAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
-import com.example.moviez.Adapters.UserAdapter;
-import com.example.moviez.UpdateFilmsInCinemas;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -143,8 +142,6 @@ public class ProfileFragment extends AppFragment {
         } else {
             editarPerfil.setText("Editar perfil");
         }
-
-        UpdateFilmsInCinemas.initDates();
 
         setUserDetails(userId);
 

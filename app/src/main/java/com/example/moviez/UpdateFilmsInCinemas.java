@@ -31,10 +31,10 @@ public class UpdateFilmsInCinemas {
         FirebaseFirestore.getInstance().collection("cinemas").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 cinemas.postValue(task.getResult().toObjects(Models.Cinema.class));
-                rooms = new ArrayList<>(task.getResult().size()*20);
+                rooms = new ArrayList<>(task.getResult().size()*10);
                 for (int i = 0; i < task.getResult().size(); i++) {
-                    for (int j = 1; j < 20; j++) {
-                        rooms.add(i*20 + j);
+                    for (int j = 1; j < 11; j++) {
+                        rooms.add(i*10 + j);
                     }
                 }
             }

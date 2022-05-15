@@ -22,7 +22,6 @@ import com.example.moviez.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -99,43 +98,72 @@ public class HomeFragment extends AppFragment {
         List<Models.User> following = new ArrayList<>();
         List<Models.UserActivity> userActivities = new ArrayList<>();
 
-        recyclerFriends.setAdapter(userActivityAdapter = new UserActivityAdapter(userActivities, requireActivity()));
-        recyclerFriends.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
-/*
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                following.add(documentSnapshot.toObject(Models.User.class));
-                for (Models.User followedUser : following) {
-                    for (Models.Film film : followedUser.favoritedFilms) {
-                        Models.UserActivity userActivity = new Models.UserActivity();
+//        Get all the users that the current user is following:
 
-                        userActivity.setUserImage(followedUser.profileImageURL);
-                        userActivity.setMovieImage(film.poster_path);
-                        userActivity.setMovieName(film.title);
-
-                        userActivities.add(userActivity);
-                    }
-                    for (Models.Film film : followedUser.viewLaterFilms) {
-                        Models.UserActivity userActivity = new Models.UserActivity();
-
-                        userActivity.setUserImage(followedUser.profileImageURL);
-                        userActivity.setMovieImage(film.poster_path);
-                        userActivity.setMovieName(film.title);
-
-                        userActivities.add(userActivity);
-                    }
-                    for (Models.Film film : followedUser.watchedFilms) {
-                        Models.UserActivity userActivity = new Models.UserActivity();
-
-                        userActivity.setUserImage(followedUser.profileImageURL);
-                        userActivity.setMovieImage(film.poster_path);
-                        userActivity.setMovieName(film.title);
-
-                        userActivities.add(userActivity);
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        following.add(document.toObject(Models.User.class));
                     }
                 }
             }
-        });*/
+        });
+
+//        Get all the favoritedFilms of the users that the current user is following:
+
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        db.collection("users").document(document.getId()).collection("favoritedFilms").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot documentActivity : task.getResult()) {
+                                        Models.UserActivity userActivity = new Models.UserActivity();
+                                        userActivity.movieImage = documentActivity.toObject(Models.Film.class).poster_path;
+                                        userActivity.userImage = document.toObject(Models.User.class).profileImageURL;
+                                        userActivity.username = document.toObject(Models.User.class).username;
+                                        userActivity.movieName = documentActivity.toObject(Models.Film.class).title;
+                                        userActivity.movieId = documentActivity.toObject(Models.Film.class).id;
+                                        userActivity.textToShow = "El usuario " + userActivity.username + " ha marcado como favorita " + userActivity.movieName;
+                                        userActivities.add(userActivity);
+                                    }
+                                }
+                            }
+                        });
+
+                        db.collection("users").document(document.getId()).collection("watchedFilms").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot documentActivity : task.getResult()) {
+                                        Models.UserActivity userActivity = new Models.UserActivity();
+                                        userActivity.movieImage = documentActivity.toObject(Models.Film.class).poster_path;
+                                        userActivity.userImage = documentActivity.toObject(Models.User.class).profileImageURL;
+                                        userActivity.username = document.toObject(Models.User.class).username;
+                                        userActivity.movieName = documentActivity.toObject(Models.Film.class).title;
+                                        userActivity.movieId = documentActivity.toObject(Models.Film.class).id;
+                                        userActivity.textToShow = "El usuario " +userActivity.username + " ha visto la película " + userActivity.movieName;
+                                        userActivities.add(userActivity);
+                                        recyclerFriends.setAdapter(userActivityAdapter = new UserActivityAdapter(userActivities, requireActivity(), HomeFragment.this));
+                                        recyclerFriends.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+
+
+
+
 
         }
 

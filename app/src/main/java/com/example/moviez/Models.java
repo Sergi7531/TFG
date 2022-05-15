@@ -171,10 +171,6 @@ public class Models {
         public String email;
         public String password;
         public List<Integer> favoriteGenres = new ArrayList<>();
-        public List<Film> watchedFilms;
-        public List<Film> favoritedFilms;
-        public List<Film> viewLaterFilms;
-        public List<Ticket> tickets;
 
 //        Empty constructor for Firebase:
         public User() {
@@ -189,10 +185,6 @@ public class Models {
             this.profileImageURL = profileImageURL;
             this.email = email;
             this.favoriteGenres = new ArrayList<>();
-            this.watchedFilms = new ArrayList<>();
-            this.favoritedFilms = new ArrayList<>();
-            this.viewLaterFilms = new ArrayList<>();
-            this.tickets = new ArrayList<>();
         }
 
 //      This will be used when the user registers with email and password (e-mail registration):
@@ -203,10 +195,6 @@ public class Models {
             this.password = password;
             this.profileImageURL = profileImageURL;
             this.favoriteGenres = new ArrayList<>();
-            this.watchedFilms = new ArrayList<>();
-            this.favoritedFilms = new ArrayList<>();
-            this.viewLaterFilms = new ArrayList<>();
-            this.tickets = new ArrayList<>();
         }
 
         public String getUserid() {
@@ -256,39 +244,6 @@ public class Models {
         public void setFavoriteGenres(List<Integer> favoriteGenres) {
             this.favoriteGenres = favoriteGenres;
         }
-
-        public List<Film> getWatchedFilms() {
-            return watchedFilms;
-        }
-
-        public void setWatchedFilms(List<Film> watchedFilms) {
-            this.watchedFilms = watchedFilms;
-        }
-
-        public List<Film> getFavoritedFilms() {
-            return favoritedFilms;
-        }
-
-        public void setFavoritedFilms(List<Film> favoritedFilms) {
-            this.favoritedFilms = favoritedFilms;
-        }
-
-        public List<Film> getViewLaterFilms() {
-            return viewLaterFilms;
-        }
-
-        public void setViewLaterFilms(List<Film> viewLaterFilms) {
-            this.viewLaterFilms = viewLaterFilms;
-        }
-
-        public List<Ticket> getTickets() {
-            return tickets;
-        }
-
-        public void setTickets(List<Ticket> tickets) {
-            this.tickets = tickets;
-        }
-
     }
 
     public class Video {
@@ -387,17 +342,23 @@ public class Models {
 
     public static class UserActivity {
         public String userImage;
+        public String username;
         public String movieImage;
+        public int movieId;
         public String movieName;
         public String dayText;
         public String hourText;
+        public String textToShow;
 
-        public UserActivity(String userImage, String movieImage, String movieName, String dayText, String hourText) {
+        public UserActivity(String userImage, String username, int movieId, String movieImage, String movieName, String dayText, String hourText, String textToShow) {
             this.userImage = userImage;
+            this.username = username;
+            this.movieId = movieId;
             this.movieImage = movieImage;
             this.movieName = movieName;
             this.dayText = dayText;
             this.hourText = hourText;
+            this.textToShow = textToShow;
         }
 
         public UserActivity() {
@@ -410,6 +371,22 @@ public class Models {
 
         public void setUserImage(String userImage) {
             this.userImage = userImage;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public int getMovieId() {
+            return movieId;
+        }
+
+        public void setMovieId(int movieId) {
+            this.movieId = movieId;
         }
 
         public String getMovieImage() {
@@ -442,6 +419,14 @@ public class Models {
 
         public void setHourText(String hourText) {
             this.hourText = hourText;
+        }
+
+        public String getTextToShow() {
+            return textToShow;
+        }
+
+        public void setTextToShow(String textToShow) {
+            this.textToShow = textToShow;
         }
     }
 }

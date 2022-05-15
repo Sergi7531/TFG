@@ -18,6 +18,7 @@ import com.example.moviez.Fragments.LoginFragment;
 import com.example.moviez.Fragments.RegisterFragment;
 import com.example.moviez.Models;
 import com.example.moviez.R;
+import com.example.moviez.UpdateFilmsInCinemas;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +48,8 @@ public class LandingActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
         googleLogin = true;
+
+        UpdateFilmsInCinemas.initDates();
 
         firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(this));
         if (!googleLogin) logWithMail();

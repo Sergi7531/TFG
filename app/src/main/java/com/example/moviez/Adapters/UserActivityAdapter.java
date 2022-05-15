@@ -8,9 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.moviez.Fragments.HomeFragment;
+import com.example.moviez.Fragments.MovieDetailedFragment;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 
@@ -20,10 +24,12 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
 
     private List<Models.UserActivity> userActivities;
     public Context context;
+    public Fragment currentFragment;
 
-    public UserActivityAdapter(List<Models.UserActivity> userActivities, Context context) {
+    public UserActivityAdapter(List<Models.UserActivity> userActivities, Context context, Fragment currentFragment) {
         this.userActivities = userActivities;
         this.context = context;
+        this.currentFragment = currentFragment;
     }
 
     @NonNull
@@ -38,17 +44,35 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
     public void onBindViewHolder(@NonNull UserActivityAdapter.UserActivityViewHolder holder, int position) {
         Models.UserActivity userActivity = userActivities.get(position);
 
+        holder.titleUserActivity.setText("Novedad de "+userActivity.username);
+
         if(userActivity.getUserImage() != null && !userActivity.getUserImage().isEmpty()) {
             Glide.with(context).load(userActivity.getUserImage()).into(holder.userImage);
         } else {
             holder.userImage.setImageResource(R.drawable.ic_baseline_person_24);
         }
 
-        Glide.with(context).load(userActivity.getMovieImage()).into(holder.movieImage);
+        Glide.with(context).load("https://image.tmdb.org/t/p/original" + userActivity.getMovieImage()).into(holder.movieImage);
 
         holder.dayText.setText(userActivity.getDayText());
-        holder.movieName.setText(userActivity.getMovieImage());
+        holder.textToShow.setText(userActivity.getTextToShow());
         holder.hourText.setText(userActivity.getHourText());
+
+        holder.userActivityCard.setOnClickListener(view -> {
+            if(userActivity.movieId != 0) {
+                MovieDetailedFragment movieDetailedFragment = new MovieDetailedFragment(userActivity.getMovieId());
+                setFragment(movieDetailedFragment);
+            }
+        });
+    }
+
+    private void setFragment(Fragment fragment) {
+        currentFragment
+                .getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .addToBackStack(HomeFragment.class.getSimpleName())
+                .commit();
     }
 
     @Override
@@ -58,17 +82,21 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
 
     public class UserActivityViewHolder extends RecyclerView.ViewHolder {
 
+        public CardView userActivityCard;
         public ImageView userImage;
         public ImageView movieImage;
-        public TextView movieName;
+        public TextView titleUserActivity;
+        public TextView textToShow;
         public TextView dayText;
         public TextView hourText;
 
         public UserActivityViewHolder(@NonNull View itemView) {
             super(itemView);
+            userActivityCard = itemView.findViewById(R.id.userActivityCard);
             userImage = itemView.findViewById(R.id.userImage);
             movieImage = itemView.findViewById(R.id.movieImage);
-            movieName = itemView.findViewById(R.id.movieName);
+            titleUserActivity = itemView.findViewById(R.id.titleUserActivity);
+            textToShow = itemView.findViewById(R.id.textToShow);
             dayText = itemView.findViewById(R.id.dayText);
             hourText = itemView.findViewById(R.id.hourText);
         }
