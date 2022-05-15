@@ -3,6 +3,7 @@ package com.example.moviez.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -32,6 +34,7 @@ import com.example.moviez.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -63,6 +66,9 @@ public class EditProfileFragment extends AppFragment {
     public Button closeSession;
     public ImageView goBackButton;
     public TextView textViewSergio;
+    public CardView creditsCard;
+    public ImageView creditButton;
+    public ImageView darkModeToggle;
 
     private MutableLiveData<Uri> uriProfilePic = new MutableLiveData<>();
 
@@ -114,6 +120,7 @@ public class EditProfileFragment extends AppFragment {
             setFragment(new PasswordFragment());
         });
 
+
         closeSession.setOnClickListener(v -> {
             GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(getString(R.string.default_web_client_id))
@@ -132,9 +139,47 @@ public class EditProfileFragment extends AppFragment {
 
         });
 
-        textViewSergio.setOnClickListener(v -> {
-                    Toast.makeText(requireContext(), "Créditos a GitHub Copilot =)", Toast.LENGTH_SHORT).show();
+        int isNightMode = getContext().getResources().getConfiguration().uiMode &
+                Configuration.UI_MODE_NIGHT_MASK;
+        if (isNightMode == Configuration.UI_MODE_NIGHT_YES){
+            darkModeToggle.setImageResource(R.drawable.ic_toggle_on);
+        } else {
+            darkModeToggle.setImageResource(R.drawable.ic_toggle_off);
+        }
+        theme.setOnClickListener(v -> {
+            switch (isNightMode) {
+                case Configuration.UI_MODE_NIGHT_YES:
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    break;
+                case Configuration.UI_MODE_NIGHT_NO:
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    break;
+                case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    break;
+            }
         });
+
+        credits.setOnClickListener(v -> {
+            if (creditsCard.getAlpha() == 0f){
+                creditButton.setRotation(90);
+                creditsCard.setAlpha(1f);
+            } else {
+                creditButton.setRotation(0);
+                creditsCard.setAlpha(0f);
+            }
+        });
+
+        textViewSergio.setOnClickListener(v -> {
+            Toast.makeText(requireContext(), "Créditos a GitHub Copilot =)", Toast.LENGTH_SHORT).show();
+        });
+//        textViewRaul.setOnClickListener(v -> {
+//            Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show();
+//        });
+//        textViewJordi.setOnClickListener(v -> {
+//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/jplanasmartinez"));
+//            startActivity(intent);
+//        });
 
         goBackButton.setOnClickListener(v -> {
             setFragment(new ProfileFragment());
@@ -205,19 +250,6 @@ public class EditProfileFragment extends AppFragment {
                 }
             }
         });
-
-
-//        db.collection("comments").document(String.valueOf(299534)).collection("comments").get().addOnCompleteListener(task -> {
-//            if (task.isSuccessful()) {
-//                for (QueryDocumentSnapshot document : task.getResult()) {
-//                    if (document.toObject(Models.User.class).userid.equals(userid)) {
-//                        db.collection("comments").document(String.valueOf(299534)).collection("comments").document(document.getId()).update("imageUrl", finalImageUrl);
-//                    }
-//                }
-//            }
-//        });
-
-
     }
 
 
@@ -237,6 +269,9 @@ public class EditProfileFragment extends AppFragment {
         closeSession = view.findViewById(R.id.closeSession);
         goBackButton = view.findViewById(R.id.goBackButton);
         textViewSergio = view.findViewById(R.id.textViewSergio);
+        creditsCard = view.findViewById(R.id.creditsCard);
+        creditButton = view.findViewById(R.id.creditButton);
+        darkModeToggle = view.findViewById(R.id.darkModeToggle);
     }
 
     private void setFragment(Fragment fragment) {
