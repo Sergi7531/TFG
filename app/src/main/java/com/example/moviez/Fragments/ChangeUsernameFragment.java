@@ -131,14 +131,10 @@ public class ChangeUsernameFragment extends AppFragment {
 //                                    db.collection("comments").document(documentSnapshot.getId()).collection("comments").get(auth.getCurrentUser().getUid())
 //                                }
 //                            });
-
-
-                                    //           setFragment(new ProfileFragment());
                             setFragment(new ProfileFragment(auth.getCurrentUser().getUid()));
                         }
                     }
                 });
-
     }
 
     public boolean validateData() {
