@@ -146,10 +146,10 @@ public class ChangeUsernameFragment extends AppFragment {
         String confirm = confirmName.getText().toString();
 
         if (name.matches("") || confirm.matches("")) {
-            Toast.makeText(getContext(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Por favor, llena todos los campos.", Toast.LENGTH_SHORT).show();
         }
         else if (!name.equals(confirm)){
-            Toast.makeText(getContext(), "The username field has to match with the repeat password field!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Revisa que ambos nombres estén igual escritos.", Toast.LENGTH_SHORT).show();
         }
         else {
             return true;

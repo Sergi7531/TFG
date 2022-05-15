@@ -4,6 +4,7 @@
     android:id="@+id/userActivityCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     app:cardBackgroundColor="?attr/colorPrimaryVariant"
     app:cardCornerRadius="16sp">
 
@@ -20,13 +21,15 @@
             android:fontFamily="@font/satoshi"
             android:text="@string/friends_activity"
             android:textColor="?attr/colorOnSecondary"
-            android:textSize="30sp" />
+            android:textSize="20sp"
+            app:autoSizeTextType="uniform" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/titleUserActivity"
+            android:layout_alignTop="@+id/titleUserActivity"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="-15dp"
             android:layout_marginEnd="20dp"
             app:cardCornerRadius="20dp">
 
@@ -61,43 +64,12 @@
             android:layout_width="210dp"
             android:layout_height="160dp"
             android:layout_alignTop="@id/cardImage"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="18dp"
             android:layout_toRightOf="@id/cardImage"
             android:fontFamily="@font/satoshi"
             android:text="TextView"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/dayText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/cardImage"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:fontFamily="@font/satoshi"
-            android:text="day"
-            android:textColor="?attr/colorOnSecondary" />
-
-        <TextView
-            android:id="@+id/textView35"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/cardImage"
-            android:layout_alignParentRight="false"
-            android:layout_toLeftOf="@id/dayText"
-            android:fontFamily="@font/satoshi"
-            android:text=" - "
-            android:textColor="?attr/colorOnSecondary" />
-
-        <TextView
-            android:id="@+id/hourText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/cardImage"
-            android:layout_toLeftOf="@id/textView35"
-            android:fontFamily="@font/satoshi"
-            android:text="hour"
-            android:textColor="?attr/colorOnSecondary" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

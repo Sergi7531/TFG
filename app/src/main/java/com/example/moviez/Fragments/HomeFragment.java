@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviez.Adapters.CinemaAdapter;
 import com.example.moviez.Adapters.FilmAdapter;
 import com.example.moviez.Adapters.UserActivityAdapter;
 import com.example.moviez.Adapters.UserSearchResultAdapter;
@@ -40,6 +41,7 @@ public class HomeFragment extends AppFragment {
     public List<Models.UserActivity> userActivities = new ArrayList<>();
     public TextInputEditText searchInputUser;
     public RecyclerView recyclerViewUserSearch;
+    public RecyclerView recyclerCinemas;
     public ProgressBar animacionCarga;
 
     public static String userId = "";
@@ -160,6 +162,21 @@ public class HomeFragment extends AppFragment {
             }
         });
 
+//        get the cinemas collection:
+
+        List<Models.Cinema> cinemas = new ArrayList<>();
+
+        db.collection("cinemas").get().addOnCompleteListener(queryDocumentSnapshots -> {
+            if (queryDocumentSnapshots.isSuccessful()) {
+                for (QueryDocumentSnapshot document : queryDocumentSnapshots.getResult()) {
+                    cinemas.add(document.toObject(Models.Cinema.class));
+                }
+                recyclerCinemas.setAdapter(new CinemaAdapter(cinemas, requireActivity(), HomeFragment.this));
+                recyclerCinemas.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+            }
+                });
+
+
 
 
 
@@ -199,6 +216,7 @@ public class HomeFragment extends AppFragment {
         recyclerForYou = view.findViewById(R.id.recyclerParaTi);
         searchInputUser = view.findViewById(R.id.searchInputUsers);
         recyclerViewUserSearch = view.findViewById(R.id.recyclerViewUserSearch);
+        recyclerCinemas = view.findViewById(R.id.recyclerCinemas);
         animacionCarga = view.findViewById(R.id.animacionCarga);
     }
 

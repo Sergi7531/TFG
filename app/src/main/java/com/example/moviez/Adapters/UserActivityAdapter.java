@@ -54,9 +54,7 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
 
         Glide.with(context).load("https://image.tmdb.org/t/p/original" + userActivity.getMovieImage()).into(holder.movieImage);
 
-        holder.dayText.setText(userActivity.getDayText());
         holder.textToShow.setText(userActivity.getTextToShow());
-        holder.hourText.setText(userActivity.getHourText());
 
         holder.userActivityCard.setOnClickListener(view -> {
             if(userActivity.movieId != 0) {
@@ -87,8 +85,6 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
         public ImageView movieImage;
         public TextView titleUserActivity;
         public TextView textToShow;
-        public TextView dayText;
-        public TextView hourText;
 
         public UserActivityViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -97,8 +93,6 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
             movieImage = itemView.findViewById(R.id.movieImage);
             titleUserActivity = itemView.findViewById(R.id.titleUserActivity);
             textToShow = itemView.findViewById(R.id.textToShow);
-            dayText = itemView.findViewById(R.id.dayText);
-            hourText = itemView.findViewById(R.id.hourText);
         }
     }
 }

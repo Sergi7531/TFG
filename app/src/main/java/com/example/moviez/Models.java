@@ -98,15 +98,19 @@ public class Models {
         public String name;
         public String coords;
         public String address;
+        public String cinemaImg;
+        public String cinemaURL;
 
 //        Empty constructor for Firebase:
         public Cinema() {}
 
-        public Cinema(String cinemaid, String name, String coords, String address) {
+        public Cinema(String cinemaid, String name, String coords, String address, String cinemaImg, String cinemaURL) {
             this.cinemaid = cinemaid;
             this.name = name;
             this.coords = coords;
             this.address = address;
+            this.cinemaImg = cinemaImg;
+            this.cinemaURL = cinemaURL;
         }
     }
 
@@ -355,18 +359,14 @@ public class Models {
         public String movieImage;
         public int movieId;
         public String movieName;
-        public String dayText;
-        public String hourText;
         public String textToShow;
 
-        public UserActivity(String userImage, String username, int movieId, String movieImage, String movieName, String dayText, String hourText, String textToShow) {
+        public UserActivity(String userImage, String username, int movieId, String movieImage, String movieName, String textToShow) {
             this.userImage = userImage;
             this.username = username;
             this.movieId = movieId;
             this.movieImage = movieImage;
             this.movieName = movieName;
-            this.dayText = dayText;
-            this.hourText = hourText;
             this.textToShow = textToShow;
         }
 
@@ -412,22 +412,6 @@ public class Models {
 
         public void setMovieName(String movieName) {
             this.movieName = movieName;
-        }
-
-        public String getDayText() {
-            return dayText;
-        }
-
-        public void setDayText(String dayText) {
-            this.dayText = dayText;
-        }
-
-        public String getHourText() {
-            return hourText;
-        }
-
-        public void setHourText(String hourText) {
-            this.hourText = hourText;
         }
 
         public String getTextToShow() {

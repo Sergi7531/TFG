@@ -10,105 +10,152 @@
     tools:context=".Fragments.HomeFragment">
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="100dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/moviez_logo" />
+            android:orientation="vertical" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerFriends"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/searchBox"
-                android:layout_gravity="center_vertical"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="20dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewUserSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/searchBox"
-                android:alpha="1"
-                android:elevation="10dp"
-                android:visibility="gone">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/searchBox"
-                style="@style/LoginTextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="?attr/colorOnSecondary"
-                app:boxBackgroundColor="?attr/colorPrimaryVariant"
-                app:boxCornerRadiusBottomEnd="10dp"
-                app:boxCornerRadiusBottomStart="10dp"
-                app:boxCornerRadiusTopEnd="10dp"
-                app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="?attr/colorPrimaryVariant"
-                app:boxStrokeWidth="0dp"
-                app:hintTextColor="?attr/colorOnSecondary">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/searchInputUsers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_baseline_search"
-                    android:fontFamily="@font/satoshi"
-                    android:hint="@string/search_for_users"
-                    android:textColorHint="?attr/colorOnSecondary" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/recyclerFriends"
-                android:layout_marginTop="0dp"
-                android:text="@string/para_ti"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="20sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerParaTi"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="40dp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/animacionCarga"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/recyclerParaTi"
-                android:layout_alignBottom="@+id/recyclerParaTi"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentEnd="false"
-                android:layout_gravity="center"
-                android:layout_marginStart="150dp"
-                android:elevation="2dp" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/moviez_logo" />
 
-    </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerFriends"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/searchBox"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="20dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewUserSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/searchBox"
+                        android:alpha="1"
+                        android:elevation="10dp"
+                        android:visibility="gone">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/searchBox"
+                        style="@style/LoginTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="?attr/colorOnSecondary"
+                        app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                        app:boxCornerRadiusBottomEnd="10dp"
+                        app:boxCornerRadiusBottomStart="10dp"
+                        app:boxCornerRadiusTopEnd="10dp"
+                        app:boxCornerRadiusTopStart="10dp"
+                        app:boxStrokeColor="?attr/colorPrimaryVariant"
+                        app:boxStrokeWidth="0dp"
+                        app:hintTextColor="?attr/colorOnSecondary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/searchInputUsers"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/ic_baseline_search"
+                            android:fontFamily="@font/satoshi"
+                            android:hint="@string/search_for_users"
+                            android:textColorHint="?attr/colorOnSecondary" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/recyclerFriends"
+                        android:layout_marginTop="0dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="@string/para_ti"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerParaTi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp" />
+
+                    <ProgressBar
+                        android:id="@+id/animacionCarga"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/recyclerParaTi"
+                        android:layout_alignBottom="@+id/recyclerParaTi"
+                        android:layout_alignParentStart="false"
+                        android:layout_alignParentEnd="false"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="150dp"
+                        android:elevation="2dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="90dp">
+
+                    <TextView
+                        android:id="@+id/textView34"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/satoshi"
+                        android:text="@string/cines"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerCinemas"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="40dp" />
+
+                    <!--            <ProgressBar-->
+                    <!--                android:id="@+id/animacionCarga2"-->
+                    <!--                android:layout_width="wrap_content"-->
+                    <!--                android:layout_height="wrap_content"-->
+                    <!--                android:layout_alignTop="@+id/recyclerCinemas"-->
+                    <!--                android:layout_alignBottom="@+id/recyclerCinemas"-->
+                    <!--                android:layout_alignParentStart="false"-->
+                    <!--                android:layout_alignParentEnd="false"-->
+                    <!--                android:layout_gravity="center"-->
+                    <!--                android:layout_marginStart="150dp"-->
+                    <!--                android:elevation="2dp" />-->
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

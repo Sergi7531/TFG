@@ -84,8 +84,6 @@ public class NewCommentFragment extends AppFragment {
 
         hook(view);
 
-//        Upload comment to firebase and go back to the movie page:
-
         backButton.setOnClickListener(view1 -> {
             getActivity().getSupportFragmentManager().popBackStack();
         });
@@ -121,17 +119,17 @@ public class NewCommentFragment extends AppFragment {
         publishButton.setOnClickListener(view1 -> {
             if(!commentText.getText().toString().isEmpty() && userRatingBar.getRating() != 0) {
                 String comment = commentText.getText().toString();
-                float rating = userRatingBar.getNumStars();
-                String ratingString = String.valueOf(rating);
+//                Get the rating from the rating bar (1 decimal place):
+                float rating = (float) Math.round(userRatingBar.getRating() * 10) / 10;
 
                 boolean spoiler = spoilerCheckBox.isChecked();
 
                 if(auth.getCurrentUser().getPhotoUrl() != null) {
                     db.collection("comments").document(String.valueOf(filmId)).set(new Models.Film(filmId));
-                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(auth.getCurrentUser().getUid(), comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(auth.getCurrentUser().getUid(), comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), rating, spoiler));
                 } else {
                     db.collection("comments").document(String.valueOf(filmId)).set(new Models.Film(filmId));
-                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(auth.getCurrentUser().getUid(), comment, "", auth.getCurrentUser().getDisplayName(), userRatingBar.getRating(), spoiler));
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(auth.getCurrentUser().getUid(), comment, "", auth.getCurrentUser().getDisplayName(), rating, spoiler));
                 }
 
                 //                Go back to the movie page:
