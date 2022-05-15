@@ -215,7 +215,7 @@
 
             <LinearLayout
                 android:layout_width="330dp"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
                 android:stateListAnimator="@null">
@@ -233,8 +233,6 @@
                     android:id="@+id/goTicketButton"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
                     android:backgroundTint="?attr/colorSecondary"
                     android:fontFamily="@font/satoshi"
                     android:shadowColor="@android:color/transparent"
@@ -247,6 +245,7 @@
                     android:textColor="@android:color/white"
                     android:textSize="12sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     app:cornerRadius="12dp" />
             </LinearLayout>
 

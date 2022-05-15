@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -83,27 +84,57 @@ public class UpdateFilmsInCinemas {
                 if (response.body() != null) {
                     Responses.BillboardResponse responseBody = response.body();
                     for (Models.Film film : responseBody.results) {
-                            FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).set(new Models.Film(film.id, film.title, film.poster_path));
+//                        If the film is not in the database, create it:
+                        FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).set(new Models.Film(film.id, film.title, film.poster_path));
 
 
-                            cinemas.observeForever(cinemas -> {
-                                Models.Cinema cinema = cinemas.get(new Random().nextInt(cinemas.size()));
-                                FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").document(cinema.cinemaid).set(cinema);
+                        cinemas.observeForever(cinemas -> {
+                            Models.Cinema cinema = cinemas.get(new Random().nextInt(cinemas.size()));
+
+                            FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").get().addOnCompleteListener(query -> {
+                                if (query.isSuccessful()) {
+                                    if (query.getResult().size() == 0) {
+                                        FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").document(cinema.cinemaid).set(cinema);
 
 //                                    Add the rooms to the cinema (randomly) from the list of rooms:
 
+                                        int roomId = rooms.get(new Random().nextInt(rooms.size()));
+                                        FirebaseFirestore.getInstance().collection("movie_sessions")
+                                                .document(String.valueOf(film.id)).collection("cinemas")
+                                                .document(cinema.cinemaid).collection("rooms")
+                                                .document(String.valueOf(roomId))
+                                                .set(new Models.Room(roomId, "Sala " + roomId, cinema.cinemaid, film.id));
+                                        if (rooms.stream().anyMatch(room -> room == roomId)) {
+                                            rooms.remove(rooms.indexOf(roomId));
+                                        }
 
-                                    int roomId = rooms.get(new Random().nextInt(rooms.size()));
-                                    FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").document(cinema.cinemaid).collection("rooms").document(String.valueOf(roomId)).set(new Models.Room(roomId, "Sala " + roomId, cinema.cinemaid));
-                                    if (rooms.stream().anyMatch(room -> room == roomId)) {
-                                        rooms.remove(rooms.indexOf(roomId));
+//                                    For every 3 hours until the dateEnd, add a new session:
+                                        for (int i = 0; i <= daysUntilDateEnd; i++) {
+                                            LocalDate localDate = LocalDate.now().plusDays(i);
+                                            for (int j = 0; j < 24; j++) {
+                                                LocalTime localTime = LocalTime.of(j, 0);
+
+//                                                Film sessions will be every 3 hours from 9:00 to 22:00
+
+                                                if (localTime.isAfter(LocalTime.of(9, 59)) && localTime.isBefore(LocalTime.of(22, 1))) {
+                                                    FirebaseFirestore.getInstance().collection("movie_sessions")
+                                                            .document(String.valueOf(film.id))
+                                                            .collection("cinemas")
+                                                            .document(cinema.cinemaid)
+                                                            .collection("rooms")
+                                                            .document(String.valueOf(roomId))
+                                                            .collection("sessions")
+                                                            .document(localDate.getMonthValue() + ":" + localDate.getDayOfMonth() + ":" + localTime.getHour())
+                                                            .set(new Models.Session(localDate.getMonthValue() + "", localDate.getDayOfMonth() + "", localTime.getHour() + ""));
+                                                }
+                                                j = j + 2;
+                                            }
+                                        }
                                     }
-
-//                                for (int j = 0; j < 10; j++) {
-
+                                }
                                 });
 
-
+                        });
 
                     }
                 }

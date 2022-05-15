@@ -71,19 +71,19 @@ public class HomeFragment extends AppFragment {
         searchInputUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                recyclerViewUserSearch.setAlpha(0f);
+                recyclerViewUserSearch.setVisibility(View.GONE);
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-               recyclerViewUserSearch.setAlpha(1f);
+               recyclerViewUserSearch.setVisibility(View.VISIBLE);
                System.out.println("TEXT CHANGED");
                firebaseUserSearch(charSequence.toString());
                if (charSequence.toString().isEmpty()) {
-                   recyclerViewUserSearch.setAlpha(0f);
+                   recyclerViewUserSearch.setVisibility(View.GONE);
                }
                else {
-                   recyclerViewUserSearch.setAlpha(1f);
+                   recyclerViewUserSearch.setVisibility(View.VISIBLE);
                }
             }
 

@@ -41,10 +41,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewUserSearch"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/searchBox"
                 android:alpha="1"
-                android:elevation="10dp">
+                android:elevation="10dp"
+                android:visibility="gone">
 
             </androidx.recyclerview.widget.RecyclerView>
 

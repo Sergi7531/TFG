@@ -215,22 +215,24 @@ public class MovieDetailedFragment extends AppFragment {
 
 //      Consulta IMDB.api.getNowPlaying para obtener las películas en cartelera. Si la película con id = filmId está en la lista, se muestra un botón buyButton:
 
-//        IMDB.api.getNowPlaying(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
-//            @RequiresApi(api = Build.VERSION_CODES.N)
-//            @Override
-//            public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
-//                if (response.body() != null) {
-//                    if (response.body().results.size() > 10) {
-//                        response.body().results.subList(0, 10);
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
-//                t.getMessage();
-//            }
-//        });
+        IMDB.api.getNowPlaying(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
+                if (response.body() != null) {
+                    for(Models.Film movie : response.body().results) {
+                        if (movie.id == filmId) {
+                            buyButton.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
+                t.getMessage();
+            }
+        });
 
 
 
@@ -241,7 +243,34 @@ public class MovieDetailedFragment extends AppFragment {
 
         List<String> status = new ArrayList<>();
         status.add(0, "Estado");
-        status.add("Vista");
+
+        IMDB.api.getUpcoming(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
+
+            @Override
+            public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
+                if (response.body() != null) {
+//                    Iterate through the list of films. If the film with id = filmId is in the list, do not add "Vista" to the list of status:
+
+                    boolean found = false;
+                    for (Models.Film movie : response.body().results) {
+                        if (movie.id == filmId) {
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        status.add(1, "Vista");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
+                t.getMessage();
+            }
+        });
+
+
+
         status.add("Ver más tarde");
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
@@ -330,6 +359,7 @@ public class MovieDetailedFragment extends AppFragment {
 
 
     private void setFragment(Fragment fragment) {
+        buyButton.setVisibility(View.GONE);
         getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_detail, fragment)

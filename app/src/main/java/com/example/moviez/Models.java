@@ -38,13 +38,15 @@ public class Models {
         public int roomid;
         public String name;
         public String cinemaid;
+        public int filmid;
 
         public Room() {}
 
-        public Room(int roomid, String name, String cinemaid) {
+        public Room(int roomid, String name, String cinemaid, int filmid) {
             this.roomid = roomid;
             this.name = name;
             this.cinemaid = cinemaid;
+            this.filmid = filmid;
         }
     }
 
@@ -308,13 +310,18 @@ public class Models {
         }
     }
 
-    public class Session {
-        public String filmid;
-        public String filmname;
+    public static class Session {
+        public String month;
         public String day;
         public String time;
+
+        public Session(String month, String day, String time) {
+            this.month = month;
+            this.day = day;
+            this.time = time;
+        }
     }
-    public enum SeatState{
+    public enum SeatState {
         BUSY,
         FREE,
         SELECTED
