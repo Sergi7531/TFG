@@ -115,7 +115,7 @@ public class ChangeUsernameFragment extends AppFragment {
                                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
 
                                     db.collection("comments").document(documentSnapshot.getId()).collection("comments").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshots, e) -> {
-                                            Models.Comment comment = documentSnapshots.toObject(Models.Comment.class);
+                                            Models.Comment comment = documentSnapshot.toObject(Models.Comment.class);
                                             comment.username = name;
                                             db.collection("comments")
                                                     .document(documentSnapshot.getId())
@@ -131,13 +131,10 @@ public class ChangeUsernameFragment extends AppFragment {
 //                                    db.collection("comments").document(documentSnapshot.getId()).collection("comments").get(auth.getCurrentUser().getUid())
 //                                }
 //                            });
-
-
-                                    //           setFragment(new ProfileFragment());
+                            setFragment(new ProfileFragment(auth.getCurrentUser().getUid()));
                         }
                     }
                 });
-
     }
 
     public boolean validateData() {
