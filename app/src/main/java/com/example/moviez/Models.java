@@ -384,4 +384,64 @@ public class Models {
         }
 
     }
+
+    public static class UserActivity {
+        public String userImage;
+        public String movieImage;
+        public String movieName;
+        public String dayText;
+        public String hourText;
+
+        public UserActivity(String userImage, String movieImage, String movieName, String dayText, String hourText) {
+            this.userImage = userImage;
+            this.movieImage = movieImage;
+            this.movieName = movieName;
+            this.dayText = dayText;
+            this.hourText = hourText;
+        }
+
+        public UserActivity() {
+
+        }
+
+        public String getUserImage() {
+            return userImage;
+        }
+
+        public void setUserImage(String userImage) {
+            this.userImage = userImage;
+        }
+
+        public String getMovieImage() {
+            return movieImage;
+        }
+
+        public void setMovieImage(String movieImage) {
+            this.movieImage = movieImage;
+        }
+
+        public String getMovieName() {
+            return movieName;
+        }
+
+        public void setMovieName(String movieName) {
+            this.movieName = movieName;
+        }
+
+        public String getDayText() {
+            return dayText;
+        }
+
+        public void setDayText(String dayText) {
+            this.dayText = dayText;
+        }
+
+        public String getHourText() {
+            return hourText;
+        }
+
+        public void setHourText(String hourText) {
+            this.hourText = hourText;
+        }
+    }
 }

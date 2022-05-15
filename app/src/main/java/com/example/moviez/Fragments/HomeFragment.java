@@ -15,12 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviez.Adapters.FilmAdapter;
+import com.example.moviez.Adapters.UserActivityAdapter;
 import com.example.moviez.Adapters.UserSearchResultAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,13 +38,14 @@ public class HomeFragment extends AppFragment {
     private RecyclerView recyclerFriends;
 
     public List<Models.User> users = new ArrayList<>();
+    public List<Models.UserActivity> userActivities = new ArrayList<>();
     public TextInputEditText searchInputUser;
     public RecyclerView recyclerViewUserSearch;
     public ProgressBar animacionCarga;
 
     public static String userId = "";
     private UserSearchResultAdapter adapter;
-
+    public UserActivityAdapter userActivityAdapter;
 
     public HomeFragment() {
     }
@@ -90,7 +93,51 @@ public class HomeFragment extends AppFragment {
 
             }
         });
-    }
+
+        recyclerFriends = view.findViewById(R.id.recyclerFriends);
+
+        List<Models.User> following = new ArrayList<>();
+        List<Models.UserActivity> userActivities = new ArrayList<>();
+
+        recyclerFriends.setAdapter(userActivityAdapter = new UserActivityAdapter(userActivities, requireActivity()));
+        recyclerFriends.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+/*
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                following.add(documentSnapshot.toObject(Models.User.class));
+                for (Models.User followedUser : following) {
+                    for (Models.Film film : followedUser.favoritedFilms) {
+                        Models.UserActivity userActivity = new Models.UserActivity();
+
+                        userActivity.setUserImage(followedUser.profileImageURL);
+                        userActivity.setMovieImage(film.poster_path);
+                        userActivity.setMovieName(film.title);
+
+                        userActivities.add(userActivity);
+                    }
+                    for (Models.Film film : followedUser.viewLaterFilms) {
+                        Models.UserActivity userActivity = new Models.UserActivity();
+
+                        userActivity.setUserImage(followedUser.profileImageURL);
+                        userActivity.setMovieImage(film.poster_path);
+                        userActivity.setMovieName(film.title);
+
+                        userActivities.add(userActivity);
+                    }
+                    for (Models.Film film : followedUser.watchedFilms) {
+                        Models.UserActivity userActivity = new Models.UserActivity();
+
+                        userActivity.setUserImage(followedUser.profileImageURL);
+                        userActivity.setMovieImage(film.poster_path);
+                        userActivity.setMovieName(film.title);
+
+                        userActivities.add(userActivity);
+                    }
+                }
+            }
+        });*/
+
+        }
 
     private void firebaseUserSearch(String query) {
 
