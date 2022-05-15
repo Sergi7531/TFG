@@ -143,7 +143,7 @@ public class HomeFragment extends AppFragment {
                                     for (QueryDocumentSnapshot documentActivity : task.getResult()) {
                                         Models.UserActivity userActivity = new Models.UserActivity();
                                         userActivity.movieImage = documentActivity.toObject(Models.Film.class).poster_path;
-                                        userActivity.userImage = documentActivity.toObject(Models.User.class).profileImageURL;
+                                        userActivity.userImage = document.toObject(Models.User.class).profileImageURL;
                                         userActivity.username = document.toObject(Models.User.class).username;
                                         userActivity.movieName = documentActivity.toObject(Models.Film.class).title;
                                         userActivity.movieId = documentActivity.toObject(Models.Film.class).id;

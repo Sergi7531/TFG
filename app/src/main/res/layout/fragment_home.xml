@@ -36,7 +36,7 @@
                 android:layout_below="@id/searchBox"
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp" />
+                android:layout_marginBottom="20dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewUserSearch"
@@ -77,8 +77,8 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recyclerViewUserSearch"
-                android:layout_marginTop="40dp"
+                android:layout_below="@id/recyclerFriends"
+                android:layout_marginTop="0dp"
                 android:text="@string/para_ti"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="20sp" />

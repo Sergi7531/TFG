@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -60,6 +62,7 @@ public class EditProfileFragment extends AppFragment {
     public CardView credits;
     public Button closeSession;
     public ImageView goBackButton;
+    public TextView textViewSergio;
 
     private MutableLiveData<Uri> uriProfilePic = new MutableLiveData<>();
 
@@ -127,6 +130,10 @@ public class EditProfileFragment extends AppFragment {
             getActivity().startActivity(intent);
 
 
+        });
+
+        textViewSergio.setOnClickListener(v -> {
+                    Toast.makeText(requireContext(), "Créditos a GitHub Copilot =)", Toast.LENGTH_SHORT).show();
         });
 
         goBackButton.setOnClickListener(v -> {
@@ -229,6 +236,7 @@ public class EditProfileFragment extends AppFragment {
         editPicture = view.findViewById(R.id.changePicture);
         closeSession = view.findViewById(R.id.closeSession);
         goBackButton = view.findViewById(R.id.goBackButton);
+        textViewSergio = view.findViewById(R.id.textViewSergio);
     }
 
     private void setFragment(Fragment fragment) {
