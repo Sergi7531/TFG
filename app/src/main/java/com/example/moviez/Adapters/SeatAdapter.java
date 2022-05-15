@@ -1,11 +1,9 @@
 package com.example.moviez.Adapters;
 
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +39,7 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
         Models.Seats seat = seats.get(position);
         holder.seatImage.setOnClickListener(view -> {
             // Select new Seat
-            if (seat.state.equals(Models.SeatState.FREE)){
+            if (seat.state.equals(Models.SeatState.FREE)) {
                 holder.seatImage.setImageResource(R.drawable.ic_rectangle_selected);
                 //TODO
                 // Save position to be saved

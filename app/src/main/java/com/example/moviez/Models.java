@@ -314,11 +314,13 @@ public class Models {
         public String month;
         public String day;
         public String time;
+        public List<String> seats;
 
         public Session(String month, String day, String time) {
             this.month = month;
             this.day = day;
             this.time = time;
+            this.seats = new ArrayList<>();
         }
     }
     public enum SeatState {

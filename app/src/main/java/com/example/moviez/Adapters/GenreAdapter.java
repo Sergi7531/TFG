@@ -1,18 +1,16 @@
 package com.example.moviez.Adapters;
 
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.moviez.Fragments.PreferencesFragment;
 import com.example.moviez.Models;
 import com.example.moviez.Models.Genre;
@@ -20,7 +18,7 @@ import com.example.moviez.R;
 
 import java.util.List;
 
-public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHolder> {
+public class GenreAdapter extends BaseAdapter {
     Context context;
     List<Genre> genresList;
 
@@ -29,49 +27,9 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
         this.genresList = genresList;
     }
 
-    @NonNull
-    @Override
-    public GenreViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.genre_data, parent, false);
-        return new GenreViewHolder(view);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
-    public void onBindViewHolder(@NonNull GenreViewHolder holder, int position) {
-        holder.titleGenreHolder.setText(genresList.get(position).getName());
-
-        holder.genreCard.setOnClickListener(v -> {
-
-            for(Genre g : genresList) {
-                if  (g.getName().equals(holder.titleGenreHolder.getText())) {
-                    if (!isSelected(g.getId())) {
-                        PreferencesFragment.selectedGenres.add(g.getId());
-                        holder.blueLayer.setAlpha(1f);
-                    } else {
-                        holder.blueLayer.setAlpha(0.4f);
-                        for (int i = 0 ; i < PreferencesFragment.selectedGenres.size() -1 ; i++){
-                            if (PreferencesFragment.selectedGenres.get(i) == g.getId()){
-                                PreferencesFragment.selectedGenres.remove(i);
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-//        We need to update the user favorite genres in the firebase database:
-
-
-    }
-
-//    Create isSelected method. This method will be used to check if the genre is selected or not.
-//    Iterate over PreferencesFragment.selectedGenres and check if the genre is in the list.
-
     public boolean isSelected(int genreID) {
-        for(Integer genreIDInList : PreferencesFragment.selectedGenres) {
-            if(genreID == genreIDInList) {
+        for (Integer genreIDInList : PreferencesFragment.selectedGenres) {
+            if (genreID == genreIDInList) {
                 return true;
             }
         }
@@ -79,22 +37,58 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenreViewHol
     }
 
     @Override
-    public int getItemCount() {
+    public int getCount() {
         return genresList.size();
     }
 
-    public static class GenreViewHolder extends RecyclerView.ViewHolder {
-        public CardView genreCard;
-        public TextView titleGenreHolder;
-        public CardView blueLayer;
-        public ImageView genre_image;
+    @Override
+    public Object getItem(int i) {
+        return genresList.get(i);
+    }
 
-        public GenreViewHolder(@NonNull View itemView) {
-            super(itemView);
-            this.genreCard = itemView.findViewById(R.id.genreCard);
-            this.titleGenreHolder = itemView.findViewById(R.id.titleGenreHolder);
-            this.blueLayer = itemView.findViewById(R.id.blueLayer);
-            this.genre_image = itemView.findViewById(R.id.genre_image);
-        }
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+
+        View view2 = LayoutInflater.from(context).inflate(R.layout.genre_data, null);
+
+        CardView genreCard;
+        TextView titleGenreHolder;
+        CardView blueLayer;
+        ImageView genre_image;
+
+        genreCard = view2.findViewById(R.id.genreCard);
+        titleGenreHolder = view2.findViewById(R.id.titleGenreHolder);
+        blueLayer = view2.findViewById(R.id.blueLayer);
+        genre_image = view2.findViewById(R.id.genre_image);
+
+        Glide.with(context).load(genresList.get(i).getImageUrl()).centerCrop().into(genre_image);
+
+        titleGenreHolder.setText(genresList.get(i).getName());
+
+        genreCard.setOnClickListener(v -> {
+
+            for (Genre g : genresList) {
+                if (g.getName().equals(titleGenreHolder.getText())) {
+                    if (!isSelected(g.getId())) {
+                        PreferencesFragment.selectedGenres.add(g.getId());
+                        blueLayer.setAlpha(1f);
+                    } else {
+                        blueLayer.setAlpha(0.4f);
+                        for (int j = 0; j < PreferencesFragment.selectedGenres.size() - 1; j++) {
+                            if (PreferencesFragment.selectedGenres.get(j) == g.getId()) {
+                                PreferencesFragment.selectedGenres.remove(j);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        return view2;
     }
 }

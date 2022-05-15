@@ -6,17 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.moviez.Models.Genre;
-import com.example.moviez.Adapters.GenreAdapter;
 import com.example.moviez.Activities.MainActivity;
+import com.example.moviez.Adapters.GenreAdapter;
+import com.example.moviez.Models.Genre;
 import com.example.moviez.R;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class PreferencesFragment extends AppFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     ArrayList<Genre> genres;
-    private RecyclerView genresRecycler;
+    private GridView listViewGenres;
     private LinearLayout linearSkip;
 
     private Button continueButton;
@@ -90,9 +89,12 @@ public class PreferencesFragment extends AppFragment {
         hook(view);
         initData();
         GenreAdapter adapter = new GenreAdapter(getContext(), genres);
-        genresRecycler.setAdapter(adapter);
-        genresRecycler.setLayoutManager(new GridLayoutManager(requireContext(), 2,
-                RecyclerView.VERTICAL, false));
+        listViewGenres.setAdapter(adapter);
+
+        listViewGenres.setStretchMode(GridView.STRETCH_SPACING);
+
+//        listViewGenres.setLayoutManager(new GridLayoutManager(requireContext(), 2,
+//                RecyclerView.VERTICAL, false));
 
         linearSkip.setOnClickListener(view1 -> {
             Intent intent = new Intent(requireContext(), MainActivity.class);
@@ -107,7 +109,7 @@ public class PreferencesFragment extends AppFragment {
     }
 
     private void hook(View view) {
-        genresRecycler = view.findViewById(R.id.recyclerGenres);
+        listViewGenres = view.findViewById(R.id.listViewGenres);
         linearSkip = view.findViewById(R.id.linearSkip);
         continueButton = view.findViewById(R.id.continueButton);
     }
