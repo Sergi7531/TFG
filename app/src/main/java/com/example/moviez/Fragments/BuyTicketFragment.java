@@ -1,5 +1,6 @@
 package com.example.moviez.Fragments;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,16 +8,22 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -32,19 +39,25 @@ public class BuyTicketFragment extends AppFragment {
 
     private static int roomsInSelectedCinema = 0;
     List<Models.Cinema> allCinemas = new ArrayList<>();
+    List<Models.Film> allFilms = new ArrayList<>();
+    List<String> filmsNamesToShow = new ArrayList<>();
     List<String> cinemasNamesToShow = new ArrayList<>();
 
     Models.Cinema selectedCinema = new Models.Cinema();
 
-    List<String> filmsNamesToShow = new ArrayList<>();
-
     boolean isFilmAvailable = false;
 
     Spinner spinnerCinema;
-    Spinner spinnerDay;
+    TextView titleFilm;
+    TextView movieSinopsis;
+    TextView movieDuration;
+    ImageView movieImage;
+    EditText dateInput;
     Spinner spinnerHour;
     Spinner spinnerMovie;
     Button buyButton;
+
+    DatePickerDialog picker;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -52,6 +65,8 @@ public class BuyTicketFragment extends AppFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    Models.Film filmSelected = new Models.Film();
+    Models.Cinema cinemaSelected = new Models.Cinema();
 
     String cinemaId;
 
@@ -108,24 +123,83 @@ public class BuyTicketFragment extends AppFragment {
 
         hook(view);
 
-//      Consulta a firebase (coleccion cinemas):
+        db.collection("movie_sessions").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                Models.Film film = documentSnapshot.toObject(Models.Film.class);
+                allFilms.add(film);
+                filmsNamesToShow.add(film.title);
+            }
+
+            ArrayAdapter<String> filmAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, filmsNamesToShow);
+
+            spinnerMovie.setAdapter(filmAdapter);
+            filmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            if (filmId != 0) {
+//            Get the film with the id = filmId iterating over the list of films:
+                for (Models.Film film : allFilms) {
+                    if (film.getId() == filmId) {
+                        filmSelected = film;
+                    }
+                }
+            } else {
+                filmSelected = allFilms.get(0);
+            }
+
+            adaptFilmToLayout(filmSelected);
+
+            spinnerMovie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if(filmId == 0) { ;
+                        filmSelected = allFilms.get(position);
+                    } else {
+                        filmId = 0;
+                    }
+                    adaptFilmToLayout(filmSelected);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    filmSelected = allFilms.get(0);
+                }
+            });
+            adaptFilmToLayout(filmSelected);
+            spinnerMovie.setSelection(filmsNamesToShow.indexOf(filmSelected.title));
+        });
+
+
+        dateInput.setOnClickListener(view1 -> {
+            final Calendar cldr = Calendar.getInstance();
+            int day = cldr.get(Calendar.DAY_OF_MONTH);
+            int month = cldr.get(Calendar.MONTH);
+            int year = cldr.get(Calendar.YEAR);
+
+            picker = new DatePickerDialog(requireContext(),
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                            dateInput.setText(i2 + "-" + (i1 + 1) + "-" + i);
+
+                        }
+                    }, year, month, day);
+
+            picker.show();
+        });
+
+//        ArrayAdapter<String> cinemaAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
+//            ArrayAdapter<String> cinemaAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
+//            ArrayAdapter<String> cinemaAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
+
+//        cinemaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
         db.collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 Models.Cinema cinema = documentSnapshot.toObject(Models.Cinema.class);
                 allCinemas.add(cinema);
-            }
-
-//            Adapt the spinner with the cinemas names:
-
-            for (Models.Cinema cinema : allCinemas) {
                 cinemasNamesToShow.add(cinema.name);
             }
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
-
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-            spinnerCinema.setAdapter(adapter);
 
             spinnerCinema.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
@@ -134,7 +208,6 @@ public class BuyTicketFragment extends AppFragment {
                         if(cinema.name.equals(spinnerCinema.getSelectedItem().toString())) {
                             cinemaId = cinema.cinemaid;
                             Toast.makeText(getContext(), cinemaId, Toast.LENGTH_SHORT).show();
-                            checkFilms(cinemaId);
                         }
                     }
                 }
@@ -149,70 +222,29 @@ public class BuyTicketFragment extends AppFragment {
                     }
                 }
             });
-
-
-
-
-
-//            TODO: Finish this part
-
-//            Cuando el cine esté seleccionado en el dropdown, se muestra la lista de salas:
-//            spinnerCinemas.setOnItemSelectedListener((adapterView, view1, i, l) -> {
-//                Models.Cinema cinema = cinemasNamesToShow.get(i);
-//                db.collection("cinemas").document(cinema.cinemaid).collection("rooms").get().addOnSuccessListener(queryDocumentSnapshotsRooms -> {
-//                    roomsInSelectedCinema = queryDocumentSnapshotsRooms.getDocuments().size();
-//                    selectedCinema = allCinemas.get(i);
-//                });
-//
-//            });
-//
-//            for(int i = 0; i < allCinemas.size(); i++) {
-//                db.collection("cinemas")
-//                        .document(cinemasNamesToShow.get().cinemaid)
-//                        .collection("rooms")
-//                        .document(String.valueOf(i)).collection("films").get()
-//                        .addOnSuccessListener(queryDocumentSnapshotsRooms -> {
-//
-////                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshotsRooms.getDocuments()) {
-////                                if (documentSnapshot.getId().equals(String.valueOf(filmId))) {
-////
-////                                }
-////                            }
-//
-//                        });
-//            }
-
-
-
-
-
         });
         buyButton.setOnClickListener(view1 -> {
             setFragment(new SeatsFragment());
         });
     }
 
-    private void checkFilms(String cinemaId) {
-//        TODO: Check if the film is in the cinema:
-        //        db.collection("cinemas").document(cinemaId).collection("rooms").get().addOnSuccessListener(queryDocumentSnapshotsRooms -> {
-////            For each room in the cinema, get the sessions. Then, for each session, get the film on that session.
-//            for(DocumentSnapshot room : queryDocumentSnapshotsRooms.getDocuments()) {
-//                db.collection("cinemas").document(cinemaId).collection("rooms").document(room.getId()).collection("sessions").get().addOnSuccessListener(queryDocumentSnapshotsSessions -> {
-////                    For each session, get the film on that session:
-//                    for(DocumentSnapshot session : queryDocumentSnapshotsSessions.getDocuments()) {
-//                       session.toObject(Models.Session.class);
-//                    }
-//                });
-//            }
-//        });
+    private void adaptFilmToLayout(Models.Film filmSelected) {
+        titleFilm.setText(filmSelected.title);
+        movieSinopsis.setText(filmSelected.overview);
+        movieDuration.setText(filmSelected.runtime / 60 + "h " + filmSelected.runtime % 60 + "min");
+        Glide.with(requireContext()).load("https://image.tmdb.org/t/p/original" + filmSelected.poster_path).into(movieImage);
     }
 
     private void hook(View view) {
         spinnerCinema = view.findViewById(R.id.spinnerCinema);
-        spinnerDay = view.findViewById(R.id.spinnerDay);
+        dateInput = view.findViewById(R.id.dateInput);
         spinnerHour = view.findViewById(R.id.spinnerHour);
         spinnerMovie = view.findViewById(R.id.spinnerMovie);
         buyButton = view.findViewById(R.id.buyButton);
+        titleFilm = view.findViewById(R.id.titleFilm);
+        movieSinopsis = view.findViewById(R.id.movieSinopsis);
+        movieDuration = view.findViewById(R.id.movieDuration);
+        movieImage = view.findViewById(R.id.movieImage);
 
     }
     private void setFragment(Fragment fragment) {
