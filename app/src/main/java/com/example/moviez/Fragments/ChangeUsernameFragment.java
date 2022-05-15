@@ -94,6 +94,7 @@ public class ChangeUsernameFragment extends AppFragment {
     private void changeUsername() {
 
         String name = newName.getText().toString();
+        String latestName = auth.getCurrentUser().getDisplayName();
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
@@ -106,13 +107,12 @@ public class ChangeUsernameFragment extends AppFragment {
                         if (task.isSuccessful()) {
                             Toast.makeText(getContext(), "Username updated!", Toast.LENGTH_SHORT).show();
                             DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
-                            userDoc.update("username", name);
 
-//                          Update username in all comments:
+                            System.out.println(latestName);
 
                             db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
                                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-
+                                    /*
                                     db.collection("comments").document(documentSnapshot.getId()).collection("comments").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshots, e) -> {
                                             Models.Comment comment = documentSnapshot.toObject(Models.Comment.class);
                                             comment.username = name;
@@ -121,10 +121,25 @@ public class ChangeUsernameFragment extends AppFragment {
                                                     .collection("comments")
                                                     .document(auth.getCurrentUser().getUid())
                                                     .set(comment);
+                                    });*/
+
+                                    db.collection("comments").document(documentSnapshot.getId()).collection("comments").get().addOnSuccessListener(documentSnapshots -> {
+                                        for (DocumentSnapshot documentSnapshot1 : documentSnapshots.getDocuments()) {
+                                            if (documentSnapshot1.toObject(Models.Comment.class).username.equals(latestName)) {
+                                                Models.Comment comment = documentSnapshot1.toObject(Models.Comment.class);
+                                                comment.username = name;
+                                                db.collection("comments")
+                                                        .document(documentSnapshot.getId())
+                                                        .collection("comments")
+                                                        .document(documentSnapshot1.getId())
+                                                        .set(comment);
+
+                                            }
+                                        }
                                     });
                                 }
                             });
-
+                            userDoc.update("username", name);
 //                            db.collection("comments").get().addOnSuccessListener(collectionDocumentSnapshots -> {
 //                                for (DocumentSnapshot documentSnapshot : collectionDocumentSnapshots) {
 //                                    db.collection("comments").document(documentSnapshot.getId()).collection("comments").get(auth.getCurrentUser().getUid())
