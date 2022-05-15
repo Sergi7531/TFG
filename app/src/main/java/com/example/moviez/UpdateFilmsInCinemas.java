@@ -5,8 +5,12 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
-import java.text.SimpleDateFormat;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,11 +21,25 @@ public class UpdateFilmsInCinemas {
     public static MutableLiveData<String> dateStart = new MutableLiveData<>();
     public static MutableLiveData<String> dateEnd = new MutableLiveData<>();
 
-    public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public static List<Integer> rooms = new ArrayList<>();
 
-
-    //    Num of days until the dateEnd
     public static int daysUntilDateEnd = 0;
+
+    public static MutableLiveData<List<Models.Cinema>> cinemas = new MutableLiveData<>();
+
+    public static void getCinemas() {
+        FirebaseFirestore.getInstance().collection("cinemas").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                cinemas.postValue(task.getResult().toObjects(Models.Cinema.class));
+                rooms = new ArrayList<>(task.getResult().size()*20);
+                for (int i = 0; i < task.getResult().size(); i++) {
+                    for (int j = 1; j < 20; j++) {
+                        rooms.add(i*20 + j);
+                    }
+                }
+            }
+        });
+    }
 
     public static void initDates() {
 
@@ -43,8 +61,8 @@ public class UpdateFilmsInCinemas {
                     daysUntilDateEnd = localDate.getDayOfYear() - localDate2.getDayOfYear();
                     System.out.println("Days until dateEnd: " + daysUntilDateEnd);
                 }
-
-//                createMovieSessions(daysUntilDateEnd);
+                getCinemas();
+                createMovieSessions(daysUntilDateEnd);
             }
 
             @Override
@@ -62,9 +80,32 @@ public class UpdateFilmsInCinemas {
 
             @Override
             public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
+                if (response.body() != null) {
+                    Responses.BillboardResponse responseBody = response.body();
+                    for (Models.Film film : responseBody.results) {
+                            FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).set(new Models.Film(film.id, film.title, film.poster_path));
 
-                while(daysUntilDateEnd > 0) {
 
+                            cinemas.observeForever(cinemas -> {
+                                Models.Cinema cinema = cinemas.get(new Random().nextInt(cinemas.size()));
+                                FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").document(cinema.cinemaid).set(cinema);
+
+//                                    Add the rooms to the cinema (randomly) from the list of rooms:
+
+
+                                    int roomId = rooms.get(new Random().nextInt(rooms.size()));
+                                    FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").document(cinema.cinemaid).collection("rooms").document(String.valueOf(roomId)).set(new Models.Room(roomId, "Sala " + roomId, cinema.cinemaid));
+                                    if (rooms.stream().anyMatch(room -> room == roomId)) {
+                                        rooms.remove(rooms.indexOf(roomId));
+                                    }
+
+//                                for (int j = 0; j < 10; j++) {
+
+                                });
+
+
+
+                    }
                 }
             }
 
@@ -72,27 +113,6 @@ public class UpdateFilmsInCinemas {
             public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
 
             }
-
-//        In the cinemas collection, get all the cinemas. For each cinema, create a new collection with every day from the current date to the billboard_finish date:
-//
-//        db.collection("cinemas").get().addOnSuccessListener(collectionSnapshot -> {
-//            for (DocumentSnapshot documentSnapshot : collectionSnapshot.getDocuments()) {
-//
-////                Get number of days between today and the billboard_finish date:
-//
-//                int days = 0;
-//                String[] billboard_finish_date_split = billboard_finish_date.split("-");
-//                String[] current_date_split = current_date.split("-");
-//
-//                int billboard_finish_date_year = Integer.parseInt(billboard_finish_date_split[0]);
-//
-//
-//
-//                //                db.collection("cinemas")
-//
-//            }
-//        });
-
         });
 
     }

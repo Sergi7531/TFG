@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,22 +29,15 @@ public class AppViewModel extends ViewModel {
     public static MutableLiveData<Models.Film> movieDetails = new MutableLiveData<>();
     public static MutableLiveData<Responses.FullCastResponse> fullCast = new MutableLiveData<>();
 
-//    public static List<Models.Film> lastViewedFilms = new ArrayList<>();
-//    public static List<Models.Film> moviesToWatch = new ArrayList<>();
-
-    public static LinkedHashSet<Models.Film> filmsToShow = new LinkedHashSet<>();
-
-
     //    We will use this counters in case we need to use the "page" param (so we take control of the results number)
-    public static int contResults = 0;
     public static int contPage = 0;
 
     public MutableLiveData<Uri> uriImagenSeleccionada = new MutableLiveData<>();
 
-
     public Models.User userlogged;
 
-//    MOVIESFRAGMENT:
+
+
 
     public static void getUpcomingMovies() {
         IMDB.api.getUpcoming(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {

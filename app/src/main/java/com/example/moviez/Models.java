@@ -34,6 +34,21 @@ public class Models {
         }
     }
 
+    public static class Room {
+        public int roomid;
+        public String name;
+        public String cinemaid;
+
+        public Room() {}
+
+        public Room(int roomid, String name, String cinemaid) {
+            this.roomid = roomid;
+            this.name = name;
+            this.cinemaid = cinemaid;
+        }
+    }
+
+
     public static class Genre {
         public int id;
         public String name;
