@@ -2,16 +2,22 @@ package com.example.moviez.Fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +50,7 @@ public class HomeFragment extends AppFragment {
     public RecyclerView recyclerViewUserSearch;
     public RecyclerView recyclerCinemas;
     public ProgressBar animacionCarga;
+    public Button buttonActivity;
 
     public static String userId = "";
     private UserSearchResultAdapter adapter;
@@ -65,6 +72,18 @@ public class HomeFragment extends AppFragment {
 
         hook(view);
         forYou();
+        buttonActivity.setOnClickListener(v -> {
+            searchInputUser.requestFocus();
+            searchInputUser.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0f, 0f, 0));
+            searchInputUser.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0f, 0f, 0));
+            OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    setFragment(new HomeFragment());
+                }
+            };
+            requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);
+        });
 
         recyclerViewUserSearch = view.findViewById(R.id.recyclerViewUserSearch);
 
@@ -74,7 +93,6 @@ public class HomeFragment extends AppFragment {
         searchInputUser.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                recyclerViewUserSearch.setVisibility(View.GONE);
             }
 
             @Override
@@ -162,6 +180,9 @@ public class HomeFragment extends AppFragment {
                 }
             }
         });
+        if (userActivities.isEmpty()){
+            checkVoidList(userActivities, buttonActivity);
+        }
 
 //        get the cinemas collection:
 
@@ -184,7 +205,18 @@ public class HomeFragment extends AppFragment {
 
 
         }
+    private void checkVoidList(List<Models.UserActivity> activities, Button button) {
 
+        if (activities.isEmpty()){
+            button.setAlpha(1f);
+            button.setEnabled(true);
+            button.setClickable(true);
+        } else {
+            button.setAlpha(0f);
+            button.setEnabled(false);
+            button.setClickable(false);
+        }
+    }
     private void firebaseUserSearch(String query) {
 
         users.clear();
@@ -215,6 +247,7 @@ public class HomeFragment extends AppFragment {
         recyclerViewUserSearch = view.findViewById(R.id.recyclerViewUserSearch);
         recyclerCinemas = view.findViewById(R.id.recyclerCinemas);
         animacionCarga = view.findViewById(R.id.animacionCarga);
+        buttonActivity = view.findViewById(R.id.buttonActivity);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -236,5 +269,11 @@ public class HomeFragment extends AppFragment {
                 });
             }
         });
+    }
+    private void setFragment(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.landingFrame, fragment)
+                .commit();
     }
 }

@@ -33,6 +33,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -63,7 +64,7 @@ public class EditProfileFragment extends AppFragment {
     public CardView editPicture;
     public CardView credits;
     public Button closeSession;
-    public ImageView goBackButton;
+    public ImageView goBackButtonEdit;
     public TextView textViewSergio;
     public CardView creditsCard;
     public ImageView creditButton;
@@ -111,20 +112,26 @@ public class EditProfileFragment extends AppFragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         hook(view);
 
+        GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build());
+
         profileName.setOnClickListener(v -> {
             setFragment(new ChangeUsernameFragment());
         });
 
         passwordName.setOnClickListener(v -> {
-            setFragment(new PasswordFragment());
+            if (sharedPreferences.getString("logType","").equals("mail")){
+                setFragment(new PasswordFragment());
+            } else {
+                Toast.makeText(requireContext(), "You cannot change the password", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
 
         closeSession.setOnClickListener(v -> {
-            GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build());
             editor.putString("userMail", "");
             editor.putString("password", "");
             editor.putBoolean("autoLogGoogle", false);
@@ -180,8 +187,11 @@ public class EditProfileFragment extends AppFragment {
 //            startActivity(intent);
 //        });
 
-        goBackButton.setOnClickListener(v -> {
-            setFragment(new ProfileFragment());
+        goBackButtonEdit.setOnClickListener(v -> {
+//            ProfileFragment profileFragment = new ProfileFragment();
+//            profileFragment.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//            setFragment(profileFragment);
+            Toast.makeText(requireContext(), "ASD", Toast.LENGTH_SHORT).show();
         });
 
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
@@ -233,7 +243,7 @@ public class EditProfileFragment extends AppFragment {
         auth.getCurrentUser().updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(getContext(), "Image updated!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Imagen actualizada!", Toast.LENGTH_SHORT).show();
                 DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
 
                 db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
@@ -292,7 +302,7 @@ public class EditProfileFragment extends AppFragment {
         credits = view.findViewById(R.id.credits);
         editPicture = view.findViewById(R.id.changePicture);
         closeSession = view.findViewById(R.id.closeSession);
-        goBackButton = view.findViewById(R.id.goBackButton);
+        goBackButtonEdit = view.findViewById(R.id.goBackButtonEdit);
         textViewSergio = view.findViewById(R.id.textViewSergio);
         creditsCard = view.findViewById(R.id.creditsCard);
         creditButton = view.findViewById(R.id.creditButton);

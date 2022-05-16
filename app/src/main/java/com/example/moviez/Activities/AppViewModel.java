@@ -29,6 +29,7 @@ public class AppViewModel extends ViewModel {
     public static MutableLiveData<Models.Film> movieDetails = new MutableLiveData<>();
     public static MutableLiveData<Responses.FullCastResponse> fullCast = new MutableLiveData<>();
 
+    public static MutableLiveData<String> maximumDate = new MutableLiveData<>();
     //    We will use this counters in case we need to use the "page" param (so we take control of the results number)
     public static int contPage = 0;
 
@@ -59,6 +60,7 @@ public class AppViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
                 actualMoviesInCinemaResponse.postValue(response.body());
+                maximumDate.postValue(response.body().dates.maximum);
             }
             @Override
             public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {

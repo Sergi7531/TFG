@@ -1,5 +1,7 @@
 package com.example.moviez.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,11 +24,11 @@ public class AnimationFragment extends AppFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static final String PREF_FILE_NAME = "MySharedFile";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
     public AnimationFragment() {
         // Required empty public constructor
     }

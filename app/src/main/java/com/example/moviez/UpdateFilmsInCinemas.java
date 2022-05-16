@@ -1,6 +1,7 @@
 package com.example.moviez;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
@@ -54,12 +55,19 @@ public class UpdateFilmsInCinemas {
                 if (responseBody != null) {
                     Responses.Dates dates = responseBody.dates;
                     dateStart.postValue(dates.minimum);
-                    dateEnd.postValue(dates.maximum);
 
                     //Get the number of days until the dateEnd
+
+
                     LocalDate localDate = LocalDate.parse(dates.maximum);
                     LocalDate localDate2 = LocalDate.now();
-                    daysUntilDateEnd = localDate2.getDayOfYear() - localDate.getDayOfYear();
+                    if(!LocalDate.parse(dates.maximum).isAfter(LocalDate.now())) {
+                        localDate.plusDays(daysUntilDateEnd);
+                        daysUntilDateEnd = 5;
+                        dateEnd.postValue(LocalDate.now().plusDays(daysUntilDateEnd).toString());
+                    } else {
+                        daysUntilDateEnd = localDate.getDayOfYear() - localDate2.getDayOfYear();
+                    }
                     System.out.println("Days until dateEnd: " + daysUntilDateEnd);
                 }
                 getCinemas();
@@ -112,15 +120,16 @@ public class UpdateFilmsInCinemas {
                                                             rooms.remove(rooms.indexOf(roomId));
                                                         }
 
-                    //                                    For every 3 hours until the dateEnd, add a new session:
+//                                                      For every 3 hours until the dateEnd, add a new session:
+
                                                         for (int i = 0; i <= daysUntilDateEnd; i++) {
                                                             LocalDate localDate = LocalDate.now().plusDays(i);
                                                             for (int j = 0; j < 24; j++) {
                                                                 LocalTime localTime = LocalTime.of(j, 0);
 
-                                                                //                                                Film sessions will be every 3 hours from 9:00 to 22:00
+//                                                              Film sessions will be every 3 hours from 9:00 to 22:00
 
-                                                                if (localTime.isAfter(LocalTime.of(9, 59)) && localTime.isBefore(LocalTime.of(22, 1))) {
+                                                                if (localTime.isAfter(LocalTime.of(10, 0)) && localTime.isBefore(LocalTime.of(22, 0))) {
                                                                     FirebaseFirestore.getInstance().collection("movie_sessions")
                                                                             .document(String.valueOf(film.id))
                                                                             .collection("cinemas")
@@ -147,18 +156,16 @@ public class UpdateFilmsInCinemas {
 
                             @Override
                             public void onFailure(Call<Models.Film> call, Throwable t) {
-
+                                Log.d("Error", t.getMessage());
                             }
                         });
-
-
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
-
+                Log.d("Error", t.getMessage());
             }
         });
 
