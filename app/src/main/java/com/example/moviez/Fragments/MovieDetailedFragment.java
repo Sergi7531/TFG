@@ -59,6 +59,7 @@ public class MovieDetailedFragment extends AppFragment {
     public static TextView movieCasting;
     public static TextView globalUsersRating;
     public static TextView comentariosTextDetail;
+    public static TextView infoMovie;
     public static RatingBar ratingBar;
     public static Button addCommentMovie;
     public static CardView favoriteFloatingButton;
@@ -160,6 +161,8 @@ public class MovieDetailedFragment extends AppFragment {
             }
 
             viewModel.getMovieCast(filmId);
+
+            infoMovie.setText(movie.overview);
 
             actorItems.clear();
 
@@ -460,6 +463,6 @@ public class MovieDetailedFragment extends AppFragment {
         buyButton = view.findViewById(R.id.goTicketButton);
         spinner = view.findViewById(R.id.spinner);
         heartImage = view.findViewById(R.id.heartImage);
-
+        infoMovie = view.findViewById(R.id.infoPeli);
     }
 }
