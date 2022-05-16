@@ -59,7 +59,7 @@ public class UpdateFilmsInCinemas {
                     //Get the number of days until the dateEnd
                     LocalDate localDate = LocalDate.parse(dates.maximum);
                     LocalDate localDate2 = LocalDate.now();
-                    daysUntilDateEnd = localDate.getDayOfYear() - localDate2.getDayOfYear();
+                    daysUntilDateEnd = localDate2.getDayOfYear() - localDate.getDayOfYear();
                     System.out.println("Days until dateEnd: " + daysUntilDateEnd);
                 }
                 getCinemas();
@@ -100,7 +100,7 @@ public class UpdateFilmsInCinemas {
                                                     if (query.getResult().size() == 0) {
                                                         FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").document(cinema.cinemaid).set(cinema);
 
-                                                        //                                    Add the rooms to the cinema (randomly) from the list of rooms:
+//                                                       Add the rooms to the cinema (randomly) from the list of rooms:
 
                                                         int roomId = rooms.get(new Random().nextInt(rooms.size()));
                                                         FirebaseFirestore.getInstance().collection("movie_sessions")

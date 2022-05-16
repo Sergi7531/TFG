@@ -158,9 +158,11 @@ public class BuyTicketFragment extends AppFragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if(filmId == 0) { ;
                         filmSelected = allFilms.get(position);
+                        filmId = filmSelected.getId();
                     } else {
                         filmId = 0;
                     }
+                    setCinemasAvailable(filmId);
                     adaptFilmToLayout(filmSelected);
                 }
 
@@ -224,38 +226,58 @@ public class BuyTicketFragment extends AppFragment {
         });
 
 
-        db.collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                Models.Cinema cinema = documentSnapshot.toObject(Models.Cinema.class);
-                allCinemas.add(cinema);
-                cinemasNamesToShow.add(cinema.name);
-            }
-
-            spinnerCinema.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    for(Models.Cinema cinema : allCinemas) {
-                        if(cinema.name.equals(spinnerCinema.getSelectedItem().toString())) {
-                            cinemaId = cinema.cinemaid;
-                            Toast.makeText(getContext(), cinemaId, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-                    for(Models.Cinema cinema : allCinemas) {
-                        if(cinema.name.equals(cinemasNamesToShow.get(0))) {
-                            cinemaId = cinema.cinemaid;
-                            Toast.makeText(getContext(), cinemaId, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-            });
-        });
         buyButton.setOnClickListener(view1 -> {
             setFragment(new SeatsFragment());
         });
+    }
+
+    private void setCinemasAvailable(int filmSelected) {
+        allCinemas.clear();
+        cinemasNamesToShow.clear();
+        if(filmSelected == 0) {
+            db.collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                    Models.Cinema cinema = documentSnapshot.toObject(Models.Cinema.class);
+                    allCinemas.add(cinema);
+                }
+            });
+        } else {
+            db.collection("movie_sessions").document(String.valueOf(filmSelected)).collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
+                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                    Models.Cinema cinema = documentSnapshot.toObject(Models.Cinema.class);
+                    allCinemas.add(cinema);
+                    cinemasNamesToShow.add(cinema.name);
+                }
+
+                ArrayAdapter<String> cinemas = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
+
+
+                spinnerCinema.setAdapter(cinemas);
+                cinemas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                spinnerCinema.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        for (Models.Cinema cinema : allCinemas) {
+                            if (cinema.name.equals(spinnerCinema.getSelectedItem().toString())) {
+                                cinemaId = cinema.cinemaid;
+                                Toast.makeText(getContext(), cinemaId, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                        for (Models.Cinema cinema : allCinemas) {
+                            if (cinema.name.equals(cinemasNamesToShow.get(0))) {
+                                cinemaId = cinema.cinemaid;
+                                Toast.makeText(getContext(), cinemaId, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+            });
+        }
     }
 
     private void adaptFilmToLayout(Models.Film filmSelected) {

@@ -31,7 +31,6 @@ import com.example.moviez.IMDB;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.example.moviez.Responses;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -374,7 +373,7 @@ public class MovieDetailedFragment extends AppFragment {
 
     private void setFragment(Fragment fragment) {
         buyButton.setVisibility(View.GONE);
-        getChildFragmentManager()
+        MovieDetailedFragment.this.getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_detail, fragment)
                 .addToBackStack(MovieDetailedFragment.class.getSimpleName())
