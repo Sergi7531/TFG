@@ -41,8 +41,7 @@ public class LandingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         fragmentInit();
         setFragment(animationFragment);
-        SharedPreferences sharedPreferences = this.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+
 
         appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
         db = FirebaseFirestore.getInstance();
@@ -66,6 +65,7 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     private void logWithMail() {
+
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         String usernameLog = sharedPreferences.getString("userMail", "");
         String passwordLog = sharedPreferences.getString("password", "");
@@ -77,7 +77,9 @@ public class LandingActivity extends AppCompatActivity {
                     ).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
-
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("logType", "mail");
+                        editor.commit();
                         accessApp();
 
                     });
@@ -99,6 +101,8 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         if(account == null) {
             googleLogin = false;
         }
@@ -106,8 +110,9 @@ public class LandingActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null))
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-
                             googleLogin = true;
+                            editor.putString("logType", "google");
+                            editor.commit();
                             createGoogleAccount();
                         } else {
                             setFragment(loginFragment);
@@ -119,10 +124,13 @@ public class LandingActivity extends AppCompatActivity {
 
     }
     private void createGoogleAccount(){
-
+        SharedPreferences sharedPreferences = this.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
         db.collection("users").document(auth.getUid()).addSnapshotListener((snap, exception) -> {
            if(snap.exists()) {
+               editor.putString("logType", "google");
+               editor.commit();
                accessApp();
            } else {
                db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()));

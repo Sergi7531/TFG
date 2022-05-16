@@ -117,7 +117,6 @@ public class LoginFragment extends AppFragment {
         registerText.setOnClickListener(view2 -> {
             setFragment(new RegisterFragment());
         });
-
         GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -134,6 +133,7 @@ public class LoginFragment extends AppFragment {
                         db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
                             editor.putString("userMail", usernameLog.getText().toString());
                             editor.putString("password", passwordLog.getText().toString());
+                            editor.putString("logType", "mail");
                             editor.commit();
                             if (documentSnapshot.toObject(Models.User.class).favoriteGenres.size() == 0) {
                                 accessApp(false, null);
@@ -176,8 +176,12 @@ public class LoginFragment extends AppFragment {
     }
 
     private void createGoogleAccount(){
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()))
                 .addOnCompleteListener(task -> {
+                    editor.putString("logType", "google");
+                    editor.commit();
                     accessApp(false, null);
         });
     }

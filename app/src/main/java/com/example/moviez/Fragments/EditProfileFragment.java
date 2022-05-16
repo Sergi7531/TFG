@@ -35,7 +35,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.auth.internal.zzt;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
@@ -69,6 +71,7 @@ public class EditProfileFragment extends AppFragment {
     public CardView creditsCard;
     public ImageView creditButton;
     public ImageView darkModeToggle;
+
 
     private MutableLiveData<Uri> uriProfilePic = new MutableLiveData<>();
 
@@ -112,23 +115,30 @@ public class EditProfileFragment extends AppFragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         hook(view);
 
+        GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build());
+
         profileName.setOnClickListener(v -> {
             setFragment(new ChangeUsernameFragment());
         });
 
         passwordName.setOnClickListener(v -> {
-            setFragment(new PasswordFragment());
+            if (sharedPreferences.getString("logType","").equals("mail")){
+                setFragment(new PasswordFragment());
+            } else {
+                Toast.makeText(requireContext(), "You cannot change the password", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
 
         closeSession.setOnClickListener(v -> {
-            GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build());
             editor.putString("userMail", "");
             editor.putString("password", "");
             editor.putBoolean("autoLogGoogle", false);
+            editor.putString("logType", "");
             editor.commit();
             auth.signOut();
             googleSignInAccount.signOut();
