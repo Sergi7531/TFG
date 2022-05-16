@@ -34,6 +34,7 @@
     <string name="related_movies">Películas similares:</string>
     <string name="search_for_users">Search for users</string>
     <string name="search_for_movies">Search for movies</string>
+    <string name="friend_act">Actividad de tus amigos</string>
     <string name="para_ti">Para ti</string>
     <string name="cines">Nuestros cines</string>
     <string name="scan_something">Scan something...</string>
