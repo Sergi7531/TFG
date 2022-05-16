@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -61,11 +62,12 @@ public class MovieDetailedFragment extends AppFragment {
     public static TextView comentariosTextDetail;
     public static RatingBar ratingBar;
     public static Button addCommentMovie;
-    public static FloatingActionButton favoriteFloatingButton;
+    public static CardView favoriteFloatingButton;
     public static RecyclerView similarFilmsRecyclerView;
 
     //    Intent to BuyTicketsFragment:
     public static Button buyButton;
+    public static ImageView heartImage;
 
     private Spinner spinner;
     private List<Responses.CastResult> actorItems = new ArrayList<>();
@@ -166,13 +168,24 @@ public class MovieDetailedFragment extends AppFragment {
                 loadActors(viewModel, cast);
             });
 
+            db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    if (task.getResult().exists()) {
+                        heartImage.setImageResource(R.drawable.heart);
+                    } else {
+                        heartImage.setImageResource(R.drawable.heart_empty);
+                    }
+                }
+            });
             favoriteFloatingButton.setOnClickListener(v -> {
 
                 db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).get().addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         if (task.getResult().exists()) {
+                            heartImage.setImageResource(R.drawable.heart_empty);
                             db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).delete();
                         } else {
+                            heartImage.setImageResource(R.drawable.heart);
                             db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).set(movie);
                         }
                     }
@@ -355,6 +368,7 @@ public class MovieDetailedFragment extends AppFragment {
                 Toast.makeText(getActivity(), "Nothing selected", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
 
@@ -446,6 +460,7 @@ public class MovieDetailedFragment extends AppFragment {
         similarFilmsRecyclerView = view.findViewById(R.id.similarFilmsRecyclerView);
         buyButton = view.findViewById(R.id.goTicketButton);
         spinner = view.findViewById(R.id.spinner);
+        heartImage = view.findViewById(R.id.heartImage);
 
     }
 }
