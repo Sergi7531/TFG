@@ -36,6 +36,8 @@ public class AppViewModel extends ViewModel {
 
     public Models.User userlogged;
 
+    public static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static FirebaseAuth auth = FirebaseAuth.getInstance();
 
 
 
@@ -96,8 +98,7 @@ public class AppViewModel extends ViewModel {
 
         contPage = (int) (Math.random() * 3) + 1;
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+
 
 
         db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
@@ -109,8 +110,8 @@ public class AppViewModel extends ViewModel {
                         if (response.body() != null) {
                             if(response.body().results.size() > 5) {
                                 response.body().results.subList(0, 5);
-                                forYouMovies.postValue(response.body());
                             }
+                            forYouMovies.postValue(response.body());
                         }
                     }
 
@@ -132,8 +133,8 @@ public class AppViewModel extends ViewModel {
                         if (response.body() != null) {
                             if(response.body().results.size() > 5) {
                                 response.body().results.subList(0, 5);
-                                forYouMovies.postValue(response.body());
                             }
+                            forYouMovies.postValue(response.body());
                         }
                     }
 
@@ -159,6 +160,13 @@ public class AppViewModel extends ViewModel {
                                 response.body().results.subList(0, 5);
                                 forYouMovies.postValue(response.body());
                             }
+                            else {
+                                forYouMovies.postValue(response.body());
+                                if (forYouMovies == null) {
+                                    moviesForYouByGenres();
+                                }
+                            }
+
                         }
                     }
                     @Override
@@ -168,27 +176,40 @@ public class AppViewModel extends ViewModel {
                 });
             }
         });
+    }
 
+    public static void moviesForYouByGenres() {
+        forYouMovies.observeForever(movies -> {
+            System.out.println(movies.results.toString());
+            if(movies == null) {
 
-        if(forYouMovies.getValue() == null) {
-
-            IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
-                @Override
-                public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
-                    if (response.body() != null) {
-                        if (response.body().results.size() > 6) {
-                            response.body().results.subList(0, 6);
+                IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
+                    @Override
+                    public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+                        if (response.body() != null) {
+                            if (response.body().results.size() > 6) {
+                                for (Models.Film film : response.body().results) {
+                                    db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(success -> {
+                                        for (int genre_id : film.genre_ids) {
+                                            for (int genre : success.toObject(Models.User.class).favoriteGenres) {
+                                                if (genre_id == genre) {
+                                                    forYouMovies.postValue(response.body());
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+                            }
                         }
-                        forYouMovies.postValue(response.body());
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
-                    t.getMessage();
-                }
-            });
-        }
+                    @Override
+                    public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
+                        t.getMessage();
+                    }
+                });
+            }
+        });
     }
 
 
