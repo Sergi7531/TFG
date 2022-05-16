@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,18 +24,18 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.moviez.Activities.LandingActivity;
-import com.example.moviez.Adapters.CommentAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.UUID;
@@ -227,14 +226,40 @@ public class EditProfileFragment extends AppFragment {
 //        Update all user comments with the new image url:
         String finalImageUrl = imageUrl;
 
-
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setPhotoUri(Uri.parse(imageUrl))
                 .build();
-        auth.getCurrentUser().updateProfile(profileUpdates);
+
+        auth.getCurrentUser().updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(getContext(), "Image updated!", Toast.LENGTH_SHORT).show();
+                DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
+
+                db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                        db.collection("comments").document(documentSnapshot.getId()).collection("comments").get().addOnSuccessListener(documentSnapshots -> {
+                            for (DocumentSnapshot documentSnapshot1 : documentSnapshots) {
+                                if (documentSnapshot1.toObject(Models.Comment.class).userid.equals(auth.getCurrentUser().getUid())) {
+                                    Models.Comment comment = documentSnapshot1.toObject(Models.Comment.class);
+                                    comment.imageUrl = String.valueOf(auth.getCurrentUser().getPhotoUrl());
+                                    db.collection("comments")
+                                            .document(documentSnapshot.getId())
+                                            .collection("comments")
+                                            .document(documentSnapshot1.getId())
+                                            .set(comment);
+                                }
+                            }
+                        });
+                    }
+                });
+                userDoc.update("profileImageURL", finalImageUrl);
+            }
+        });;
 
 //        Get all documents in the collection:
 //
+/*
         db.collection("comments")
                 .get().addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
@@ -249,7 +274,7 @@ public class EditProfileFragment extends AppFragment {
                     });
                 }
             }
-        });
+        });*/
     }
 
 
