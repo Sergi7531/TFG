@@ -85,8 +85,7 @@ public class UpdateFilmsInCinemas {
                     Responses.BillboardResponse responseBody = response.body();
                     for (Models.Film film : responseBody.results) {
 //                        If the film is not in the database, create it:
-                        FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).set(new Models.Film(film.id, film.title, film.poster_path));
-
+                        FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).set(new Models.Film(film.id, film.poster_path, film.runtime, film.overview, film.title));
 
                         cinemas.observeForever(cinemas -> {
                             Models.Cinema cinema = cinemas.get(new Random().nextInt(cinemas.size()));

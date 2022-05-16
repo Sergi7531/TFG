@@ -320,8 +320,7 @@
             android:layout_marginTop="500dp"
             android:layout_marginRight="-26dp"
             android:rotation="90"
-            app:srcCompat="@drawable/ic_baseline_incomplete_circle_24"
-            app:tint="?attr/colorOnPrimary" />
+            app:srcCompat="@drawable/ic_baseline_incomplete_circle_24" />
 
         <ImageView
             android:id="@+id/imageView20"

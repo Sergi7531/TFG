@@ -39,274 +39,278 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/changeName"
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="?attr/colorPrimaryVariant"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/satoshi"
-                android:text="@string/cambiar_nombre_de_perfil"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="14sp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/changeName"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-            <ImageView
-                android:id="@+id/imageView11"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center|right"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_arrow_right_2" />
-        </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="15dp"
+                    android:fontFamily="@font/satoshi"
+                    android:text="@string/cambiar_nombre_de_perfil"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="14sp" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/changePassword"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="?attr/colorPrimaryVariant"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center|right"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_arrow_right_2" />
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/satoshi"
-                android:text="@string/cambiar_contrase_a"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="14sp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/changePassword"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-            <ImageView
-                android:id="@+id/imageView12"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center|right"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_arrow_right_2" />
-        </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="15dp"
+                    android:fontFamily="@font/satoshi"
+                    android:text="@string/cambiar_contrase_a"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="14sp" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/changeDarkLightTheme"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="?attr/colorPrimaryVariant"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/imageView12"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center|right"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_arrow_right_2" />
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/satoshi"
-                android:text="@string/modo_oscuro"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="14sp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/changeDarkLightTheme"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-            <ImageView
-                android:id="@+id/darkModeToggle"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center|end"
-                android:layout_marginRight="5dp"
-                android:src="@drawable/ic_toggle_off" />
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="15dp"
+                    android:fontFamily="@font/satoshi"
+                    android:text="@string/modo_oscuro"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="14sp" />
 
-        </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/darkModeToggle"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center|end"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_toggle_off" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/changePicture"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="?attr/colorPrimaryVariant"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp">
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/change_picture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/satoshi"
-                android:text="Cambiar foto de perfil"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="14sp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/changePicture"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-            <ImageView
-                android:id="@+id/arrow3"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center|right"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_arrow_right_2" />
-        </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/change_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="15dp"
+                    android:fontFamily="@font/satoshi"
+                    android:text="Cambiar foto de perfil"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="14sp" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/credits"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="?attr/colorPrimaryVariant"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/arrow3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center|right"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_arrow_right_2" />
+            </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/satoshi"
-                android:text="@string/cr_ditos"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="14sp" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/credits"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-            <ImageView
-                android:id="@+id/creditButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center|right"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_arrow_right_2" />
-        </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="15dp"
+                    android:fontFamily="@font/satoshi"
+                    android:text="@string/cr_ditos"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="14sp" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/creditsCard"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0"
-            app:cardBackgroundColor="?attr/colorPrimaryVariant"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp">
+                <ImageView
+                    android:id="@+id/creditButton"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center|right"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_arrow_right_2" />
+            </androidx.cardview.widget.CardView>
 
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/creditsCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:elevation="0dp">
+                android:alpha="0"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/satoshi"
-                    android:text="Graphic Design"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView33"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/textView8"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="15dp"
-                    android:text="mrey∞cn"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textView8"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/satoshi"
-                    android:text="Project Developers"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textViewSergio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textView8"
-                    android:layout_alignRight="@id/textView33"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/satoshi"
-                    android:text="@string/developer_1"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textStyle="italic" />
-
-                <View
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/textView8"
-                    android:layout_alignStart="@id/textView8"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:background="?attr/colorOnSecondary" />
+                    android:layout_height="match_parent"
+                    android:elevation="0dp">
 
-                <TextView
-                    android:id="@+id/textViewRaul"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewSergio"
-                    android:layout_alignRight="@id/textView33"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/satoshi"
-                    android:text="@string/developer_2"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textStyle="italic" />
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="Graphic Design"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textViewJordi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewRaul"
-                    android:layout_alignRight="@id/textView33"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:fontFamily="@font/satoshi"
-                    android:text="@string/developer_3"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textStyle="italic" />
+                    <TextView
+                        android:id="@+id/textView33"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/textView8"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
+                        android:text="mrey∞cn"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textStyle="italic" />
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView8"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="Project Developers"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textStyle="bold" />
 
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/textViewSergio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textView8"
+                        android:layout_alignRight="@id/textView33"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="@string/developer_1"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textStyle="italic" />
 
-        <Button
-            android:id="@+id/closeSession"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="?attr/colorSecondary"
-            android:stateListAnimator="@null"
-            android:text="@string/cerrar_sesi_n"
-            android:textAllCaps="false"
-            app:cornerRadius="12dp" />
-    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/textView8"
+                        android:layout_alignStart="@id/textView8"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp"
+                        android:background="?attr/colorOnSecondary" />
 
+                    <TextView
+                        android:id="@+id/textViewRaul"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewSergio"
+                        android:layout_alignRight="@id/textView33"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="@string/developer_2"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/textViewJordi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/textViewRaul"
+                        android:layout_alignRight="@id/textView33"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="@string/developer_3"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textStyle="italic" />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/closeSession"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="?attr/colorSecondary"
+                android:stateListAnimator="@null"
+                android:text="@string/cerrar_sesi_n"
+                android:textAllCaps="false"
+                app:cornerRadius="12dp" />
+        </LinearLayout>
+    </ScrollView>
 
 
     <LinearLayout

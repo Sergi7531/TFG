@@ -8,12 +8,13 @@
     android:layout_marginRight="25dp"
     android:layout_marginBottom="15dp"
     android:background="?attr/backgroundColor"
-    android:elevation="5dp">
+    android:elevation="5dp"
+    android:padding="5dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/genreCard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/primaryColor"
         app:cardCornerRadius="14dp"
@@ -31,11 +32,12 @@
 
         <TextView
             android:id="@+id/titleGenreHolder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:elevation="12dp"
             android:fontFamily="@font/satoshi"
+            android:gravity="center"
             android:text="Género"
             android:textColor="@android:color/white"
             android:textSize="19sp" />

@@ -12,6 +12,7 @@ public class Models {
         public String poster_path;
         public String release_date;
         public int runtime;
+        public String overview;
         public String title;
         @Nullable public List<Integer> genre_ids;
 
@@ -24,6 +25,14 @@ public class Models {
             this.id = id;
             this.title = title;
             this.poster_path = poster_path;
+        }
+
+        public Film(int id, String poster_path, int runtime, String overview, String title) {
+            this.id = id;
+            this.poster_path = poster_path;
+            this.runtime = runtime;
+            this.overview = overview;
+            this.title = title;
         }
 
         public Film() {

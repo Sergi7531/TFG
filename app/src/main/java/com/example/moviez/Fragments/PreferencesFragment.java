@@ -91,7 +91,6 @@ public class PreferencesFragment extends AppFragment {
         GenreAdapter adapter = new GenreAdapter(getContext(), genres);
         listViewGenres.setAdapter(adapter);
 
-
 //        listViewGenres.setLayoutManager(new GridLayoutManager(requireContext(), 2,
 //                RecyclerView.VERTICAL, false));
 
