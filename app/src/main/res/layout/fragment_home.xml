@@ -16,8 +16,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,14 +38,54 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerFriends"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/textView79"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/searchBox"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="30dp"
-                        android:layout_marginBottom="20dp" />
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="@string/friend_act"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:id="@+id/recyclerList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/textView79">
+
+                        <Button
+                            android:id="@+id/buttonActivity"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="20dp"
+                            android:alpha="0"
+                            android:backgroundTint="?attr/colorPrimaryVariant"
+                            android:clickable="false"
+                            android:enabled="false"
+                            android:text="+"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="28sp"
+                            app:cornerRadius="18dp" />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerFriends"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginBottom="20dp" />
+                    </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerViewUserSearch"
@@ -87,7 +127,7 @@
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/recyclerFriends"
+                        android:layout_below="@id/recyclerList"
                         android:layout_marginTop="0dp"
                         android:fontFamily="@font/satoshi"
                         android:text="@string/para_ti"

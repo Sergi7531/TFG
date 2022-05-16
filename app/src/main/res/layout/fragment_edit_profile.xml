@@ -19,6 +19,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/goBackButtonEdit"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:clickable="true"
+                android:src="@drawable/ic_arrow_left"
+                app:tint="?attr/colorOnSecondary"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
@@ -29,12 +38,7 @@
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="24sp" />
 
-            <ImageView
-                android:id="@+id/goBackButton"
-                android:layout_width="80dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_arrow_left"
-                app:tint="?attr/colorOnSecondary" />
+
         </RelativeLayout>
 
     </LinearLayout>
