@@ -445,12 +445,16 @@ public class Models {
     }
 
     public static class Session {
+        public String sessionid;
         public String month;
         public String day;
         public String time;
         public List<String> seats;
 
-        public Session(String month, String day, String time) {
+        public Session() {}
+
+        public Session(String sessionid, String month, String day, String time) {
+            this.sessionid = sessionid;
             this.month = month;
             this.day = day;
             this.time = time;

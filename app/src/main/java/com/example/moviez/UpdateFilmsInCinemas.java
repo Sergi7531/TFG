@@ -123,8 +123,8 @@ public class UpdateFilmsInCinemas {
                                                             .collection("rooms")
                                                             .document(String.valueOf(roomId))
                                                             .collection("sessions")
-                                                            .document(localDate.getMonthValue() + ":" + localDate.getDayOfMonth() + ":" + localTime.getHour())
-                                                            .set(new Models.Session(localDate.getMonthValue() + "", localDate.getDayOfMonth() + "", localTime.getHour() + ""));
+                                                            .document(localDate.getMonthValue() + "-" + localDate.getDayOfMonth() + "-" + localTime.getHour())
+                                                            .set(new Models.Session(localDate.getMonthValue() + "-" + localDate.getDayOfMonth() + "-" + localTime.getHour(), localDate.getMonthValue() + "", localDate.getDayOfMonth() + "", localTime.getHour() + ""));
                                                 }
                                                 j = j + 2;
                                             }

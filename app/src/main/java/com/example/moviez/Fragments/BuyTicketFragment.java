@@ -1,6 +1,7 @@
 package com.example.moviez.Fragments;
 
 import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +24,7 @@ import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -73,6 +76,7 @@ public class BuyTicketFragment extends AppFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private List<String> sessionsToShow = new ArrayList<>();
 
     public BuyTicketFragment() {
         // Required empty public constructor
@@ -117,6 +121,7 @@ public class BuyTicketFragment extends AppFragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -177,22 +182,46 @@ public class BuyTicketFragment extends AppFragment {
 
             picker = new DatePickerDialog(requireContext(),
                     new DatePickerDialog.OnDateSetListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                             dateInput.setText(i2 + "-" + (i1 + 1) + "-" + i);
+                            sessionsToShow.clear();
+
+                            db.collection("movie_sessions").document(filmSelected.id + "").collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
+                                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                    db.collection("movie_sessions").document(filmSelected.id + "").collection("cinemas").document(documentSnapshot.getId()).collection("rooms").get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+                                        for (DocumentSnapshot documentSnapshot1 : queryDocumentSnapshots1.getDocuments()) {
+                                            db.collection("movie_sessions").document(filmSelected.id + "").collection("cinemas").document(documentSnapshot.getId()).collection("rooms").document(documentSnapshot1.getId()).collection("sessions").get().addOnSuccessListener(queryDocumentSnapshots2 -> {
+                                                for (DocumentSnapshot documentSnapshot2 : queryDocumentSnapshots2.getDocuments()) {
+                                                    Models.Session session = documentSnapshot2.toObject(Models.Session.class);
+
+//                                                    Split session.sessionid to get date and time:
+                                                        String[] sessionIdSplit = session.sessionid.split("-");
+                                                        String sessionMonth = sessionIdSplit[0];
+                                                        String sessionDay = sessionIdSplit[1];
+
+                                                        String dateSession = sessionDay + "-" + sessionMonth + "-" + LocalDate.now().getYear();
+
+                                                        if (dateSession.equals(dateInput.getText().toString())) {
+                                                            sessionsToShow.add(session.time + ":00");
+                                                        }
+                                                    }
+                                                ArrayAdapter<String> sessionAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, sessionsToShow);
+                                                sessionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                                spinnerHour.setAdapter(sessionAdapter);
+                                            });
+                                        }
+                                    });
+                                }
+
+                            });
 
                         }
                     }, year, month, day);
 
             picker.show();
-//            a
         });
-
-//        ArrayAdapter<String> cinemaAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
-//            ArrayAdapter<String> cinemaAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
-//            ArrayAdapter<String> cinemaAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
-
-//        cinemaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
         db.collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
