@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.moviez.Models;
 import com.example.moviez.R;
+import com.example.moviez.UpdateFilmsInCinemas;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.time.LocalDate;
@@ -46,9 +47,10 @@ public class BuyTicketFragment extends AppFragment {
     List<String> filmsNamesToShow = new ArrayList<>();
     List<String> cinemasNamesToShow = new ArrayList<>();
 
-    Models.Cinema selectedCinema = new Models.Cinema();
-
-    boolean isFilmAvailable = false;
+    private static int selectedCinemaId = 0;
+    private static int selectedFilmId = 0;
+    private static int selectedRoom = 0;
+    private static String selectedDate = "";
 
     Spinner spinnerCinema;
     TextView titleFilm;
@@ -61,6 +63,8 @@ public class BuyTicketFragment extends AppFragment {
     Button buyButton;
 
     DatePickerDialog picker;
+
+    String[] maxDate = new String[3];
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -187,41 +191,63 @@ public class BuyTicketFragment extends AppFragment {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                            dateInput.setText(i2 + "-" + (i1 + 1) + "-" + i);
-                            sessionsToShow.clear();
+//                            Check if the date is before appviewmodel maxium date:
+//                            First, split appViewModel.maximumDate into a list of strings:\
+                            UpdateFilmsInCinemas.dateEnd.observe(getViewLifecycleOwner(), s -> {
+                                maxDate = s.split("-");
 
-                            db.collection("movie_sessions").document(filmSelected.id + "").collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
-                                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                                    db.collection("movie_sessions").document(filmSelected.id + "").collection("cinemas").document(documentSnapshot.getId()).collection("rooms").get().addOnSuccessListener(queryDocumentSnapshots1 -> {
-                                        for (DocumentSnapshot documentSnapshot1 : queryDocumentSnapshots1.getDocuments()) {
-                                            db.collection("movie_sessions").document(filmSelected.id + "").collection("cinemas").document(documentSnapshot.getId()).collection("rooms").document(documentSnapshot1.getId()).collection("sessions").get().addOnSuccessListener(queryDocumentSnapshots2 -> {
-                                                for (DocumentSnapshot documentSnapshot2 : queryDocumentSnapshots2.getDocuments()) {
-                                                    Models.Session session = documentSnapshot2.toObject(Models.Session.class);
+                                int maxYear = Integer.parseInt(maxDate[0]);
+                                int maxMonth = Integer.parseInt(maxDate[1]);
+                                int maxDay = Integer.parseInt(maxDate[2]);
+//                            Then, check if the date is before the maximum date:
+
+                                LocalDate dateSelectedLocal = LocalDate.of(i, i1+1, i2);
+                                LocalDate maxDateLocal = LocalDate.of(maxYear, maxMonth, maxDay);
+
+                                if (dateSelectedLocal.isBefore(maxDateLocal)) {
+
+                                    dateInput.setText(i2 + "-" + (i1 + 1) + "-" + i);
+                                    sessionsToShow.clear();
+
+                                    db.collection("movie_sessions").document(filmSelected.id + "").collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
+                                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                            db.collection("movie_sessions").document(filmSelected.id + "").collection("cinemas").document(documentSnapshot.getId()).collection("rooms").get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+                                                for (DocumentSnapshot documentSnapshot1 : queryDocumentSnapshots1.getDocuments()) {
+                                                    db.collection("movie_sessions").document(filmSelected.id + "").collection("cinemas").document(documentSnapshot.getId()).collection("rooms").document(documentSnapshot1.getId()).collection("sessions").get().addOnSuccessListener(queryDocumentSnapshots2 -> {
+                                                        for (DocumentSnapshot documentSnapshot2 : queryDocumentSnapshots2.getDocuments()) {
+                                                            Models.Session session = documentSnapshot2.toObject(Models.Session.class);
 
 //                                                    Split session.sessionid to get date and time:
-                                                        String[] sessionIdSplit = session.sessionid.split("-");
-                                                        String sessionMonth = sessionIdSplit[0];
-                                                        String sessionDay = sessionIdSplit[1];
+                                                            String[] sessionIdSplit = session.sessionid.split("-");
+                                                            String sessionMonth = sessionIdSplit[0];
+                                                            String sessionDay = sessionIdSplit[1];
 
-                                                        String dateSession = sessionDay + "-" + sessionMonth + "-" + LocalDate.now().getYear();
+                                                            String dateSession = sessionDay + "-" + sessionMonth + "-" + LocalDate.now().getYear();
 
-                                                        if (dateSession.equals(dateInput.getText().toString())) {
-                                                            sessionsToShow.add(session.time + ":00");
+                                                            if (dateSession.equals(dateInput.getText().toString())) {
+                                                                sessionsToShow.add(session.time + ":00");
+                                                            }
                                                         }
-                                                    }
-                                                ArrayAdapter<String> sessionAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, sessionsToShow);
-                                                sessionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                                spinnerHour.setAdapter(sessionAdapter);
+
+                                                        ArrayAdapter<String> sessionAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, sessionsToShow);
+                                                        sessionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                                        spinnerHour.setAdapter(sessionAdapter);
+                                                    });
+                                                }
                                             });
                                         }
+
                                     });
+
+                                } else {
+                                    Toast.makeText(getContext(), "Date is not available", Toast.LENGTH_SHORT).show();
                                 }
 
                             });
 
+
                         }
                     }, year, month, day);
-
             picker.show();
         });
 

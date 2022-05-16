@@ -8,71 +8,74 @@
     android:background="?attr/backgroundColor"
     tools:context=".Fragments.PreferencesFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/passRecoverText"
-                android:layout_width="278dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/satoshi"
-                android:text="@string/escoge_hasta_3_generos_de_preferencia"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="20dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:layout_marginLeft="50dp"
-                android:src="@drawable/ic_arrow" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearSkip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="270dp"
-            android:orientation="horizontal" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="600dp"
             android:orientation="vertical">
 
-            <GridView
-                android:id="@+id/listViewGenres"
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/passRecoverText"
+                    android:layout_width="278dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/satoshi"
+                    android:text="@string/escoge_hasta_3_generos_de_preferencia"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="50dp"
+                    android:src="@drawable/ic_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearSkip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:numColumns="auto_fit">
+                android:layout_marginStart="270dp"
+                android:orientation="horizontal" />
 
-            </GridView>
-
-            <Button
-                android:id="@+id/continueButton"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginTop="50dp"
-                android:backgroundTint="@color/secondaryColor"
-                android:text="Continuar"
-                android:textAllCaps="false"
-                android:textColor="@color/secondaryTextColor"
-                app:cornerRadius="12dp" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    </LinearLayout>
+                <GridView
+                    android:id="@+id/listViewGenres"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:layout_marginTop="30dp"
+                    android:numColumns="auto_fit">
+
+                </GridView>
+
+                <Button
+                    android:id="@+id/continueButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="50dp"
+                    android:backgroundTint="@color/secondaryColor"
+                    android:text="Continuar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/secondaryTextColor"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 </FrameLayout>
