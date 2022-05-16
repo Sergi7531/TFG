@@ -55,11 +55,14 @@
 
             <GridView
                 android:id="@+id/listViewGenres"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
-                android:minHeight="50dp"
-                android:numColumns="auto_fit">
+                android:columnWidth="150dp"
+                android:fitsSystemWindows="true"
+                android:minHeight="100dp"
+                android:numColumns="auto_fit"
+                android:stretchMode="columnWidth">
 
             </GridView>
 

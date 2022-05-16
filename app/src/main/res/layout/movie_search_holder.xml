@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/searchHolderLayout"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
-    android:background="#fef1ea"
+    android:layout_height="120dp"
+    android:background="?attr/colorPrimaryVariant"
     android:padding="10dp">
 
     <ImageView
         android:id="@+id/userProfilePic"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="65dp"
+        android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/moviez_logo" />
@@ -20,7 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:fontFamily="@font/satoshi"
         android:text="Movie title"
+        android:textColor="?attr/colorOnSecondary"
         app:layout_constraintBottom_toBottomOf="@+id/userProfilePic"
         app:layout_constraintStart_toEndOf="@+id/userProfilePic"
         app:layout_constraintTop_toTopOf="@+id/userProfilePic" />

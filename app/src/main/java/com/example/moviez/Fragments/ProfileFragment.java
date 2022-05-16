@@ -48,6 +48,9 @@ public class ProfileFragment extends AppFragment {
     private RecyclerView recyclerMoviesToWatch;
 
     private Button editarPerfil;
+    private Button watchedButton;
+    private Button toWatchButton;
+    private Button favoritedButton;
 
     List<Models.Film> lastViewedFilms = new ArrayList<>();
     List<Models.Film> favoritedFilms = new ArrayList<>();
@@ -112,6 +115,15 @@ public class ProfileFragment extends AppFragment {
         editarPerfil.setOnClickListener(v -> {
             setFragment(new EditProfileFragment());
         });
+        watchedButton.setOnClickListener(v -> {
+            setFragment(new MoviesFragment());
+        });
+        toWatchButton.setOnClickListener(v -> {
+            setFragment(new MoviesFragment());
+        });
+        favoritedButton.setOnClickListener(v -> {
+            setFragment(new MoviesFragment());
+        });
 
         if(userId != auth.getCurrentUser().getUid()) {
             db.collection("users").document(auth.getCurrentUser().getUid())
@@ -156,6 +168,8 @@ public class ProfileFragment extends AppFragment {
         followers(userId);
     }
 
+
+
     public void unfollow(String userId) {
         db.collection("users").document(auth.getCurrentUser().getUid())
                 .collection("following").document(userId).delete();
@@ -171,6 +185,7 @@ public class ProfileFragment extends AppFragment {
             lastViewedFilms.addAll(favoriteFilms);
             adaptFilmsToRecycler(lastViewedFilms, recyclerLastViewed);
             watchedNumber.setText(String.valueOf(lastViewedFilms.size()));
+            checkVoidMovies(lastViewedFilms, watchedButton);
         });
     }
 
@@ -184,6 +199,7 @@ public class ProfileFragment extends AppFragment {
             toWatch.addAll(moviesToWatch);
             adaptFilmsToRecycler(toWatch, recyclerMoviesToWatch);
             wantToWatchNumber.setText(String.valueOf(toWatch.size()));
+            checkVoidMovies(toWatch, toWatchButton);
         });
     }
 
@@ -222,6 +238,7 @@ public class ProfileFragment extends AppFragment {
             favoritedFilms.addAll(favoriteFilms);
             adaptFilmsToRecycler(favoritedFilms, recyclerFavorites);
             favoriteNumber.setText(String.valueOf(favoritedFilms.size()));
+            checkVoidMovies(favoritedFilms, favoritedButton);
         });
     }
 
@@ -255,6 +272,19 @@ public class ProfileFragment extends AppFragment {
 
     }
 
+    private void checkVoidMovies(List<Models.Film> films, Button button) {
+
+        if (films.isEmpty()){
+            button.setAlpha(1f);
+            button.setEnabled(true);
+            button.setClickable(true);
+        } else {
+            button.setAlpha(0f);
+            button.setEnabled(false);
+            button.setClickable(false);
+        }
+    }
+
     private void adaptFilmsToRecycler(List<?> list, RecyclerView recyclerView) {
         recyclerView.setAdapter(new FilmAdapter((List<Models.Film>) list, requireContext(), ProfileFragment.this));
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
@@ -280,6 +310,9 @@ public class ProfileFragment extends AppFragment {
         watchedNumber = view.findViewById(R.id.watchedNumber);
         wantToWatchNumber = view.findViewById(R.id.wantToWatchNumber);
         favoriteNumber = view.findViewById(R.id.favoriteNumber);
+        watchedButton = view.findViewById(R.id.watchedButton);
+        toWatchButton = view.findViewById(R.id.toWatchButton);
+        favoritedButton = view.findViewById(R.id.favoritedButton);
     }
 
     private void setUserDetails(String userid) {
@@ -297,6 +330,7 @@ public class ProfileFragment extends AppFragment {
         });
 
     }
+
     private void setFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()

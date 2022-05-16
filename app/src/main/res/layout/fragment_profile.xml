@@ -298,15 +298,39 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerWatchedMovies"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <Button
+                    android:id="@+id/watchedButton"
+                    android:layout_width="130dp"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:alpha="0"
+                    android:backgroundTint="?attr/colorPrimaryVariant"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:text="+"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="28sp"
+                    app:cornerRadius="18dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerWatchedMovies"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
+
+
 
             <TextView
                 android:id="@+id/estadisticas5"
@@ -321,14 +345,38 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerMoviesToWatch"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp" >
+
+                <Button
+                    android:id="@+id/toWatchButton"
+                    android:layout_width="130dp"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:alpha="0"
+                    android:backgroundTint="?attr/colorPrimaryVariant"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:text="+"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="28sp"
+                    app:cornerRadius="18dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerMoviesToWatch"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    />
+            </RelativeLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -347,17 +395,38 @@
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerFavoritedMovies"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp" >
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <Button
+                    android:id="@+id/favoritedButton"
+                    android:layout_width="130dp"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:alpha="0"
+                    android:backgroundTint="?attr/colorPrimaryVariant"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:text="+"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="28sp"
+                    app:cornerRadius="18dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerFavoritedMovies"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp" />
+            </RelativeLayout>
+
+
 
             <TextView
                 android:layout_width="match_parent"
