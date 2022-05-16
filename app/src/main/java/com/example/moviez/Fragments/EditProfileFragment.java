@@ -111,20 +111,26 @@ public class EditProfileFragment extends AppFragment {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         hook(view);
 
+        GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build());
+
         profileName.setOnClickListener(v -> {
             setFragment(new ChangeUsernameFragment());
         });
 
         passwordName.setOnClickListener(v -> {
-            setFragment(new PasswordFragment());
+            if (sharedPreferences.getString("logType","").equals("mail")){
+                setFragment(new PasswordFragment());
+            } else {
+                Toast.makeText(requireContext(), "You cannot change the password", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
 
         closeSession.setOnClickListener(v -> {
-            GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build());
             editor.putString("userMail", "");
             editor.putString("password", "");
             editor.putBoolean("autoLogGoogle", false);
