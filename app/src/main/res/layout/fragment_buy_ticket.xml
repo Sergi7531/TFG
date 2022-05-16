@@ -33,7 +33,7 @@
             android:id="@+id/cardview2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/spinnerCinema"
+            android:layout_above="@+id/cardCinema"
             android:layout_below="@id/spinnerMovie"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
@@ -70,24 +70,36 @@
             android:background="@drawable/style_spinner"
             android:contentDescription="@string/buy" />
 
-        <Spinner
-            android:id="@+id/spinnerCinema"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardCinema"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_below="@id/spinnerHour"
-            android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/style_spinner"
-            android:contentDescription="@string/buy" />
+            app:cardBackgroundColor="?attr/colorPrimaryVariant"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp" >
+
+            <TextView
+                android:id="@+id/cinemaName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:fontFamily="@font/satoshi"
+                android:gravity="center_vertical"
+                android:text="-"
+                android:textColor="?attr/colorOnSecondary"
+                android:textSize="20sp" />
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerCinema"
+            android:layout_below="@id/cardCinema"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
