@@ -233,7 +233,7 @@ public class EditProfileFragment extends AppFragment {
         auth.getCurrentUser().updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(getContext(), "Image updated!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Imagen actualizada!", Toast.LENGTH_SHORT).show();
                 DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
 
                 db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {

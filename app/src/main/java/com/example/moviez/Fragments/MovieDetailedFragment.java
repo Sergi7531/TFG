@@ -78,7 +78,7 @@ public class MovieDetailedFragment extends AppFragment {
 
     private FrameLayout frame_detail;
 
-    public static Models.Film film;
+    Models.Film film;
 
 
     public MovieDetailedFragment() {
@@ -303,17 +303,7 @@ public class MovieDetailedFragment extends AppFragment {
                         public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
                             if (response.body() != null) {
                                 film = new Models.Film(response.body().id, response.body().title, response.body().poster_path);
-                                db.collection("users")
-                                        .document(auth.getCurrentUser().getUid())
-                                        .collection("moviesToWatch")
-                                        .document(String.valueOf(filmId))
-                                        .set(film);
-
-                                db.collection("users")
-                                        .document(auth.getCurrentUser().getUid())
-                                        .collection("watchedFilms")
-                                        .document(String.valueOf(filmId))
-                                        .delete();
+                                addToWatched("moviesToWatch", "watchedFilms");
                             }
                         }
 
@@ -329,17 +319,7 @@ public class MovieDetailedFragment extends AppFragment {
                         public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
                             if (response.body() != null) {
                                 film = new Models.Film(response.body().id, response.body().title, response.body().poster_path);
-                                db.collection("users")
-                                        .document(auth.getCurrentUser().getUid())
-                                        .collection("watchedFilms")
-                                        .document(String.valueOf(filmId))
-                                        .set(film);
-
-                                db.collection("users")
-                                        .document(auth.getCurrentUser().getUid())
-                                        .collection("moviesToWatch")
-                                        .document(String.valueOf(filmId))
-                                        .delete();
+                                addToWatched("watchedFilms", "moviesToWatch");
                             }
                         }
 
@@ -349,28 +329,44 @@ public class MovieDetailedFragment extends AppFragment {
                         }
                     });
                 } else {
-//                    Delete from both collections (moviesToWatch and watchedFilms):
-                    db.collection("users")
-                            .document(auth.getCurrentUser().getUid())
-                            .collection("moviesToWatch")
-                            .document(String.valueOf(filmId))
-                            .delete();
-
-                    db.collection("users")
-                            .document(auth.getCurrentUser().getUid())
-                            .collection("watchedFilms")
-                            .document(String.valueOf(filmId))
-                            .delete();
+                    removeFromWatchedAndToWatch();
                 }
-                //   Toast.makeText(getActivity(), selected, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(getActivity(), "Nothing selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "No has seleccionado nada", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+    private void removeFromWatchedAndToWatch() {
+        db.collection("users")
+                .document(auth.getCurrentUser().getUid())
+                .collection("moviesToWatch")
+                .document(String.valueOf(filmId))
+                .delete();
+
+        db.collection("users")
+                .document(auth.getCurrentUser().getUid())
+                .collection("watchedFilms")
+                .document(String.valueOf(filmId))
+                .delete();
+    }
+
+    private void addToWatched(String watchedFilms, String moviesToWatch) {
+        db.collection("users")
+                .document(auth.getCurrentUser().getUid())
+                .collection(watchedFilms)
+                .document(String.valueOf(filmId))
+                .set(film);
+
+        db.collection("users")
+                .document(auth.getCurrentUser().getUid())
+                .collection(moviesToWatch)
+                .document(String.valueOf(filmId))
+                .delete();
     }
 
 

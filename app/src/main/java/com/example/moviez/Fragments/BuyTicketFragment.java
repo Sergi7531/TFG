@@ -160,11 +160,9 @@ public class BuyTicketFragment extends AppFragment {
             spinnerMovie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(filmId == 0) { ;
+                    if(filmId == 0) {
                         filmSelected = allFilms.get(position);
                         filmId = filmSelected.getId();
-                    } else {
-                        filmId = 0;
                     }
                     setCinemasAvailable(filmId);
                     adaptFilmToLayout(filmSelected);
@@ -202,7 +200,7 @@ public class BuyTicketFragment extends AppFragment {
 //                            Then, check if the date is before the maximum date:
 
                                 LocalDate dateSelectedLocal = LocalDate.of(i, i1+1, i2);
-                                LocalDate maxDateLocal = LocalDate.of(maxYear, maxMonth, maxDay);
+                                LocalDate maxDateLocal = LocalDate.of(maxYear, maxMonth, maxDay).plusDays(1);
 
                                 if (dateSelectedLocal.isBefore(maxDateLocal)) {
 
