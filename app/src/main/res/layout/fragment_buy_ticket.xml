@@ -33,8 +33,7 @@
             android:id="@+id/cardview2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/cardCinema"
-            android:layout_below="@id/spinnerMovie"
+            android:layout_below="@id/linearCinema"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
@@ -60,7 +59,7 @@
             android:id="@+id/spinnerHour"
             android:layout_width="180dp"
             android:layout_height="60dp"
-            android:layout_below="@id/spinnerMovie"
+            android:layout_below="@id/linearCinema"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
@@ -70,36 +69,72 @@
             android:background="@drawable/style_spinner"
             android:contentDescription="@string/buy" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardCinema"
+        <LinearLayout
+            android:id="@+id/linearCinema"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_below="@id/spinnerHour"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            app:cardBackgroundColor="?attr/colorPrimaryVariant"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp" >
+            android:layout_height="wrap_content"
+            android:layout_below="@id/spinnerMovie"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/cinemaName"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardCinema"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:fontFamily="@font/satoshi"
-                android:gravity="center_vertical"
-                android:text="-"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="20sp" />
-        </androidx.cardview.widget.CardView>
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/cinemaName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:fontFamily="@font/satoshi"
+                    android:gravity="center_vertical"
+                    android:text="-"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="20sp" />
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardRoom"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="2"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:id="@+id/roomNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:fontFamily="@font/satoshi"
+                    android:gravity="center_vertical"
+                    android:text="-"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="20sp" />
+            </androidx.cardview.widget.CardView>
+
+
+
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cardCinema"
+            android:layout_below="@id/spinnerHour"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
@@ -126,6 +161,7 @@
                         android:id="@+id/movieImage"
                         android:layout_width="100dp"
                         android:layout_height="180dp"
+                        android:scaleType="fitXY"
                         android:src="@drawable/moviez_logo" />
 
                 </androidx.cardview.widget.CardView>
@@ -155,6 +191,7 @@
                     android:layout_marginBottom="10dp"
                     android:alpha="0.8"
                     android:fontFamily="@font/satoshi"
+                    android:maxHeight="200dp"
                     android:text="TextView"
                     android:textColor="?attr/colorOnSecondary" />
 

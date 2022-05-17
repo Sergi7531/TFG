@@ -44,15 +44,10 @@ public class CinemaAdapter extends RecyclerView.Adapter<CinemaAdapter.CinemaView
     @Override
     public void onBindViewHolder(@NonNull CinemaAdapter.CinemaViewHolder holder, int position) {
 
-//        Can we do a new CinemaDetailedFragment??
         holder.cinemaHolder.setOnClickListener(view -> {
-//            CinemaDetailedFragment cinemaDetailedFragment = new CinemaDetailedFragment(cinemas.get(position).cinemaid);
-//            setFragment(movieDetailedFragment);
-
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(cinemaList.get(position).cinemaURL));
             context.startActivity(intent);
-
         });
         Glide.with(context).load(cinemaList.get(position).cinemaImg).into(holder.imageCinemaHolder);
 

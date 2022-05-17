@@ -52,7 +52,6 @@ public class BuyTicketFragment extends AppFragment {
     private static int selectedRoom = 0;
     private static String selectedDate = "";
 
-    Spinner spinnerCinema;
     TextView titleFilm;
     TextView movieSinopsis;
     TextView movieDuration;
@@ -61,6 +60,9 @@ public class BuyTicketFragment extends AppFragment {
     Spinner spinnerHour;
     Spinner spinnerMovie;
     Button buyButton;
+
+    TextView cinemaName;
+    TextView roomNumber;
 
     DatePickerDialog picker;
 
@@ -73,9 +75,6 @@ public class BuyTicketFragment extends AppFragment {
     private static final String ARG_PARAM2 = "param2";
 
     Models.Film filmSelected = new Models.Film();
-    Models.Cinema cinemaSelected = new Models.Cinema();
-
-    String cinemaId;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -90,15 +89,6 @@ public class BuyTicketFragment extends AppFragment {
     public BuyTicketFragment(int param1) {
         filmId = param1;
     }
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BuyTicketFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static BuyTicketFragment newInstance(String param1, String param2) {
         BuyTicketFragment fragment = new BuyTicketFragment();
         Bundle args = new Bundle();
@@ -160,10 +150,8 @@ public class BuyTicketFragment extends AppFragment {
             spinnerMovie.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if(filmId == 0) {
-                        filmSelected = allFilms.get(position);
-                        filmId = filmSelected.getId();
-                    }
+                    filmSelected = allFilms.get(position);
+                    filmId = filmSelected.getId();
                     setCinemasAvailable(filmId);
                     adaptFilmToLayout(filmSelected);
                 }
@@ -200,7 +188,7 @@ public class BuyTicketFragment extends AppFragment {
 //                            Then, check if the date is before the maximum date:
 
                                 LocalDate dateSelectedLocal = LocalDate.of(i, i1+1, i2);
-                                LocalDate maxDateLocal = LocalDate.of(maxYear, maxMonth, maxDay).plusDays(1);
+                                LocalDate maxDateLocal = LocalDate.of(maxYear, maxMonth, maxDay);
 
                                 if (dateSelectedLocal.isBefore(maxDateLocal)) {
 
@@ -238,7 +226,7 @@ public class BuyTicketFragment extends AppFragment {
                                     });
 
                                 } else {
-                                    Toast.makeText(getContext(), "Date is not available", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), "La película no se emitirá en los cines este día.", Toast.LENGTH_SHORT).show();
                                 }
 
                             });
@@ -268,38 +256,12 @@ public class BuyTicketFragment extends AppFragment {
         } else {
             db.collection("movie_sessions").document(String.valueOf(filmSelected)).collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    Models.Cinema cinema = documentSnapshot.toObject(Models.Cinema.class);
-                    allCinemas.add(cinema);
-                    cinemasNamesToShow.add(cinema.name);
+//                    Set the cinemaName text:
+                    cinemaName.setText(documentSnapshot.toObject(Models.Cinema.class).name);
+                    db.collection("movie_sessions").document(String.valueOf(filmSelected)).collection("cinemas").document(documentSnapshot.toObject(Models.Cinema.class).cinemaid).collection("rooms").get().addOnSuccessListener(documentSnapshot1 -> {
+                        roomNumber.setText(documentSnapshot1.getDocuments().get(0).toObject(Models.Room.class).name);
+                    });
                 }
-
-                ArrayAdapter<String> cinemas = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, cinemasNamesToShow);
-
-
-                spinnerCinema.setAdapter(cinemas);
-                cinemas.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                spinnerCinema.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        for (Models.Cinema cinema : allCinemas) {
-                            if (cinema.name.equals(spinnerCinema.getSelectedItem().toString())) {
-                                cinemaId = cinema.cinemaid;
-                                Toast.makeText(getContext(), cinemaId, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-                        for (Models.Cinema cinema : allCinemas) {
-                            if (cinema.name.equals(cinemasNamesToShow.get(0))) {
-                                cinemaId = cinema.cinemaid;
-                                Toast.makeText(getContext(), cinemaId, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
             });
         }
     }
@@ -312,7 +274,6 @@ public class BuyTicketFragment extends AppFragment {
     }
 
     private void hook(View view) {
-        spinnerCinema = view.findViewById(R.id.spinnerCinema);
         dateInput = view.findViewById(R.id.dateInput);
         spinnerHour = view.findViewById(R.id.spinnerHour);
         spinnerMovie = view.findViewById(R.id.spinnerMovie);
@@ -321,7 +282,8 @@ public class BuyTicketFragment extends AppFragment {
         movieSinopsis = view.findViewById(R.id.movieSinopsis);
         movieDuration = view.findViewById(R.id.movieDuration);
         movieImage = view.findViewById(R.id.movieImage);
-
+        cinemaName = view.findViewById(R.id.cinemaName);
+        roomNumber = view.findViewById(R.id.roomNumber);
     }
     private void setFragment(Fragment fragment) {
         getFragmentManager()
