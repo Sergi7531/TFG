@@ -66,7 +66,6 @@ public class MovieDetailedFragment extends AppFragment {
     public static Button addCommentMovie;
     public static CardView favoriteFloatingButton;
     public static RecyclerView similarFilmsRecyclerView;
-    public static final String PREF_FILE_NAME = "MySharedFile";
 
     //    Intent to BuyTicketsFragment:
     public static Button buyButton;
@@ -253,11 +252,9 @@ public class MovieDetailedFragment extends AppFragment {
         });
 
 
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         buyButton.setOnClickListener(v -> {
-//            editor.putInt("filmId", filmId);
-//            editor.commit();
+            appViewModel.currentFilmId = filmId;
             BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId);
             setFragment(buyTicketFragment);
 

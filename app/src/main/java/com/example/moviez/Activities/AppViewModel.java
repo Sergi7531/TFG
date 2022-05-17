@@ -40,6 +40,8 @@ public class AppViewModel extends ViewModel {
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static FirebaseAuth auth = FirebaseAuth.getInstance();
 
+    public static int currentFilmId;
+
 
 
     public static void getUpcomingMovies() {

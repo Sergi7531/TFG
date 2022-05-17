@@ -109,13 +109,13 @@ public class MainActivity extends AppCompatActivity {
             nav_bottom.setSelectedItemId(R.id.home);
         }
         else if (fragment instanceof BuyTicketFragment){
-            int filmId = sharedPreferences.getInt("filmId", 0);
+            int filmId = appViewModel.currentFilmId;
             if (filmId == 0 ){
                 setFragment(homeFragment);
                 nav_bottom.setSelectedItemId(R.id.home);
             } else {
-                MovieDetailedFragment movieDetailedFragment = new MovieDetailedFragment(filmId);
-                setFragment(movieDetailedFragment);
+                MovieDetailedFragment movieDetailedFragment2 = new MovieDetailedFragment(filmId);
+                setFragment(movieDetailedFragment2);
                 editor.putInt("filmId", 0);
                 editor.commit();
             }
