@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -98,63 +99,55 @@ public class AppViewModel extends ViewModel {
         });
     }
 
-    public static void getMoviesForYou() {
+    public static void getMoviesForYou(List<Integer> genresUser) {
 
         contPage = (int) (Math.random() * 3) + 1;
 
+        getMoviesForYouByCollection("favoritedFilms");
 
+        getMoviesForYouByCollection("lastViewedFilms");
 
+        getMoviesForYouByCollection("moviesToWatch");
 
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                IMDB.api.getRecommendations(Integer.parseInt(documentSnapshot.getId()), IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
-                        if (response.body() != null) {
-                            if(response.body().results.size() > 5) {
-                                response.body().results.subList(0, 5);
+//        If after the 3 methods the forYouMovies list is empty,
+//        We need to get the movies from the API and filter them by the genres the user has selected:
+
+        if (forYouMovies.getValue() == null) {
+//            Get the api response:
+            IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
+                @Override
+                public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+//                   Iterate the user genres and get the movies that match with them:
+                    List<Models.Film> moviesByGenres = new ArrayList<>();
+                    if (genresUser.size() > 0) {
+                        for (int genre : genresUser) {
+//                           For with i = 0, we will get the movies that match with the first genre of the user:
+                            for (int i = 0; i < response.body().results.size(); i++) {
+                                if (response.body().results.get(i).genre_ids.contains(genre)) {
+                                    moviesByGenres.add(response.body().results.get(i));
+                                }
                             }
+                            response.body().results = moviesByGenres;
                             forYouMovies.postValue(response.body());
                         }
+                    } else {
+                        forYouMovies.postValue(response.body());
                     }
+                }
 
-                    @Override
-                    public void onFailure (Call < Responses.SearchResponse > call, Throwable t) {
-                        t.getMessage();
-                    }
-                });
+                @Override
+                public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
+                    t.getMessage();
+                }
+            });
+        }
 
-            }
-        });
 
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("lastViewedFilms").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                IMDB.api.getRecommendations(Integer.parseInt(documentSnapshot.getId()), IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
-                        if (response.body() != null) {
-                            if(response.body().results.size() > 5) {
-                                response.body().results.subList(0, 5);
-                            }
-                            forYouMovies.postValue(response.body());
-                        }
-                    }
+    }
 
-                    @Override
-                    public void onFailure (Call < Responses.SearchResponse > call, Throwable t) {
-                        t.getMessage();
-                    }
-                });
-
-            }
-        });
-
-//        Now we have the movies that the user has watched, we need to retrieve the movies the user has not watched yet (In Firebase, moviesToWatch):
-
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("moviesToWatch").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+    private static void getMoviesForYouByCollection(String favoritedFilms) {
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection(favoritedFilms).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 IMDB.api.getRecommendations(Integer.parseInt(documentSnapshot.getId()), IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
@@ -162,22 +155,17 @@ public class AppViewModel extends ViewModel {
                         if (response.body() != null) {
                             if (response.body().results.size() > 5) {
                                 response.body().results.subList(0, 5);
-                                forYouMovies.postValue(response.body());
                             }
-                            else {
-                                forYouMovies.postValue(response.body());
-                                if (forYouMovies == null) {
-                                    moviesForYouByGenres();
-                                }
-                            }
-
+                            forYouMovies.postValue(response.body());
                         }
                     }
+
                     @Override
-                    public void onFailure (Call < Responses.SearchResponse > call, Throwable t) {
+                    public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
                         t.getMessage();
                     }
                 });
+
             }
         });
     }

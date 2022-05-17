@@ -76,6 +76,7 @@ public class BuyTicketFragment extends AppFragment {
 
     Models.Film filmSelected = new Models.Film();
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -186,10 +187,13 @@ public class BuyTicketFragment extends AppFragment {
                                 int maxYear = Integer.parseInt(maxDate[0]);
                                 int maxMonth = Integer.parseInt(maxDate[1]);
                                 int maxDay = Integer.parseInt(maxDate[2]);
-//                            Then, check if the date is before the maximum date:
 
                                 LocalDate dateSelectedLocal = LocalDate.of(i, i1+1, i2);
                                 LocalDate maxDateLocal = LocalDate.of(maxYear, maxMonth, maxDay);
+
+
+
+
 
                                 if (dateSelectedLocal.isBefore(maxDateLocal)) {
 

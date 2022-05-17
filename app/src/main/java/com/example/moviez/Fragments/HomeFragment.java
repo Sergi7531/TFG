@@ -16,7 +16,6 @@ import android.widget.ProgressBar;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -172,7 +171,6 @@ public class HomeFragment extends AppFragment {
                                         userActivities.add(userActivity);
                                         recyclerFriends.setAdapter(userActivityAdapter = new UserActivityAdapter(userActivities, requireActivity(), HomeFragment.this));
                                         recyclerFriends.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
-
                                     }
                                     checkVoidList(userActivities, buttonActivity);
                                 }
@@ -256,7 +254,7 @@ public class HomeFragment extends AppFragment {
             if (documentSnapshot.exists()) {
                 genresUser.addAll(documentSnapshot.toObject(Models.User.class).getFavoriteGenres());
 
-                appViewModel.getMoviesForYou();
+                appViewModel.getMoviesForYou(genresUser);
 
                 appViewModel.forYouMovies.observe(getViewLifecycleOwner(), filmsByGenreForUser -> {
                     if (filmsByGenreForUser != null) {
