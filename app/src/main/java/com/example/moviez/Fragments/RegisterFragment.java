@@ -211,7 +211,7 @@ public class RegisterFragment extends AppFragment {
             imageUrl = imageUri.toString();
         }
 
-        Models.User userToAdd = new Models.User(userid, usernameValue, emailValue, imageUrl);
+        Models.User userToAdd = new Models.User(userid, usernameValue, emailValue, passwordValue, imageUrl);
 
         db.collection("users")
                 .document(auth.getCurrentUser().getUid())
