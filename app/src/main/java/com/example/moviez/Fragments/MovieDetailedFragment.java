@@ -378,7 +378,7 @@ public class MovieDetailedFragment extends AppFragment {
         buyButton.setVisibility(View.GONE);
         MovieDetailedFragment.this.getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_frame, fragment)
+                .replace(R.id.frame_detail, fragment)
                 .addToBackStack(MovieDetailedFragment.class.getSimpleName())
                 .commit();
     }
