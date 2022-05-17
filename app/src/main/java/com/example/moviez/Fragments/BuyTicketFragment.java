@@ -88,6 +88,7 @@ public class BuyTicketFragment extends AppFragment {
 
     public BuyTicketFragment(int param1) {
         filmId = param1;
+        selectedCinemaId = param1;
     }
     public static BuyTicketFragment newInstance(String param1, String param2) {
         BuyTicketFragment fragment = new BuyTicketFragment();

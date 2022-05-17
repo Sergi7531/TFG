@@ -1,5 +1,7 @@
 package com.example.moviez.Activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -27,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String PREF_FILE_NAME = "MySharedFile";
     private BottomNavigationView nav_bottom;
     private FloatingActionButton buyMovie;
     private FrameLayout mainFrame;
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buyMovie.setOnClickListener(v -> {
+            buyTicketFragment = new BuyTicketFragment(0);
             setFragment(buyTicketFragment);
         });
     }
@@ -98,9 +102,23 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_frame);
-        if (fragment instanceof MoviesFragment || fragment instanceof TicketsFragment || fragment instanceof BuyTicketFragment || fragment instanceof ProfileFragment) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (fragment instanceof MoviesFragment || fragment instanceof TicketsFragment || fragment instanceof ProfileFragment) {
             setFragment(homeFragment);
             nav_bottom.setSelectedItemId(R.id.home);
+        }
+        else if (fragment instanceof BuyTicketFragment){
+            int filmId = sharedPreferences.getInt("filmId", 0);
+            if (filmId == 0 ){
+                setFragment(homeFragment);
+                nav_bottom.setSelectedItemId(R.id.home);
+            } else {
+                MovieDetailedFragment movieDetailedFragment = new MovieDetailedFragment(filmId);
+                setFragment(movieDetailedFragment);
+                editor.putInt("filmId", 0);
+                editor.commit();
+            }
         }
         else if (fragment instanceof QRScanFragment) {
             setFragment(ticketsFragment);

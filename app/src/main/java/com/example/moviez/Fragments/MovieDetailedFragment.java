@@ -1,5 +1,7 @@
 package com.example.moviez.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,6 +66,7 @@ public class MovieDetailedFragment extends AppFragment {
     public static Button addCommentMovie;
     public static CardView favoriteFloatingButton;
     public static RecyclerView similarFilmsRecyclerView;
+    public static final String PREF_FILE_NAME = "MySharedFile";
 
     //    Intent to BuyTicketsFragment:
     public static Button buyButton;
@@ -250,10 +253,14 @@ public class MovieDetailedFragment extends AppFragment {
         });
 
 
-
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         buyButton.setOnClickListener(v -> {
+//            editor.putInt("filmId", filmId);
+//            editor.commit();
             BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId);
             setFragment(buyTicketFragment);
+
         });
 
         List<String> status = new ArrayList<>();
@@ -374,10 +381,11 @@ public class MovieDetailedFragment extends AppFragment {
         buyButton.setVisibility(View.GONE);
         MovieDetailedFragment.this.getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_detail, fragment)
+                .replace(R.id.main_frame, fragment)
                 .addToBackStack(MovieDetailedFragment.class.getSimpleName())
                 .commit();
     }
+
 
     private void getCommentsFromFirebase(int filmId) {
         db.collection("comments").document(String.valueOf(filmId)).collection("comments").get().addOnCompleteListener(task -> {

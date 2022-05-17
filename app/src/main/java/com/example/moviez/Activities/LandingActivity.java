@@ -14,8 +14,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.moviez.Fragments.AnimationFragment;
+import com.example.moviez.Fragments.BuyTicketFragment;
 import com.example.moviez.Fragments.LoginFragment;
+import com.example.moviez.Fragments.MoviesFragment;
+import com.example.moviez.Fragments.PasswordFragment;
+import com.example.moviez.Fragments.ProfileFragment;
 import com.example.moviez.Fragments.RegisterFragment;
+import com.example.moviez.Fragments.TicketsFragment;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.example.moviez.UpdateFilmsInCinemas;
@@ -154,5 +159,16 @@ public class LandingActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.landingFrame, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.landingFrame);
+        if (fragment instanceof PasswordFragment) {
+            setFragment(new LoginFragment());
+        } else {
+            super.onBackPressed();
+        }
+
     }
 }

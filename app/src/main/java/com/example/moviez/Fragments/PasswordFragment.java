@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.moviez.R;
 import com.google.android.material.textfield.TextInputEditText;
@@ -74,10 +76,16 @@ public class PasswordFragment extends AppFragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_password, container, false);
     }
-    private void setFragment(Fragment fragment) {
+    private void setFragmentMain(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_frame, fragment)
+                .commit();
+    }
+    private void setFragmentLanding(Fragment fragment) {
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.landingFrame, fragment)
                 .commit();
     }
 
@@ -86,21 +94,31 @@ public class PasswordFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
 
         hook(view);
-
+        String activity_type = getActivity().getClass().getSimpleName();
         goBackPassword.setOnClickListener(v -> {
-            setFragment(new EditProfileFragment());
+
+            if (activity_type.equals("LandingActivity")){
+                setFragmentLanding(new LoginFragment());
+            } else {
+                setFragmentMain(new EditProfileFragment());
+            }
+
+
         });
 
         recoverPassword.setOnClickListener(view1 -> {
             if(auth.getCurrentUser() != null) {
                 if(auth.getCurrentUser().getEmail().equals(mailRecovery.getText().toString().trim())) {
                     auth.sendPasswordResetEmail(auth.getCurrentUser().getEmail());
-
-                    setFragment(new LoginFragment());
+                    setFragmentMain(new EditProfileFragment());
+                    Toast.makeText(requireContext(), "Correo mandado con éxito.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Introduce tu correo actual", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 auth.sendPasswordResetEmail(mailRecovery.getText().toString().trim());
-                getActivity().getSupportFragmentManager().popBackStack();
+                setFragmentLanding(new LoginFragment());
+                Toast.makeText(requireContext(), "Correo mandado con éxito.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -118,7 +136,7 @@ public class PasswordFragment extends AppFragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                setFragment(new LoginFragment());
+                setFragmentLanding(new LoginFragment());
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);

@@ -7,10 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.MovieDetailedFragment">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorOnPrimary"
+        android:clickable="true" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/colorOnPrimary">
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
