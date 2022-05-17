@@ -1,22 +1,16 @@
 package com.example.moviez.Fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.GridView;
 
 import com.example.moviez.Adapters.SeatAdapter;
 import com.example.moviez.Models;
@@ -30,7 +24,7 @@ import java.util.List;
  * Use the {@link SeatsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SeatsFragment extends Fragment {
+public class SeatsFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,12 +34,30 @@ public class SeatsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    public static int movieid;
+    public static String cinemaid;
+    public static int roomid;
+    public static int day;
+    public static int month;
+    public static int hour;
+
+
     private RecyclerView seatsGrid;
     private Button buyButton2;
     List<Models.Seats> seats = new ArrayList<>();
 
     public SeatsFragment() {
         // Required empty public constructor
+    }
+
+    public SeatsFragment(int movieid, String cinemaid, int roomid, int day, int month, int hour) {
+        this.movieid = movieid;
+        this.cinemaid = cinemaid;
+        this.roomid = roomid;
+        this.day = day;
+        this.month = month;
+        this.hour = hour;
     }
 
     /**
@@ -111,12 +123,32 @@ public class SeatsFragment extends Fragment {
 
 
     private void insertDefaultSeats() {
-        seats.clear();
-        for (int i = 0; i < 8 ; i++){
-            for (int j = 0; j < 8 ; j++){
-                seats.add(new Models.Seats("SeatID" + i + j, i, j));
-            }
-        }
+        db.collection("movie_sessions").
+                document(movieid + "").
+                collection("cinemas").
+                document(cinemaid + "").
+                collection("rooms").
+                document(roomid + "").
+                collection("sessions").
+                document(month + "-" + day + "-" + hour).
+                get().
+                addOnSuccessListener(success -> {
+
+                Models.Session session = success.toObject(Models.Session.class);
+
+//                The session.seats is a list of numbers, each number represents a seat.
+//                The numbers, for example are:
+//                    if the number is 50, it means the seat is in the
+
+                seats.clear();
+                for (int i = 0; i < 8 ; i++) {
+                    for (int j = 0; j < 8 ; j++) {
+                        seats.add(new Models.Seats(i + ":" + j, i, j));
+                    }
+                }
+            });
+
+
     }
     private void setFragment(Fragment fragment) {
         getFragmentManager()

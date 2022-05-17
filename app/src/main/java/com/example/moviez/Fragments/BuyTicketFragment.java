@@ -47,9 +47,9 @@ public class BuyTicketFragment extends AppFragment {
     List<String> filmsNamesToShow = new ArrayList<>();
     List<String> cinemasNamesToShow = new ArrayList<>();
 
-    private static int selectedCinemaId = 0;
+    private static String selectedCinemaId = "";
     private static int selectedFilmId = 0;
-    private static int selectedRoom = 0;
+    private static int selectedRoomId = 0;
     private static String selectedDate = "";
 
     TextView titleFilm;
@@ -89,7 +89,6 @@ public class BuyTicketFragment extends AppFragment {
 
     public BuyTicketFragment(int param1) {
         filmId = param1;
-        selectedCinemaId = param1;
     }
     public static BuyTicketFragment newInstance(String param1, String param2) {
         BuyTicketFragment fragment = new BuyTicketFragment();
@@ -192,9 +191,6 @@ public class BuyTicketFragment extends AppFragment {
                                 LocalDate maxDateLocal = LocalDate.of(maxYear, maxMonth, maxDay);
 
 
-
-
-
                                 if (dateSelectedLocal.isBefore(maxDateLocal)) {
 
                                     dateInput.setText(i2 + "-" + (i1 + 1) + "-" + i);
@@ -233,10 +229,7 @@ public class BuyTicketFragment extends AppFragment {
                                 } else {
                                     Toast.makeText(getContext(), "La película no se emitirá en los cines este día.", Toast.LENGTH_SHORT).show();
                                 }
-
                             });
-
-
                         }
                     }, year, month, day);
             picker.show();
@@ -244,7 +237,10 @@ public class BuyTicketFragment extends AppFragment {
 
 
         buyButton.setOnClickListener(view1 -> {
-            setFragment(new SeatsFragment());
+
+            String[] dateInputSplitted = dateInput.getText().toString().trim().split("-");
+
+            setFragment(new SeatsFragment(selectedFilmId, selectedCinemaId, selectedRoomId, Integer.parseInt(dateInputSplitted[0]), Integer.parseInt(dateInputSplitted[1]), Integer.parseInt(spinnerHour.getSelectedItem().toString().substring(0,2))));
         });
     }
 
@@ -262,8 +258,11 @@ public class BuyTicketFragment extends AppFragment {
             db.collection("movie_sessions").document(String.valueOf(filmSelected)).collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
 //                    Set the cinemaName text:
+                    selectedCinemaId = documentSnapshot.toObject(Models.Cinema.class).cinemaid;
                     cinemaName.setText(documentSnapshot.toObject(Models.Cinema.class).name);
                     db.collection("movie_sessions").document(String.valueOf(filmSelected)).collection("cinemas").document(documentSnapshot.toObject(Models.Cinema.class).cinemaid).collection("rooms").get().addOnSuccessListener(documentSnapshot1 -> {
+                        selectedFilmId = documentSnapshot1.getDocuments().get(0).toObject(Models.Room.class).filmid;
+                        selectedRoomId = documentSnapshot1.getDocuments().get(0).toObject(Models.Room.class).roomid;
                         roomNumber.setText(documentSnapshot1.getDocuments().get(0).toObject(Models.Room.class).name);
                     });
                 }
@@ -293,7 +292,7 @@ public class BuyTicketFragment extends AppFragment {
     private void setFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_frame, fragment)
+                .replace(R.id.frame_detail, fragment)
                 .commit();
     }
 }
