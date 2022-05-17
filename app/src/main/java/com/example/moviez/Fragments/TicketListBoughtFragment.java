@@ -1,29 +1,33 @@
 package com.example.moviez.Fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.moviez.Models;
 import com.example.moviez.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TicketListBoughtFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TicketListBoughtFragment extends Fragment {
+public class TicketListBoughtFragment extends AppFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private List<Models.Ticket> ticketsToBuy = new ArrayList<>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -32,6 +36,10 @@ public class TicketListBoughtFragment extends Fragment {
 
     public TicketListBoughtFragment() {
         // Required empty public constructor
+    }
+
+    public TicketListBoughtFragment(List<Models.Ticket> ticketsToBuy) {
+        this.ticketsToBuy = ticketsToBuy;
     }
 
     /**

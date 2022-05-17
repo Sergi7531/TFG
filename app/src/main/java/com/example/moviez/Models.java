@@ -237,7 +237,9 @@ public class Models {
         public String filmImage;
         public String cinemaName;
         public String cinemaCoords;
+//        Date, format DD/MM
         public String date;
+//        Time, format HH:MM
         public String time;
         public int duration;
         public int row;
@@ -247,7 +249,7 @@ public class Models {
 //        Empty constructor for Firebase:
         public Ticket() {}
 
-        public Ticket(String ticketid, int filmid, String userid, String filmName, String tagline, String filmImage, String cinemaName, String cinemaCoords, String date, String time, int duration, int row, int seat, int room, boolean valid) {
+        public Ticket(String ticketid, int filmid, String userid, String filmName, String tagline, String filmImage, String cinemaName, String cinemaCoords, String date, String time, int duration, int row, int seat, int room) {
             this.ticketid = ticketid;
             this.filmid = filmid;
             this.userid = userid;
@@ -468,21 +470,19 @@ public class Models {
         SELECTED
     }
     public static class Seats {
-        public String id;
         public int row;
-        public int column;
+        public int seat;
         public SeatState state;
 
-        public Seats(String id, int row, int column) {
-            this.id = id;
+        public Seats(int row, int column) {
             this.row = row;
-            this.column = column;
+            this.seat = column;
             this.state = SeatState.FREE;
         }
-        public Seats(String id, int row, int column, SeatState state) {
-            this.id = id;
+
+        public Seats(int row, int seat, SeatState state) {
             this.row = row;
-            this.column = column;
+            this.seat = seat;
             this.state = state;
         }
 
