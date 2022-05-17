@@ -70,6 +70,7 @@ public class HomeFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
 
         hook(view);
+        appViewModel.forYouMovies.postValue(null);
         forYou();
         buttonActivity.setOnClickListener(v -> {
             searchInputUser.requestFocus();

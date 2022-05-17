@@ -14,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -101,6 +100,8 @@ public class AppViewModel extends ViewModel {
 
     public static void getMoviesForYou(List<Integer> genresUser) {
 
+        forYouMovies.setValue(null);
+
         contPage = (int) (Math.random() * 3) + 1;
 
         getMoviesForYouByCollection("favoritedFilms");
@@ -109,10 +110,13 @@ public class AppViewModel extends ViewModel {
 
         getMoviesForYouByCollection("moviesToWatch");
 
+//        getMoviesForYouByCollection("favoriteGenres");
+
 //        If after the 3 methods the forYouMovies list is empty,
 //        We need to get the movies from the API and filter them by the genres the user has selected:
 
-        if (forYouMovies.getValue() == null) {
+/*
+ if (forYouMovies.getValue() == null) {
 //            Get the api response:
             IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
                 @Override
@@ -120,16 +124,16 @@ public class AppViewModel extends ViewModel {
 //                   Iterate the user genres and get the movies that match with them:
                     List<Models.Film> moviesByGenres = new ArrayList<>();
                     if (genresUser.size() > 0) {
-                        for (int genre : genresUser) {
 //                           For with i = 0, we will get the movies that match with the first genre of the user:
-                            for (int i = 0; i < response.body().results.size(); i++) {
+                        for (int i = 0; i < response.body().results.size(); i++) {
+                            for (int genre : genresUser) {
                                 if (response.body().results.get(i).genre_ids.contains(genre)) {
                                     moviesByGenres.add(response.body().results.get(i));
                                 }
                             }
-                            response.body().results = moviesByGenres;
-                            forYouMovies.postValue(response.body());
                         }
+                        response.body().results = moviesByGenres;
+                        forYouMovies.postValue(response.body());
                     } else {
                         forYouMovies.postValue(response.body());
                     }
@@ -141,12 +145,12 @@ public class AppViewModel extends ViewModel {
                 }
             });
         }
-
-
+ */
     }
 
-    private static void getMoviesForYouByCollection(String favoritedFilms) {
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection(favoritedFilms).get().addOnSuccessListener(queryDocumentSnapshots -> {
+    private static void getMoviesForYouByCollection(String collection) {
+//        TODO: Check if the movie to be added was already added to the collection:
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection(collection).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 IMDB.api.getRecommendations(Integer.parseInt(documentSnapshot.getId()), IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -170,43 +174,6 @@ public class AppViewModel extends ViewModel {
         });
     }
 
-    public static void moviesForYouByGenres() {
-        forYouMovies.observeForever(movies -> {
-            System.out.println(movies.results.toString());
-            if(movies == null) {
-
-                IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
-                    @Override
-                    public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
-                        if (response.body() != null) {
-                            if (response.body().results.size() > 6) {
-                                for (Models.Film film : response.body().results) {
-                                    db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(success -> {
-                                        for (int genre_id : film.genre_ids) {
-                                            for (int genre : success.toObject(Models.User.class).favoriteGenres) {
-                                                if (genre_id == genre) {
-                                                    forYouMovies.postValue(response.body());
-                                                }
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
-                        t.getMessage();
-                    }
-                });
-            }
-        });
-    }
-
-
-
-    //    Create a method to get the movie's details:
     public static void getMovieDetails(int filmId) {
         movieDetails = new MutableLiveData<>();
         IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
@@ -224,7 +191,6 @@ public class AppViewModel extends ViewModel {
     }
 
 
-    //    CReate a method to get the movie's cast:
     public static void getMovieCast(int filmId) {
         fullCast = new MutableLiveData<>();
         IMDB.api.getCast(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Responses.FullCastResponse>() {
@@ -242,7 +208,6 @@ public class AppViewModel extends ViewModel {
         });
 
     }
-
 
     public void setUriImagenSeleccionada(Uri uri) {
         uriImagenSeleccionada.setValue(uri);
