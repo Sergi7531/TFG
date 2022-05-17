@@ -188,10 +188,10 @@ public class EditProfileFragment extends AppFragment {
 //        });
 
         goBackButtonEdit.setOnClickListener(v -> {
-//            ProfileFragment profileFragment = new ProfileFragment();
-//            profileFragment.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//            setFragment(profileFragment);
-            Toast.makeText(requireContext(), "ASD", Toast.LENGTH_SHORT).show();
+            ProfileFragment profileFragment = new ProfileFragment();
+            profileFragment.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            setFragment(profileFragment);
+//            Toast.makeText(requireContext(), "ASD", Toast.LENGTH_SHORT).show();
         });
 
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {

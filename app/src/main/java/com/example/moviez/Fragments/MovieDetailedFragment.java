@@ -1,5 +1,7 @@
 package com.example.moviez.Fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -252,8 +254,10 @@ public class MovieDetailedFragment extends AppFragment {
 
 
         buyButton.setOnClickListener(v -> {
+            appViewModel.currentFilmId = filmId;
             BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId);
             setFragment(buyTicketFragment);
+
         });
 
         List<String> status = new ArrayList<>();
@@ -374,10 +378,11 @@ public class MovieDetailedFragment extends AppFragment {
         buyButton.setVisibility(View.GONE);
         MovieDetailedFragment.this.getChildFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frame_detail, fragment)
+                .replace(R.id.main_frame, fragment)
                 .addToBackStack(MovieDetailedFragment.class.getSimpleName())
                 .commit();
     }
+
 
     private void getCommentsFromFirebase(int filmId) {
         db.collection("comments").document(String.valueOf(filmId)).collection("comments").get().addOnCompleteListener(task -> {

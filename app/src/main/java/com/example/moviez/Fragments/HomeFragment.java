@@ -172,7 +172,9 @@ public class HomeFragment extends AppFragment {
                                         userActivities.add(userActivity);
                                         recyclerFriends.setAdapter(userActivityAdapter = new UserActivityAdapter(userActivities, requireActivity(), HomeFragment.this));
                                         recyclerFriends.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+
                                     }
+                                    checkVoidList(userActivities, buttonActivity);
                                 }
                             }
                         });
@@ -180,9 +182,6 @@ public class HomeFragment extends AppFragment {
                 }
             }
         });
-        if (userActivities.isEmpty()){
-            checkVoidList(userActivities, buttonActivity);
-        }
 
 //        get the cinemas collection:
 
