@@ -120,37 +120,33 @@ public class ProfileFragment extends AppFragment {
 
         if (userId != auth.getCurrentUser().getUid()) {
             db.collection("users").document(auth.getCurrentUser().getUid())
-                    .collection("following").get()
-                    .addOnSuccessListener(task -> {
-                                if (task.isEmpty()) {
-                                    editarPerfil.setText("Seguir");
-                                    editarPerfil.setOnClickListener(v -> {
-                                        addToFollowing(userId);
-                                    });
-                                } else {
-                                    for (DocumentSnapshot documentSnapshot : task.getDocuments()) {
-                                        if (documentSnapshot.toObject(Models.User.class).userid.equals(userId)) {
-                                            isFollowing = true;
-                                        } else {
-                                            editarPerfil.setText("Seguir");
-                                            editarPerfil.setOnClickListener(v -> {
-                                                addToFollowing(userId);
-                                            });
-                                        }
+                    .collection("following").addSnapshotListener((value, error) -> {
+                if (value.isEmpty()) {
+                    editarPerfil.setText("Seguir");
+                    editarPerfil.setOnClickListener(v -> {
+                        addToFollowing(userId);
+                    });
+                } else {
+                    for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
+                        if (documentSnapshot.toObject(Models.User.class).userid.equals(userId)) {
+                            isFollowing = true;
+                        } else {
+                            editarPerfil.setText("Seguir");
+                            editarPerfil.setOnClickListener(v -> {
+                                addToFollowing(userId);
+                            });
+                        }
 
-                                        if (isFollowing) {
-                                            editarPerfil.setText("Dejar de seguir");
-                                            editarPerfil.setOnClickListener(v -> {
-                                                unfollow(userId);
-                                                isFollowing = false;
-                                            });
-                                        }
+                        if (isFollowing) {
+                            editarPerfil.setText("Dejar de seguir");
+                            editarPerfil.setOnClickListener(v -> {
+                                unfollow(userId);
+                            });
+                        }
 
-                                    }
-                                }
-                            }
-                    );
-
+                    }
+                }
+            });
         } else {
             editarPerfil.setText("Editar perfil");
         }
@@ -174,7 +170,66 @@ public class ProfileFragment extends AppFragment {
         db.collection("users").document(userId).collection("followers").document(auth.getCurrentUser().getUid()).delete();
         adaptUsersToRecycler(this.followers, recyclerFollowers);
         editarPerfil.setText("Seguir");
-        followersNumber.setText(followers.size()-1 + "");
+        editarPerfil.setOnClickListener(v -> {
+            addToFollowing(userId);
+            isFollowing = true;
+        });
+        followersNumber.setText(this.followers.size() + "");
+    }
+
+    public void addToFollowing(String userid) {
+
+        db.collection("users").document(userid).get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                Models.User usuarioASeguir = documentSnapshot.toObject(Models.User.class);
+
+                db.collection("users")
+                        .document(auth.getCurrentUser().getUid())
+                        .collection("following").document(userid)
+                        .set(usuarioASeguir);
+
+                db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot1 -> {
+                    db.collection("users")
+                            .document(userId)
+                            .collection("followers").document(auth.getCurrentUser().getUid())
+                            .set(documentSnapshot1.toObject(Models.User.class));
+                });
+
+                followersNumber.setText(this.followers.size() + "");
+                editarPerfil.setOnClickListener(v -> {
+                    unfollow(userId);
+                    isFollowing = false;
+                });
+            }
+        });
+        editarPerfil.setText("Dejar de seguir");
+    }
+
+    public void following(String userId) {
+
+        db.collection("users").document(userId).collection("following").addSnapshotListener((value, error) -> {
+            this.users.clear();
+            for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
+                this.users.add(documentSnapshot.toObject(Models.User.class));
+            }
+            adaptUsersToRecycler(users, recyclerFollowing);
+            followingNumber.setText(this.users.size() + "");
+        });
+
+    }
+
+    public void followers(String userId) {
+
+        db.collection("users").document(userId).collection("followers").addSnapshotListener((value, error) -> {
+            this.followers.clear();
+            for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
+                this.followers.add(documentSnapshot.toObject(Models.User.class));
+            }
+
+            adaptUsersToRecycler(this.followers, recyclerFollowers);
+            followersNumber.setText(this.followers.size() + "");
+        });
+
     }
 
     public void lastViewedFilms(String userId) {
@@ -205,34 +260,7 @@ public class ProfileFragment extends AppFragment {
         });
     }
 
-    public void addToFollowing(String userid) {
 
-        db.collection("users").document(userid).get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                Models.User usuarioASeguir = documentSnapshot.toObject(Models.User.class);
-
-                db.collection("users")
-                        .document(auth.getCurrentUser().getUid())
-                        .collection("following").document(userid)
-                        .set(usuarioASeguir);
-
-                db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot1 -> {
-                    db.collection("users")
-                            .document(userId)
-                            .collection("followers").document(auth.getCurrentUser().getUid())
-                            .set(documentSnapshot1.toObject(Models.User.class));
-                });
-
-                followersNumber.setText(this.followers.size() + "");
-                editarPerfil.setOnClickListener(v -> {
-                    unfollow(userId);
-                    isFollowing = false;
-                });
-            }
-        });
-        editarPerfil.setText("Dejar de seguir");
-
-    }
 
     public void favoriteFilms(String userId) {
         favoritedFilms.clear();
@@ -246,36 +274,6 @@ public class ProfileFragment extends AppFragment {
             favoriteNumber.setText(String.valueOf(favoritedFilms.size()));
             checkVoidMovies(favoritedFilms, favoritedButton);
         });
-    }
-
-    public void following(String userId) {
-        users.clear();
-        List<Models.User> following = new ArrayList<>();
-
-        db.collection("users").document(userId).collection("following").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                following.add(documentSnapshot.toObject(Models.User.class));
-            }
-            users.addAll(following);
-            adaptUsersToRecycler(users, recyclerFollowing);
-            followingNumber.setText(users.size() + "");
-        });
-
-    }
-
-    public void followers(String userId) {
-
-        db.collection("users").document(userId).collection("followers").addSnapshotListener((value, error) -> {
-            System.out.println("GETTTING FOLLLOWERS");
-            this.followers.clear();
-            for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
-                this.followers.add(documentSnapshot.toObject(Models.User.class));
-            }
-
-            adaptUsersToRecycler(this.followers, recyclerFollowers);
-            followersNumber.setText(this.followers.size() + "");
-        });
-
     }
 
     private void checkVoidMovies(List<Models.Film> films, Button button) {

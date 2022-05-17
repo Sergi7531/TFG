@@ -227,9 +227,11 @@ public class HomeFragment extends AppFragment {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Models.User user = document.toObject(Models.User.class);
-                        if (user.username.contains(query)) {
-                            users.add(user);
-                        }
+                        System.out.println(auth.getCurrentUser().getUid());
+                        System.out.println(user.getUserid());
+                            if (user.username.contains(query)) {
+                                users.add(user);
+                            }
                     }
                     adapter.notifyDataSetChanged();
                 } else {

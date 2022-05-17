@@ -1,11 +1,14 @@
 package com.example.moviez.Adapters;
 
+import static com.example.moviez.Activities.AppViewModel.auth;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,19 +50,33 @@ public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResu
     public void onBindViewHolder(@NonNull UserSearchResultViewHolder holder, int position) {
 
         Models.User user = users.get(position);
-        System.out.println("MOSTRANDO " + user.username);
+        System.out.println("MOSTRANDO " + user.userid);
+        System.out.println("GETCURRENTUSER " + auth.getCurrentUser().getUid());
+           if (!user.getUserid().equals(auth.getCurrentUser().getUid())) {
+                Glide.with(context)
+                        .load(user.profileImageURL)
+                        .centerCrop()
+                        .into(holder.userProfilePic);
 
-        Glide.with(context)
-                .load(user.profileImageURL)
-                .centerCrop()
-                .into(holder.userProfilePic);
+                holder.usernameSearch.setText(user.username);
 
-        holder.usernameSearch.setText(user.username);
+                holder.searchHolderLayout.setOnClickListener(view -> {
+                    ProfileFragment profileFragment = new ProfileFragment(user.userid);
+                    setFragment(profileFragment);
+                });
+            }
+           else {
+               Glide.with(context)
+                       .load(user.profileImageURL)
+                       .centerCrop()
+                       .into(holder.userProfilePic);
 
-        holder.searchHolderLayout.setOnClickListener(view -> {
-            ProfileFragment profileFragment = new ProfileFragment(user.userid);
-            setFragment(profileFragment);
-        });
+               holder.usernameSearch.setText(user.username);
+
+               holder.searchHolderLayout.setOnClickListener(view -> {
+                   Toast.makeText(view.getContext(), "¿Te estás buscando a tí mismo?", Toast.LENGTH_SHORT).show();
+               });
+           }
     }
 
     private void setFragment(Fragment fragment) {
