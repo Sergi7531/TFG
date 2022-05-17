@@ -123,28 +123,30 @@
                             android:textColorHint="?attr/colorOnSecondary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/linearForYou"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/recyclerList"
                         android:layout_marginTop="0dp"
                         android:fontFamily="@font/satoshi"
                         android:text="@string/para_ti"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="25sp"
                         android:textStyle="bold" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerParaTi"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="20dp" />
+                        android:layout_marginTop="40dp" />
 
                     <ProgressBar
                         android:id="@+id/animacionCarga"

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -54,6 +55,7 @@ public class HomeFragment extends AppFragment {
     public static String userId = "";
     private UserSearchResultAdapter adapter;
     public UserActivityAdapter userActivityAdapter;
+    private RelativeLayout linearForYou;
 
     public HomeFragment() {
     }
@@ -246,6 +248,7 @@ public class HomeFragment extends AppFragment {
         recyclerCinemas = view.findViewById(R.id.recyclerCinemas);
         animacionCarga = view.findViewById(R.id.animacionCarga);
         buttonActivity = view.findViewById(R.id.buttonActivity);
+        linearForYou = view.findViewById(R.id.linearForYou);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -262,7 +265,7 @@ public class HomeFragment extends AppFragment {
                         recyclerForYou.setAdapter(new FilmAdapter(filmsByGenreForUser.results, requireActivity(), this));
                         recyclerForYou.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
                         animacionCarga.setAlpha(0f);
-                        recyclerForYou.setAlpha(1f);
+                        linearForYou.setVisibility(View.VISIBLE);
                     }
                 });
             }

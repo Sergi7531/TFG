@@ -450,7 +450,7 @@ public class Models {
         public String month;
         public String day;
         public String time;
-        public List<String> seats;
+        public List<Integer> seats;
 
         public Session() {}
 

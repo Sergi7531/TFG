@@ -1,7 +1,5 @@
 package com.example.moviez.Fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -257,7 +255,6 @@ public class MovieDetailedFragment extends AppFragment {
             appViewModel.currentFilmId = filmId;
             BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId);
             setFragment(buyTicketFragment);
-
         });
 
         List<String> status = new ArrayList<>();
