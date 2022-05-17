@@ -41,20 +41,22 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
         if(seat.state.equals(Models.SeatState.BUSY)) {
             holder.seatImage.setImageResource(R.drawable.ic_rectangle_taken);
             disableSeat(seat, holder);
-
+        } else if(seat.state.equals(Models.SeatState.FREE)) {
+            holder.seatImage.setImageResource(R.drawable.ic_rectangle_void);
+            enableSeat(seat, holder);
+        } else if(seat.state.equals(Models.SeatState.SELECTED)) {
+            holder.seatImage.setImageResource(R.drawable.ic_rectangle_selected);
+            selectSeat(seat, holder);
         }
 
         holder.seatImage.setOnClickListener(view -> {
             // Select new Seat
             if (seat.state.equals(Models.SeatState.FREE)) {
                 holder.seatImage.setImageResource(R.drawable.ic_rectangle_selected);
-                //TODO
-                // Save position to be saved
-                seat.state = Models.SeatState.SELECTED;
+                selectSeat(seat, holder);
             } else if (seat.state.equals(Models.SeatState.SELECTED)) {
                 holder.seatImage.setImageResource(R.drawable.ic_rectangle_void);
-                //TODO
-                //Delete position
+                enableSeat(seat, holder);
             }
         });
 
@@ -64,6 +66,16 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
         seat.state = Models.SeatState.BUSY;
         holder.seatImage.setEnabled(false);
         holder.seatImage.setClickable(false);
+    }
+
+    private void enableSeat(Models.Seats seat, @NonNull SeatViewHolder holder) {
+        seat.state = Models.SeatState.FREE;
+        holder.seatImage.setEnabled(true);
+        holder.seatImage.setClickable(true);
+    }
+
+    private void selectSeat(Models.Seats seat, @NonNull SeatViewHolder holder) {
+        seat.state = Models.SeatState.SELECTED;
     }
 
     @Override
