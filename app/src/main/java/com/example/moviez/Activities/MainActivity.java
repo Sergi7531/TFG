@@ -104,21 +104,10 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_frame);
         SharedPreferences sharedPreferences = this.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
         if (fragment instanceof MoviesFragment || fragment instanceof TicketsFragment || fragment instanceof ProfileFragment) {
             setFragment(homeFragment);
             nav_bottom.setSelectedItemId(R.id.home);
-        }
-        else if (fragment instanceof BuyTicketFragment){
-            int filmId = appViewModel.currentFilmId;
-            if (filmId == 0 ){
-                setFragment(homeFragment);
-                nav_bottom.setSelectedItemId(R.id.home);
-            } else {
-                MovieDetailedFragment movieDetailedFragment2 = new MovieDetailedFragment(filmId);
-                setFragment(movieDetailedFragment2);
-                editor.putInt("filmId", 0);
-                editor.commit();
-            }
         }
         else if (fragment instanceof QRScanFragment) {
             setFragment(ticketsFragment);
@@ -134,7 +123,15 @@ public class MainActivity extends AppCompatActivity {
             setFragment(editProfileFragment);
         }
         else if (fragment instanceof MovieDetailedFragment) {
-            setFragment(moviesFragment);
+            int filmId = appViewModel.currentFilmId;
+            if (filmId == 0){
+                setFragment(homeFragment);
+                nav_bottom.setSelectedItemId(R.id.home);
+            } else {
+                MovieDetailedFragment movieDetailedFragment2 = new MovieDetailedFragment(filmId);
+                setFragment(movieDetailedFragment2);
+                appViewModel.currentFilmId = 0;
+            }
         }
         else if (fragment instanceof NewCommentFragment) {
             setFragment(movieDetailedFragment);
