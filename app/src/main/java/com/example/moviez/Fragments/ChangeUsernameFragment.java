@@ -18,6 +18,8 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.Objects;
+
 public class ChangeUsernameFragment extends AppFragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -28,8 +30,7 @@ public class ChangeUsernameFragment extends AppFragment {
     private Button confirm_button;
     private ImageView goBackUsername;
 
-    public ChangeUsernameFragment() {
-    }
+    public ChangeUsernameFragment() { }
 
     public static ChangeUsernameFragment newInstance(String param1, String param2) {
         ChangeUsernameFragment fragment = new ChangeUsernameFragment();
@@ -68,7 +69,7 @@ public class ChangeUsernameFragment extends AppFragment {
                 .setDisplayName(name)
                 .build();
 
-        auth.getCurrentUser().updateProfile(profileUpdates)
+        Objects.requireNonNull(auth.getCurrentUser()).updateProfile(profileUpdates)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(getContext(), "Username updated!", Toast.LENGTH_SHORT).show();
@@ -79,14 +80,18 @@ public class ChangeUsernameFragment extends AppFragment {
 
                                 db.collection("comments").document(documentSnapshot.getId()).collection("comments").get().addOnSuccessListener(documentSnapshots -> {
                                     for (DocumentSnapshot documentSnapshot1 : documentSnapshots.getDocuments()) {
-                                        if (documentSnapshot1.toObject(Models.Comment.class).userid.equals(auth.getCurrentUser().getUid())) {
+                                        if (Objects.requireNonNull(documentSnapshot1.toObject(Models.Comment.class)).userid.equals(auth.getCurrentUser().getUid())) {
                                             Models.Comment comment = documentSnapshot1.toObject(Models.Comment.class);
-                                            comment.username = name;
-                                            db.collection("comments")
-                                                    .document(documentSnapshot.getId())
-                                                    .collection("comments")
-                                                    .document(documentSnapshot1.getId())
-                                                    .set(comment);
+                                            if (comment != null) {
+                                                comment.username = name;
+                                            }
+                                            if (comment != null) {
+                                                db.collection("comments")
+                                                        .document(documentSnapshot.getId())
+                                                        .collection("comments")
+                                                        .document(documentSnapshot1.getId())
+                                                        .set(comment);
+                                            }
 
                                         }
                                     }

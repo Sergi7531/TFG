@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import com.example.moviez.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
 
 public class PasswordFragment extends AppFragment {
 
@@ -83,7 +85,7 @@ public class PasswordFragment extends AppFragment {
 
         recoverPassword.setOnClickListener(view1 -> {
             if(auth.getCurrentUser() != null) {
-                if(auth.getCurrentUser().getEmail().equals(mailRecovery.getText().toString().trim())) {
+                if(Objects.equals(auth.getCurrentUser().getEmail(), Objects.requireNonNull(mailRecovery.getText()).toString().trim())) {
                     auth.sendPasswordResetEmail(auth.getCurrentUser().getEmail());
                     setFragmentMain(new EditProfileFragment());
                     Toast.makeText(requireContext(), "Correo mandado con éxito.", Toast.LENGTH_SHORT).show();
@@ -91,7 +93,7 @@ public class PasswordFragment extends AppFragment {
                     Toast.makeText(requireContext(), "Introduce tu correo actual", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                auth.sendPasswordResetEmail(mailRecovery.getText().toString().trim());
+                auth.sendPasswordResetEmail(Objects.requireNonNull(mailRecovery.getText()).toString().trim());
                 setFragmentLanding(new LoginFragment());
                 Toast.makeText(requireContext(), "Correo mandado con éxito.", Toast.LENGTH_SHORT).show();
             }

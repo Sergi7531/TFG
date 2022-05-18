@@ -21,6 +21,7 @@ import com.example.moviez.Models;
 import com.example.moviez.R;
 
 import java.util.List;
+import java.util.Objects;
 
 public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResultAdapter.UserSearchResultViewHolder>{
 
@@ -45,10 +46,10 @@ public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResu
     public void onBindViewHolder(@NonNull UserSearchResultViewHolder holder, int position) {
 
         Models.User user = users.get(position);
-           if (!user.getUserid().equals(auth.getCurrentUser().getUid())) {
+           if (!user.getUserid().equals(Objects.requireNonNull(auth.getCurrentUser()).getUid())) {
                 holder.usernameSearch.setText(user.username);
 
-               if (user.profileImageURL != "") {
+               if (!user.profileImageURL.equals("")) {
                    Glide.with(context)
                            .load(user.profileImageURL)
                            .centerCrop()
@@ -61,18 +62,14 @@ public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResu
                 });
             }
            else {
-               if (user.profileImageURL != "") {
+               if (!user.profileImageURL.equals("")) {
                    Glide.with(context)
                            .load(user.profileImageURL)
                            .centerCrop()
                            .into(holder.userProfilePic);
                }
-
                holder.usernameSearch.setText(user.username);
-
-               holder.searchHolderLayout.setOnClickListener(view -> {
-                   Toast.makeText(view.getContext(), "¿Te estás buscando a tí mismo?", Toast.LENGTH_SHORT).show();
-               });
+               holder.searchHolderLayout.setOnClickListener(view -> Toast.makeText(view.getContext(), "¿Te estás buscando a tí mismo?", Toast.LENGTH_SHORT).show());
            }
     }
 

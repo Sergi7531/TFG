@@ -70,7 +70,6 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         holder.linearCinema.setOnClickListener(v -> {
             String[] cinemaCoordsSplit = ticket.cinemaCoords.split(",");
 
-
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo: " + ticket.cinemaCoords + "?q=" + "(" + ticket.cinemaName + ")"));
             context.startActivity(intent);
         });

@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import com.example.moviez.Activities.AppViewModel;
 import com.example.moviez.Adapters.CinemaAdapter;
 import com.example.moviez.Adapters.FilmAdapter;
 import com.example.moviez.Adapters.UserActivityAdapter;
@@ -34,6 +35,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeFragment extends AppFragment {
     
@@ -59,7 +61,7 @@ public class HomeFragment extends AppFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        appViewModel.forYouMovies.postValue(null);
+        AppViewModel.forYouMovies.postValue(null);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -107,7 +109,7 @@ public class HomeFragment extends AppFragment {
         List<Models.User> following = new ArrayList<>();
         List<Models.UserActivity> userActivities = new ArrayList<>();
 
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnCompleteListener(task -> {
+        db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid()).collection("following").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     following.add(document.toObject(Models.User.class));
@@ -154,7 +156,7 @@ public class HomeFragment extends AppFragment {
                             }
                         }
                         userActivityAdapter.notifyDataSetChanged();
-                        checkVoidList(recyclerFriends.getAdapter().getItemCount(), buttonActivity);
+                        checkVoidList(Objects.requireNonNull(recyclerFriends.getAdapter()).getItemCount(), buttonActivity);
                     });
                 }
             }
@@ -207,7 +209,7 @@ public class HomeFragment extends AppFragment {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Models.User user = document.toObject(Models.User.class);
-                        if (user.username.contains(query) && !user.userid.equals(auth.getCurrentUser().getUid())) {
+                        if (user.username.contains(query) && !user.userid.equals(Objects.requireNonNull(auth.getCurrentUser()).getUid())) {
                             users.add(user);
                         }
                 }
@@ -232,14 +234,14 @@ public class HomeFragment extends AppFragment {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void forYou() {
 
-        db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot -> {
+        db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid()).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 genresUser.clear();
-                genresUser.addAll(documentSnapshot.toObject(Models.User.class).getFavoriteGenres());
+                genresUser.addAll(Objects.requireNonNull(documentSnapshot.toObject(Models.User.class)).getFavoriteGenres());
 
-                appViewModel.getMoviesForYou();
+                AppViewModel.getMoviesForYou();
 
-                appViewModel.forYouMovies.observe(getViewLifecycleOwner(), filmsByGenreForUser -> {
+                AppViewModel.forYouMovies.observe(getViewLifecycleOwner(), filmsByGenreForUser -> {
                     if (filmsByGenreForUser != null) {
                         System.out.println("he entrado en forYou");
                         System.out.println(filmsByGenreForUser.results.size());

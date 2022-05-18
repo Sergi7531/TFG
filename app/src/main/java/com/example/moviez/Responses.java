@@ -20,7 +20,6 @@ public class Responses {
 
     public static class BillboardResponse {
         public Dates dates;
-        public int page;
         public List<Models.Film> results;
     }
 
@@ -30,7 +29,6 @@ public class Responses {
     }
 
     public static class SearchResponse {
-        public String page;
         public List<Models.Film> results = new ArrayList<>();
     }
 

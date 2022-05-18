@@ -14,6 +14,8 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 
+import java.util.Objects;
+
 public class QRScanFragment extends AppFragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -93,7 +95,7 @@ public class QRScanFragment extends AppFragment {
 
             db.collection("users").document(ticket.userid).collection("tickets").document(ticket.ticketid).delete().addOnSuccessListener(success1 -> {
 
-                ticket.userid = auth.getCurrentUser().getUid();
+                ticket.userid = Objects.requireNonNull(auth.getCurrentUser()).getUid();
                 db.collection("users").document(ticket.userid).collection("tickets").document(ticket.ticketid).set(ticket).addOnSuccessListener(success -> {
                 });
 
@@ -118,7 +120,9 @@ public class QRScanFragment extends AppFragment {
             fragmentTransaction = fragmentManager.beginTransaction();
         }
         TicketsFragment ticketsFragment = new TicketsFragment();
-        fragmentTransaction.replace(R.id.main_frame, ticketsFragment);
+        if (fragmentTransaction != null) {
+            fragmentTransaction.replace(R.id.main_frame, ticketsFragment);
+        }
         fragmentTransaction.replace(frame, ticketsFragment);
         fragmentTransaction.commit();
     }

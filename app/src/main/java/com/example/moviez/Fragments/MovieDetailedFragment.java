@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,7 +63,6 @@ public class MovieDetailedFragment extends AppFragment {
 
     private Spinner spinner;
     private List<Responses.CastResult> actorItems = new ArrayList<>();
-    private List<Responses.CrewResult> crewItems = new ArrayList<>();
     public static RecyclerView commentsFragmentMovieDetail;
     private final List<Models.Comment> comments = new ArrayList<>();
     
@@ -130,7 +130,7 @@ public class MovieDetailedFragment extends AppFragment {
             if (parts.length == 3) {
                 movieRelease.setText(parts[2] + "-" + parts[1] + "-" + parts[0]);
             } else {
-                movieRelease.setText("Fecha no disponible.");
+                movieRelease.setText(R.string.FechaNoDisponible);
             }
 
             AppViewModel.getMovieCast(filmId);
@@ -141,7 +141,7 @@ public class MovieDetailedFragment extends AppFragment {
 
             AppViewModel.fullCast.observe(getViewLifecycleOwner(), this::loadActors);
 
-            db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).get().addOnCompleteListener(task -> {
+            db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     if (task.getResult().exists()) {
                         heartImage.setImageResource(R.drawable.heart);
@@ -307,7 +307,7 @@ public class MovieDetailedFragment extends AppFragment {
 
     private void removeFromWatchedAndToWatch() {
         db.collection("users")
-                .document(auth.getCurrentUser().getUid())
+                .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                 .collection("moviesToWatch")
                 .document(String.valueOf(filmId))
                 .delete();
@@ -321,7 +321,7 @@ public class MovieDetailedFragment extends AppFragment {
 
     private void addToWatched(String watchedFilms, String moviesToWatch) {
         db.collection("users")
-                .document(auth.getCurrentUser().getUid())
+                .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                 .collection(watchedFilms)
                 .document(String.valueOf(filmId))
                 .set(film);
@@ -362,11 +362,11 @@ public class MovieDetailedFragment extends AppFragment {
                     globalUsersRating.setText(String.format("%.1f", averageRating));
                     ratingBar.setRating((float) averageRating);
                     commentsFragmentMovieDetail.setVisibility(View.VISIBLE);
-                    comentariosTextDetail.setText("Comentarios");
+                    comentariosTextDetail.setText(R.string.Comentarios);
                 } else {
                     globalUsersRating.setText(" - ");
                     commentsFragmentMovieDetail.setVisibility(View.GONE);
-                    comentariosTextDetail.setText("No hay comentarios");
+                    comentariosTextDetail.setText(R.string.NoHayComentarios);
                 }
 
             } else {
@@ -376,13 +376,13 @@ public class MovieDetailedFragment extends AppFragment {
     }
 
     private void loadActors(Responses.FullCastResponse cast) {
-        actorItems = AppViewModel.fullCast.getValue().cast;
+        actorItems = Objects.requireNonNull(AppViewModel.fullCast.getValue()).cast;
 
         if (actorItems.size() > 4) {
             actorItems = actorItems.subList(0, 4);
         }
 
-        crewItems = AppViewModel.fullCast.getValue().crew;
+        List<Responses.CrewResult> crewItems = AppViewModel.fullCast.getValue().crew;
 
         for (int i = 0; i < crewItems.size(); i++) {
             if (crewItems.get(i).job.equals("Director")) {

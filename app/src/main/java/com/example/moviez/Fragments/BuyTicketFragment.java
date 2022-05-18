@@ -30,6 +30,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class BuyTicketFragment extends AppFragment {
 
@@ -108,7 +109,9 @@ public class BuyTicketFragment extends AppFragment {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 Models.Film film = documentSnapshot.toObject(Models.Film.class);
                 allFilms.add(film);
-                filmsNamesToShow.add(film.title);
+                if (film != null) {
+                    filmsNamesToShow.add(film.title);
+                }
             }
 
             ArrayAdapter<String> filmAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, filmsNamesToShow);
@@ -215,11 +218,17 @@ public class BuyTicketFragment extends AppFragment {
             picker.show();
         });
 
-        buyButton.setOnClickListener(view1 -> {
+        if (dateInput.getText() == null) {
+            buyButton.setVisibility(View.GONE);
+        }
+        else {
+            buyButton.setVisibility(View.VISIBLE);
 
-            String[] dateInputSplitted = dateInput.getText().toString().trim().split("-");
-            setFragment(new SeatsFragment(frameComingFrom, selectedFilmId, selectedCinemaId, selectedRoomId, Integer.parseInt(dateInputSplitted[0]), Integer.parseInt(dateInputSplitted[1]), Integer.parseInt(spinnerHour.getSelectedItem().toString().substring(0,2))));
-        });
+            buyButton.setOnClickListener(view1 -> {
+                String[] dateInputSplitted = dateInput.getText().toString().trim().split("-");
+                setFragment(new SeatsFragment(frameComingFrom, selectedFilmId, selectedCinemaId, selectedRoomId, Integer.parseInt(dateInputSplitted[0]), Integer.parseInt(dateInputSplitted[1]), Integer.parseInt(spinnerHour.getSelectedItem().toString().substring(0, 2))));
+            });
+        }
     }
 
     private void setCinemaInfo(int filmSelected) {
@@ -235,12 +244,12 @@ public class BuyTicketFragment extends AppFragment {
         } else {
             db.collection("movie_sessions").document(String.valueOf(filmSelected)).collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    selectedCinemaId = documentSnapshot.toObject(Models.Cinema.class).cinemaid;
-                    cinemaName.setText(documentSnapshot.toObject(Models.Cinema.class).name);
-                    db.collection("movie_sessions").document(String.valueOf(filmSelected)).collection("cinemas").document(documentSnapshot.toObject(Models.Cinema.class).cinemaid).collection("rooms").get().addOnSuccessListener(documentSnapshot1 -> {
-                        selectedFilmId = documentSnapshot1.getDocuments().get(0).toObject(Models.Room.class).filmid;
-                        selectedRoomId = documentSnapshot1.getDocuments().get(0).toObject(Models.Room.class).roomid;
-                        roomNumber.setText(documentSnapshot1.getDocuments().get(0).toObject(Models.Room.class).name);
+                    selectedCinemaId = Objects.requireNonNull(documentSnapshot.toObject(Models.Cinema.class)).cinemaid;
+                    cinemaName.setText(Objects.requireNonNull(documentSnapshot.toObject(Models.Cinema.class)).name);
+                    db.collection("movie_sessions").document(String.valueOf(filmSelected)).collection("cinemas").document(Objects.requireNonNull(documentSnapshot.toObject(Models.Cinema.class)).cinemaid).collection("rooms").get().addOnSuccessListener(documentSnapshot1 -> {
+                        selectedFilmId = Objects.requireNonNull(documentSnapshot1.getDocuments().get(0).toObject(Models.Room.class)).filmid;
+                        selectedRoomId = Objects.requireNonNull(documentSnapshot1.getDocuments().get(0).toObject(Models.Room.class)).roomid;
+                        roomNumber.setText(Objects.requireNonNull(documentSnapshot1.getDocuments().get(0).toObject(Models.Room.class)).name);
                     });
                 }
             });
