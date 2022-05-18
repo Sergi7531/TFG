@@ -18,6 +18,7 @@ import com.example.moviez.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SeatsFragment extends AppFragment {
 
@@ -99,7 +100,7 @@ public class SeatsFragment extends AppFragment {
                 });
 
                 ticket.filmid = movieid;
-                ticket.userid = auth.getCurrentUser().getUid();
+                ticket.userid = Objects.requireNonNull(auth.getCurrentUser()).getUid();
 
                 ticket.date = day + "/" + month;
                 ticket.time = hour + ":00";
@@ -143,7 +144,7 @@ public class SeatsFragment extends AppFragment {
                 for (int i = 0; i < 8 ; i++) {
                     for (int j = 0; j < 8 ; j++) {
                         Models.SeatState state = Models.SeatState.FREE;
-                        if (session.seats.contains(i*8 + j)) {
+                        if (session != null && session.seats.contains(i * 8 + j)) {
                             state = Models.SeatState.BUSY;
                         }
                         seats.add(new Models.Seats(i, j, state));

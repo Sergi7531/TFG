@@ -31,7 +31,6 @@ import com.example.moviez.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
@@ -46,8 +45,6 @@ public class EditProfileFragment extends AppFragment {
     public static final String PREF_FILE_NAME = "MySharedFile";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private BottomNavigationView nav_bottom;
 
     public CardView profileName;
     public CardView passwordName;
@@ -239,7 +236,6 @@ public class EditProfileFragment extends AppFragment {
         creditsCard = view.findViewById(R.id.creditsCard);
         creditButton = view.findViewById(R.id.creditButton);
         darkModeToggle = view.findViewById(R.id.darkModeToggle);
-        nav_bottom = (BottomNavigationView) view.findViewById(R.id.bottomNavigationView);
     }
 
     private void setFragment(Fragment fragment) {

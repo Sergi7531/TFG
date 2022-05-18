@@ -104,24 +104,24 @@ public class ProfileFragment extends AppFragment {
         toWatchButton.setOnClickListener(v -> setFragment(new MoviesFragment()));
         favoritedButton.setOnClickListener(v -> setFragment(new MoviesFragment()));
 
-        if (!userId.equals(auth.getCurrentUser().getUid())) {
+        if (!userId.equals(Objects.requireNonNull(auth.getCurrentUser()).getUid())) {
             db.collection("users").document(auth.getCurrentUser().getUid())
                     .collection("following").addSnapshotListener((value, error) -> {
                 if (value != null) {
                     if (value.isEmpty()) {
-                        editarPerfil.setText("Seguir");
+                        editarPerfil.setText(R.string.Seguir);
                         editarPerfil.setOnClickListener(v -> addToFollowing(userId));
                     } else {
                         for (DocumentSnapshot documentSnapshot : value.getDocuments()) {
-                            if (documentSnapshot.toObject(Models.User.class).userid.equals(userId)) {
+                            if (Objects.requireNonNull(documentSnapshot.toObject(Models.User.class)).userid.equals(userId)) {
                                 isFollowing = true;
                             } else {
-                                editarPerfil.setText("Seguir");
+                                editarPerfil.setText(R.string.Seguir);
                                 editarPerfil.setOnClickListener(v -> addToFollowing(userId));
                             }
 
                             if (isFollowing) {
-                                editarPerfil.setText("Dejar de seguir");
+                                editarPerfil.setText(R.string.DejarDeSeguir);
                                 editarPerfil.setOnClickListener(v -> unfollow(userId));
                             }
 
@@ -130,7 +130,7 @@ public class ProfileFragment extends AppFragment {
                 }
             });
         } else {
-            editarPerfil.setText("Editar perfil");
+            editarPerfil.setText(R.string.EditarPerfil);
         }
 
         setUserDetails(userId);
@@ -147,11 +147,11 @@ public class ProfileFragment extends AppFragment {
     }
 
     public void unfollow(String userId) {
-        db.collection("users").document(auth.getCurrentUser().getUid())
+        db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                 .collection("following").document(userId).delete();
         db.collection("users").document(userId).collection("followers").document(auth.getCurrentUser().getUid()).delete();
         adaptUsersToRecycler(this.followers, recyclerFollowers);
-        editarPerfil.setText("Seguir");
+        editarPerfil.setText(R.string.Seguir);
         editarPerfil.setOnClickListener(v -> {
             addToFollowing(userId);
             isFollowing = true;
@@ -167,15 +167,15 @@ public class ProfileFragment extends AppFragment {
 
                 if (usuarioASeguir != null) {
                     db.collection("users")
-                            .document(auth.getCurrentUser().getUid())
+                            .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                             .collection("following").document(userid)
                             .set(usuarioASeguir);
                 }
 
-                db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot1 -> db.collection("users")
+                db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid()).get().addOnSuccessListener(documentSnapshot1 -> db.collection("users")
                         .document(userId)
                         .collection("followers").document(auth.getCurrentUser().getUid())
-                        .set(documentSnapshot1.toObject(Models.User.class)));
+                        .set(Objects.requireNonNull(documentSnapshot1.toObject(Models.User.class))));
 
                 followersNumber.setText(this.followers.size() + "");
                 editarPerfil.setOnClickListener(v -> {
@@ -184,7 +184,7 @@ public class ProfileFragment extends AppFragment {
                 });
             }
         });
-        editarPerfil.setText("Dejar de seguir");
+        editarPerfil.setText(R.string.DejarDeSeguir);
     }
 
     public void following(String userId) {
@@ -309,8 +309,10 @@ public class ProfileFragment extends AppFragment {
                 if (user != null) {
                     usuario.setText(user.username);
                 }
-                correo.setText(user.email);
-                if (user.profileImageURL != "") {
+                if (user != null) {
+                    correo.setText(user.email);
+                }
+                if (user != null && !user.profileImageURL.equals("")) {
                     Glide.with(getActivity()).load(user.profileImageURL).circleCrop().into(profilepic);
                 }
             }

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">MovieZ</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="email">Correo electrónico</string>
     <string name="username">Usuario</string>
@@ -110,6 +109,12 @@
     <string name="movies">Movies</string>
     <string name="tickets">Tickets</string>
     <string name="profile">Profile</string>
+    <string name="FechaNoDisponible">Fecha no disponible.</string>
+    <string name="Comentarios">Comentarios</string>
+    <string name="NoHayComentarios">No hay comentarios</string>
+    <string name="Seguir">Seguir</string>
+    <string name="EditarPerfil">Editar perfil</string>
+    <string name="DejarDeSeguir">Dejar de seguir</string>
     <string-array name="movie_status">
         <item>Vista</item>
         <item>Ver más tarde</item>

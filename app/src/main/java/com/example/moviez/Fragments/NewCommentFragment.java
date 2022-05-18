@@ -17,6 +17,8 @@ import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.Objects;
+
 public class NewCommentFragment extends AppFragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -93,16 +95,16 @@ public class NewCommentFragment extends AppFragment {
         });
 
         publishButton.setOnClickListener(view1 -> {
-            if(!commentText.getText().toString().isEmpty() && userRatingBar.getRating() != 0) {
+            if(!Objects.requireNonNull(commentText.getText()).toString().isEmpty() && userRatingBar.getRating() != 0) {
                 String comment = commentText.getText().toString();
 //                Get the rating from the rating bar (1 decimal place):
                 float rating = (float) Math.round(userRatingBar.getRating() * 10) / 10;
 
                 boolean spoiler = spoilerCheckBox.isChecked();
 
-                if(auth.getCurrentUser().getPhotoUrl() != null) {
+                if(Objects.requireNonNull(auth.getCurrentUser()).getPhotoUrl() != null) {
                     db.collection("comments").document(String.valueOf(filmId)).set(new Models.Film(filmId));
-                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(auth.getCurrentUser().getUid(), comment, auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getDisplayName(), rating, spoiler));
+                    db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(auth.getCurrentUser().getUid(), comment, Objects.requireNonNull(auth.getCurrentUser().getPhotoUrl()).toString(), auth.getCurrentUser().getDisplayName(), rating, spoiler));
                 } else {
                     db.collection("comments").document(String.valueOf(filmId)).set(new Models.Film(filmId));
                     db.collection("comments").document(String.valueOf(filmId)).collection("comments").document(auth.getCurrentUser().getUid()).set(new Models.Comment(auth.getCurrentUser().getUid(), comment, "", auth.getCurrentUser().getDisplayName(), rating, spoiler));

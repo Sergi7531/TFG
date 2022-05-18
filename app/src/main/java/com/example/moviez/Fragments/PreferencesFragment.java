@@ -21,6 +21,7 @@ import com.example.moviez.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class PreferencesFragment extends AppFragment {
 
@@ -75,7 +76,7 @@ public class PreferencesFragment extends AppFragment {
             startActivity(intent);
         });
 
-        continueButton.setOnClickListener(v -> db.collection("users").document(auth.getCurrentUser().getUid()).update("favoriteGenres", selectedGenres).addOnSuccessListener(success -> {
+        continueButton.setOnClickListener(v -> db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid()).update("favoriteGenres", selectedGenres).addOnSuccessListener(success -> {
         Intent intent = new Intent(requireContext(), MainActivity.class);
         startActivity(intent);
     }));

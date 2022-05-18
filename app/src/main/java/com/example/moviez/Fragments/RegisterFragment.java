@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.storage.FirebaseStorage;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class RegisterFragment extends AppFragment {
@@ -37,7 +38,6 @@ public class RegisterFragment extends AppFragment {
     private TextInputEditText password;
     private TextInputEditText confirmPassword;
     private ImageView profilePic;
-    private Button register;
     private Button setImageProfile;
 
     public RegisterFragment() { }
@@ -70,7 +70,7 @@ public class RegisterFragment extends AppFragment {
         password = view.findViewById(R.id.password);
         confirmPassword = view.findViewById(R.id.confirm);
         profilePic = view.findViewById(R.id.profilePic);
-        register = view.findViewById(R.id.buyButton);
+        Button register = view.findViewById(R.id.buyButton);
         setImageProfile = view.findViewById(R.id.setImageProfile);
 
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
@@ -122,10 +122,10 @@ public class RegisterFragment extends AppFragment {
     }
 
     public boolean validateData() {
-        String usernameValue = username.getText().toString();
-        String emailValue = email.getText().toString();
-        String passwordValue = password.getText().toString();
-        String confirmValue = confirmPassword.getText().toString();
+        String usernameValue = Objects.requireNonNull(username.getText()).toString();
+        String emailValue = Objects.requireNonNull(email.getText()).toString();
+        String passwordValue = Objects.requireNonNull(password.getText()).toString();
+        String confirmValue = Objects.requireNonNull(confirmPassword.getText()).toString();
 
         if (usernameValue.matches("") || emailValue.matches("") || passwordValue.matches("") || confirmValue.matches("")) {
             Toast.makeText(getContext(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
@@ -147,9 +147,9 @@ public class RegisterFragment extends AppFragment {
 
     private void registerNewUser() {
 
-        String usernameValue = username.getText().toString();
-        String emailValue = email.getText().toString();
-        String passwordValue = password.getText().toString();
+        String usernameValue = Objects.requireNonNull(username.getText()).toString();
+        String emailValue = Objects.requireNonNull(email.getText()).toString();
+        String passwordValue = Objects.requireNonNull(password.getText()).toString();
 
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailValue, passwordValue).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -157,14 +157,14 @@ public class RegisterFragment extends AppFragment {
                     FirebaseStorage.getInstance().getReference("/profileimgs/" + UUID.randomUUID() + ".jpg")
                             .putFile(uriProfilePic)
                             .continueWithTask(task2 -> task2.getResult().getStorage().getDownloadUrl())
-                            .addOnSuccessListener(imageUrl -> saveUser(auth.getCurrentUser().getUid(), usernameValue, emailValue, passwordValue, imageUrl));
+                            .addOnSuccessListener(imageUrl -> saveUser(Objects.requireNonNull(auth.getCurrentUser()).getUid(), usernameValue, emailValue, passwordValue, imageUrl));
                 } else {
-                    saveUser(FirebaseAuth.getInstance().getCurrentUser().getUid(), usernameValue, emailValue, passwordValue, null);
+                    saveUser(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid(), usernameValue, emailValue, passwordValue, null);
                 }
 
                 setFragment(new PreferencesFragment());
             } else {
-                Toast.makeText(requireContext(), task.getException().getLocalizedMessage(),
+                Toast.makeText(requireContext(), Objects.requireNonNull(task.getException()).getLocalizedMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -183,12 +183,12 @@ public class RegisterFragment extends AppFragment {
         Models.User userToAdd = new Models.User(userid, usernameValue, emailValue, passwordValue, imageUrl);
 
         db.collection("users")
-                .document(auth.getCurrentUser().getUid())
+                .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                 .set(userToAdd);
 
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(username.getText().toString())
+                .setDisplayName(Objects.requireNonNull(username.getText()).toString())
                 .setPhotoUri(Uri.parse(imageUrl))
                 .build();
         auth.getCurrentUser().updateProfile(profileUpdates);
