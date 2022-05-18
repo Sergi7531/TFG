@@ -69,7 +69,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_toRightOf="@id/cardview2"
+            android:layout_toEndOf="@id/cardview2"
             android:background="@drawable/style_spinner"
             android:contentDescription="@string/buy" />
 
@@ -97,10 +97,10 @@
                     android:id="@+id/cinemaName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:fontFamily="@font/satoshi"
                     android:gravity="center_vertical"
-                    android:text="-"
+                    android:text="@string/guion"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="20sp" />
             </androidx.cardview.widget.CardView>
@@ -122,10 +122,10 @@
                     android:id="@+id/roomNumber"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
                     android:fontFamily="@font/satoshi"
                     android:gravity="center_vertical"
-                    android:text="-"
+                    android:text="@string/guion"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="20sp" />
             </androidx.cardview.widget.CardView>
@@ -178,7 +178,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_toRightOf="@id/cardMain"
+                    android:layout_toEndOf="@id/cardMain"
                     android:fontFamily="@font/satoshi"
                     android:text="@string/info"
                     android:textColor="?attr/colorOnSecondary"
@@ -190,13 +190,13 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/titleFilm"
-                    android:layout_alignLeft="@id/titleFilm"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignStart="@id/titleFilm"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:alpha="0.8"
                     android:fontFamily="@font/satoshi"
                     android:maxHeight="200dp"
-                    android:text="TextView"
+                    android:text="@string/textview"
                     android:textColor="?attr/colorOnSecondary" />
 
                 <androidx.cardview.widget.CardView
@@ -204,7 +204,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/cardMain"
-                    android:layout_alignLeft="@id/cardMain"
+                    android:layout_alignStart="@id/cardMain"
                     android:layout_marginBottom="10dp"
                     app:cardBackgroundColor="?attr/hintTextColor"
                     app:cardCornerRadius="12dp"
@@ -216,7 +216,7 @@
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:textAlignment="center"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="16sp"

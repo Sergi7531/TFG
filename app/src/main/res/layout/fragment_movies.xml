@@ -44,7 +44,7 @@
                 android:id="@+id/searchInputFilm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_baseline_search"
+                android:drawableEnd="@drawable/ic_baseline_search"
                 android:fontFamily="@font/satoshi"
                 android:hint="@string/search_for_movies"
                 android:textColorHint="?attr/colorOnSecondary" />
@@ -66,7 +66,7 @@
             android:layout_below="@id/searchBar"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/satoshi"
-            android:text="Cartelera"
+            android:text="@string/cartelera"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -88,7 +88,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/satoshi"
             android:gravity="center_vertical"
-            android:text="Próximamente en cines"
+            android:text="@string/pr_ximamente_en_cines"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="25sp"
             android:textStyle="bold" />

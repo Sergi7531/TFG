@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -37,12 +37,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                    </RelativeLayout>
 
                     <TextView
                         android:id="@+id/textView79"
@@ -72,7 +66,7 @@
                             android:backgroundTint="?attr/colorPrimaryVariant"
                             android:clickable="false"
                             android:enabled="false"
-                            android:text="+"
+                            android:text="@string/sum"
                             android:textColor="?attr/colorOnSecondary"
                             android:textSize="28sp"
                             app:cornerRadius="18dp" />
@@ -117,7 +111,7 @@
                             android:id="@+id/searchInputUsers"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableRight="@drawable/ic_baseline_search"
+                            android:drawableEnd="@drawable/ic_baseline_search"
                             android:fontFamily="@font/satoshi"
                             android:hint="@string/search_for_users"
                             android:textColorHint="?attr/colorOnSecondary" />

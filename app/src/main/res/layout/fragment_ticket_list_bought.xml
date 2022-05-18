@@ -72,16 +72,16 @@
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="15dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="Total:"
+                        android:text="@string/total"
                         android:textColor="?attr/colorOnSecondary" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="160dp"
+                        android:layout_marginStart="160dp"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="(10€x"
+                        android:text="@string/_10_x"
                         android:textColor="?attr/colorOnSecondary" />
 
                     <TextView
@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="2"
+                        android:text="@string/_2"
                         android:textColor="?attr/colorOnSecondary" />
 
                     <TextView
@@ -99,31 +99,31 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/satoshi"
-                        android:text=")"
+                        android:text="@string/parentesis"
                         android:textColor="?attr/colorOnSecondary" />
 
                     <TextView
                         android:id="@+id/totalPriceTickets"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
                         android:layout_marginTop="12.5dp"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="20"
+                        android:text="@string/_20"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView27"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12.5dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/satoshi"
-                        android:text="€"
+                        android:text="@string/euro"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="20sp"
                         android:textStyle="bold" />

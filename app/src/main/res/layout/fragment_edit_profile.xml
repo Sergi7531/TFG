@@ -82,7 +82,7 @@
                     android:id="@+id/imageView11"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_gravity="center|right"
+                    android:layout_gravity="center|end"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_arrow_right_2" />
             </androidx.cardview.widget.CardView>
@@ -111,7 +111,7 @@
                     android:id="@+id/imageView12"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_gravity="center|right"
+                    android:layout_gravity="center|end"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_arrow_right_2" />
             </androidx.cardview.widget.CardView>
@@ -141,7 +141,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center|end"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
                     android:src="@drawable/ic_toggle_off" />
 
             </androidx.cardview.widget.CardView>
@@ -162,7 +162,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_margin="15dp"
                     android:fontFamily="@font/satoshi"
-                    android:text="Cambiar foto de perfil"
+                    android:text="@string/cambiar_foto_de_perfil"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="14sp" />
 
@@ -170,7 +170,7 @@
                     android:id="@+id/arrow3"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_gravity="center|right"
+                    android:layout_gravity="center|end"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_arrow_right_2" />
             </androidx.cardview.widget.CardView>
@@ -199,7 +199,7 @@
                     android:id="@+id/creditButton"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_gravity="center|right"
+                    android:layout_gravity="center|end"
                     android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_arrow_right_2" />
             </androidx.cardview.widget.CardView>
@@ -222,10 +222,10 @@
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="Graphic Design"
+                        android:text="@string/graphic_design"
                         android:textColor="?attr/colorOnSecondary"
                         android:textStyle="bold" />
 
@@ -234,21 +234,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/textView8"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="15dp"
-                        android:text="mrey∞cn"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="15dp"
+                        android:text="@string/mrey_cn"
                         android:textColor="?attr/colorOnSecondary"
-                        android:textStyle="italic" />
+                        android:textStyle="italic"
+                        tools:ignore="RelativeOverlap" />
 
                     <TextView
                         android:id="@+id/textView11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textView8"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="Project Developers"
+                        android:text="@string/project_developers"
                         android:textColor="?attr/colorOnSecondary"
                         android:textStyle="bold" />
 
@@ -257,8 +258,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textView8"
-                        android:layout_alignRight="@id/textView33"
-                        android:layout_marginLeft="15dp"
+                        android:layout_alignEnd="@id/textView33"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/satoshi"
                         android:text="@string/developer_1"
@@ -271,7 +272,7 @@
                         android:layout_below="@id/textView8"
                         android:layout_alignStart="@id/textView8"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginEnd="15dp"
                         android:background="?attr/colorOnSecondary" />
 
                     <TextView
@@ -279,8 +280,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textViewSergio"
-                        android:layout_alignRight="@id/textView33"
-                        android:layout_marginLeft="15dp"
+                        android:layout_alignEnd="@id/textView33"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/satoshi"
                         android:text="@string/developer_2"
@@ -292,8 +293,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/textViewRaul"
-                        android:layout_alignRight="@id/textView33"
-                        android:layout_marginLeft="15dp"
+                        android:layout_alignEnd="@id/textView33"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
                         android:fontFamily="@font/satoshi"
@@ -318,13 +319,4 @@
         </LinearLayout>
     </ScrollView>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="650dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-    </LinearLayout>
 </FrameLayout>

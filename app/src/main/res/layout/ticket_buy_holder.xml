@@ -35,7 +35,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignBottom="@id/imageCard"
-            android:layout_toRightOf="@id/imageCard"
+            android:layout_toEndOf="@id/imageCard"
             app:srcCompat="@drawable/ic_baseline_location_on_24" />
 
         <TextView
@@ -43,11 +43,11 @@
             android:layout_width="match_parent"
             android:layout_height="26dp"
             android:layout_alignBottom="@id/imageCard"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/imageView2"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/imageView2"
             android:fontFamily="@font/satoshi"
             android:gravity="bottom"
-            android:text="Arenas Cinesa"
+            android:text="@string/arenas_cinesa"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="18sp" />
 
@@ -56,12 +56,12 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_above="@id/imageView2"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_marginBottom="10dp"
-            android:layout_toRightOf="@id/imageCard"
+            android:layout_toEndOf="@id/imageCard"
             android:fontFamily="@font/satoshi"
             android:gravity="bottom"
-            android:text="TextView"
+            android:text="@string/textview"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="28sp"
             app:autoSizeTextType="uniform" />
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="SALA"
+                        android:text="@string/sala"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="10sp" />
 
@@ -104,7 +104,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/satoshi"
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -135,7 +135,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="FILA"
+                        android:text="@string/fila"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="10sp" />
 
@@ -144,7 +144,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/satoshi"
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -175,7 +175,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="ASIENTO"
+                        android:text="@string/asiento"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="10sp" />
 
@@ -184,7 +184,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/satoshi"
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -215,7 +215,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="HORA"
+                        android:text="@string/hora"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="10sp" />
 
@@ -224,7 +224,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/satoshi"
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -255,7 +255,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
                         android:fontFamily="@font/satoshi"
-                        android:text="DÍA"
+                        android:text="@string/d_a"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="10sp" />
 
@@ -264,7 +264,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/satoshi"
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:textColor="?attr/colorOnSecondary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
