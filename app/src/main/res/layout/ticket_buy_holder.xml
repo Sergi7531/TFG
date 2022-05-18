@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
+    app:cardBackgroundColor="?attr/colorPrimaryVariant"
     app:cardCornerRadius="12dp"
     app:cardElevation="0dp">
 
@@ -12,8 +13,9 @@
         android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="130dp"
-            android:layout_height="85dp"
+            android:id="@+id/imageCard"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
@@ -22,17 +24,253 @@
             app:cardElevation="0dp">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/movieImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:srcCompat="@drawable/moviez_logo" />
         </androidx.cardview.widget.CardView>
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignBottom="@id/imageCard"
+            android:layout_toRightOf="@id/imageCard"
+            app:srcCompat="@drawable/ic_baseline_location_on_24" />
+
         <TextView
-            android:id="@+id/textView28"
-            android:layout_width="wrap_content"
+            android:id="@+id/ticketCinema"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:layout_alignBottom="@id/imageCard"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/imageView2"
+            android:fontFamily="@font/satoshi"
+            android:gravity="bottom"
+            android:text="Arenas Cinesa"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/ticketMovieName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_above="@id/imageView2"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@id/imageCard"
+            android:fontFamily="@font/satoshi"
+            android:gravity="bottom"
+            android:text="TextView"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="28sp"
+            app:autoSizeTextType="uniform" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_below="@id/imageCard"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="SALA"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/ticketSala"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/satoshi"
+                        android:text="TextView"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="?attr/hintTextColor" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="FILA"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/ticketFila"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/satoshi"
+                        android:text="TextView"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="?attr/hintTextColor" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView29"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="ASIENTO"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/ticketAsiento"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/satoshi"
+                        android:text="TextView"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="?attr/hintTextColor" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView30"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="HORA"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/ticketHora"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/satoshi"
+                        android:text="TextView"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="?attr/hintTextColor" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardBackgroundColor="?attr/colorPrimaryVariant">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:fontFamily="@font/satoshi"
+                        android:text="DÍA"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/ticketDia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/satoshi"
+                        android:text="TextView"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
     </RelativeLayout>
 
