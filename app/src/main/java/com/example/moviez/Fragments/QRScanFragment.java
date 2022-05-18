@@ -20,7 +20,6 @@ public class QRScanFragment extends AppFragment {
     private static final String ARG_PARAM2 = "param2";
     private CodeScanner codeScanner;
 
-
     public QRScanFragment() { }
 
     public static QRScanFragment newInstance(String param1, String param2) {

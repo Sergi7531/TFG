@@ -41,7 +41,6 @@ public class LandingActivity extends AppCompatActivity {
         fragmentInit();
         setFragment(animationFragment);
 
-
         appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();

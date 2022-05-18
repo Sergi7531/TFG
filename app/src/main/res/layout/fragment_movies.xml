@@ -15,14 +15,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/moviez_logo" />
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/searchBar"
             style="@style/LoginTextInputLayoutStyle"

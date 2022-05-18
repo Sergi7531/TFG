@@ -73,10 +73,10 @@ public class MoviesFragment extends AppFragment {
                                recyclerMoviesSearch.setAdapter(new MovieSearchResultAdapter(requireActivity(), moviesByQuery.results, MoviesFragment.this));
                                recyclerMoviesSearch.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
                                if (charSequence.toString().isEmpty()) {
-                                   recyclerMoviesSearch.setAlpha(0f);
+                                   recyclerMoviesSearch.setVisibility(View.GONE);
                                }
                                else {
-                                   recyclerMoviesSearch.setAlpha(1f);
+                                   recyclerMoviesSearch.setVisibility(View.VISIBLE);
                                }
                            });
                        }

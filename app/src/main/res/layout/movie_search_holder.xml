@@ -8,7 +8,7 @@
     android:padding="10dp">
 
     <ImageView
-        android:id="@+id/userProfilePic"
+        android:id="@+id/moviePic"
         android:layout_width="65dp"
         android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
         android:fontFamily="@font/satoshi"
         android:text="@string/movie_title"
         android:textColor="?attr/colorOnSecondary"
-        app:layout_constraintBottom_toBottomOf="@+id/userProfilePic"
-        app:layout_constraintStart_toEndOf="@+id/userProfilePic"
-        app:layout_constraintTop_toTopOf="@+id/userProfilePic" />
+        app:layout_constraintBottom_toBottomOf="@+id/moviePic"
+        app:layout_constraintStart_toEndOf="@+id/moviePic"
+        app:layout_constraintTop_toTopOf="@+id/moviePic" />
 </androidx.constraintlayout.widget.ConstraintLayout>

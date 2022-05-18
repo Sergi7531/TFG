@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ public class PreferencesFragment extends AppFragment {
     private LinearLayout linearSkip;
 
     private Button continueButton;
+    private ImageView skip;
 
     public static List<Integer> selectedGenres = new ArrayList<>();
 
@@ -67,6 +69,12 @@ public class PreferencesFragment extends AppFragment {
             Intent intent = new Intent(requireContext(), MainActivity.class);
             startActivity(intent);
         });
+
+        skip.setOnClickListener(v ->  {
+            Intent intent = new Intent(requireContext(), MainActivity.class);
+            startActivity(intent);
+        });
+
         continueButton.setOnClickListener(v -> db.collection("users").document(auth.getCurrentUser().getUid()).update("favoriteGenres", selectedGenres).addOnSuccessListener(success -> {
         Intent intent = new Intent(requireContext(), MainActivity.class);
         startActivity(intent);
@@ -77,8 +85,8 @@ public class PreferencesFragment extends AppFragment {
         listViewGenres = view.findViewById(R.id.listViewGenres);
         linearSkip = view.findViewById(R.id.linearSkip);
         continueButton = view.findViewById(R.id.continueButton);
+        skip = view.findViewById(R.id.skip);
     }
-
 
     private void initData() {
         genres = new ArrayList<>(Arrays.asList(new Genre (

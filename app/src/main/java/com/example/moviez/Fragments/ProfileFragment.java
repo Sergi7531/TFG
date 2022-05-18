@@ -310,10 +310,8 @@ public class ProfileFragment extends AppFragment {
                     usuario.setText(user.username);
                 }
                 correo.setText(user.email);
-                if (user.profileImageURL != null) {
+                if (user.profileImageURL != "") {
                     Glide.with(getActivity()).load(user.profileImageURL).circleCrop().into(profilepic);
-                } else {
-                    profilepic.setImageResource(R.drawable.ic_baseline_person_24);
                 }
             }
         });

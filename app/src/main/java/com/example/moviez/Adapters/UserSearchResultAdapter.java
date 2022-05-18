@@ -46,12 +46,14 @@ public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResu
 
         Models.User user = users.get(position);
            if (!user.getUserid().equals(auth.getCurrentUser().getUid())) {
-                Glide.with(context)
-                        .load(user.profileImageURL)
-                        .centerCrop()
-                        .into(holder.userProfilePic);
-
                 holder.usernameSearch.setText(user.username);
+
+               if (user.profileImageURL != "") {
+                   Glide.with(context)
+                           .load(user.profileImageURL)
+                           .centerCrop()
+                           .into(holder.userProfilePic);
+               }
 
                 holder.searchHolderLayout.setOnClickListener(view -> {
                     ProfileFragment profileFragment = new ProfileFragment(user.userid);
@@ -59,10 +61,12 @@ public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResu
                 });
             }
            else {
-               Glide.with(context)
-                       .load(user.profileImageURL)
-                       .centerCrop()
-                       .into(holder.userProfilePic);
+               if (user.profileImageURL != "") {
+                   Glide.with(context)
+                           .load(user.profileImageURL)
+                           .centerCrop()
+                           .into(holder.userProfilePic);
+               }
 
                holder.usernameSearch.setText(user.username);
 

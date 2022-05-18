@@ -41,7 +41,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
 
-        if (users.get(position).profileImageURL == null) {
+        if (users.get(position).profileImageURL == "") {
             Glide.with(context)
                     .load(R.drawable.ic_baseline_person_24)
                     .centerCrop()
