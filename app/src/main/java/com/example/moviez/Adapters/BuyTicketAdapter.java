@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,19 +34,20 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
         this.currentFragment = currentFragment;
     }
 
+    @NonNull
     @Override
-    public BuyTicketViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BuyTicketViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.ticket_buy_holder, parent, false);
         return new BuyTicketViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(BuyTicketViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BuyTicketViewHolder holder, int position) {
 
         IMDB.api.getMovie(tickets.get(position).filmid, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
             @Override
-            public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
+            public void onResponse(@NonNull Call<Models.Film> call, @NonNull Response<Models.Film> response) {
                 if (response.body() != null) {
                     Models.Film film = response.body();
                     tickets.get(holder.getAdapterPosition()).filmImage = film.poster_path;
@@ -57,7 +59,7 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
             }
 
             @Override
-            public void onFailure(Call<Models.Film> call, Throwable t) {
+            public void onFailure(@NonNull Call<Models.Film> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });

@@ -30,20 +30,18 @@ public class AppViewModel extends ViewModel {
     public static MutableLiveData<Responses.SearchResponse> similarMovies = new MutableLiveData<>();
     public static MutableLiveData<Models.Film> movieDetails = new MutableLiveData<>();
     public static MutableLiveData<Responses.FullCastResponse> fullCast = new MutableLiveData<>();
-
     public static MutableLiveData<String> maximumDate = new MutableLiveData<>();
-    public static int contPage = 0;
-
     public MutableLiveData<Uri> uriImagenSeleccionada = new MutableLiveData<>();
+
+    public static int contPage = 0;
+    public static int currentFilmId;
 
     public Models.User userlogged;
 
     public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static FirebaseAuth auth = FirebaseAuth.getInstance();
 
-    public static int currentFilmId;
-
-    public static void getUpcomingMovies() {
+    public static void getUpcomingMovies () {
         IMDB.api.getUpcoming(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
             @Override
             public void onResponse(@NonNull Call<Responses.BillboardResponse> call, @NonNull Response<Responses.BillboardResponse> response) {
@@ -56,7 +54,7 @@ public class AppViewModel extends ViewModel {
         });
     }
 
-    public static void getActualCinemaMovies() {
+    public static void getActualCinemaMovies () {
         IMDB.api.getNowPlaying(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
             @Override
             public void onResponse(@NonNull Call<Responses.BillboardResponse> call, @NonNull Response<Responses.BillboardResponse> response) {
@@ -66,13 +64,13 @@ public class AppViewModel extends ViewModel {
                 }
             }
             @Override
-            public void onFailure(@NonNull Call<Responses.BillboardResponse> call, @NonNull Throwable t) {
+            public void onFailure (@NonNull Call<Responses.BillboardResponse> call, @NonNull Throwable t) {
                 t.getMessage();
             }
         });
     }
 
-    public static void searchMoviesByQuery(String query) {
+    public static void searchMoviesByQuery (String query) {
         IMDB.api.search(IMDB.apiKey, "es-ES", query, 1).enqueue(new Callback<Responses.SearchResponse>() {
             @Override
             public void onResponse(@NonNull Call<Responses.SearchResponse> call, @NonNull Response<Responses.SearchResponse> response) {
@@ -89,13 +87,13 @@ public class AppViewModel extends ViewModel {
                 }
             }
             @Override
-            public void onFailure(@NonNull Call<Responses.SearchResponse> call, @NonNull Throwable t) {
+            public void onFailure (@NonNull Call<Responses.SearchResponse> call, @NonNull Throwable t) {
                 t.getMessage();
             }
         });
     }
 
-    public static void getMoviesForYou() {
+    public static void getMoviesForYou () {
 
         forYouMovies.setValue(null);
 
@@ -109,13 +107,13 @@ public class AppViewModel extends ViewModel {
 
     }
 
-    private static void getMoviesForYouByCollection(String collection) {
+    private static void getMoviesForYouByCollection (String collection) {
         db.collection("users").document(auth.getCurrentUser().getUid()).collection(collection).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 IMDB.api.getRecommendations(Integer.parseInt(documentSnapshot.getId()), IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
-                    public void onResponse(@NonNull Call<Responses.SearchResponse> call, @NonNull Response<Responses.SearchResponse> response) {
+                    public void onResponse (@NonNull Call<Responses.SearchResponse> call, @NonNull Response<Responses.SearchResponse> response) {
                         if (response.body() != null) {
                             if (response.body().results.size() > 5) {
                                 response.body().results.subList(0, 5);
@@ -124,7 +122,7 @@ public class AppViewModel extends ViewModel {
                         }
                     }
                     @Override
-                    public void onFailure(@NonNull Call<Responses.SearchResponse> call, @NonNull Throwable t) {
+                    public void onFailure (@NonNull Call<Responses.SearchResponse> call, @NonNull Throwable t) {
                         t.getMessage();
                     }
                 });
@@ -132,40 +130,40 @@ public class AppViewModel extends ViewModel {
         });
     }
 
-    public static void getMovieDetails(int filmId) {
+    public static void getMovieDetails (int filmId) {
         movieDetails = new MutableLiveData<>();
         IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
             @Override
-            public void onResponse(@NonNull Call<Models.Film> call, @NonNull Response<Models.Film> response) {
+            public void onResponse (@NonNull Call<Models.Film> call, @NonNull Response<Models.Film> response) {
                 if (response.body() != null) {
                     movieDetails.postValue(response.body());
                 }
             }
             @Override
-            public void onFailure(@NonNull Call<Models.Film> call, @NonNull Throwable t) {
+            public void onFailure (@NonNull Call<Models.Film> call, @NonNull Throwable t) {
                 t.getMessage();
             }
         });
     }
 
 
-    public static void getMovieCast(int filmId) {
+    public static void getMovieCast (int filmId) {
         fullCast = new MutableLiveData<>();
         IMDB.api.getCast(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Responses.FullCastResponse>() {
             @Override
-            public void onResponse(@NonNull Call<Responses.FullCastResponse> call, @NonNull Response<Responses.FullCastResponse> response) {
+            public void onResponse (@NonNull Call<Responses.FullCastResponse> call, @NonNull Response<Responses.FullCastResponse> response) {
                 if (response.body() != null) {
                     fullCast.postValue(response.body());
                 }
             }
             @Override
-            public void onFailure(@NonNull Call<Responses.FullCastResponse> call, @NonNull Throwable t) {
+            public void onFailure (@NonNull Call<Responses.FullCastResponse> call, @NonNull Throwable t) {
                 t.getMessage();
             }
         });
     }
 
-    public void setUriImagenSeleccionada(Uri uri) {
+    public void setUriImagenSeleccionada (Uri uri) {
         uriImagenSeleccionada.setValue(uri);
     }
 

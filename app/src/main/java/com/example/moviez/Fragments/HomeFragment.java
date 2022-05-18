@@ -246,6 +246,9 @@ public class HomeFragment extends AppFragment {
                         animacionCarga.setAlpha(0f);
                         linearForYou.setVisibility(View.VISIBLE);
                     }
+                    else {
+                        linearForYou.setVisibility(View.GONE);
+                    }
                 });
             }
         });

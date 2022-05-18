@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -27,16 +28,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TicketsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TicketsFragment extends AppFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -44,19 +39,14 @@ public class TicketsFragment extends AppFragment {
 
     public TextView noTickets;
 
-    public static RecyclerView recyclerTickets;
-    public static LinearLayout linearPages;
+    public RecyclerView recyclerTickets;
+    public LinearLayout linearPages;
     public int frameComingFrom = 0;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private List<Models.Ticket> tickets = new ArrayList<>();
+    private final List<Models.Ticket> tickets = new ArrayList<>();
     public FloatingActionButton button;
 
-    public TicketsFragment() {
-        // Required empty public constructor
-    }
+    public TicketsFragment() { }
 
     public TicketsFragment(int frameComingFrom) {
         this.frameComingFrom = frameComingFrom;
@@ -74,25 +64,17 @@ public class TicketsFragment extends AppFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tickets, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        ViewPager2 etc...
-
         hook(view);
         button.setOnClickListener(v -> {
             askCameraPermission();
@@ -102,11 +84,11 @@ public class TicketsFragment extends AppFragment {
     }
 
     private void getTicketsFromFirebase() {
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("tickets").get().addOnSuccessListener(collection -> {
+        db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid()).collection("tickets").get().addOnSuccessListener(collection -> {
             tickets.clear();
             if(!collection.isEmpty()) {
                 for (DocumentSnapshot document : collection.getDocuments()) {
-                    if(document.toObject(Models.Ticket.class).userid.equals(auth.getCurrentUser().getUid())) {
+                    if(Objects.requireNonNull(document.toObject(Models.Ticket.class)).userid.equals(auth.getCurrentUser().getUid())) {
                         tickets.add(document.toObject(Models.Ticket.class));
                         ImageView imageView = new ImageView(getContext());
                         imageView.setImageResource(R.drawable.ic_baseline_circle_24);
@@ -138,15 +120,19 @@ public class TicketsFragment extends AppFragment {
 
     private void setFragment(Fragment fragment) {
         if(frameComingFrom != 0) {
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(frameComingFrom, fragment)
-                    .commit();
+            if (getFragmentManager() != null) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(frameComingFrom, fragment)
+                        .commit();
+            }
         } else {
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_frame, fragment)
-                    .commit();
+            if (getFragmentManager() != null) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_frame, fragment)
+                        .commit();
+            }
         }
     }
 

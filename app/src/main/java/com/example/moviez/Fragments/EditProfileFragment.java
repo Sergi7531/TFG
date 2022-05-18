@@ -266,6 +266,25 @@ public class EditProfileFragment extends AppFragment {
                 userDoc.update("profileImageURL", finalImageUrl);
             }
         });;
+
+//        Get all documents in the collection:
+//
+/*
+        db.collection("comments")
+                .get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    db.collection("comments").document(document.getId()).collection("comments").get().addOnCompleteListener(task2 -> {
+                        if (task2.isSuccessful()) {
+                            Models.Comment comment = document.toObject(Models.Comment.class);
+                            if (comment.userid.equals(userid)) {
+                                db.collection("comments").document(document.getId()).collection("comments").document(comment.userid).update("imageUrl", finalImageUrl);
+                            }
+                        }
+                    });
+                }
+            }
+        });*/
     }
 
 
