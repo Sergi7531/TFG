@@ -31,6 +31,7 @@ public class TicketBoughtFinishedFragment extends Fragment {
     Button goTicketButton;
     public List<Models.Ticket> ticketsToCreate;
     private String cinemaid;
+    private int frameComingFrom;
 
 
     // TODO: Rename and change types of parameters
@@ -41,7 +42,8 @@ public class TicketBoughtFinishedFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public TicketBoughtFinishedFragment(List<Models.Ticket> ticketsToCreate, String cinemaid) {
+    public TicketBoughtFinishedFragment(List<Models.Ticket> ticketsToCreate, String cinemaid, int frameComingFrom) {
+        this.frameComingFrom = frameComingFrom;
         this.ticketsToCreate = ticketsToCreate;
         this.cinemaid = cinemaid;
     }
@@ -91,7 +93,7 @@ public class TicketBoughtFinishedFragment extends Fragment {
 
         goTicketButton = view.findViewById(R.id.buyButton);
         goTicketButton.setOnClickListener(view1 -> {
-            setFragment(new TicketsFragment());
+            setFragment(new TicketsFragment(frameComingFrom));
         });
     }
 
@@ -145,10 +147,18 @@ public class TicketBoughtFinishedFragment extends Fragment {
     }
 
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_detail, fragment)
-                .addToBackStack(TicketListBoughtFragment.class.getSimpleName())
-                .commit();
+        if(frameComingFrom != 0) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(frameComingFrom, fragment)
+                    .addToBackStack(TicketBoughtFinishedFragment.class.getSimpleName())
+                    .commit();
+        } else {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_detail, fragment)
+                    .addToBackStack(TicketBoughtFinishedFragment.class.getSimpleName())
+                    .commit();
+        }
     }
 }

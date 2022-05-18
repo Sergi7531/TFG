@@ -210,7 +210,7 @@ public class EditProfileFragment extends AppFragment {
                     FirebaseStorage.getInstance().getReference("/profileimgs/" + UUID.randomUUID() + ".jpg")
                             .putFile(uri)
                             .continueWithTask(task2 -> task2.getResult().getStorage().getDownloadUrl())
-                            .addOnSuccessListener(imageUrl -> saveUser(auth.getCurrentUser().getUid(), imageUrl));
+                            .addOnSuccessListener(imageUrl -> saveUser(imageUrl));
                 }
             });
         });
@@ -221,7 +221,7 @@ public class EditProfileFragment extends AppFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void saveUser(String userid, Uri imageUri) {
+    private void saveUser(Uri imageUri) {
 
         String imageUrl = "";
 

@@ -46,6 +46,7 @@ public class TicketsFragment extends AppFragment {
 
     public static RecyclerView recyclerTickets;
     public static LinearLayout linearPages;
+    public int frameComingFrom = 0;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -57,15 +58,10 @@ public class TicketsFragment extends AppFragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TicketsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    public TicketsFragment(int frameComingFrom) {
+        this.frameComingFrom = frameComingFrom;
+    }
+
     public static TicketsFragment newInstance(String param1, String param2) {
         TicketsFragment fragment = new TicketsFragment();
         Bundle args = new Bundle();
@@ -100,7 +96,7 @@ public class TicketsFragment extends AppFragment {
         hook(view);
         button.setOnClickListener(v -> {
             askCameraPermission();
-            setFragment(new QRScanFragment());
+            setFragment(new QRScanFragment(frameComingFrom));
         });
         getTicketsFromFirebase();
     }
@@ -141,10 +137,17 @@ public class TicketsFragment extends AppFragment {
     }
 
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_frame, fragment)
-                .commit();
+        if(frameComingFrom != 0) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(frameComingFrom, fragment)
+                    .commit();
+        } else {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_frame, fragment)
+                    .commit();
+        }
     }
 
     private void askCameraPermission() {
@@ -154,11 +157,11 @@ public class TicketsFragment extends AppFragment {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},
                         CAMERA_REQUEST_CODE);
             } else {
-                setFragment(new QRScanFragment());
+                setFragment(new QRScanFragment(frameComingFrom));
             }
         }
         else {
-            setFragment(new QRScanFragment());
+            setFragment(new QRScanFragment(frameComingFrom));
         }
     }
 }

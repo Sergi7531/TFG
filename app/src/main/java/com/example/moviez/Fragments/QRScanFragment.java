@@ -32,7 +32,8 @@ public class QRScanFragment extends AppFragment {
     private static final String ARG_PARAM2 = "param2";
     private CodeScanner codeScanner;
 
-    // TODO: Rename and change types of parameters
+    public int frameComingFrom = 0;
+
     private String mParam1;
     private String mParam2;
 
@@ -40,15 +41,10 @@ public class QRScanFragment extends AppFragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment QRScanFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    public QRScanFragment(int frameComingFrom) {
+        this.frameComingFrom = frameComingFrom;
+    }
+
     public static QRScanFragment newInstance(String param1, String param2) {
         QRScanFragment fragment = new QRScanFragment();
         Bundle args = new Bundle();
@@ -152,12 +148,19 @@ public class QRScanFragment extends AppFragment {
     }
 
     private void setFragment() {
+        if(frameComingFrom != 0) {
+            navigateWithFrame(frameComingFrom);
+        } else {
+            navigateWithFrame(R.id.main_frame);
+        }
+    }
+
+    private void navigateWithFrame(int frame) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         TicketsFragment ticketsFragment = new TicketsFragment();
         fragmentTransaction.replace(R.id.main_frame, ticketsFragment);
+        fragmentTransaction.replace(frame, ticketsFragment);
         fragmentTransaction.commit();
     }
-
-
 }
