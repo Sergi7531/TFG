@@ -25,17 +25,23 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Objects;
+
 public class LandingActivity extends AppCompatActivity {
 
     public static final String PREF_FILE_NAME = "MySharedFile";
+
     private AnimationFragment animationFragment;
     private LoginFragment loginFragment;
+
     public AppViewModel appViewModel;
+
     public FirebaseFirestore db;
     public FirebaseAuth auth;
+
     private boolean googleLogin;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         fragmentInit();
@@ -53,7 +59,7 @@ public class LandingActivity extends AppCompatActivity {
 
     }
 
-    private void logWithMail() {
+    private void logWithMail () {
 
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         String usernameLog = sharedPreferences.getString("userMail", "");
@@ -65,15 +71,14 @@ public class LandingActivity extends AppCompatActivity {
                             passwordLog
                     ).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    db.collection("users").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
+                    db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid()).addSnapshotListener((documentSnapshot, e) -> {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("logType", "mail");
                         editor.commit();
                         accessApp();
-
                     });
                 } else {
-                    Toast.makeText(this, task.getException().getLocalizedMessage(),
+                    Toast.makeText(this, Objects.requireNonNull(task.getException()).getLocalizedMessage(),
                             Toast.LENGTH_SHORT).show();
                 }
             });
@@ -84,7 +89,7 @@ public class LandingActivity extends AppCompatActivity {
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+    private void firebaseAuthWithGoogle (GoogleSignInAccount account) {
         SharedPreferences sharedPreferences = this.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if(account == null) {
@@ -105,33 +110,35 @@ public class LandingActivity extends AppCompatActivity {
         }
     }
 
-    private void createGoogleAccount(){
+    private void createGoogleAccount (){
         SharedPreferences sharedPreferences = this.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        db.collection("users").document(auth.getUid()).addSnapshotListener((snap, exception) -> {
-           if(snap.exists()) {
-               editor.putString("logType", "google");
-               editor.commit();
-               accessApp();
-           } else {
-               db.collection("users").document(auth.getUid()).set(new Models.User(auth.getCurrentUser().getUid(), auth.getCurrentUser().getDisplayName(), auth.getCurrentUser().getPhotoUrl().toString(), auth.getCurrentUser().getEmail()));
-           }
+        db.collection("users").document(Objects.requireNonNull(auth.getUid())).addSnapshotListener((snap, exception) -> {
+            if (snap != null) {
+                if(snap.exists()) {
+                    editor.putString("logType", "google");
+                    editor.commit();
+                    accessApp();
+                } else {
+                    db.collection("users").document(auth.getUid()).set(new Models.User(Objects.requireNonNull(auth.getCurrentUser()).getUid(), auth.getCurrentUser().getDisplayName(), Objects.requireNonNull(auth.getCurrentUser().getPhotoUrl()).toString(), auth.getCurrentUser().getEmail()));
+                }
+            }
         });
     }
 
-    private void accessApp(){
+    private void accessApp (){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    private void fragmentInit() {
+    private void fragmentInit () {
         animationFragment = new AnimationFragment();
         loginFragment = new LoginFragment();
     }
 
-    private void setFragment(Fragment fragment) {
+    private void setFragment (Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.landingFrame, fragment);
@@ -139,7 +146,7 @@ public class LandingActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed () {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.landingFrame);
         if (fragment instanceof PasswordFragment) {
             setFragment(new LoginFragment());

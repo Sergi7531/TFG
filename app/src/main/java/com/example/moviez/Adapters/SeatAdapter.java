@@ -44,13 +44,13 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
             enableSeat(seat, holder);
         } else if (seat.state.equals(Models.SeatState.SELECTED)) {
             holder.seatImage.setImageResource(R.drawable.ic_rectangle_selected);
-            selectSeat(seat, holder);
+            selectSeat(seat);
         }
 
         holder.seatImage.setOnClickListener(view -> {
             if (seat.state.equals(Models.SeatState.FREE)) {
                 holder.seatImage.setImageResource(R.drawable.ic_rectangle_selected);
-                selectSeat(seat, holder);
+                selectSeat(seat);
             } else if (seat.state.equals(Models.SeatState.SELECTED)) {
                 holder.seatImage.setImageResource(R.drawable.ic_rectangle_void);
                 enableSeat(seat, holder);
@@ -71,7 +71,7 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
         holder.seatImage.setClickable(true);
     }
 
-    private void selectSeat(Models.Seats seat, @NonNull SeatViewHolder holder) {
+    private void selectSeat(Models.Seats seat) {
         seat.state = Models.SeatState.SELECTED;
     }
 

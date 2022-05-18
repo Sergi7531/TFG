@@ -25,12 +25,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String PREF_FILE_NAME = "MySharedFile";
     private BottomNavigationView nav_bottom;
-    private FloatingActionButton buyMovie;
-    AppViewModel appViewModel;
 
     private HomeFragment homeFragment;
     private MoviesFragment moviesFragment;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private EditProfileFragment editProfileFragment;
     private MovieDetailedFragment movieDetailedFragment;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -54,9 +54,10 @@ public class MainActivity extends AppCompatActivity {
         editProfileFragment = new EditProfileFragment();
         movieDetailedFragment = new MovieDetailedFragment();
 
-        buyMovie = findViewById(R.id.buyMovie);
+        FloatingActionButton buyMovie = findViewById(R.id.buyMovie);
 
         setFragment(homeFragment);
+        nav_bottom.setSelectedItemId(R.id.home);
 
         nav_bottom.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.profile:
-                    profileFragment.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    ProfileFragment.userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
                     setFragment(profileFragment);
                     return true;
 
@@ -81,14 +82,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buyMovie.setOnClickListener(v -> {
+        buyMovie.setOnClickListener (v -> {
             buyTicketFragment = new BuyTicketFragment(0, R.id.main_frame);
             setFragment(buyTicketFragment);
         });
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed () {
 
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_frame);
         SharedPreferences sharedPreferences = this.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
@@ -112,14 +113,14 @@ public class MainActivity extends AppCompatActivity {
             setFragment(editProfileFragment);
         }
         else if (fragment instanceof MovieDetailedFragment) {
-            int filmId = appViewModel.currentFilmId;
+            int filmId = AppViewModel.currentFilmId;
             if (filmId == 0){
                 setFragment(homeFragment);
                 nav_bottom.setSelectedItemId(R.id.home);
             } else {
                 MovieDetailedFragment movieDetailedFragment2 = new MovieDetailedFragment(filmId);
                 setFragment(movieDetailedFragment2);
-                appViewModel.currentFilmId = 0;
+                AppViewModel.currentFilmId = 0;
             }
         }
         else if (fragment instanceof NewCommentFragment) {
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setFragment(Fragment fragment) {
+    private void setFragment (Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
