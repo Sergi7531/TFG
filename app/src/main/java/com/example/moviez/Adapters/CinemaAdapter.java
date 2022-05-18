@@ -22,10 +22,10 @@ import com.example.moviez.R;
 import java.util.List;
 
 public class CinemaAdapter extends RecyclerView.Adapter<CinemaAdapter.CinemaViewHolder> {
+
     public Context context;
     public List<Models.Cinema> cinemaList;
     public Fragment currentFragment;
-
 
     public CinemaAdapter(List<Models.Cinema> cinemas, Context context, HomeFragment currentFragment) {
         this.cinemaList = cinemas;
@@ -52,7 +52,6 @@ public class CinemaAdapter extends RecyclerView.Adapter<CinemaAdapter.CinemaView
         Glide.with(context).load(cinemaList.get(position).cinemaImg).into(holder.imageCinemaHolder);
 
         holder.nameCinemaHolder.setText(cinemaList.get(position).name);
-
     }
 
     @Override
@@ -60,16 +59,7 @@ public class CinemaAdapter extends RecyclerView.Adapter<CinemaAdapter.CinemaView
         return cinemaList.size();
     }
 
-    private void setFragment(Fragment fragment) {
-        currentFragment
-                .getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_frame, fragment)
-                .addToBackStack(HomeFragment.class.getSimpleName())
-                .commit();
-    }
-
-    public class CinemaViewHolder extends RecyclerView.ViewHolder {
+    public static class CinemaViewHolder extends RecyclerView.ViewHolder {
         public ConstraintLayout cinemaHolder;
         public ImageView imageCinemaHolder;
         public TextView nameCinemaHolder;

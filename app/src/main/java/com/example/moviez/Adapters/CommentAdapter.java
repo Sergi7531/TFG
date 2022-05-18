@@ -17,6 +17,7 @@ import com.example.moviez.R;
 import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
+
     List<Models.Comment> comments;
     Context context;
 
@@ -66,7 +67,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return comments.size();
     }
 
-    public class CommentViewHolder extends RecyclerView.ViewHolder {
+    public static class CommentViewHolder extends RecyclerView.ViewHolder {
         public TextView comment;
         public TextView username;
         public ImageView profileImage;
@@ -82,8 +83,5 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
             rating = itemView.findViewById(R.id.userRatingHolder);
             spoilerImage = itemView.findViewById(R.id.spoilerImage);
         }
-
     }
-
-
 }

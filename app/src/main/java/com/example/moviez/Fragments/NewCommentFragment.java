@@ -11,30 +11,19 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
 
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.google.android.material.textfield.TextInputEditText;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link NewCommentFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class NewCommentFragment extends AppFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-
     private static int filmId = 0;
 
-    private int mParam1;
-    private String mParam2;
     private TextInputEditText commentText;
     public Button publishButton;
     public CheckBox spoilerCheckBox;
@@ -44,11 +33,7 @@ public class NewCommentFragment extends AppFragment {
     public TextView actualRating;
     private float starsf = 0.0f;
 
-    public NewCommentFragment() {
-        // Required empty public constructor
-    }
-
-//    Constructor for the fragment with filmId:
+    public NewCommentFragment() { }
 
     public NewCommentFragment(int mParam1) {
         filmId = mParam1;
@@ -66,54 +51,45 @@ public class NewCommentFragment extends AppFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_comment, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         hook(view);
 
-        backButton.setOnClickListener(view1 -> {
-            getActivity().getSupportFragmentManager().popBackStack();
-        });
+        backButton.setOnClickListener(view1 -> getActivity().getSupportFragmentManager().popBackStack());
 
         userRatingBar.setRating(5);
 
-        userRatingBar.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    float touchPositionX = event.getX();
-                    float width = userRatingBar.getWidth();
-                    starsf = (touchPositionX / width) * 5.0f;
+        userRatingBar.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                float touchPositionX = event.getX();
+                float width = userRatingBar.getWidth();
+                starsf = (touchPositionX / width) * 5.0f;
 //                    Set stars to 1 decimal place:
-                    starsf = (float) Math.round(starsf * 10) / 10;
-                    if(starsf <=5 && starsf >= 1) {
-                        userRatingBar.setRating(starsf);
-                        actualRating.setText(String.valueOf(starsf));
-                        v.setPressed(false);
-                    }
-                }
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setPressed(true);
-                }
-
-                if (event.getAction() == MotionEvent.ACTION_CANCEL) {
+                starsf = (float) Math.round(starsf * 10) / 10;
+                if(starsf <=5 && starsf >= 1) {
+                    userRatingBar.setRating(starsf);
+                    actualRating.setText(String.valueOf(starsf));
                     v.setPressed(false);
                 }
-                return true;
             }
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                v.setPressed(true);
+            }
+
+            if (event.getAction() == MotionEvent.ACTION_CANCEL) {
+                v.setPressed(false);
+            }
+            return true;
         });
 
         publishButton.setOnClickListener(view1 -> {

@@ -3,7 +3,6 @@ package com.example.moviez.Activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -31,24 +30,21 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREF_FILE_NAME = "MySharedFile";
     private BottomNavigationView nav_bottom;
     private FloatingActionButton buyMovie;
-    private FrameLayout mainFrame;
     AppViewModel appViewModel;
 
-//    Fragments:
-        private HomeFragment homeFragment;
-        private MoviesFragment moviesFragment;
-        private TicketsFragment ticketsFragment;
-        private ProfileFragment profileFragment;
-        private BuyTicketFragment buyTicketFragment;
-        private EditProfileFragment editProfileFragment;
-        private MovieDetailedFragment movieDetailedFragment;
+    private HomeFragment homeFragment;
+    private MoviesFragment moviesFragment;
+    private TicketsFragment ticketsFragment;
+    private ProfileFragment profileFragment;
+    private BuyTicketFragment buyTicketFragment;
+    private EditProfileFragment editProfileFragment;
+    private MovieDetailedFragment movieDetailedFragment;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         nav_bottom = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
-        mainFrame = (FrameLayout) findViewById(R.id.main_frame);
 
         homeFragment = new HomeFragment();
         moviesFragment = new MoviesFragment();
@@ -62,30 +58,24 @@ public class MainActivity extends AppCompatActivity {
 
         setFragment(homeFragment);
 
-//        We need to set the default fragment to the home fragment:
-
-//        Iterate the mapa variable entries:
-
         nav_bottom.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
-                    //open the HomeFragment
-//                    get user favoriteGenres:
                     setFragment(homeFragment);
                     return true;
+
                 case R.id.movies:
-                    //open the MoviesFragment
                     setFragment(moviesFragment);
                     return true;
                 case R.id.tickets:
-                    //open the TicketsFragment
                     setFragment(ticketsFragment);
                     return true;
+
                 case R.id.profile:
-                    //open the ProfileFragment
                     profileFragment.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     setFragment(profileFragment);
                     return true;
+
                 default:
                     return false;
             }
@@ -135,16 +125,6 @@ public class MainActivity extends AppCompatActivity {
         else if (fragment instanceof NewCommentFragment) {
             setFragment(movieDetailedFragment);
         }
-
-        /*
-        if (nav_bottom.getSelectedItemId() == R.id.home) {
-            super.onBackPressed();
-            finish();
-        }
-        else {
-            nav_bottom.setSelectedItemId(R.id.home);
-        }
-        */
     }
 
     private void setFragment(Fragment fragment) {

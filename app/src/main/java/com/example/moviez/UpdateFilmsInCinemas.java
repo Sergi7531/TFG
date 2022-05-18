@@ -3,6 +3,7 @@ package com.example.moviez;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 
@@ -49,15 +50,11 @@ public class UpdateFilmsInCinemas {
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
-            public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
-//                Get the Dates from the response:
+            public void onResponse(@NonNull Call<Responses.BillboardResponse> call, @NonNull Response<Responses.BillboardResponse> response) {
                 Responses.BillboardResponse responseBody = response.body();
                 if (responseBody != null) {
                     Responses.Dates dates = responseBody.dates;
                     dateStart.postValue(dates.minimum);
-
-                    //Get the number of days until the dateEnd
-
 
                     LocalDate localDate = LocalDate.parse(dates.maximum);
                     LocalDate localDate2 = LocalDate.now();
@@ -74,12 +71,11 @@ public class UpdateFilmsInCinemas {
             }
 
             @Override
-            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<Responses.BillboardResponse> call, @NonNull Throwable t) {
                 t.printStackTrace();
             }
         });
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void createMovieSessions(int daysUntilDateEnd) {
@@ -87,74 +83,63 @@ public class UpdateFilmsInCinemas {
         IMDB.api.getNowPlaying(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
 
             @Override
-            public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
+            public void onResponse(@NonNull Call<Responses.BillboardResponse> call, @NonNull Response<Responses.BillboardResponse> response) {
                 if (response.body() != null) {
                     Responses.BillboardResponse responseBody = response.body();
                     for (Models.Film film : responseBody.results) {
-//                        If the film is not in the database, create it:
 
                         IMDB.api.getMovie(film.id, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
                             @Override
-                            public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
+                            public void onResponse(@NonNull Call<Models.Film> call, @NonNull Response<Models.Film> response) {
                                 if (response.body() != null) {
-                                    FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).set(new Models.Film(film.id, response.body().poster_path, response.body().runtime, response.body().overview, response.body().title)).addOnSuccessListener(success -> {
+                                    FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).set(new Models.Film(film.id, response.body().poster_path, response.body().runtime, response.body().overview, response.body().title)).addOnSuccessListener(success -> cinemas.observeForever(cinemas -> {
+                                        Models.Cinema cinema = cinemas.get(new Random().nextInt(cinemas.size()));
 
-                                        cinemas.observeForever(cinemas -> {
-                                            Models.Cinema cinema = cinemas.get(new Random().nextInt(cinemas.size()));
+                                        FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").get().addOnCompleteListener(query -> {
+                                            if (query.isSuccessful()) {
+                                                if (query.getResult().size() == 0) {
+                                                    FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").document(cinema.cinemaid).set(cinema);
 
-                                            FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").get().addOnCompleteListener(query -> {
-                                                if (query.isSuccessful()) {
-                                                    if (query.getResult().size() == 0) {
-                                                        FirebaseFirestore.getInstance().collection("movie_sessions").document(String.valueOf(film.id)).collection("cinemas").document(cinema.cinemaid).set(cinema);
+                                                    int roomId = rooms.get(new Random().nextInt(rooms.size()));
+                                                    FirebaseFirestore.getInstance().collection("movie_sessions")
+                                                            .document(String.valueOf(film.id)).collection("cinemas")
+                                                            .document(cinema.cinemaid).collection("rooms")
+                                                            .document(String.valueOf(roomId))
+                                                            .set(new Models.Room(roomId, "Sala " + roomId, cinema.cinemaid, film.id));
+                                                    if (rooms.stream().anyMatch(room -> room == roomId)) {
+                                                        rooms.remove((Integer) roomId);
+                                                    }
 
-//                                                       Add the rooms to the cinema (randomly) from the list of rooms:
+                                                    for (int i = 0; i <= daysUntilDateEnd; i++) {
+                                                        LocalDate localDate = LocalDate.now().plusDays(i);
+                                                        for (int j = 0; j < 24; j++) {
+                                                            LocalTime localTime = LocalTime.of(j, 0);
 
-                                                        int roomId = rooms.get(new Random().nextInt(rooms.size()));
-                                                        FirebaseFirestore.getInstance().collection("movie_sessions")
-                                                                .document(String.valueOf(film.id)).collection("cinemas")
-                                                                .document(cinema.cinemaid).collection("rooms")
-                                                                .document(String.valueOf(roomId))
-                                                                .set(new Models.Room(roomId, "Sala " + roomId, cinema.cinemaid, film.id));
-                                                        if (rooms.stream().anyMatch(room -> room == roomId)) {
-                                                            rooms.remove(rooms.indexOf(roomId));
-                                                        }
-
-//                                                      For every 3 hours until the dateEnd, add a new session:
-
-                                                        for (int i = 0; i <= daysUntilDateEnd; i++) {
-                                                            LocalDate localDate = LocalDate.now().plusDays(i);
-                                                            for (int j = 0; j < 24; j++) {
-                                                                LocalTime localTime = LocalTime.of(j, 0);
-
-//                                                              Film sessions will be every 3 hours from 9:00 to 22:00
-
-                                                                if (localTime.isAfter(LocalTime.of(10, 0)) && localTime.isBefore(LocalTime.of(22, 0))) {
-                                                                    FirebaseFirestore.getInstance().collection("movie_sessions")
-                                                                            .document(String.valueOf(film.id))
-                                                                            .collection("cinemas")
-                                                                            .document(cinema.cinemaid)
-                                                                            .collection("rooms")
-                                                                            .document(String.valueOf(roomId))
-                                                                            .collection("sessions")
-                                                                            .document(localDate.getMonthValue() + "-" + localDate.getDayOfMonth() + "-" + localTime.getHour())
-                                                                            .set(new Models.Session(localDate.getMonthValue() + "-" + localDate.getDayOfMonth() + "-" + localTime.getHour(), localDate.getMonthValue() + "", localDate.getDayOfMonth() + "", localTime.getHour() + ""));
-                                                                }
-                                                                j = j + 2;
+                                                            if (localTime.isAfter(LocalTime.of(10, 0)) && localTime.isBefore(LocalTime.of(22, 0))) {
+                                                                FirebaseFirestore.getInstance().collection("movie_sessions")
+                                                                        .document(String.valueOf(film.id))
+                                                                        .collection("cinemas")
+                                                                        .document(cinema.cinemaid)
+                                                                        .collection("rooms")
+                                                                        .document(String.valueOf(roomId))
+                                                                        .collection("sessions")
+                                                                        .document(localDate.getMonthValue() + "-" + localDate.getDayOfMonth() + "-" + localTime.getHour())
+                                                                        .set(new Models.Session(localDate.getMonthValue() + "-" + localDate.getDayOfMonth() + "-" + localTime.getHour(), localDate.getMonthValue() + "", localDate.getDayOfMonth() + "", localTime.getHour() + ""));
                                                             }
+                                                            j = j + 2;
                                                         }
                                                     }
                                                 }
-                                            });
-
+                                            }
                                         });
 
-                                    });
+                                    }));
 
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<Models.Film> call, Throwable t) {
+                            public void onFailure(@NonNull Call<Models.Film> call, @NonNull Throwable t) {
                                 Log.d("Error", t.getMessage());
                             }
                         });
@@ -163,11 +148,9 @@ public class UpdateFilmsInCinemas {
             }
 
             @Override
-            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<Responses.BillboardResponse> call, @NonNull Throwable t) {
                 Log.d("Error", t.getMessage());
             }
         });
-
     }
-
 }

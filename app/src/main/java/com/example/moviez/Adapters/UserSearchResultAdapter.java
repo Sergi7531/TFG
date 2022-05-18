@@ -23,6 +23,7 @@ import com.example.moviez.R;
 import java.util.List;
 
 public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResultAdapter.UserSearchResultViewHolder>{
+
     Context context;
     List<Models.User> users;
     Fragment currentFragment;
@@ -32,7 +33,6 @@ public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResu
         this.users = users;
         this.currentFragment = currentFragment;
     }
-
 
     @NonNull
     @Override
@@ -86,7 +86,7 @@ public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResu
     }
 
 
-    public class UserSearchResultViewHolder extends RecyclerView.ViewHolder {
+    public static class UserSearchResultViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout searchHolderLayout;
         ImageView userProfilePic;
         TextView usernameSearch;

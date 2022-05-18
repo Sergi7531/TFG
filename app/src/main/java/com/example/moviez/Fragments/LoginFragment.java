@@ -16,7 +16,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -32,15 +31,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LoginFragment extends AppFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public static final String PREF_FILE_NAME = "MySharedFile";
@@ -52,24 +44,9 @@ public class LoginFragment extends AppFragment {
     public TextView forgotPassword;
     public CardView googleButton;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
     public LoginFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LoginFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static LoginFragment newInstance(String param1, String param2) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
@@ -83,19 +60,14 @@ public class LoginFragment extends AppFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
+
     ActivityResultLauncher<Intent> signInClient = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
@@ -106,6 +78,7 @@ public class LoginFragment extends AppFragment {
                     }
                 }
             });
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -114,9 +87,8 @@ public class LoginFragment extends AppFragment {
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        registerText.setOnClickListener(view2 -> {
-            setFragment(new RegisterFragment());
-        });
+        registerText.setOnClickListener(view2 -> setFragment(new RegisterFragment()));
+
         GoogleSignInClient googleSignInAccount = GoogleSignIn.getClient(requireContext(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -135,9 +107,7 @@ public class LoginFragment extends AppFragment {
                             editor.putString("password", passwordLog.getText().toString());
                             editor.putString("logType", "mail");
                             editor.commit();
-                            if (documentSnapshot.toObject(Models.User.class).favoriteGenres.size() == 0) {
-                                accessApp(false, null);
-                            } else accessApp(true, view);
+                            accessApp(documentSnapshot.toObject(Models.User.class).favoriteGenres.size() != 0);
                         });
                     } else {
                         Toast.makeText(requireContext(), task.getException().getLocalizedMessage(),
@@ -146,15 +116,10 @@ public class LoginFragment extends AppFragment {
                 });
             }
         });
-        googleButton.setOnClickListener(view1 -> {
-            signInClient.launch(googleSignInAccount.getSignInIntent());
-        });
+        googleButton.setOnClickListener(view1 -> signInClient.launch(googleSignInAccount.getSignInIntent()));
 
-        forgotPassword.setOnClickListener(view1 -> {
-            setFragment(new PasswordFragment());
-        });
+        forgotPassword.setOnClickListener(view1 -> setFragment(new PasswordFragment()));
     }
-
 
     private void hook(View view) {
         usernameLog = view.findViewById(R.id.mailLog);
@@ -164,7 +129,9 @@ public class LoginFragment extends AppFragment {
         googleButton = view.findViewById(R.id.googleButton);
         forgotPassword = view.findViewById(R.id.forgotPasswordText);
     }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+
         if(account == null) return;
 
         FirebaseAuth.getInstance().signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null))
@@ -182,15 +149,15 @@ public class LoginFragment extends AppFragment {
                 .addOnCompleteListener(task -> {
                     editor.putString("logType", "google");
                     editor.commit();
-                    accessApp(false, null);
+                    accessApp(false);
         });
     }
-    private void accessApp(boolean hasGenres, @Nullable View view) {
+
+    private void accessApp(boolean hasGenres) {
         if (hasGenres) {
             Intent intent = new Intent();
             intent.setClass(getActivity(), MainActivity.class);
             getActivity().startActivity(intent);
-           // requireActivity().finish();
         }
         else {
             setFragment(new PreferencesFragment());
@@ -198,10 +165,12 @@ public class LoginFragment extends AppFragment {
     }
 
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.landingFrame, fragment)
-                .commit();
+        if (getFragmentManager() != null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.landingFrame, fragment)
+                    .commit();
+        }
     }
     @Override
     public void onAttach(@NonNull Context context) {

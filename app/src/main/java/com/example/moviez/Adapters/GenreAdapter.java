@@ -19,6 +19,7 @@ import com.example.moviez.R;
 import java.util.List;
 
 public class GenreAdapter extends BaseAdapter {
+
     Context context;
     List<Genre> genresList;
 
@@ -73,7 +74,7 @@ public class GenreAdapter extends BaseAdapter {
         genreCard.setOnClickListener(v -> {
 
             for (Genre g : genresList) {
-                if (g.getName().equals(titleGenreHolder.getText())) {
+                if (g.getName().contentEquals(titleGenreHolder.getText())) {
                     if (!isSelected(g.getId())) {
                         PreferencesFragment.selectedGenres.add(g.getId());
                         blueLayer.setAlpha(1f);
@@ -88,7 +89,6 @@ public class GenreAdapter extends BaseAdapter {
                 }
             }
         });
-
         return view2;
     }
 }

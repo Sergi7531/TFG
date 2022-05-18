@@ -29,25 +29,19 @@ import com.example.moviez.Adapters.UserActivityAdapter;
 import com.example.moviez.Adapters.UserSearchResultAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class HomeFragment extends AppFragment {
-
-
+    
     List<Integer> genresUser = new ArrayList<>();
     private RecyclerView recyclerForYou;
     private RecyclerView recyclerFriends;
 
     public List<Models.User> users = new ArrayList<>();
-    public List<Models.UserActivity> userActivities = new ArrayList<>();
     public TextInputEditText searchInputUser;
     public RecyclerView recyclerViewUserSearch;
     public RecyclerView recyclerCinemas;
@@ -71,16 +65,14 @@ public class HomeFragment extends AppFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         hook(view);
 
         forYou();
 
-        buttonActivity.setOnClickListener(v -> {
-            setFocusToUserSearchBar();
-        });
+        buttonActivity.setOnClickListener(v -> setFocusToUserSearchBar());
 
         recyclerViewUserSearch = view.findViewById(R.id.recyclerViewUserSearch);
 
@@ -115,20 +107,13 @@ public class HomeFragment extends AppFragment {
         List<Models.User> following = new ArrayList<>();
         List<Models.UserActivity> userActivities = new ArrayList<>();
 
-//        Get all the users that the current user is following:
-
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        following.add(document.toObject(Models.User.class));
-                    }
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    following.add(document.toObject(Models.User.class));
                 }
             }
         });
-
-//        Get all the favoritedFilms of the users that the current user is following:
 
         recyclerFriends.setAdapter(userActivityAdapter = new UserActivityAdapter(userActivities, requireActivity(), HomeFragment.this));
 
@@ -137,54 +122,43 @@ public class HomeFragment extends AppFragment {
         recyclerFriends.setLayoutManager(layoutManager);
         snapHelper.attachToRecyclerView(recyclerFriends);
 
-        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        db.collection("users").document(document.getId()).collection("favoritedFilms").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot documentActivity : task.getResult()) {
-                                        Models.UserActivity userActivity = new Models.UserActivity();
-                                        userActivity.movieImage = documentActivity.toObject(Models.Film.class).poster_path;
-                                        userActivity.userImage = document.toObject(Models.User.class).profileImageURL;
-                                        userActivity.username = document.toObject(Models.User.class).username;
-                                        userActivity.movieName = documentActivity.toObject(Models.Film.class).title;
-                                        userActivity.movieId = documentActivity.toObject(Models.Film.class).id;
-                                        userActivity.textToShow = "El usuario " + userActivity.username + " ha marcado como favorita " + userActivity.movieName;
-                                        userActivities.add(userActivity);
-                                    }
-                                }
+        db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    db.collection("users").document(document.getId()).collection("favoritedFilms").get().addOnCompleteListener(task12 -> {
+                        if (task12.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentActivity : task12.getResult()) {
+                                Models.UserActivity userActivity = new Models.UserActivity();
+                                userActivity.movieImage = documentActivity.toObject(Models.Film.class).poster_path;
+                                userActivity.userImage = document.toObject(Models.User.class).profileImageURL;
+                                userActivity.username = document.toObject(Models.User.class).username;
+                                userActivity.movieName = documentActivity.toObject(Models.Film.class).title;
+                                userActivity.movieId = documentActivity.toObject(Models.Film.class).id;
+                                userActivity.textToShow = "El usuario " + userActivity.username + " ha marcado como favorita " + userActivity.movieName;
+                                userActivities.add(userActivity);
                             }
-                        });
+                        }
+                    });
 
-                        db.collection("users").document(document.getId()).collection("watchedFilms").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot documentActivity : task.getResult()) {
-                                        Models.UserActivity userActivity = new Models.UserActivity();
-                                        userActivity.movieImage = documentActivity.toObject(Models.Film.class).poster_path;
-                                        userActivity.userImage = document.toObject(Models.User.class).profileImageURL;
-                                        userActivity.username = document.toObject(Models.User.class).username;
-                                        userActivity.movieName = documentActivity.toObject(Models.Film.class).title;
-                                        userActivity.movieId = documentActivity.toObject(Models.Film.class).id;
-                                        userActivity.textToShow = "El usuario " +userActivity.username + " ha visto la película " + userActivity.movieName;
-                                        userActivities.add(userActivity);
-                                    }
-                                }
-                                userActivityAdapter.notifyDataSetChanged();
-                                checkVoidList(recyclerFriends.getAdapter().getItemCount(), buttonActivity);
+                    db.collection("users").document(document.getId()).collection("watchedFilms").get().addOnCompleteListener(task1 -> {
+                        if (task1.isSuccessful()) {
+                            for (QueryDocumentSnapshot documentActivity : task1.getResult()) {
+                                Models.UserActivity userActivity = new Models.UserActivity();
+                                userActivity.movieImage = documentActivity.toObject(Models.Film.class).poster_path;
+                                userActivity.userImage = document.toObject(Models.User.class).profileImageURL;
+                                userActivity.username = document.toObject(Models.User.class).username;
+                                userActivity.movieName = documentActivity.toObject(Models.Film.class).title;
+                                userActivity.movieId = documentActivity.toObject(Models.Film.class).id;
+                                userActivity.textToShow = "El usuario " +userActivity.username + " ha visto la película " + userActivity.movieName;
+                                userActivities.add(userActivity);
                             }
-                        });
-                    }
+                        }
+                        userActivityAdapter.notifyDataSetChanged();
+                        checkVoidList(recyclerFriends.getAdapter().getItemCount(), buttonActivity);
+                    });
                 }
             }
         });
-
-//        get the cinemas collection:
 
         List<Models.Cinema> cinemas = new ArrayList<>();
 
@@ -227,24 +201,20 @@ public class HomeFragment extends AppFragment {
 
         users.clear();
 
-        db.collection("users").orderBy("username").startAt(query).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Models.User user = document.toObject(Models.User.class);
-                            if (user.username.contains(query) && !user.userid.equals(auth.getCurrentUser().getUid())) {
-                                users.add(user);
-                            }
-                    }
-                    adapter.notifyDataSetChanged();
-                } else {
-                    Log.d("TAG", "Error getting documents: ", task.getException());
+        db.collection("users").orderBy("username").startAt(query).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    Models.User user = document.toObject(Models.User.class);
+                        if (user.username.contains(query) && !user.userid.equals(auth.getCurrentUser().getUid())) {
+                            users.add(user);
+                        }
                 }
+                adapter.notifyDataSetChanged();
+            } else {
+                Log.d("TAG", "Error getting documents: ", task.getException());
             }
         });
     }
-
 
     private void hook(View view) {
         recyclerFriends = view.findViewById(R.id.recyclerFriends);
@@ -265,7 +235,7 @@ public class HomeFragment extends AppFragment {
                 genresUser.clear();
                 genresUser.addAll(documentSnapshot.toObject(Models.User.class).getFavoriteGenres());
 
-                appViewModel.getMoviesForYou(genresUser);
+                appViewModel.getMoviesForYou();
 
                 appViewModel.forYouMovies.observe(getViewLifecycleOwner(), filmsByGenreForUser -> {
                     if (filmsByGenreForUser != null) {
@@ -281,9 +251,11 @@ public class HomeFragment extends AppFragment {
         });
     }
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.landingFrame, fragment)
-                .commit();
+        if (getFragmentManager() != null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.landingFrame, fragment)
+                    .commit();
+        }
     }
 }

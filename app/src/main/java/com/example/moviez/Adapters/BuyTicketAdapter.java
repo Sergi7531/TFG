@@ -22,6 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyTicketViewHolder> {
+
     Context context;
     List<Models.Ticket> tickets;
     Fragment currentFragment;
@@ -106,7 +107,7 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
         }
 
         holder.cinemaName.setText(tickets.get(position).cinemaName);
-        holder.day.setText(day + " " + month + ".");
+        holder.day.setText(String.format("%s %s.", day, month));
         holder.time.setText(tickets.get(position).time);
         holder.seat.setText(tickets.get(position).seat+1 + "");
         holder.row.setText(tickets.get(position).row+1 + "");
@@ -118,8 +119,7 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
         return tickets.size();
     }
 
-
-    public class BuyTicketViewHolder extends RecyclerView.ViewHolder {
+    public static class BuyTicketViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView movieImage;
         public TextView movieName;
@@ -141,7 +141,5 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
             time = itemView.findViewById(R.id.ticketHora);
             day = itemView.findViewById(R.id.ticketDia);
         }
-
     }
-
 }

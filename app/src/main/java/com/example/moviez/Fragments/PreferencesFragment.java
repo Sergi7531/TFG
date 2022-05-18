@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.moviez.Activities.MainActivity;
 import com.example.moviez.Adapters.GenreAdapter;
@@ -22,15 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PreferencesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PreferencesFragment extends AppFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     ArrayList<Genre> genres;
@@ -41,23 +33,8 @@ public class PreferencesFragment extends AppFragment {
 
     public static List<Integer> selectedGenres = new ArrayList<>();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public PreferencesFragment() { }
 
-    public PreferencesFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PreferencesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static PreferencesFragment newInstance(String param1, String param2) {
         PreferencesFragment fragment = new PreferencesFragment();
         Bundle args = new Bundle();
@@ -70,16 +47,11 @@ public class PreferencesFragment extends AppFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_preferences, container, false);
     }
 
@@ -91,19 +63,14 @@ public class PreferencesFragment extends AppFragment {
         GenreAdapter adapter = new GenreAdapter(getContext(), genres);
         listViewGenres.setAdapter(adapter);
 
-//        listViewGenres.setLayoutManager(new GridLayoutManager(requireContext(), 2,
-//                RecyclerView.VERTICAL, false));
-
         linearSkip.setOnClickListener(view1 -> {
             Intent intent = new Intent(requireContext(), MainActivity.class);
             startActivity(intent);
         });
-        continueButton.setOnClickListener(v -> {
-                db.collection("users").document(auth.getCurrentUser().getUid()).update("favoriteGenres", selectedGenres).addOnSuccessListener(success -> {
-                Intent intent = new Intent(requireContext(), MainActivity.class);
-                startActivity(intent);
-            });
-        });
+        continueButton.setOnClickListener(v -> db.collection("users").document(auth.getCurrentUser().getUid()).update("favoriteGenres", selectedGenres).addOnSuccessListener(success -> {
+        Intent intent = new Intent(requireContext(), MainActivity.class);
+        startActivity(intent);
+    }));
     }
 
     private void hook(View view) {

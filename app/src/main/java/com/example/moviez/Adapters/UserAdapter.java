@@ -19,6 +19,7 @@ import com.example.moviez.R;
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
+
     Context context;
     List<Models.User> users;
     public Fragment currentFragment;
@@ -61,11 +62,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
     private void setFragment(Fragment fragment) {
-        currentFragment
-                .getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_frame, fragment)
-                .commit();
+        if (currentFragment
+                .getFragmentManager() != null) {
+            currentFragment
+                    .getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_frame, fragment)
+                    .commit();
+        }
 
     }
 
@@ -75,7 +79,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     }
 
 
-    class UserViewHolder extends RecyclerView.ViewHolder {
+    static class UserViewHolder extends RecyclerView.ViewHolder {
         ImageView userImageHolder;
         TextView usernameHolder;
 

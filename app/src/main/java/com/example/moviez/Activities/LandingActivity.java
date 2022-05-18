@@ -14,13 +14,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.moviez.Fragments.AnimationFragment;
-import com.example.moviez.Fragments.BuyTicketFragment;
 import com.example.moviez.Fragments.LoginFragment;
-import com.example.moviez.Fragments.MoviesFragment;
 import com.example.moviez.Fragments.PasswordFragment;
-import com.example.moviez.Fragments.ProfileFragment;
-import com.example.moviez.Fragments.RegisterFragment;
-import com.example.moviez.Fragments.TicketsFragment;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.example.moviez.UpdateFilmsInCinemas;
@@ -35,7 +30,6 @@ public class LandingActivity extends AppCompatActivity {
     public static final String PREF_FILE_NAME = "MySharedFile";
     private AnimationFragment animationFragment;
     private LoginFragment loginFragment;
-    private RegisterFragment registerFragment;
     public AppViewModel appViewModel;
     public FirebaseFirestore db;
     public FirebaseAuth auth;
@@ -57,16 +51,7 @@ public class LandingActivity extends AppCompatActivity {
 
         firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(this));
         if (!googleLogin) logWithMail();
-//        if (!mailLogin) {
-//            Handler handler = new Handler();
-//            Runnable run = new Runnable() {
-//                @Override
-//                public void run() {
-//                    setFragment(loginFragment);
-//                }
-//            };
-//            handler.postDelayed(run, 2000);
-//        }
+
     }
 
     private void logWithMail() {
@@ -95,12 +80,7 @@ public class LandingActivity extends AppCompatActivity {
             });
         } else {
             Handler handler = new Handler();
-            Runnable run = new Runnable() {
-                @Override
-                public void run() {
-                    setFragment(loginFragment);
-                }
-            };
+            Runnable run = () -> setFragment(loginFragment);
             handler.postDelayed(run, 2000);
         }
     }
@@ -124,10 +104,8 @@ public class LandingActivity extends AppCompatActivity {
                         }
                     });
         }
-
-
-
     }
+
     private void createGoogleAccount(){
         SharedPreferences sharedPreferences = this.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -142,6 +120,7 @@ public class LandingActivity extends AppCompatActivity {
            }
         });
     }
+
     private void accessApp(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -151,7 +130,6 @@ public class LandingActivity extends AppCompatActivity {
     private void fragmentInit() {
         animationFragment = new AnimationFragment();
         loginFragment = new LoginFragment();
-        registerFragment = new RegisterFragment();
     }
 
     private void setFragment(Fragment fragment) {
@@ -169,6 +147,5 @@ public class LandingActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-
     }
 }

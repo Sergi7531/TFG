@@ -21,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AppViewModel extends ViewModel {
+
     public static MutableLiveData<Responses.BillboardResponse> upcomingMoviesResponse = new MutableLiveData<>();
     public static MutableLiveData<Responses.BillboardResponse> actualMoviesInCinemaResponse = new MutableLiveData<>();
     public static MutableLiveData<Responses.SearchResponse> moviesByQuery = new MutableLiveData<>();
@@ -30,7 +31,6 @@ public class AppViewModel extends ViewModel {
     public static MutableLiveData<Responses.FullCastResponse> fullCast = new MutableLiveData<>();
 
     public static MutableLiveData<String> maximumDate = new MutableLiveData<>();
-    //    We will use this counters in case we need to use the "page" param (so we take control of the results number)
     public static int contPage = 0;
 
     public MutableLiveData<Uri> uriImagenSeleccionada = new MutableLiveData<>();
@@ -41,8 +41,6 @@ public class AppViewModel extends ViewModel {
     public static FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public static int currentFilmId;
-
-
 
     public static void getUpcomingMovies() {
         IMDB.api.getUpcoming(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
@@ -62,7 +60,9 @@ public class AppViewModel extends ViewModel {
             @Override
             public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
                 actualMoviesInCinemaResponse.postValue(response.body());
-                maximumDate.postValue(response.body().dates.maximum);
+                if (response.body() != null) {
+                    maximumDate.postValue(response.body().dates.maximum);
+                }
             }
             @Override
             public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
@@ -71,13 +71,10 @@ public class AppViewModel extends ViewModel {
         });
     }
 
-//    This query will be executed a lot of times, so we need to cache the results by applying a "internPages" variable that will limit the results to 10 at each API request:
-
     public static void searchMoviesByQuery(String query) {
         IMDB.api.search(IMDB.apiKey, "es-ES", query, 1).enqueue(new Callback<Responses.SearchResponse>() {
             @Override
             public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
-//                We need to limit the number of results to 10:
                 if (response.body() != null) {
                     Responses.SearchResponse searchResponse = response.body();
                     if (searchResponse.results.size() > 10) {
@@ -89,7 +86,6 @@ public class AppViewModel extends ViewModel {
                         moviesByQuery.postValue(response.body());
                     }
                 }
-
             }
             @Override
             public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
@@ -98,7 +94,7 @@ public class AppViewModel extends ViewModel {
         });
     }
 
-    public static void getMoviesForYou(List<Integer> genresUser) {
+    public static void getMoviesForYou() {
 
         forYouMovies.setValue(null);
 
@@ -110,46 +106,9 @@ public class AppViewModel extends ViewModel {
 
         getMoviesForYouByCollection("moviesToWatch");
 
-//        getMoviesForYouByCollection("favoriteGenres");
-
-//        If after the 3 methods the forYouMovies list is empty,
-//        We need to get the movies from the API and filter them by the genres the user has selected:
-
-/*
- if (forYouMovies.getValue() == null) {
-//            Get the api response:
-            IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
-                @Override
-                public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
-//                   Iterate the user genres and get the movies that match with them:
-                    List<Models.Film> moviesByGenres = new ArrayList<>();
-                    if (genresUser.size() > 0) {
-//                           For with i = 0, we will get the movies that match with the first genre of the user:
-                        for (int i = 0; i < response.body().results.size(); i++) {
-                            for (int genre : genresUser) {
-                                if (response.body().results.get(i).genre_ids.contains(genre)) {
-                                    moviesByGenres.add(response.body().results.get(i));
-                                }
-                            }
-                        }
-                        response.body().results = moviesByGenres;
-                        forYouMovies.postValue(response.body());
-                    } else {
-                        forYouMovies.postValue(response.body());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
-                    t.getMessage();
-                }
-            });
-        }
- */
     }
 
     private static void getMoviesForYouByCollection(String collection) {
-//        TODO: Check if the movie to be added was already added to the collection:
         db.collection("users").document(auth.getCurrentUser().getUid()).collection(collection).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 IMDB.api.getRecommendations(Integer.parseInt(documentSnapshot.getId()), IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
@@ -163,13 +122,11 @@ public class AppViewModel extends ViewModel {
                             forYouMovies.postValue(response.body());
                         }
                     }
-
                     @Override
                     public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
                         t.getMessage();
                     }
                 });
-
             }
         });
     }
@@ -200,13 +157,11 @@ public class AppViewModel extends ViewModel {
                     fullCast.postValue(response.body());
                 }
             }
-
             @Override
             public void onFailure(Call<Responses.FullCastResponse> call, Throwable t) {
                 t.getMessage();
             }
         });
-
     }
 
     public void setUriImagenSeleccionada(Uri uri) {

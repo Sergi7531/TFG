@@ -13,22 +13,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.moviez.Models;
 import com.example.moviez.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChangeUsernameFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ChangeUsernameFragment extends AppFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -37,23 +28,9 @@ public class ChangeUsernameFragment extends AppFragment {
     private Button confirm_button;
     private ImageView goBackUsername;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public ChangeUsernameFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChangeUsernameFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ChangeUsernameFragment newInstance(String param1, String param2) {
         ChangeUsernameFragment fragment = new ChangeUsernameFragment();
         Bundle args = new Bundle();
@@ -66,17 +43,11 @@ public class ChangeUsernameFragment extends AppFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        ViewPager2 etc...
 
         hook(view);
 
@@ -86,9 +57,7 @@ public class ChangeUsernameFragment extends AppFragment {
             }
         });
 
-        goBackUsername.setOnClickListener(v -> {
-            setFragment(new EditProfileFragment());
-        });
+        goBackUsername.setOnClickListener(v -> setFragment(new EditProfileFragment()));
     }
 
     private void changeUsername() {
@@ -100,34 +69,31 @@ public class ChangeUsernameFragment extends AppFragment {
                 .build();
 
         auth.getCurrentUser().updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Username updated!", Toast.LENGTH_SHORT).show();
-                            DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(getContext(), "Username updated!", Toast.LENGTH_SHORT).show();
+                        DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
 
-                            db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
-                                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                        db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
+                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
 
-                                    db.collection("comments").document(documentSnapshot.getId()).collection("comments").get().addOnSuccessListener(documentSnapshots -> {
-                                        for (DocumentSnapshot documentSnapshot1 : documentSnapshots.getDocuments()) {
-                                            if (documentSnapshot1.toObject(Models.Comment.class).userid.equals(auth.getCurrentUser().getUid())) {
-                                                Models.Comment comment = documentSnapshot1.toObject(Models.Comment.class);
-                                                comment.username = name;
-                                                db.collection("comments")
-                                                        .document(documentSnapshot.getId())
-                                                        .collection("comments")
-                                                        .document(documentSnapshot1.getId())
-                                                        .set(comment);
+                                db.collection("comments").document(documentSnapshot.getId()).collection("comments").get().addOnSuccessListener(documentSnapshots -> {
+                                    for (DocumentSnapshot documentSnapshot1 : documentSnapshots.getDocuments()) {
+                                        if (documentSnapshot1.toObject(Models.Comment.class).userid.equals(auth.getCurrentUser().getUid())) {
+                                            Models.Comment comment = documentSnapshot1.toObject(Models.Comment.class);
+                                            comment.username = name;
+                                            db.collection("comments")
+                                                    .document(documentSnapshot.getId())
+                                                    .collection("comments")
+                                                    .document(documentSnapshot1.getId())
+                                                    .set(comment);
 
-                                            }
                                         }
-                                    });
-                                }
-                            });
-                            userDoc.update("username", name);
-                        }
+                                    }
+                                });
+                            }
+                        });
+                        userDoc.update("username", name);
                     }
                 });
     }
@@ -135,16 +101,7 @@ public class ChangeUsernameFragment extends AppFragment {
     public boolean validateData() {
 
         String name = newName.getText().toString();
-        String confirm = confirmName.getText().toString();                                    /*
-                                    db.collection("comments").document(documentSnapshot.getId()).collection("comments").document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshots, e) -> {
-                                            Models.Comment comment = documentSnapshot.toObject(Models.Comment.class);
-                                            comment.username = name;
-                                            db.collection("comments")
-                                                    .document(documentSnapshot.getId())
-                                                    .collection("comments")
-                                                    .document(auth.getCurrentUser().getUid())
-                                                    .set(comment);
-                                    });*/
+        String confirm = confirmName.getText().toString();
 
         if (name.matches("") || confirm.matches("")) {
             Toast.makeText(getContext(), "Por favor, llena todos los campos.", Toast.LENGTH_SHORT).show();
@@ -168,14 +125,15 @@ public class ChangeUsernameFragment extends AppFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_change_username, container, false);
     }
 
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_frame, fragment)
-                .commit();
+        if (getFragmentManager() != null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_frame, fragment)
+                    .commit();
+        }
     }
 }

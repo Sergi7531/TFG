@@ -17,44 +17,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TicketBoughtFinishedFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TicketBoughtFinishedFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     Button goTicketButton;
     public List<Models.Ticket> ticketsToCreate;
     private String cinemaid;
 
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public TicketBoughtFinishedFragment() {
-        // Required empty public constructor
-    }
+    public TicketBoughtFinishedFragment() { }
 
     public TicketBoughtFinishedFragment(List<Models.Ticket> ticketsToCreate, String cinemaid) {
         this.ticketsToCreate = ticketsToCreate;
         this.cinemaid = cinemaid;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TicketBoughtFinishedFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static TicketBoughtFinishedFragment newInstance(String param1, String param2) {
         TicketBoughtFinishedFragment fragment = new TicketBoughtFinishedFragment();
         Bundle args = new Bundle();
@@ -67,16 +44,11 @@ public class TicketBoughtFinishedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_ticket_bought_finished, container, false);
     }
 
@@ -90,14 +62,10 @@ public class TicketBoughtFinishedFragment extends Fragment {
         }
 
         goTicketButton = view.findViewById(R.id.buyButton);
-        goTicketButton.setOnClickListener(view1 -> {
-            setFragment(new TicketsFragment());
-        });
+        goTicketButton.setOnClickListener(view1 -> setFragment(new TicketsFragment()));
     }
 
     private void setUnavailableInSession(Models.Ticket ticket) {
-
-//        Split ticket.date into day, month (format is dd/mm)
 
         String[] date = ticket.date.split("/");
         String day = date[0];
@@ -115,7 +83,9 @@ public class TicketBoughtFinishedFragment extends Fragment {
                 .get().addOnSuccessListener(documentSnapshot -> {
                     if(documentSnapshot.exists()) {
                         Models.Session session = documentSnapshot.toObject(Models.Session.class);
-                        session.seats.add(ticket.seat+(ticket.row*8));
+                        if (session != null) {
+                            session.seats.add(ticket.seat+(ticket.row*8));
+                        }
                     }
         }).addOnCompleteListener(task -> {
             if(task.isSuccessful()) {
@@ -145,10 +115,12 @@ public class TicketBoughtFinishedFragment extends Fragment {
     }
 
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_detail, fragment)
-                .addToBackStack(TicketListBoughtFragment.class.getSimpleName())
-                .commit();
+        if (getFragmentManager() != null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_detail, fragment)
+                    .addToBackStack(TicketListBoughtFragment.class.getSimpleName())
+                    .commit();
+        }
     }
 }

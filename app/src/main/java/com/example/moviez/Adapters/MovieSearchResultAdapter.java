@@ -55,12 +55,15 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
     }
 
     private void setFragment(Fragment fragment) {
-        currentFragment
-                .getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_frame, fragment)
-                .addToBackStack(HomeFragment.class.getSimpleName())
-                .commit();
+        if (currentFragment
+                .getFragmentManager() != null) {
+            currentFragment
+                    .getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_frame, fragment)
+                    .addToBackStack(HomeFragment.class.getSimpleName())
+                    .commit();
+        }
     }
 
     @Override
@@ -69,7 +72,7 @@ public class MovieSearchResultAdapter extends RecyclerView.Adapter<MovieSearchRe
     }
 
 
-    class MovieSearchResultViewHolder extends RecyclerView.ViewHolder {
+    static class MovieSearchResultViewHolder extends RecyclerView.ViewHolder {
         ConstraintLayout searchHolderLayout;
         ImageView imageFilmHolder;
         TextView filmNameHolder;

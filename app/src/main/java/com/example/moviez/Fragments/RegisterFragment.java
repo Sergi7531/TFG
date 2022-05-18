@@ -26,18 +26,10 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.UUID;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RegisterFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RegisterFragment extends AppFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public static final String PREF_FILE_NAME = "MySharedFile";
 
     private Uri uriProfilePic;
     private TextInputEditText username;
@@ -48,23 +40,8 @@ public class RegisterFragment extends AppFragment {
     private Button register;
     private Button setImageProfile;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public RegisterFragment() { }
 
-    public RegisterFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RegisterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static RegisterFragment newInstance(String param1, String param2) {
         RegisterFragment fragment = new RegisterFragment();
         Bundle args = new Bundle();
@@ -77,21 +54,16 @@ public class RegisterFragment extends AppFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         username = view.findViewById(R.id.usernameMyUserHolder);
         email = view.findViewById(R.id.mail);
@@ -113,9 +85,7 @@ public class RegisterFragment extends AppFragment {
             }
         });
 
-        setImageProfile.setOnClickListener(v -> {
-            phoneGallery.launch("image/*");
-        });
+        setImageProfile.setOnClickListener(v -> phoneGallery.launch("image/*"));
 
         register.setOnClickListener(v -> {
             if (validateData()) {
@@ -124,12 +94,13 @@ public class RegisterFragment extends AppFragment {
         });
     }
 
-
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.landingFrame, fragment)
-                .commit();
+        if (getFragmentManager() != null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.landingFrame, fragment)
+                    .commit();
+        }
     }
 
     public boolean containsUpperCaseLetter(String s) {
@@ -175,7 +146,7 @@ public class RegisterFragment extends AppFragment {
     }
 
     private void registerNewUser() {
-//        Add a user to the collections users in firebase:
+
         String usernameValue = username.getText().toString();
         String emailValue = email.getText().toString();
         String passwordValue = password.getText().toString();
@@ -197,15 +168,13 @@ public class RegisterFragment extends AppFragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void saveUser(String userid, String usernameValue, String emailValue, String passwordValue, Uri imageUri) {
 
-        String imageUrl = "";
+        String imageUrl;
 
         if (imageUri == null || imageUri.toString().equals("")) {
-//            https://firebasestorage.googleapis.com/v0/b/apifirebase-f6f9e.appspot.com/o/profileimgs%2Fic_baseline_person_24.xml?alt=media&token=896e0cc4-b4af-4800-9a9b-a21b8cac7a0d
             imageUrl = "";
         } else {
             imageUrl = imageUri.toString();
@@ -223,7 +192,6 @@ public class RegisterFragment extends AppFragment {
                 .setPhotoUri(Uri.parse(imageUrl))
                 .build();
         auth.getCurrentUser().updateProfile(profileUpdates);
-//        We keep the signed in user here:
         appViewModel.userlogged = userToAdd;
     }
 

@@ -21,39 +21,28 @@ public class IMDB {
 
     public interface Api {
 
-//        Retrieves the full cast of a film (actors)
         @GET("movie/{movie_id}/credits")
         Call<Responses.FullCastResponse> getCast(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language);
 
-
-//        Retrieves the movie details.
         @GET("movie/{movie_id}")
         Call<Models.Film> getMovie(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language);
 
-//        Given a movie (id) gets recommendations (films)
         @GET("movie/{movie_id}/recommendations")
         Call<Responses.SearchResponse> getRecommendations(@Path("movie_id") int movie_id, @Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
-//        Gets upcoming films (near release)
         @GET("movie/upcoming")
         Call<Responses.BillboardResponse> getUpcoming(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
-//      Retrieves films that are on cinemas right now.
         @GET("movie/now_playing")
         Call<Responses.BillboardResponse> getNowPlaying(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
         @GET("movie/top_rated")
         Call<Responses.SearchResponse> getMoviesTopRated(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
-//        API language will be set to English by default, but can be changed to another language by adding the language parameter to the request. The language parameter can be changes by switching the enum.
-
-//      Returns movies based on a search query.
         @GET("search/movie")
         Call<Responses.SearchResponse> search(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String query, @Query("page") int page);
 
         @GET("movie/{movie_id}/videos")
         Call<Responses.Videos> getVideos(@Path("movie_id") int movie_id, @Query("api_key") String apiKey);
     }
-
-
 }
