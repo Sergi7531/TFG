@@ -61,9 +61,6 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
             }
         });
 
-
-//        Parse the date (it is in the format of "DD/MM"). The month must be written in full, not the number:
-
         String[] dateSplit = tickets.get(position).date.split("/");
 
         String day = dateSplit[0];

@@ -75,18 +75,11 @@ public class HomeFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
 
         hook(view);
+
         forYou();
+
         buttonActivity.setOnClickListener(v -> {
-            searchInputUser.requestFocus();
-            searchInputUser.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0f, 0f, 0));
-            searchInputUser.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0f, 0f, 0));
-            OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-                @Override
-                public void handleOnBackPressed() {
-                    setFragment(new HomeFragment());
-                }
-            };
-            requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);
+            setFocusToUserSearchBar();
         });
 
         recyclerViewUserSearch = view.findViewById(R.id.recyclerViewUserSearch);
@@ -204,6 +197,19 @@ public class HomeFragment extends AppFragment {
                 recyclerCinemas.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
             }
         });
+    }
+
+    private void setFocusToUserSearchBar() {
+        searchInputUser.requestFocus();
+        searchInputUser.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0f, 0f, 0));
+        searchInputUser.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0f, 0f, 0));
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                setFragment(new HomeFragment());
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(requireActivity(), callback);
     }
 
     private void checkVoidList(int results, Button button) {
