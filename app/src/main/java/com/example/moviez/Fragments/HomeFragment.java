@@ -191,10 +191,12 @@ public class HomeFragment extends AppFragment {
             button.setAlpha(1f);
             button.setEnabled(true);
             button.setClickable(true);
+            recyclerFriends.setVisibility(View.GONE);
         } else {
             button.setAlpha(0f);
             button.setEnabled(false);
             button.setClickable(false);
+            recyclerFriends.setVisibility(View.VISIBLE);
         }
     }
     private void firebaseUserSearch(String query) {
