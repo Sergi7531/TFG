@@ -1,17 +1,21 @@
 package com.example.moviez.Fragments;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.moviez.Models;
 import com.example.moviez.R;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +29,9 @@ public class TicketBoughtFinishedFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     Button goTicketButton;
+    public List<Models.Ticket> ticketsToCreate;
+    private String cinemaid;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -32,6 +39,11 @@ public class TicketBoughtFinishedFragment extends Fragment {
 
     public TicketBoughtFinishedFragment() {
         // Required empty public constructor
+    }
+
+    public TicketBoughtFinishedFragment(List<Models.Ticket> ticketsToCreate, String cinemaid) {
+        this.ticketsToCreate = ticketsToCreate;
+        this.cinemaid = cinemaid;
     }
 
     /**
@@ -71,15 +83,72 @@ public class TicketBoughtFinishedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        for(Models.Ticket ticket : ticketsToCreate) {
+            createFirebaseTicket(ticket);
+            setUnavailableInSession(ticket);
+        }
+
         goTicketButton = view.findViewById(R.id.buyButton);
         goTicketButton.setOnClickListener(view1 -> {
             setFragment(new TicketsFragment());
         });
     }
+
+    private void setUnavailableInSession(Models.Ticket ticket) {
+
+//        Split ticket.date into day, month (format is dd/mm)
+
+        String[] date = ticket.date.split("/");
+        String day = date[0];
+        String month = date[1];
+
+
+        FirebaseFirestore.getInstance()
+                .collection("movie_sessions")
+                .document(ticket.filmid+"")
+                .collection("cinemas")
+                .document(cinemaid)
+                .collection("rooms")
+                .document(ticket.room+"")
+                .collection("sessions")
+                .document(month + "-" + day + "-" + ticket.time.substring(0,2))
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    if(documentSnapshot.exists()) {
+                        Models.Session session = documentSnapshot.toObject(Models.Session.class);
+                        session.seats.add(ticket.seat+(ticket.row*8));
+                    }
+        }).addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                FirebaseFirestore.getInstance()
+                        .collection("movie_sessions")
+                        .document(ticket.filmid+"")
+                        .collection("cinemas")
+                        .document(cinemaid)
+                        .collection("rooms")
+                        .document(ticket.room+"")
+                        .collection("sessions")
+                        .document(month + "-" + day + "-" + ticket.time.substring(0,2))
+                        .update("seats", FieldValue.arrayUnion(ticket.seat+(ticket.row*8)));
+            }
+        });
+    }
+
+    private void createFirebaseTicket(Models.Ticket ticket) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db
+                .collection("users")
+                .document(ticket.userid)
+                .collection("tickets")
+                .document(ticket.filmid + ":" + ticket.room + ":" + ticket.row + ":" + ticket.seat)
+                .set(ticket);
+    }
+
     private void setFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_frame, fragment)
+                .replace(R.id.frame_detail, fragment)
                 .commit();
     }
 }

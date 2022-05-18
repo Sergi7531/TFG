@@ -5,11 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviez.Adapters.BuyTicketAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 
@@ -28,18 +33,25 @@ public class TicketListBoughtFragment extends AppFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private List<Models.Ticket> ticketsToBuy = new ArrayList<>();
+    private String cinemaid;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     Button goTicketButton;
+    private RecyclerView ticketRecycler;
+    private ImageView backButton;
+    private TextView numberTicketsText;
+    private TextView totalPriceTickets;
+
 
     public TicketListBoughtFragment() {
         // Required empty public constructor
     }
 
-    public TicketListBoughtFragment(List<Models.Ticket> ticketsToBuy) {
+    public TicketListBoughtFragment(List<Models.Ticket> ticketsToBuy, String cinemaid) {
         this.ticketsToBuy = ticketsToBuy;
+        this.cinemaid = cinemaid;
     }
 
     /**
@@ -79,15 +91,34 @@ public class TicketListBoughtFragment extends AppFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        goTicketButton = view.findViewById(R.id.buyButton);
+
+        hook(view);
+        adaptTickets();
+        numberTicketsText.setText(String.valueOf(ticketsToBuy.size()));
+        totalPriceTickets.setText(String.valueOf(ticketsToBuy.size()*10));
+
         goTicketButton.setOnClickListener(view1 -> {
-            setFragment(new TicketBoughtFinishedFragment());
+            setFragment(new TicketBoughtFinishedFragment(ticketsToBuy, cinemaid));
         });
     }
+
+    private void adaptTickets() {
+        ticketRecycler.setAdapter(new BuyTicketAdapter(requireContext(), ticketsToBuy, TicketListBoughtFragment.this));
+        ticketRecycler.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false));
+    }
+
+    private void hook(View view) {
+        goTicketButton = view.findViewById(R.id.buyButton);
+        ticketRecycler = view.findViewById(R.id.ticketRecycler);
+        backButton = view.findViewById(R.id.backButton);
+        numberTicketsText = view.findViewById(R.id.numberTicketsText);
+        totalPriceTickets = view.findViewById(R.id.totalPriceTickets);
+    }
+
     private void setFragment(Fragment fragment) {
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_frame, fragment)
+                .replace(R.id.frame_detail, fragment)
                 .commit();
     }
 }

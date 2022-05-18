@@ -9,9 +9,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -95,8 +93,8 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         String durationString = hours + "h " + minutes + "m";
         //holder.durationTicket.setText(durationString);
         holder.roomTicketDetail.setText(ticket.room + "");
-        holder.rowTicketDetail.setText(ticket.row + "");
-        holder.seatTicketDetail.setText(ticket.seat + "");
+        holder.rowTicketDetail.setText(ticket.row+1 + "");
+        holder.seatTicketDetail.setText(ticket.seat+1 + "");
 
         try {
             passInfoToQR(holder, ticket.toString());

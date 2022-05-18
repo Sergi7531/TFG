@@ -229,7 +229,7 @@ public class HomeFragment extends AppFragment {
                         Models.User user = document.toObject(Models.User.class);
                         System.out.println(auth.getCurrentUser().getUid());
                         System.out.println(user.getUserid());
-                            if (user.username.contains(query)) {
+                            if (user.username.contains(query) && !user.userid.equals(auth.getCurrentUser().getUid())) {
                                 users.add(user);
                             }
                     }

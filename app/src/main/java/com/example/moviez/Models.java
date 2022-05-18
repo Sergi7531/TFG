@@ -14,6 +14,7 @@ public class Models {
         public int runtime;
         public String overview;
         public String title;
+        public String tagline;
         @Nullable public List<Integer> genre_ids;
 
         public Film(String title, String poster_path) {
@@ -88,6 +89,22 @@ public class Models {
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public String getOverview() {
+            return overview;
+        }
+
+        public void setOverview(String overview) {
+            this.overview = overview;
+        }
+
+        public String getTagline() {
+            return tagline;
+        }
+
+        public void setTagline(String tagline) {
+            this.tagline = tagline;
         }
 
         @Nullable
