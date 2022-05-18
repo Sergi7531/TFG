@@ -31,6 +31,8 @@ import com.example.moviez.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
@@ -39,11 +41,22 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.UUID;
 
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link EditProfileFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class EditProfileFragment extends AppFragment {
 
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String PREF_FILE_NAME = "MySharedFile";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
     public CardView profileName;
     public CardView passwordName;
@@ -60,8 +73,18 @@ public class EditProfileFragment extends AppFragment {
     private MutableLiveData<Uri> uriProfilePic = new MutableLiveData<>();
 
     public EditProfileFragment() {
+        // Required empty public constructor
     }
 
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment EditProfileFragment.
+     */
+    // TODO: Rename and change types and number of parameters
     public static EditProfileFragment newInstance(String param1, String param2) {
         EditProfileFragment fragment = new EditProfileFragment();
         Bundle args = new Bundle();
@@ -74,6 +97,11 @@ public class EditProfileFragment extends AppFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -89,7 +117,9 @@ public class EditProfileFragment extends AppFragment {
                 .requestEmail()
                 .build());
 
-        profileName.setOnClickListener(v -> setFragment(new ChangeUsernameFragment()));
+        profileName.setOnClickListener(v -> {
+            setFragment(new ChangeUsernameFragment());
+        });
 
         passwordName.setOnClickListener(v -> {
             if (sharedPreferences.getString("logType","").equals("mail")){
@@ -97,6 +127,7 @@ public class EditProfileFragment extends AppFragment {
             } else {
                 Toast.makeText(requireContext(), "You cannot change the password", Toast.LENGTH_SHORT).show();
             }
+
         });
 
 
@@ -110,6 +141,8 @@ public class EditProfileFragment extends AppFragment {
             Intent intent = new Intent();
             intent.setClass(getActivity(), LandingActivity.class);
             getActivity().startActivity(intent);
+
+
         });
 
         int isNightMode = getContext().getResources().getConfiguration().uiMode &
@@ -125,6 +158,8 @@ public class EditProfileFragment extends AppFragment {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     break;
                 case Configuration.UI_MODE_NIGHT_NO:
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    break;
                 case Configuration.UI_MODE_NIGHT_UNDEFINED:
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     break;
@@ -141,12 +176,22 @@ public class EditProfileFragment extends AppFragment {
             }
         });
 
-        textViewSergio.setOnClickListener(v -> Toast.makeText(requireContext(), "Créditos a GitHub Copilot =)", Toast.LENGTH_SHORT).show());
+        textViewSergio.setOnClickListener(v -> {
+            Toast.makeText(requireContext(), "Créditos a GitHub Copilot =)", Toast.LENGTH_SHORT).show();
+        });
+//        textViewRaul.setOnClickListener(v -> {
+//            Toast.makeText(requireContext(), "", Toast.LENGTH_SHORT).show();
+//        });
+//        textViewJordi.setOnClickListener(v -> {
+//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/jplanasmartinez"));
+//            startActivity(intent);
+//        });
 
         goBackButtonEdit.setOnClickListener(v -> {
             ProfileFragment profileFragment = new ProfileFragment();
             profileFragment.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             setFragment(profileFragment);
+//            Toast.makeText(requireContext(), "ASD", Toast.LENGTH_SHORT).show();
         });
 
         final ActivityResultLauncher<String> phoneGallery = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
@@ -169,6 +214,10 @@ public class EditProfileFragment extends AppFragment {
                 }
             });
         });
+
+
+
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -184,26 +233,26 @@ public class EditProfileFragment extends AppFragment {
                 .document(auth.getCurrentUser().getUid())
                 .update("profileImageURL", imageUrl);
 
+//        Update all user comments with the new image url:
         String finalImageUrl = imageUrl;
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setPhotoUri(Uri.parse(imageUrl))
                 .build();
 
-        auth.getCurrentUser().updateProfile(profileUpdates).addOnCompleteListener(task -> {
-            Toast.makeText(getContext(), "Imagen actualizada!", Toast.LENGTH_SHORT).show();
-            DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
+        auth.getCurrentUser().updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(getContext(), "Imagen actualizada!", Toast.LENGTH_SHORT).show();
+                DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
 
-            db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-                    db.collection("comments").document(documentSnapshot.getId()).collection("comments").get().addOnSuccessListener(documentSnapshots -> {
-                        for (DocumentSnapshot documentSnapshot1 : documentSnapshots) {
-                            if (documentSnapshot1.toObject(Models.Comment.class).userid.equals(auth.getCurrentUser().getUid())) {
-                                Models.Comment comment = documentSnapshot1.toObject(Models.Comment.class);
-                                if (comment != null) {
+                db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                        db.collection("comments").document(documentSnapshot.getId()).collection("comments").get().addOnSuccessListener(documentSnapshots -> {
+                            for (DocumentSnapshot documentSnapshot1 : documentSnapshots) {
+                                if (documentSnapshot1.toObject(Models.Comment.class).userid.equals(auth.getCurrentUser().getUid())) {
+                                    Models.Comment comment = documentSnapshot1.toObject(Models.Comment.class);
                                     comment.imageUrl = String.valueOf(auth.getCurrentUser().getPhotoUrl());
-                                }
-                                if (comment != null) {
                                     db.collection("comments")
                                             .document(documentSnapshot.getId())
                                             .collection("comments")
@@ -211,18 +260,38 @@ public class EditProfileFragment extends AppFragment {
                                             .set(comment);
                                 }
                             }
+                        });
+                    }
+                });
+                userDoc.update("profileImageURL", finalImageUrl);
+            }
+        });;
+
+//        Get all documents in the collection:
+//
+/*
+        db.collection("comments")
+                .get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    db.collection("comments").document(document.getId()).collection("comments").get().addOnCompleteListener(task2 -> {
+                        if (task2.isSuccessful()) {
+                            Models.Comment comment = document.toObject(Models.Comment.class);
+                            if (comment.userid.equals(userid)) {
+                                db.collection("comments").document(document.getId()).collection("comments").document(comment.userid).update("imageUrl", finalImageUrl);
+                            }
                         }
                     });
                 }
-            });
-            userDoc.update("profileImageURL", finalImageUrl);
-        });
+            }
+        });*/
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_profile, container, false);
     }
 
@@ -241,11 +310,9 @@ public class EditProfileFragment extends AppFragment {
     }
 
     private void setFragment(Fragment fragment) {
-        if (getFragmentManager() != null) {
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_frame, fragment)
-                    .commit();
-        }
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .commit();
     }
 }
