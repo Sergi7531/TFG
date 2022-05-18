@@ -35,7 +35,7 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
     @Override
     public BuyTicketViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.buy_ticket_holder, parent, false);
+        View view = inflater.inflate(R.layout.ticket_buy_holder, parent, false);
         return new BuyTicketViewHolder(view);
     }
 
@@ -135,14 +135,14 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
 
         public BuyTicketViewHolder(View itemView) {
             super(itemView);
-            movieImage = itemView.findViewById(R.id.movieImageTicketDetail);
-            movieName = itemView.findViewById(R.id.movieName);
-            cinemaName = itemView.findViewById(R.id.cinemaNameTicketDetail);
-            room = itemView.findViewById(R.id.room);
-            row = itemView.findViewById(R.id.row);
-            seat = itemView.findViewById(R.id.seat);
-            time = itemView.findViewById(R.id.time);
-            day = itemView.findViewById(R.id.day);
+            movieImage = itemView.findViewById(R.id.movieImageTicket);
+            movieName = itemView.findViewById(R.id.ticketMovieName);
+            cinemaName = itemView.findViewById(R.id.ticketCinemaName);
+            room = itemView.findViewById(R.id.ticketSala);
+            row = itemView.findViewById(R.id.ticketFila);
+            seat = itemView.findViewById(R.id.ticketAsiento);
+            time = itemView.findViewById(R.id.ticketHora);
+            day = itemView.findViewById(R.id.ticketDia);
         }
 
     }

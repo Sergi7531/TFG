@@ -128,8 +128,6 @@ public class MovieDetailedFragment extends AppFragment {
 
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
-
-        System.out.println("Details:  " + filmId);
         viewModel.getMovieDetails(filmId);
 
         viewModel.movieDetails.observe(getViewLifecycleOwner(), movie -> {
@@ -253,7 +251,7 @@ public class MovieDetailedFragment extends AppFragment {
 
         buyButton.setOnClickListener(v -> {
             appViewModel.currentFilmId = filmId;
-            BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId);
+            BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId, R.id.frame_detail);
             setFragment(buyTicketFragment);
         });
 

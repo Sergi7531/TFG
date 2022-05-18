@@ -9,7 +9,11 @@
     android:background="?attr/backgroundColor"
     android:elevation="0dp"
     tools:context=".Fragments.BuyTicketFragment">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorOnPrimary"
+        android:clickable="true" />
     <RelativeLayout
         android:layout_width="360dp"
         android:layout_height="wrap_content"

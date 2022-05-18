@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -41,6 +41,8 @@ public class TicketsFragment extends AppFragment {
     private static final String ARG_PARAM2 = "param2";
 
     private static final int CAMERA_REQUEST_CODE = 101;
+
+    public TextView noTickets;
 
     public static RecyclerView recyclerTickets;
     public static LinearLayout linearPages;
@@ -117,11 +119,16 @@ public class TicketsFragment extends AppFragment {
                     }
                 }
 
-                recyclerTickets.setAdapter(new TicketsAdapter(tickets, requireContext()));
-                LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                SnapHelper snapHelper = new PagerSnapHelper();
-                recyclerTickets.setLayoutManager(layoutManager);
-                snapHelper.attachToRecyclerView(recyclerTickets);
+                if(tickets.size() == 0) {
+                    noTickets.setVisibility(View.VISIBLE);
+                } else {
+                    noTickets.setVisibility(View.GONE);
+                    recyclerTickets.setAdapter(new TicketsAdapter(tickets, requireContext()));
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                    SnapHelper snapHelper = new PagerSnapHelper();
+                    recyclerTickets.setLayoutManager(layoutManager);
+                    snapHelper.attachToRecyclerView(recyclerTickets);
+                }
             }
         });
     }
@@ -130,6 +137,7 @@ public class TicketsFragment extends AppFragment {
         recyclerTickets = view.findViewById(R.id.recyclerTickets);
         linearPages = view.findViewById(R.id.linearPages);
         button = view.findViewById(R.id.qrButton);
+        noTickets = view.findViewById(R.id.noTickets);
     }
 
     private void setFragment(Fragment fragment) {

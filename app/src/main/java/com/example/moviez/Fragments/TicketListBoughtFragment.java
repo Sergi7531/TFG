@@ -34,6 +34,7 @@ public class TicketListBoughtFragment extends AppFragment {
     private static final String ARG_PARAM2 = "param2";
     private List<Models.Ticket> ticketsToBuy = new ArrayList<>();
     private String cinemaid;
+    private int frameComingFrom = 0;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -49,7 +50,8 @@ public class TicketListBoughtFragment extends AppFragment {
         // Required empty public constructor
     }
 
-    public TicketListBoughtFragment(List<Models.Ticket> ticketsToBuy, String cinemaid) {
+    public TicketListBoughtFragment(List<Models.Ticket> ticketsToBuy, String cinemaid, int frameComingFrom) {
+        this.frameComingFrom = frameComingFrom;
         this.ticketsToBuy = ticketsToBuy;
         this.cinemaid = cinemaid;
     }
@@ -116,9 +118,18 @@ public class TicketListBoughtFragment extends AppFragment {
     }
 
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_detail, fragment)
-                .commit();
+        if(frameComingFrom != 0) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(frameComingFrom, fragment)
+                    .addToBackStack(TicketListBoughtFragment.class.getSimpleName())
+                    .commit();
+        } else {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_detail, fragment)
+                    .addToBackStack(TicketListBoughtFragment.class.getSimpleName())
+                    .commit();
+        }
     }
 }

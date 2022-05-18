@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     android:background="?attr/colorOnPrimary"
     tools:context=".Fragments.NewCommentFragment">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorOnPrimary"
+        android:clickable="true" />
     <LinearLayout
         android:layout_width="360dp"
         android:layout_height="match_parent"
@@ -87,15 +91,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:stepSize="0.1"
+                    android:stepSize="0.5"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <TextView
                     android:id="@+id/actualRating"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="2dp"
                     android:fontFamily="@font/satoshi"
                     android:gravity="center|right"
+                    android:paddingRight="3dp"
                     android:text="0.0"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="24sp"
@@ -105,6 +111,7 @@
                     android:id="@+id/actualRating2"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="0.6dp"
                     android:fontFamily="@font/satoshi"
                     android:gravity="center|left"
                     android:text="/5.0"

@@ -103,7 +103,6 @@ public class TicketBoughtFinishedFragment extends Fragment {
         String day = date[0];
         String month = date[1];
 
-
         FirebaseFirestore.getInstance()
                 .collection("movie_sessions")
                 .document(ticket.filmid+"")
@@ -112,7 +111,7 @@ public class TicketBoughtFinishedFragment extends Fragment {
                 .collection("rooms")
                 .document(ticket.room+"")
                 .collection("sessions")
-                .document(month + "-" + day + "-" + ticket.time.substring(0,2))
+                .document(ticket.ticketid)
                 .get().addOnSuccessListener(documentSnapshot -> {
                     if(documentSnapshot.exists()) {
                         Models.Session session = documentSnapshot.toObject(Models.Session.class);
@@ -149,6 +148,7 @@ public class TicketBoughtFinishedFragment extends Fragment {
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frame_detail, fragment)
+                .addToBackStack(TicketListBoughtFragment.class.getSimpleName())
                 .commit();
     }
 }

@@ -33,6 +33,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="40dp"
+            android:elevation="3dp"
             android:overScrollMode="never">
 
         </androidx.recyclerview.widget.RecyclerView>
@@ -48,5 +49,17 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/noTickets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="1dp"
+        android:fontFamily="@font/satoshi"
+        android:text="No tienes tickets."
+        android:textColor="?attr/colorOnSecondary"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
 </FrameLayout>

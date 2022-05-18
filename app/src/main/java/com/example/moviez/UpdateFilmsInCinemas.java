@@ -68,7 +68,6 @@ public class UpdateFilmsInCinemas {
                     } else {
                         daysUntilDateEnd = localDate.getDayOfYear() - localDate2.getDayOfYear();
                     }
-                    System.out.println("Days until dateEnd: " + daysUntilDateEnd);
                 }
                 getCinemas();
                 createMovieSessions(daysUntilDateEnd);

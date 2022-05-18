@@ -24,7 +24,7 @@
             app:cardElevation="0dp">
 
             <ImageView
-                android:id="@+id/movieImage"
+                android:id="@+id/movieImageTicket"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:srcCompat="@drawable/moviez_logo" />
@@ -39,7 +39,7 @@
             app:srcCompat="@drawable/ic_baseline_location_on_24" />
 
         <TextView
-            android:id="@+id/ticketCinema"
+            android:id="@+id/ticketCinemaName"
             android:layout_width="match_parent"
             android:layout_height="26dp"
             android:layout_alignBottom="@id/imageCard"

@@ -19,7 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.moviez.Adapters.CinemaAdapter;
 import com.example.moviez.Adapters.FilmAdapter;
@@ -63,6 +65,7 @@ public class HomeFragment extends AppFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        appViewModel.forYouMovies.postValue(null);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -72,7 +75,6 @@ public class HomeFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
 
         hook(view);
-        appViewModel.forYouMovies.postValue(null);
         forYou();
         buttonActivity.setOnClickListener(v -> {
             searchInputUser.requestFocus();
@@ -100,7 +102,6 @@ public class HomeFragment extends AppFragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                recyclerViewUserSearch.setVisibility(View.VISIBLE);
-               System.out.println("TEXT CHANGED");
                firebaseUserSearch(charSequence.toString());
                if (charSequence.toString().isEmpty()) {
                    recyclerViewUserSearch.setVisibility(View.GONE);
@@ -135,6 +136,13 @@ public class HomeFragment extends AppFragment {
         });
 
 //        Get all the favoritedFilms of the users that the current user is following:
+
+        recyclerFriends.setAdapter(userActivityAdapter = new UserActivityAdapter(userActivities, requireActivity(), HomeFragment.this));
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        SnapHelper snapHelper = new PagerSnapHelper();
+        recyclerFriends.setLayoutManager(layoutManager);
+        snapHelper.attachToRecyclerView(recyclerFriends);
 
         db.collection("users").document(auth.getCurrentUser().getUid()).collection("following").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -172,11 +180,10 @@ public class HomeFragment extends AppFragment {
                                         userActivity.movieId = documentActivity.toObject(Models.Film.class).id;
                                         userActivity.textToShow = "El usuario " +userActivity.username + " ha visto la película " + userActivity.movieName;
                                         userActivities.add(userActivity);
-                                        recyclerFriends.setAdapter(userActivityAdapter = new UserActivityAdapter(userActivities, requireActivity(), HomeFragment.this));
-                                        recyclerFriends.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
                                     }
-                                    checkVoidList(userActivities, buttonActivity);
                                 }
+                                userActivityAdapter.notifyDataSetChanged();
+                                checkVoidList(recyclerFriends.getAdapter().getItemCount(), buttonActivity);
                             }
                         });
                     }
@@ -196,18 +203,11 @@ public class HomeFragment extends AppFragment {
                 recyclerCinemas.setAdapter(new CinemaAdapter(cinemas, requireActivity(), HomeFragment.this));
                 recyclerCinemas.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
             }
-                });
+        });
+    }
 
-
-
-
-
-
-
-        }
-    private void checkVoidList(List<Models.UserActivity> activities, Button button) {
-
-        if (activities.isEmpty()){
+    private void checkVoidList(int results, Button button) {
+        if (results == 0) {
             button.setAlpha(1f);
             button.setEnabled(true);
             button.setClickable(true);
@@ -227,8 +227,6 @@ public class HomeFragment extends AppFragment {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Models.User user = document.toObject(Models.User.class);
-                        System.out.println(auth.getCurrentUser().getUid());
-                        System.out.println(user.getUserid());
                             if (user.username.contains(query) && !user.userid.equals(auth.getCurrentUser().getUid())) {
                                 users.add(user);
                             }
@@ -258,12 +256,15 @@ public class HomeFragment extends AppFragment {
 
         db.collection("users").document(auth.getCurrentUser().getUid()).get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
+                genresUser.clear();
                 genresUser.addAll(documentSnapshot.toObject(Models.User.class).getFavoriteGenres());
 
                 appViewModel.getMoviesForYou(genresUser);
 
                 appViewModel.forYouMovies.observe(getViewLifecycleOwner(), filmsByGenreForUser -> {
                     if (filmsByGenreForUser != null) {
+                        System.out.println("he entrado en forYou");
+                        System.out.println(filmsByGenreForUser.results.size());
                         recyclerForYou.setAdapter(new FilmAdapter(filmsByGenreForUser.results, requireActivity(), this));
                         recyclerForYou.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
                         animacionCarga.setAlpha(0f);

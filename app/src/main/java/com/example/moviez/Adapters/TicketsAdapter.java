@@ -121,7 +121,6 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         public TextView cinemaNameTicketDetail;
         public TextView dayTicketDetail;
         public TextView timeTicketDetail;
-        public TextView durationTicket;
         public TextView roomTicketDetail;
         public TextView rowTicketDetail;
         public TextView seatTicketDetail;
@@ -138,7 +137,6 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
             cinemaNameTicketDetail = itemView.findViewById(R.id.linearCinema);
             dayTicketDetail = itemView.findViewById(R.id.dayTicketDetail);
             timeTicketDetail = itemView.findViewById(R.id.timeTicketDetail);
-            //durationTicket = itemView.findViewById(R.id.durationTicket);
             roomTicketDetail = itemView.findViewById(R.id.roomTicketDetail);
             rowTicketDetail = itemView.findViewById(R.id.rowTicketDetail);
             seatTicketDetail = itemView.findViewById(R.id.seatTicketDetail);

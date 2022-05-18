@@ -26,22 +26,13 @@ import java.util.List;
  */
 public class SeatsFragment extends AppFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    public static int frameComingFrom = 0;
     public static int movieid;
     public static String cinemaid;
     public static int roomid;
     public static int day;
     public static int month;
     public static int hour;
-
 
     Models.Cinema cinema = new Models.Cinema();
 
@@ -56,7 +47,8 @@ public class SeatsFragment extends AppFragment {
         // Required empty public constructor
     }
 
-    public SeatsFragment(int movieid, String cinemaid, int roomid, int day, int month, int hour) {
+    public SeatsFragment(int frameComingFrom, int movieid, String cinemaid, int roomid, int day, int month, int hour) {
+        this.frameComingFrom = frameComingFrom;
         this.movieid = movieid;
         this.cinemaid = cinemaid;
         this.roomid = roomid;
@@ -77,8 +69,6 @@ public class SeatsFragment extends AppFragment {
     public static SeatsFragment newInstance(String param1, String param2) {
         SeatsFragment fragment = new SeatsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -86,11 +76,6 @@ public class SeatsFragment extends AppFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
     }
 
     private void hook(View view) {
@@ -142,11 +127,13 @@ public class SeatsFragment extends AppFragment {
                 ticket.row = seat.row;
                 ticket.seat = seat.seat;
 
+                ticket.ticketid = movieid + ":" + roomid + ":" + seat.row + ":" + seat.seat;
+
 //                    The ticket data related to the film will be retrieved from the database and added later (name, image, etc.):
                 ticketsToBuy.add(ticket);
             }
         }
-        TicketListBoughtFragment ticketListBoughtFragment = new TicketListBoughtFragment(ticketsToBuy, cinemaid);
+        TicketListBoughtFragment ticketListBoughtFragment = new TicketListBoughtFragment(ticketsToBuy, cinemaid, frameComingFrom);
         setFragment(ticketListBoughtFragment);
     }
 
@@ -193,10 +180,19 @@ public class SeatsFragment extends AppFragment {
 
     }
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_detail, fragment)
-                .commit();
+        if(frameComingFrom != 0) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(frameComingFrom, fragment)
+                    .addToBackStack(SeatsFragment.class.getSimpleName())
+                    .commit();
+        } else {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_detail, fragment)
+                    .addToBackStack(SeatsFragment.class.getSimpleName())
+                    .commit();
+        }
     }
 
 }

@@ -3,7 +3,6 @@ package com.example.moviez.Activities;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buyMovie.setOnClickListener(v -> {
-            buyTicketFragment = new BuyTicketFragment(0);
+            buyTicketFragment = new BuyTicketFragment(0, R.id.main_frame);
             setFragment(buyTicketFragment);
         });
     }

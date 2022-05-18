@@ -11,16 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.moviez.Activities.AppViewModel;
-import com.example.moviez.Fragments.HomeFragment;
 import com.example.moviez.Fragments.ProfileFragment;
 import com.example.moviez.Models;
 import com.example.moviez.R;
@@ -50,8 +45,6 @@ public class UserSearchResultAdapter extends RecyclerView.Adapter<UserSearchResu
     public void onBindViewHolder(@NonNull UserSearchResultViewHolder holder, int position) {
 
         Models.User user = users.get(position);
-        System.out.println("MOSTRANDO " + user.userid);
-        System.out.println("GETCURRENTUSER " + auth.getCurrentUser().getUid());
            if (!user.getUserid().equals(auth.getCurrentUser().getUid())) {
                 Glide.with(context)
                         .load(user.profileImageURL)

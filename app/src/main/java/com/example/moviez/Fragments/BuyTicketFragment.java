@@ -40,6 +40,7 @@ import java.util.List;
 public class BuyTicketFragment extends AppFragment {
 
     private static int filmId = 0;
+    public static int frameComingFrom = 0;
 
     private static int roomsInSelectedCinema = 0;
     List<Models.Cinema> allCinemas = new ArrayList<>();
@@ -78,8 +79,6 @@ public class BuyTicketFragment extends AppFragment {
 
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private List<String> sessionsToShow = new ArrayList<>();
 
     public BuyTicketFragment() {
@@ -87,7 +86,8 @@ public class BuyTicketFragment extends AppFragment {
     }
 
 
-    public BuyTicketFragment(int param1) {
+    public BuyTicketFragment(int param1, int frameComingFrom) {
+        this.frameComingFrom = frameComingFrom;
         filmId = param1;
     }
     public static BuyTicketFragment newInstance(String param1, String param2) {
@@ -102,10 +102,6 @@ public class BuyTicketFragment extends AppFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -153,17 +149,18 @@ public class BuyTicketFragment extends AppFragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     filmSelected = allFilms.get(position);
                     filmId = filmSelected.getId();
-                    setCinemasAvailable(filmId);
+                    setCinemaInfo(filmId);
                     adaptFilmToLayout(filmSelected);
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
                     filmSelected = allFilms.get(0);
+                    filmId = filmSelected.getId();
                 }
             });
             adaptFilmToLayout(filmSelected);
-            spinnerMovie.setSelection(filmsNamesToShow.indexOf(filmSelected.title));
+            spinnerMovie.setSelection(filmAdapter.getPosition(filmSelected.title));
         });
 
 
@@ -240,11 +237,11 @@ public class BuyTicketFragment extends AppFragment {
 
             String[] dateInputSplitted = dateInput.getText().toString().trim().split("-");
 
-            setFragment(new SeatsFragment(selectedFilmId, selectedCinemaId, selectedRoomId, Integer.parseInt(dateInputSplitted[0]), Integer.parseInt(dateInputSplitted[1]), Integer.parseInt(spinnerHour.getSelectedItem().toString().substring(0,2))));
+            setFragment(new SeatsFragment(frameComingFrom, selectedFilmId, selectedCinemaId, selectedRoomId, Integer.parseInt(dateInputSplitted[0]), Integer.parseInt(dateInputSplitted[1]), Integer.parseInt(spinnerHour.getSelectedItem().toString().substring(0,2))));
         });
     }
 
-    private void setCinemasAvailable(int filmSelected) {
+    private void setCinemaInfo(int filmSelected) {
         allCinemas.clear();
         cinemasNamesToShow.clear();
         if(filmSelected == 0) {
@@ -290,9 +287,19 @@ public class BuyTicketFragment extends AppFragment {
         roomNumber = view.findViewById(R.id.roomNumber);
     }
     private void setFragment(Fragment fragment) {
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.frame_detail, fragment)
-                .commit();
+        if(frameComingFrom != 0) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(frameComingFrom, fragment)
+                    .addToBackStack(BuyTicketFragment.class.getSimpleName())
+                    .commit();
+        } else {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_detail, fragment)
+                    .addToBackStack(BuyTicketFragment.class.getSimpleName())
+                    .commit();
+        }
+
     }
 }
