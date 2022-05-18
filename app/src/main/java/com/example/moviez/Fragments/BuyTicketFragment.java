@@ -150,6 +150,10 @@ public class BuyTicketFragment extends AppFragment {
             spinnerMovie.setSelection(filmAdapter.getPosition(filmSelected.title));
         });
 
+        if (dateInput.getText().toString().isEmpty()) {
+            buyButton.setVisibility(View.GONE);
+        }
+
         dateInput.setOnClickListener(view1 -> {
             final Calendar cldr = Calendar.getInstance();
             int day = cldr.get(Calendar.DAY_OF_MONTH);
@@ -171,10 +175,9 @@ public class BuyTicketFragment extends AppFragment {
                                 LocalDate dateSelectedLocal = LocalDate.of(i, i1+1, i2);
                                 LocalDate maxDateLocal = LocalDate.of(maxYear, maxMonth, maxDay);
 
+                                if (dateSelectedLocal.isBefore(maxDateLocal) && dateSelectedLocal.isAfter(LocalDate.now())) {
 
-                                if (dateSelectedLocal.isBefore(maxDateLocal)) {
-
-                                    dateInput.setText(i2 + "-" + (i1 + 1) + "-" + i);
+                                    dateInput.setText(i2 + "/" + (i1 + 1) + "/" + i);
                                     sessionsToShow.clear();
 
                                     db.collection("movie_sessions").document(filmSelected.id + "").collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
@@ -192,7 +195,7 @@ public class BuyTicketFragment extends AppFragment {
                                                             String sessionMonth = sessionIdSplit[0];
                                                             String sessionDay = sessionIdSplit[1];
 
-                                                            String dateSession = sessionDay + "-" + sessionMonth + "-" + LocalDate.now().getYear();
+                                                            String dateSession = sessionDay + "/" + sessionMonth + "/" + LocalDate.now().getYear();
 
                                                             if (dateSession.equals(dateInput.getText().toString())) {
                                                                 sessionsToShow.add(session.time + ":00");
@@ -203,6 +206,16 @@ public class BuyTicketFragment extends AppFragment {
                                                         sessionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                                         spinnerHour.setAdapter(sessionAdapter);
                                                     });
+                                                    if (dateInput.getText().toString().isEmpty()) {
+                                                        buyButton.setVisibility(View.GONE);
+                                                    }
+                                                    else {
+                                                        buyButton.setVisibility(View.VISIBLE);
+                                                        buyButton.setOnClickListener(view1 -> {
+                                                            String[] dateInputSplitted = dateInput.getText().toString().trim().split("/");
+                                                            setFragment(new SeatsFragment(frameComingFrom, selectedFilmId, selectedCinemaId, selectedRoomId, Integer.parseInt(dateInputSplitted[0]), Integer.parseInt(dateInputSplitted[1]), Integer.parseInt(spinnerHour.getSelectedItem().toString().substring(0, 2))));
+                                                        });
+                                                    }
                                                 }
                                             });
                                         }
@@ -211,6 +224,7 @@ public class BuyTicketFragment extends AppFragment {
 
                                 } else {
                                     Toast.makeText(getContext(), "La película no se emitirá en los cines este día.", Toast.LENGTH_SHORT).show();
+                                    buyButton.setVisibility(View.GONE);
                                 }
                             });
                         }
@@ -218,17 +232,8 @@ public class BuyTicketFragment extends AppFragment {
             picker.show();
         });
 
-        if (dateInput.getText() == null) {
-            buyButton.setVisibility(View.GONE);
-        }
-        else {
-            buyButton.setVisibility(View.VISIBLE);
 
-            buyButton.setOnClickListener(view1 -> {
-                String[] dateInputSplitted = dateInput.getText().toString().trim().split("-");
-                setFragment(new SeatsFragment(frameComingFrom, selectedFilmId, selectedCinemaId, selectedRoomId, Integer.parseInt(dateInputSplitted[0]), Integer.parseInt(dateInputSplitted[1]), Integer.parseInt(spinnerHour.getSelectedItem().toString().substring(0, 2))));
-            });
-        }
+
     }
 
     private void setCinemaInfo(int filmSelected) {

@@ -59,12 +59,12 @@
                         <Button
                             android:id="@+id/buttonActivity"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
+                            android:layout_height="190dp"
                             android:layout_marginTop="30dp"
                             android:layout_marginBottom="20dp"
-                            android:alpha="0"
                             android:backgroundTint="?attr/colorPrimaryVariant"
                             android:clickable="false"
+                            android:elevation="1dp"
                             android:enabled="false"
                             android:text="@string/sum"
                             android:textColor="?attr/colorOnSecondary"
@@ -78,7 +78,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="30dp"
-                            android:layout_marginBottom="20dp" />
+                            android:layout_marginBottom="20dp"
+                            android:elevation="4dp"
+                            android:visibility="gone" />
                     </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
