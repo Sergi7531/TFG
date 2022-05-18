@@ -20,7 +20,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -40,7 +40,7 @@
                     android:src="@drawable/ic_baseline_person_24" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -49,7 +49,7 @@
                         android:id="@+id/usuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:fontFamily="@font/satoshi"
                         android:text="@string/username"
                         android:textColor="?attr/colorOnSecondary"
@@ -60,7 +60,7 @@
                         android:id="@+id/correo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
                         android:alpha="0.7"
                         android:fontFamily="@font/satoshi"
                         android:text="@string/email"
@@ -136,7 +136,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="30dp"
                 android:backgroundTint="@color/secondaryColor"
-                android:text="Editar Perfil"
+                android:text="@string/editar_perfil"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 app:cornerRadius="10dp" />
@@ -145,7 +145,7 @@
                 android:id="@+id/estadisticas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:text="@string/estad_sticas_usuario"
@@ -289,7 +289,7 @@
                 android:id="@+id/estadisticas2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/satoshi"
@@ -317,7 +317,7 @@
                     android:backgroundTint="?attr/colorPrimaryVariant"
                     android:clickable="false"
                     android:enabled="false"
-                    android:text="+"
+                    android:text="@string/sum"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="28sp"
                     app:cornerRadius="18dp" />
@@ -336,11 +336,11 @@
                 android:id="@+id/estadisticas5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/satoshi"
-                android:text="Películas que quieres ver:"
+                android:text="@string/pel_culas_que_quieres_ver"
                 android:textColor="?attr/colorOnSecondary"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -365,7 +365,7 @@
                     android:backgroundTint="?attr/colorPrimaryVariant"
                     android:clickable="false"
                     android:enabled="false"
-                    android:text="+"
+                    android:text="@string/sum"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="28sp"
                     app:cornerRadius="18dp" />
@@ -376,12 +376,6 @@
                     />
             </RelativeLayout>
 
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
 
             <TextView
                 android:id="@+id/estadisticas3"
@@ -415,7 +409,7 @@
                     android:backgroundTint="?attr/colorPrimaryVariant"
                     android:clickable="false"
                     android:enabled="false"
-                    android:text="+"
+                    android:text="@string/sum"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="28sp"
                     app:cornerRadius="18dp" />
@@ -431,7 +425,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/satoshi"
@@ -453,9 +447,9 @@
                 android:id="@+id/estadisticas4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:fontFamily="@font/satoshi"
                 android:text="@string/siguiendo"

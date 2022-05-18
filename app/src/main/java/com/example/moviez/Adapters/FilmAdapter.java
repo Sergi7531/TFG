@@ -19,6 +19,7 @@ import com.example.moviez.R;
 import java.util.List;
 
 public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmViewHolder> {
+
     public Context context;
     public List<Models.Film> movies;
     public Fragment currentFragment;
@@ -52,22 +53,23 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmViewHolder
     }
 
     private void setFragment(Fragment fragment) {
-        currentFragment
-                .getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_frame, fragment)
-                .addToBackStack(HomeFragment.class.getSimpleName())
-                .commit();
+        if (currentFragment
+                .getFragmentManager() != null) {
+            currentFragment
+                    .getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_frame, fragment)
+                    .addToBackStack(HomeFragment.class.getSimpleName())
+                    .commit();
+        }
     }
-
 
     @Override
     public int getItemCount() {
         return movies.size();
     }
 
-
-    class FilmViewHolder extends RecyclerView.ViewHolder {
+    static class FilmViewHolder extends RecyclerView.ViewHolder {
         ImageView imageFilmHolder;
 
         public FilmViewHolder(@NonNull View itemView) {

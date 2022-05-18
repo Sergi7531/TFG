@@ -89,7 +89,7 @@
                     android:id="@+id/userRatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:stepSize="0.5"
                     tools:ignore="SpeakableTextPresentCheck" />
@@ -98,11 +98,11 @@
                     android:id="@+id/actualRating"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="2dp"
+                    android:layout_marginEnd="2dp"
                     android:fontFamily="@font/satoshi"
-                    android:gravity="center|right"
-                    android:paddingRight="3dp"
-                    android:text="0.0"
+                    android:gravity="center|end"
+                    android:paddingEnd="3dp"
+                    android:text="@string/_0_0"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -111,10 +111,10 @@
                     android:id="@+id/actualRating2"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="0.6dp"
+                    android:layout_marginStart="0.6dp"
                     android:fontFamily="@font/satoshi"
-                    android:gravity="center|left"
-                    android:text="/5.0"
+                    android:gravity="center|start"
+                    android:text="@string/_5_0"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -126,7 +126,7 @@
             android:id="@+id/spoilerCheckBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Spoiler" />
+            android:text="@string/spoiler" />
 
         <Button
             android:id="@+id/publishButton"

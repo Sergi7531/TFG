@@ -210,7 +210,7 @@ public class EditProfileFragment extends AppFragment {
                     FirebaseStorage.getInstance().getReference("/profileimgs/" + UUID.randomUUID() + ".jpg")
                             .putFile(uri)
                             .continueWithTask(task2 -> task2.getResult().getStorage().getDownloadUrl())
-                            .addOnSuccessListener(imageUrl -> saveUser(imageUrl));
+                            .addOnSuccessListener(imageUrl -> saveUser(auth.getCurrentUser().getUid(), imageUrl));
                 }
             });
         });
@@ -221,7 +221,7 @@ public class EditProfileFragment extends AppFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void saveUser(Uri imageUri) {
+    private void saveUser(String userid, Uri imageUri) {
 
         String imageUrl = "";
 
@@ -233,6 +233,7 @@ public class EditProfileFragment extends AppFragment {
                 .document(auth.getCurrentUser().getUid())
                 .update("profileImageURL", imageUrl);
 
+//        Update all user comments with the new image url:
         String finalImageUrl = imageUrl;
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -266,6 +267,24 @@ public class EditProfileFragment extends AppFragment {
             }
         });;
 
+//        Get all documents in the collection:
+//
+/*
+        db.collection("comments")
+                .get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    db.collection("comments").document(document.getId()).collection("comments").get().addOnCompleteListener(task2 -> {
+                        if (task2.isSuccessful()) {
+                            Models.Comment comment = document.toObject(Models.Comment.class);
+                            if (comment.userid.equals(userid)) {
+                                db.collection("comments").document(document.getId()).collection("comments").document(comment.userid).update("imageUrl", finalImageUrl);
+                            }
+                        }
+                    });
+                }
+            }
+        });*/
     }
 
 

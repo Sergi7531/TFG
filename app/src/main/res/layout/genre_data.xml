@@ -5,7 +5,7 @@
     android:id="@+id/genreHolder"
     android:layout_width="150dp"
     android:layout_height="100dp"
-    android:layout_marginRight="25dp"
+    android:layout_marginEnd="25dp"
     android:layout_marginBottom="15dp"
     android:background="?attr/backgroundColor"
     android:elevation="5dp"
@@ -38,7 +38,7 @@
             android:elevation="12dp"
             android:fontFamily="@font/satoshi"
             android:gravity="center"
-            android:text="Género"
+            android:text="@string/g_nero"
             android:textColor="@android:color/white"
             android:textSize="19sp" />
 

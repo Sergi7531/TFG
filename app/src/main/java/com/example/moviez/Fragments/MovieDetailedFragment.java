@@ -9,17 +9,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,63 +39,43 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MovieDetailedFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MovieDetailedFragment extends AppFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static int filmId = 0;
-    public static ImageView movieImage;
-    public static ImageView movieBackground;
-    public static TextView movieTitle;
-    public static TextView movieDuration;
-    public static TextView movieRelease;
-    public static TextView movieDirector;
-    public static TextView movieCasting;
-    public static TextView globalUsersRating;
-    public static TextView comentariosTextDetail;
-    public static TextView infoMovie;
-    public static RatingBar ratingBar;
-    public static Button addCommentMovie;
+    public ImageView movieImage;
+    public ImageView movieBackground;
+    public TextView infoMovie,
+            movieTitle,
+            movieDuration,
+            movieRelease,
+            movieDirector,
+            movieCasting,
+            globalUsersRating,
+            comentariosTextDetail;
+    public RatingBar ratingBar;
+    public Button addCommentMovie;
     public static CardView favoriteFloatingButton;
     public static RecyclerView similarFilmsRecyclerView;
 
-    //    Intent to BuyTicketsFragment:
-    public static Button buyButton;
-    public static ImageView heartImage;
+    public Button buyButton;
+    public ImageView heartImage;
 
     private Spinner spinner;
     private List<Responses.CastResult> actorItems = new ArrayList<>();
     private List<Responses.CrewResult> crewItems = new ArrayList<>();
     public static RecyclerView commentsFragmentMovieDetail;
-    private List<Models.Comment> comments = new ArrayList<>();
-    private List<Models.Film> watchedMovies = new ArrayList<>();
-
-    private FrameLayout frame_detail;
-
+    private final List<Models.Comment> comments = new ArrayList<>();
+    
     Models.Film film;
 
 
     public MovieDetailedFragment() {
-        // Required empty public constructor
     }
 
     public MovieDetailedFragment(int param1) {
         filmId = param1;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment MovieDetailed.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MovieDetailedFragment newInstance(String param1) {
         MovieDetailedFragment fragment = new MovieDetailedFragment();
         Bundle args = new Bundle();
@@ -116,21 +95,18 @@ public class MovieDetailedFragment extends AppFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movie_detailed, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         hook(view);
 
-        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        AppViewModel.getMovieDetails(filmId);
 
-        viewModel.getMovieDetails(filmId);
-
-        viewModel.movieDetails.observe(getViewLifecycleOwner(), movie -> {
+        AppViewModel.movieDetails.observe(getViewLifecycleOwner(), movie -> {
 
             Glide.with(requireContext())
                     .load("https://image.tmdb.org/t/p/original" + movie.poster_path)
@@ -149,24 +125,21 @@ public class MovieDetailedFragment extends AppFragment {
 
             movieDuration.setText(hours + "h " + minutes + "m");
 
-//            Convert date in string (format YYYY-MM-DD) to DD-MM-YYYY:
             String date = movie.release_date;
             String[] parts = date.split("-");
-            if(parts.length == 3) {
+            if (parts.length == 3) {
                 movieRelease.setText(parts[2] + "-" + parts[1] + "-" + parts[0]);
             } else {
                 movieRelease.setText("Fecha no disponible.");
             }
 
-            viewModel.getMovieCast(filmId);
+            AppViewModel.getMovieCast(filmId);
 
             infoMovie.setText(movie.overview);
 
             actorItems.clear();
 
-            viewModel.fullCast.observe(getViewLifecycleOwner(), cast -> { ;
-                loadActors(viewModel, cast);
-            });
+            AppViewModel.fullCast.observe(getViewLifecycleOwner(), this::loadActors);
 
             db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
@@ -177,47 +150,43 @@ public class MovieDetailedFragment extends AppFragment {
                     }
                 }
             });
-            favoriteFloatingButton.setOnClickListener(v -> {
-
-                db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().exists()) {
-                            heartImage.setImageResource(R.drawable.heart_empty);
-                            db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).delete();
-                        } else {
-                            heartImage.setImageResource(R.drawable.heart);
-                            db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).set(movie);
-                        }
+            favoriteFloatingButton.setOnClickListener(v -> db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    if (task.getResult().exists()) {
+                        heartImage.setImageResource(R.drawable.heart_empty);
+                        db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).delete();
+                    } else {
+                        heartImage.setImageResource(R.drawable.heart);
+                        db.collection("users").document(auth.getCurrentUser().getUid()).collection("favoritedFilms").document(String.valueOf(filmId)).set(movie);
                     }
-                });
-            });
+                }
+            }));
 
             IMDB.api.getRecommendations(movie.id, IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.SearchResponse>() {
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
-                public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+                public void onResponse(@NonNull Call<Responses.SearchResponse> call, @NonNull Response<Responses.SearchResponse> response) {
                     if (response.body() != null) {
                         if (response.body().results.size() > 10) {
                             response.body().results.subList(0, 10);
                         }
-                        viewModel.similarMovies.postValue(response.body());
+                        AppViewModel.similarMovies.postValue(response.body());
                     }
                 }
 
                 @Override
-                public void onFailure (Call < Responses.SearchResponse > call, Throwable t) {
+                public void onFailure (@NonNull Call < Responses.SearchResponse > call, @NonNull Throwable t) {
                     t.getMessage();
                 }
             });
 
-            viewModel.similarMovies.observe(getViewLifecycleOwner(), similarMovies -> {
+            AppViewModel.similarMovies.observe(getViewLifecycleOwner(), similarMovies -> {
                 if (similarMovies != null) {
                     similarFilmsRecyclerView.setAdapter(new FilmAdapter(similarMovies.results, requireContext(), MovieDetailedFragment.this));
                     similarFilmsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
                 }
             });
         });
-
 
         addCommentMovie.setOnClickListener(v -> {
             NewCommentFragment newCommentFragment = new NewCommentFragment(filmId);
@@ -226,12 +195,10 @@ public class MovieDetailedFragment extends AppFragment {
 
         getCommentsFromFirebase(filmId);
 
-//      Consulta IMDB.api.getNowPlaying para obtener las películas en cartelera. Si la película con id = filmId está en la lista, se muestra un botón buyButton:
-
         IMDB.api.getNowPlaying(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
-            public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
+            public void onResponse(@NonNull Call<Responses.BillboardResponse> call, @NonNull Response<Responses.BillboardResponse> response) {
                 if (response.body() != null) {
                     for(Models.Film movie : response.body().results) {
                         if (movie.id == filmId) {
@@ -242,7 +209,7 @@ public class MovieDetailedFragment extends AppFragment {
             }
 
             @Override
-            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<Responses.BillboardResponse> call, @NonNull Throwable t) {
                 t.getMessage();
             }
         });
@@ -250,7 +217,7 @@ public class MovieDetailedFragment extends AppFragment {
 
 
         buyButton.setOnClickListener(v -> {
-            appViewModel.currentFilmId = filmId;
+            AppViewModel.currentFilmId = filmId;
             BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId, R.id.frame_detail);
             setFragment(buyTicketFragment);
         });
@@ -261,14 +228,14 @@ public class MovieDetailedFragment extends AppFragment {
         IMDB.api.getUpcoming(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
 
             @Override
-            public void onResponse(Call<Responses.BillboardResponse> call, Response<Responses.BillboardResponse> response) {
+            public void onResponse(@NonNull Call<Responses.BillboardResponse> call, @NonNull Response<Responses.BillboardResponse> response) {
                 if (response.body() != null) {
-//                    Iterate through the list of films. If the film with id = filmId is in the list, do not add "Vista" to the list of status:
 
                     boolean found = false;
                     for (Models.Film movie : response.body().results) {
                         if (movie.id == filmId) {
                             found = true;
+                            break;
                         }
                     }
                     if (!found) {
@@ -278,12 +245,10 @@ public class MovieDetailedFragment extends AppFragment {
             }
 
             @Override
-            public void onFailure(Call<Responses.BillboardResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<Responses.BillboardResponse> call, @NonNull Throwable t) {
                 t.getMessage();
             }
         });
-
-
 
         status.add("Ver más tarde");
 
@@ -299,7 +264,7 @@ public class MovieDetailedFragment extends AppFragment {
 
                     IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
                         @Override
-                        public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
+                        public void onResponse(@NonNull Call<Models.Film> call, @NonNull Response<Models.Film> response) {
                             if (response.body() != null) {
                                 film = new Models.Film(response.body().id, response.body().title, response.body().poster_path);
                                 addToWatched("moviesToWatch", "watchedFilms");
@@ -307,7 +272,7 @@ public class MovieDetailedFragment extends AppFragment {
                         }
 
                         @Override
-                        public void onFailure(Call<Models.Film> call, Throwable t) {
+                        public void onFailure(@NonNull Call<Models.Film> call, @NonNull Throwable t) {
 
                         }
                     });
@@ -315,7 +280,7 @@ public class MovieDetailedFragment extends AppFragment {
                 } else if (selected.equals("Vista")) {
                     IMDB.api.getMovie(filmId, IMDB.apiKey, "es-ES").enqueue(new Callback<Models.Film>() {
                         @Override
-                        public void onResponse(Call<Models.Film> call, Response<Models.Film> response) {
+                        public void onResponse(@NonNull Call<Models.Film> call, @NonNull Response<Models.Film> response) {
                             if (response.body() != null) {
                                 film = new Models.Film(response.body().id, response.body().title, response.body().poster_path);
                                 addToWatched("watchedFilms", "moviesToWatch");
@@ -323,7 +288,7 @@ public class MovieDetailedFragment extends AppFragment {
                         }
 
                         @Override
-                        public void onFailure(Call<Models.Film> call, Throwable t) {
+                        public void onFailure(@NonNull Call<Models.Film> call, @NonNull Throwable t) {
 
                         }
                     });
@@ -368,7 +333,6 @@ public class MovieDetailedFragment extends AppFragment {
                 .delete();
     }
 
-
     private void setFragment(Fragment fragment) {
         buyButton.setVisibility(View.GONE);
         MovieDetailedFragment.this.getChildFragmentManager()
@@ -377,7 +341,6 @@ public class MovieDetailedFragment extends AppFragment {
                 .addToBackStack(MovieDetailedFragment.class.getSimpleName())
                 .commit();
     }
-
 
     private void getCommentsFromFirebase(int filmId) {
         db.collection("comments").document(String.valueOf(filmId)).collection("comments").get().addOnCompleteListener(task -> {
@@ -406,22 +369,20 @@ public class MovieDetailedFragment extends AppFragment {
                     comentariosTextDetail.setText("No hay comentarios");
                 }
 
-
             } else {
                 Log.d("TAG", "Error getting documents: ", task.getException());
             }
         });
     }
 
-    private void loadActors(AppViewModel viewModel, Responses.FullCastResponse cast) {
-        actorItems = viewModel.fullCast.getValue().cast;
+    private void loadActors(Responses.FullCastResponse cast) {
+        actorItems = AppViewModel.fullCast.getValue().cast;
 
         if (actorItems.size() > 4) {
             actorItems = actorItems.subList(0, 4);
         }
 
-
-        crewItems = viewModel.fullCast.getValue().crew;
+        crewItems = AppViewModel.fullCast.getValue().crew;
 
         for (int i = 0; i < crewItems.size(); i++) {
             if (crewItems.get(i).job.equals("Director")) {
@@ -432,16 +393,15 @@ public class MovieDetailedFragment extends AppFragment {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < actorItems.size(); i++) {
             if (i == actorItems.size()-1) {
-                sb.append(cast.cast.get(i).name + "\n");
+                sb.append(cast.cast.get(i).name).append("\n");
             } else {
-                sb.append(cast.cast.get(i).name + ",\n");
+                sb.append(cast.cast.get(i).name).append(",\n");
             }
         }
         movieCasting.setText(sb.toString().trim());
     }
 
     private void hook(View view) {
-        frame_detail = view.findViewById(R.id.frame_detail);
         movieImage = view.findViewById(R.id.movieImage);
         movieBackground = view.findViewById(R.id.movieBackground);
         movieTitle = view.findViewById(R.id.movieTitle);

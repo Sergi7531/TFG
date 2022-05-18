@@ -12,19 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder> {
-    private boolean isScrollEnabled = true;
-    List<Models.Seats> seats = new ArrayList<>();
+
+    List<Models.Seats> seats;
     public Context context;
 
     public SeatAdapter(List<Models.Seats> seats, Context context) {
         this.seats = seats;
         this.context = context;
     }
-
 
     @NonNull
     @Override
@@ -38,19 +36,18 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
     public void onBindViewHolder(@NonNull SeatViewHolder holder, int position) {
         Models.Seats seat = seats.get(position);
 
-        if(seat.state.equals(Models.SeatState.BUSY)) {
+        if (seat.state.equals(Models.SeatState.BUSY)) {
             holder.seatImage.setImageResource(R.drawable.ic_rectangle_taken);
             disableSeat(seat, holder);
-        } else if(seat.state.equals(Models.SeatState.FREE)) {
+        } else if (seat.state.equals(Models.SeatState.FREE)) {
             holder.seatImage.setImageResource(R.drawable.ic_rectangle_void);
             enableSeat(seat, holder);
-        } else if(seat.state.equals(Models.SeatState.SELECTED)) {
+        } else if (seat.state.equals(Models.SeatState.SELECTED)) {
             holder.seatImage.setImageResource(R.drawable.ic_rectangle_selected);
             selectSeat(seat, holder);
         }
 
         holder.seatImage.setOnClickListener(view -> {
-            // Select new Seat
             if (seat.state.equals(Models.SeatState.FREE)) {
                 holder.seatImage.setImageResource(R.drawable.ic_rectangle_selected);
                 selectSeat(seat, holder);
@@ -83,7 +80,7 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
         return seats.size();
     }
 
-    public class SeatViewHolder extends RecyclerView.ViewHolder {
+    public static class SeatViewHolder extends RecyclerView.ViewHolder {
         public ImageView seatImage;
         public SeatViewHolder(@NonNull View itemView) {
             super(itemView);

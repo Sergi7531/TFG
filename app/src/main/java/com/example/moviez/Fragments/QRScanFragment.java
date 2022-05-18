@@ -32,18 +32,12 @@ public class QRScanFragment extends AppFragment {
     private static final String ARG_PARAM2 = "param2";
     private CodeScanner codeScanner;
 
-    public int frameComingFrom = 0;
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public QRScanFragment() {
         // Required empty public constructor
-    }
-
-    public QRScanFragment(int frameComingFrom) {
-        this.frameComingFrom = frameComingFrom;
     }
 
     /**
@@ -158,18 +152,10 @@ public class QRScanFragment extends AppFragment {
     }
 
     private void setFragment() {
-        if(frameComingFrom != 0) {
-            navigateWithFrame(frameComingFrom);
-        } else {
-            navigateWithFrame(R.id.main_frame);
-        }
-    }
-
-    private void navigateWithFrame(int frame) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         TicketsFragment ticketsFragment = new TicketsFragment();
-        fragmentTransaction.replace(frame, ticketsFragment);
+        fragmentTransaction.replace(R.id.main_frame, ticketsFragment);
         fragmentTransaction.commit();
     }
 

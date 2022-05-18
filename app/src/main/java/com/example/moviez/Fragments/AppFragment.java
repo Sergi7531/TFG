@@ -12,8 +12,8 @@ import com.example.moviez.Activities.AppViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
 public abstract class AppFragment extends Fragment {
+
     public static AppViewModel appViewModel;
     public FirebaseFirestore db;
     public FirebaseAuth auth;

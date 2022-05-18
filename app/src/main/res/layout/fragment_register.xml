@@ -22,7 +22,7 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
@@ -35,7 +35,7 @@
                     android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/ic_profile_picture"
-                    android:text="+"
+                    android:text="@string/sum"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="28sp" />
 

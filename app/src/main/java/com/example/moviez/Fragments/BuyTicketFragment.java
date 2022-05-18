@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
@@ -30,19 +31,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BuyTicketFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-
 public class BuyTicketFragment extends AppFragment {
 
     private static int filmId = 0;
     public static int frameComingFrom = 0;
 
-    private static int roomsInSelectedCinema = 0;
     List<Models.Cinema> allCinemas = new ArrayList<>();
     List<Models.Film> allFilms = new ArrayList<>();
     List<String> filmsNamesToShow = new ArrayList<>();
@@ -51,7 +44,6 @@ public class BuyTicketFragment extends AppFragment {
     private static String selectedCinemaId = "";
     private static int selectedFilmId = 0;
     private static int selectedRoomId = 0;
-    private static String selectedDate = "";
 
     TextView titleFilm;
     TextView movieSinopsis;
@@ -69,27 +61,22 @@ public class BuyTicketFragment extends AppFragment {
 
     String[] maxDate = new String[3];
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     Models.Film filmSelected = new Models.Film();
 
-
-    // TODO: Rename and change types of parameters
-    private List<String> sessionsToShow = new ArrayList<>();
+    private final List<String> sessionsToShow = new ArrayList<>();
 
     public BuyTicketFragment() {
-        // Required empty public constructor
-    }
 
+    }
 
     public BuyTicketFragment(int param1, int frameComingFrom) {
-        this.frameComingFrom = frameComingFrom;
+        BuyTicketFragment.frameComingFrom = frameComingFrom;
         filmId = param1;
     }
+
     public static BuyTicketFragment newInstance(String param1, String param2) {
         BuyTicketFragment fragment = new BuyTicketFragment();
         Bundle args = new Bundle();
@@ -107,14 +94,12 @@ public class BuyTicketFragment extends AppFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_buy_ticket, container, false);
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         hook(view);
@@ -126,13 +111,12 @@ public class BuyTicketFragment extends AppFragment {
                 filmsNamesToShow.add(film.title);
             }
 
-            ArrayAdapter<String> filmAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, filmsNamesToShow);
+            ArrayAdapter<String> filmAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, filmsNamesToShow);
 
             spinnerMovie.setAdapter(filmAdapter);
             filmAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             if (filmId != 0) {
-//            Get the film with the id = filmId iterating over the list of films:
                 for (Models.Film film : allFilms) {
                     if (film.getId() == filmId) {
                         filmSelected = film;
@@ -163,7 +147,6 @@ public class BuyTicketFragment extends AppFragment {
             spinnerMovie.setSelection(filmAdapter.getPosition(filmSelected.title));
         });
 
-
         dateInput.setOnClickListener(view1 -> {
             final Calendar cldr = Calendar.getInstance();
             int day = cldr.get(Calendar.DAY_OF_MONTH);
@@ -175,8 +158,6 @@ public class BuyTicketFragment extends AppFragment {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-//                            Check if the date is before appviewmodel maxium date:
-//                            First, split appViewModel.maximumDate into a list of strings:\
                             UpdateFilmsInCinemas.dateEnd.observe(getViewLifecycleOwner(), s -> {
                                 maxDate = s.split("-");
 
@@ -201,8 +182,10 @@ public class BuyTicketFragment extends AppFragment {
                                                         for (DocumentSnapshot documentSnapshot2 : queryDocumentSnapshots2.getDocuments()) {
                                                             Models.Session session = documentSnapshot2.toObject(Models.Session.class);
 
-//                                                    Split session.sessionid to get date and time:
-                                                            String[] sessionIdSplit = session.sessionid.split("-");
+                                                            String[] sessionIdSplit = new String[0];
+                                                            if (session != null) {
+                                                                sessionIdSplit = session.sessionid.split("-");
+                                                            }
                                                             String sessionMonth = sessionIdSplit[0];
                                                             String sessionDay = sessionIdSplit[1];
 
@@ -232,11 +215,9 @@ public class BuyTicketFragment extends AppFragment {
             picker.show();
         });
 
-
         buyButton.setOnClickListener(view1 -> {
 
             String[] dateInputSplitted = dateInput.getText().toString().trim().split("-");
-
             setFragment(new SeatsFragment(frameComingFrom, selectedFilmId, selectedCinemaId, selectedRoomId, Integer.parseInt(dateInputSplitted[0]), Integer.parseInt(dateInputSplitted[1]), Integer.parseInt(spinnerHour.getSelectedItem().toString().substring(0,2))));
         });
     }
@@ -254,7 +235,6 @@ public class BuyTicketFragment extends AppFragment {
         } else {
             db.collection("movie_sessions").document(String.valueOf(filmSelected)).collection("cinemas").get().addOnSuccessListener(queryDocumentSnapshots -> {
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-//                    Set the cinemaName text:
                     selectedCinemaId = documentSnapshot.toObject(Models.Cinema.class).cinemaid;
                     cinemaName.setText(documentSnapshot.toObject(Models.Cinema.class).name);
                     db.collection("movie_sessions").document(String.valueOf(filmSelected)).collection("cinemas").document(documentSnapshot.toObject(Models.Cinema.class).cinemaid).collection("rooms").get().addOnSuccessListener(documentSnapshot1 -> {
@@ -288,17 +268,21 @@ public class BuyTicketFragment extends AppFragment {
     }
     private void setFragment(Fragment fragment) {
         if(frameComingFrom != 0) {
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(frameComingFrom, fragment)
-                    .addToBackStack(BuyTicketFragment.class.getSimpleName())
-                    .commit();
+            if (getFragmentManager() != null) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(frameComingFrom, fragment)
+                        .addToBackStack(BuyTicketFragment.class.getSimpleName())
+                        .commit();
+            }
         } else {
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frame_detail, fragment)
-                    .addToBackStack(BuyTicketFragment.class.getSimpleName())
-                    .commit();
+            if (getFragmentManager() != null) {
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame_detail, fragment)
+                        .addToBackStack(BuyTicketFragment.class.getSimpleName())
+                        .commit();
+            }
         }
 
     }

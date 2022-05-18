@@ -44,9 +44,6 @@ public class TicketsFragment extends AppFragment {
 
     public TextView noTickets;
 
-    public int frameComingFrom = 0;
-
-
     public static RecyclerView recyclerTickets;
     public static LinearLayout linearPages;
 
@@ -58,10 +55,6 @@ public class TicketsFragment extends AppFragment {
 
     public TicketsFragment() {
         // Required empty public constructor
-    }
-
-    public TicketsFragment(int frameComingFrom) {
-        this.frameComingFrom = frameComingFrom;
     }
 
     /**
@@ -107,7 +100,7 @@ public class TicketsFragment extends AppFragment {
         hook(view);
         button.setOnClickListener(v -> {
             askCameraPermission();
-            setFragment(new QRScanFragment(frameComingFrom));
+            setFragment(new QRScanFragment());
         });
         getTicketsFromFirebase();
     }
@@ -148,17 +141,10 @@ public class TicketsFragment extends AppFragment {
     }
 
     private void setFragment(Fragment fragment) {
-        if(frameComingFrom != 0) {
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(frameComingFrom, fragment)
-                    .commit();
-        } else {
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_frame, fragment)
-                    .commit();
-        }
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frame, fragment)
+                .commit();
     }
 
     private void askCameraPermission() {
@@ -168,11 +154,11 @@ public class TicketsFragment extends AppFragment {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},
                         CAMERA_REQUEST_CODE);
             } else {
-                setFragment(new QRScanFragment(frameComingFrom));
+                setFragment(new QRScanFragment());
             }
         }
         else {
-            setFragment(new QRScanFragment(frameComingFrom));
+            setFragment(new QRScanFragment());
         }
     }
 }

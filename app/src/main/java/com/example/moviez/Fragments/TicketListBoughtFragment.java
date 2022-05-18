@@ -100,7 +100,7 @@ public class TicketListBoughtFragment extends AppFragment {
         totalPriceTickets.setText(String.valueOf(ticketsToBuy.size()*10));
 
         goTicketButton.setOnClickListener(view1 -> {
-            setFragment(new TicketBoughtFinishedFragment(ticketsToBuy, cinemaid, frameComingFrom));
+            setFragment(new TicketBoughtFinishedFragment(ticketsToBuy, cinemaid));
         });
     }
 

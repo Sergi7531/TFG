@@ -22,7 +22,7 @@ import java.util.List;
 
 public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapter.UserActivityViewHolder> {
 
-    private List<Models.UserActivity> userActivities;
+    private final List<Models.UserActivity> userActivities;
     public Context context;
     public Fragment currentFragment;
 
@@ -44,7 +44,7 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
     public void onBindViewHolder(@NonNull UserActivityAdapter.UserActivityViewHolder holder, int position) {
         Models.UserActivity userActivity = userActivities.get(position);
 
-        holder.titleUserActivity.setText("Novedad de "+userActivity.username);
+        holder.titleUserActivity.setText(String.format("Novedad de %s", userActivity.username));
 
         if(userActivity.getUserImage() != null && !userActivity.getUserImage().isEmpty()) {
             Glide.with(context).load(userActivity.getUserImage()).into(holder.userImage);
@@ -65,12 +65,15 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
     }
 
     private void setFragment(Fragment fragment) {
-        currentFragment
-                .getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_frame, fragment)
-                .addToBackStack(HomeFragment.class.getSimpleName())
-                .commit();
+        if (currentFragment
+                .getFragmentManager() != null) {
+            currentFragment
+                    .getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.main_frame, fragment)
+                    .addToBackStack(HomeFragment.class.getSimpleName())
+                    .commit();
+        }
     }
 
     @Override
@@ -78,7 +81,7 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
         return userActivities.size();
     }
 
-    public class UserActivityViewHolder extends RecyclerView.ViewHolder {
+    public static class UserActivityViewHolder extends RecyclerView.ViewHolder {
 
         public CardView userActivityCard;
         public ImageView userImage;
