@@ -136,7 +136,7 @@
                 android:layout_marginTop="20dp"
                 android:backgroundTint="?attr/colorSecondary"
                 android:fontFamily="@font/satoshi"
-                android:text="Finalizar compra"
+                android:text="Reservar asientos"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"

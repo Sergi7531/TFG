@@ -32,6 +32,7 @@ import com.example.moviez.R;
 import com.example.moviez.Responses;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -71,6 +72,9 @@ public class MovieDetailedFragment extends AppFragment {
     Models.Film film;
 
 
+    List<String> status = new ArrayList<>();
+
+
     public MovieDetailedFragment() {
     }
 
@@ -100,6 +104,7 @@ public class MovieDetailedFragment extends AppFragment {
         return inflater.inflate(R.layout.fragment_movie_detailed, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -188,75 +193,56 @@ public class MovieDetailedFragment extends AppFragment {
             loadSimilarMovies(AppViewModel.similarMovies.getValue());
 
             AppViewModel.similarMovies.observe(getViewLifecycleOwner(), this::loadSimilarMovies);
-        });
 
-        addCommentMovie.setOnClickListener(v -> {
-            NewCommentFragment newCommentFragment = new NewCommentFragment(filmId);
-            setFragment(newCommentFragment);
-        });
+            status.add(0, "Estado");
 
-        getCommentsFromFirebase(filmId);
+            if(!LocalDate.of(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]) ,Integer.parseInt(parts[2])).isAfter(LocalDate.now())) {
+                status.add(1, "Vista");
+            }
 
-        IMDB.api.getNowPlaying(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onResponse(@NonNull Call<Responses.BillboardResponse> call, @NonNull Response<Responses.BillboardResponse> response) {
-                if (response.body() != null) {
-                    for(Models.Film movie : response.body().results) {
-                        if (movie.id == filmId) {
-                            buyButton.setVisibility(View.VISIBLE);
+            status.add("Ver más tarde");
+
+            addCommentMovie.setOnClickListener(v -> {
+                NewCommentFragment newCommentFragment = new NewCommentFragment(filmId);
+                setFragment(newCommentFragment);
+            });
+
+            getCommentsFromFirebase(filmId);
+
+            IMDB.api.getNowPlaying(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onResponse(@NonNull Call<Responses.BillboardResponse> call, @NonNull Response<Responses.BillboardResponse> response) {
+                    if (response.body() != null) {
+                        for(Models.Film movie : response.body().results) {
+                            if (movie.id == filmId) {
+                                buyButton.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<Responses.BillboardResponse> call, @NonNull Throwable t) {
-                t.getMessage();
-            }
-        });
-
-
-
-        buyButton.setOnClickListener(v -> {
-            AppViewModel.currentFilmId = filmId;
-            BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId, R.id.frame_detail);
-            setFragment(buyTicketFragment);
-        });
-
-        List<String> status = new ArrayList<>();
-        status.add(0, "Estado");
-
-        IMDB.api.getUpcoming(IMDB.apiKey, "es-ES", 1).enqueue(new Callback<Responses.BillboardResponse>() {
-
-            @Override
-            public void onResponse(@NonNull Call<Responses.BillboardResponse> call, @NonNull Response<Responses.BillboardResponse> response) {
-                if (response.body() != null) {
-
-                    boolean found = false;
-                    for (Models.Film movie : response.body().results) {
-                        if (movie.id == filmId) {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        status.add(1, "Vista");
-                    }
+                @Override
+                public void onFailure(@NonNull Call<Responses.BillboardResponse> call, @NonNull Throwable t) {
+                    t.getMessage();
                 }
-            }
+            });
 
-            @Override
-            public void onFailure(@NonNull Call<Responses.BillboardResponse> call, @NonNull Throwable t) {
-                t.getMessage();
-            }
+
+
+            buyButton.setOnClickListener(v -> {
+                AppViewModel.currentFilmId = filmId;
+                BuyTicketFragment buyTicketFragment = new BuyTicketFragment(filmId, R.id.frame_detail);
+                setFragment(buyTicketFragment);
+            });
+
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                    status);
+            spinner.setAdapter(dataAdapter);
         });
 
-        status.add("Ver más tarde");
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-                status);
-        spinner.setAdapter(dataAdapter);
+
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -306,6 +292,7 @@ public class MovieDetailedFragment extends AppFragment {
         });
 
     }
+
 
     private void removeFromWatchedAndToWatch() {
         db.collection("users")

@@ -15,6 +15,23 @@ public class IMDB {
 
     public static Api api = new Retrofit.Builder()
             .baseUrl(BASE_URL)
+//            .client(new OkHttpClient.Builder()
+                    // log interceptor
+//                    .addInterceptor(new Interceptor() {
+//                        @Override
+//                        @NonNull
+//                        public Response intercept(@NonNull Chain chain) throws IOException {
+//                            Request request = chain.request();
+//                            Log.e("INTERCEPTOR", String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
+//
+//                            okhttp3.Response response = chain.proceed(request);
+//                            Log.e("INTERCEPTOR---", String.format("Received response for %s %n%s", response.request().url(), response.headers()));
+//
+//                            return response;
+//                        }
+//                    })
+//                    .build()
+//            )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(Api.class);

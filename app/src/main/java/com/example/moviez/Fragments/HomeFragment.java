@@ -239,20 +239,16 @@ public class HomeFragment extends AppFragment {
                 genresUser.clear();
                 genresUser.addAll(Objects.requireNonNull(documentSnapshot.toObject(Models.User.class)).getFavoriteGenres());
 
-                AppViewModel.getMoviesForYou();
+                AppViewModel.getMoviesForYou(genresUser);
 
                 AppViewModel.forYouMovies.observe(getViewLifecycleOwner(), filmsByGenreForUser -> {
                     if (filmsByGenreForUser != null) {
                         if(filmsByGenreForUser.results.size() > 0) {
-                            System.out.println("he entrado en forYou");
-                            System.out.println(filmsByGenreForUser.results.size());
                             recyclerForYou.setAdapter(new FilmAdapter(filmsByGenreForUser.results, requireActivity(), this));
                             recyclerForYou.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
                             animacionCarga.setAlpha(0f);
                             linearForYou.setVisibility(View.VISIBLE);
                         } else {
-                            recyclerForYou.setAdapter(new FilmAdapter(filmsByGenreForUser.results, requireActivity(), this));
-                            recyclerForYou.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
                             linearForYou.setVisibility(View.GONE);
                         }
                     }

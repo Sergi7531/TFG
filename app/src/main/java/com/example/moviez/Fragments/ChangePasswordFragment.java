@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.moviez.R;
 
-public class ChangePasswordFragment extends Fragment {
+public class ChangePasswordFragment extends AppFragment {
 
     public ImageView goBackPassword2;
 

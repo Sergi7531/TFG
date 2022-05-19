@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -78,32 +79,38 @@ public class QRScanFragment extends AppFragment {
 
             Models.Ticket ticket = new Models.Ticket();
 
-            ticket.ticketid = resultSplitted[0];
-            ticket.filmid = Integer.parseInt(resultSplitted[1]);
-            ticket.userid = resultSplitted[2];
-            ticket.filmName = resultSplitted[3];
-            ticket.tagline = resultSplitted[4];
-            ticket.filmImage = resultSplitted[5];
-            ticket.cinemaName = resultSplitted[6];
-            ticket.cinemaCoords = resultSplitted[7];
-            ticket.date = resultSplitted[8];
-            ticket.time = resultSplitted[9];
-            ticket.duration = Integer.parseInt(resultSplitted[10]);
-            ticket.row = Integer.parseInt(resultSplitted[11]);
-            ticket.seat = Integer.parseInt(resultSplitted[12]);
-            ticket.room = Integer.parseInt(resultSplitted[13]);
+            if(resultSplitted.length == 14) {
+                ticket.ticketid = resultSplitted[0];
+                ticket.filmid = Integer.parseInt(resultSplitted[1]);
+                ticket.userid = resultSplitted[2];
+                ticket.filmName = resultSplitted[3];
+                ticket.tagline = resultSplitted[4];
+                ticket.filmImage = resultSplitted[5];
+                ticket.cinemaName = resultSplitted[6];
+                ticket.cinemaCoords = resultSplitted[7];
+                ticket.date = resultSplitted[8];
+                ticket.time = resultSplitted[9];
+                ticket.duration = Integer.parseInt(resultSplitted[10]);
+                ticket.row = Integer.parseInt(resultSplitted[11]);
+                ticket.seat = Integer.parseInt(resultSplitted[12]);
+                ticket.room = Integer.parseInt(resultSplitted[13]);
 
-            db.collection("users").document(ticket.userid).collection("tickets").document(ticket.ticketid).delete().addOnSuccessListener(success1 -> {
+                db.collection("users").document(ticket.userid).collection("tickets").document(ticket.ticketid).delete().addOnSuccessListener(success1 -> {
 
-                ticket.userid = Objects.requireNonNull(auth.getCurrentUser()).getUid();
-                db.collection("users").document(ticket.userid).collection("tickets").document(ticket.ticketid).set(ticket).addOnSuccessListener(success -> {
+                    ticket.userid = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+                    db.collection("users").document(ticket.userid).collection("tickets").document(ticket.ticketid).set(ticket).addOnSuccessListener(success -> {
+                    });
+
+
                 });
-
-                setFragment();
-            });
+                scannerView.setOnClickListener(view1 -> codeScanner.startPreview());
+            } else {
+                Toast.makeText(requireContext(), "QR no válido.", Toast.LENGTH_SHORT).show();
+            }
+            setFragment();
         }));
-        scannerView.setOnClickListener(view1 -> codeScanner.startPreview());
     }
+
 
     private void setFragment() {
         if(frameComingFrom != 0) {

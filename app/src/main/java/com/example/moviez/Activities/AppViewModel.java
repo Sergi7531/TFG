@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import retrofit2.Call;
@@ -93,36 +94,91 @@ public class AppViewModel extends ViewModel {
         });
     }
 
-    public static void getMoviesForYou () {
+    public static void getMoviesForYou (List<Integer> genresUser) {
 
         forYouMovies.setValue(null);
 
-        contPage = (int) (Math.random() * 3) + 1;
+        contPage = (int) (Math.random() * 2) + 1;
 
         getMoviesForYouByCollection("favoritedFilms");
 
-        getMoviesForYouByCollection("lastViewedFilms");
+        getMoviesForYouByCollection("watchedFilms");
 
         getMoviesForYouByCollection("moviesToWatch");
 
+
+        if(forYouMovies.getValue() == null) {
+            getMoviesByGenres(genresUser);
+        }
+
+    }
+
+    private static void getMoviesByGenres(List<Integer> genresUser) {
+//        Get recommendations by genres:
+        IMDB.api.getMoviesTopRated(IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
+            @Override
+            public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
+                if (response.body() != null) {
+                    Responses.SearchResponse moviesForYouResponse = response.body();
+//                    If user has no genre preferences, we will show the most popular movies:
+                    if (genresUser.isEmpty()) {
+                        forYouMovies.postValue(moviesForYouResponse);
+                        return;
+                    }
+                    LinkedHashSet<Models.Film> filmsToShow = new LinkedHashSet<>();
+
+//                    For each film, we need to check if any of the user's favorite genres is in the film's genres:
+                    for (Models.Film movie : moviesForYouResponse.results) {
+                        System.out.println("Checkeamos " + movie.title);
+                        for (Integer genre : genresUser) {
+                            if (movie.genre_ids.contains(genre)) {
+                                filmsToShow.add(movie);
+                            }
+                        }
+                    }
+                    moviesForYouResponse.results.clear();
+                    moviesForYouResponse.results.addAll(filmsToShow);
+                    forYouMovies.postValue(moviesForYouResponse);
+                } else {
+                    System.out.println("respuesta nula papá");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
+                System.out.println("He fallao");
+
+            }
+        });
     }
 
     private static void getMoviesForYouByCollection (String collection) {
+        System.out.println("entro al metodoooo" + collection);
+
         db.collection("users").document(auth.getCurrentUser().getUid()).collection(collection).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                 IMDB.api.getRecommendations(Integer.parseInt(documentSnapshot.getId()), IMDB.apiKey, "es-ES", contPage).enqueue(new Callback<Responses.SearchResponse>() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onResponse (@NonNull Call<Responses.SearchResponse> call, @NonNull Response<Responses.SearchResponse> response) {
+                        System.out.println("collection: " + collection);
                         if (response.body() != null) {
-                            if (response.body().results.size() > 5) {
-                                response.body().results.subList(0, 5);
+                            System.out.println("RESPONSE FROM collection: " + collection + " size: " + response.body().results.size());
+                            List<Models.Film> moviesToShow = response.body().results;
+                            if (moviesToShow.size() > 5) {
+                                moviesToShow = moviesToShow.subList(0, 5);
                             }
-                            forYouMovies.postValue(response.body());
+                            Responses.SearchResponse searchResponses = new Responses.SearchResponse();
+                            searchResponses.results = moviesToShow;
+                            if(forYouMovies.getValue() != null) {
+                                searchResponses.results.addAll(forYouMovies.getValue().results);
+                            }
+                            forYouMovies.postValue(searchResponses);
                         }
                     }
                     @Override
                     public void onFailure (@NonNull Call<Responses.SearchResponse> call, @NonNull Throwable t) {
+                        System.out.println("onfailure: " + collection );
                         t.getMessage();
                     }
                 });

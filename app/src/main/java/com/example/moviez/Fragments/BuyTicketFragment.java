@@ -262,7 +262,7 @@ public class BuyTicketFragment extends AppFragment {
 
     private void adaptFilmToLayout(Models.Film filmSelected) {
         titleFilm.setText(filmSelected.title);
-        movieSinopsis.setText(filmSelected.overview);
+        movieSinopsis.setText(filmSelected.overview.length() < 280 ? filmSelected.overview : filmSelected.overview.substring(0, 280) + "...");
         movieDuration.setText(filmSelected.runtime / 60 + "h " + filmSelected.runtime % 60 + "min");
         Glide.with(requireContext()).load("https://image.tmdb.org/t/p/original" + filmSelected.poster_path).into(movieImage);
     }
