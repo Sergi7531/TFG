@@ -166,7 +166,7 @@ public class BuyTicketFragment extends AppFragment {
                         @Override
                         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                             UpdateFilmsInCinemas.dateEnd.observe(getViewLifecycleOwner(), s -> {
-                                maxDate = s.split("-");
+                                maxDate = s.split("/");
 
                                 int maxYear = Integer.parseInt(maxDate[0]);
                                 int maxMonth = Integer.parseInt(maxDate[1]);

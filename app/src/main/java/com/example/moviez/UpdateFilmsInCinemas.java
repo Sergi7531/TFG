@@ -60,7 +60,7 @@ public class UpdateFilmsInCinemas {
                     LocalDate localDate2 = LocalDate.now();
                     if(!LocalDate.parse(dates.maximum).isAfter(LocalDate.now())) {
                         localDate.plusDays(daysUntilDateEnd);
-                        daysUntilDateEnd = 5;
+                        daysUntilDateEnd = 10;
                         dateEnd.postValue(LocalDate.now().plusDays(daysUntilDateEnd).toString());
                     } else {
                         daysUntilDateEnd = localDate.getDayOfYear() - localDate2.getDayOfYear();
