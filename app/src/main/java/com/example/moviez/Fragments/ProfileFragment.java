@@ -47,6 +47,7 @@ public class ProfileFragment extends AppFragment {
     private Button watchedButton;
     private Button toWatchButton;
     private Button favoritedButton;
+    private Button followingButton;
 
     List<Models.Film> lastViewedFilms = new ArrayList<>();
     List<Models.Film> favoritedFilms = new ArrayList<>();
@@ -56,6 +57,7 @@ public class ProfileFragment extends AppFragment {
 
     public static String userId = "";
     public static boolean isFollowing = false;
+    public static boolean isOtherUser = false;
 
     public ProfileFragment() {
         userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -108,6 +110,7 @@ public class ProfileFragment extends AppFragment {
             db.collection("users").document(auth.getCurrentUser().getUid())
                     .collection("following").addSnapshotListener((value, error) -> {
                 if (value != null) {
+                    isOtherUser = true;
                     if (value.isEmpty()) {
                         editarPerfil.setText(R.string.Seguir);
                         editarPerfil.setOnClickListener(v -> addToFollowing(userId));
@@ -130,6 +133,7 @@ public class ProfileFragment extends AppFragment {
                 }
             });
         } else {
+            isOtherUser = false;
             editarPerfil.setText(R.string.EditarPerfil);
         }
 
@@ -197,6 +201,7 @@ public class ProfileFragment extends AppFragment {
                 }
             }
             adaptUsersToRecycler(users, recyclerFollowing);
+            checkVoidList(users, followingButton);
             followingNumber.setText(this.users.size() + "");
         });
 
@@ -228,7 +233,7 @@ public class ProfileFragment extends AppFragment {
             lastViewedFilms.addAll(favoriteFilms);
             adaptFilmsToRecycler(lastViewedFilms, recyclerLastViewed);
             watchedNumber.setText(String.valueOf(lastViewedFilms.size()));
-            checkVoidMovies(lastViewedFilms, watchedButton);
+            checkVoidList(lastViewedFilms, watchedButton);
         });
     }
 
@@ -242,7 +247,7 @@ public class ProfileFragment extends AppFragment {
             toWatch.addAll(moviesToWatch);
             adaptFilmsToRecycler(toWatch, recyclerMoviesToWatch);
             wantToWatchNumber.setText(String.valueOf(toWatch.size()));
-            checkVoidMovies(toWatch, toWatchButton);
+            checkVoidList(toWatch, toWatchButton);
         });
     }
 
@@ -256,15 +261,20 @@ public class ProfileFragment extends AppFragment {
             favoritedFilms.addAll(favoriteFilms);
             adaptFilmsToRecycler(favoritedFilms, recyclerFavorites);
             favoriteNumber.setText(String.valueOf(favoritedFilms.size()));
-            checkVoidMovies(favoritedFilms, favoritedButton);
+            checkVoidList(favoritedFilms, favoritedButton);
         });
     }
 
-    private void checkVoidMovies(List<Models.Film> films, Button button) {
+    private void checkVoidList(List<?> films, Button button) {
         if (films.isEmpty()) {
             button.setAlpha(1f);
-            button.setEnabled(true);
-            button.setClickable(true);
+             if (isOtherUser) {
+                button.setText("");
+             } else {
+                button.setEnabled(true);
+                button.setClickable(true);
+                button.setText("+");
+             }
         } else {
             button.setAlpha(0f);
             button.setEnabled(false);
@@ -300,6 +310,7 @@ public class ProfileFragment extends AppFragment {
         watchedButton = view.findViewById(R.id.watchedButton);
         toWatchButton = view.findViewById(R.id.toWatchButton);
         favoritedButton = view.findViewById(R.id.favoritedButton);
+        followingButton = view.findViewById(R.id.followingButton);
     }
 
     private void setUserDetails(String userid) {

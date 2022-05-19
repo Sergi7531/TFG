@@ -143,8 +143,8 @@
                     android:hint="@string/password"
                     android:password="true"
                     android:text=""
-                    android:textColor="@color/secondaryTextColor"
-                    android:textColorHint="@color/secondaryTextColor" />
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textColorHint="?attr/colorOnSecondary" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

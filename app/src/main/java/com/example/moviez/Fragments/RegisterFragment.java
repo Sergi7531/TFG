@@ -1,6 +1,7 @@
 package com.example.moviez.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import java.util.UUID;
 
 public class RegisterFragment extends AppFragment {
 
+    public static final String PREF_FILE_NAME = "MySharedFile";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -128,17 +130,17 @@ public class RegisterFragment extends AppFragment {
         String confirmValue = Objects.requireNonNull(confirmPassword.getText()).toString();
 
         if (usernameValue.matches("") || emailValue.matches("") || passwordValue.matches("") || confirmValue.matches("")) {
-            Toast.makeText(getContext(), "You need to fill all the fields!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Debes rellenar todos los campos", Toast.LENGTH_SHORT).show();
         } else if (!emailValue.contains("@")) {
-            Toast.makeText(getContext(), "The email has to contain a @", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "El correo debe contener una @", Toast.LENGTH_SHORT).show();
         } else if (!containsUpperCaseLetter(passwordValue)) {
-            Toast.makeText(getContext(), "The password has to contain a capital letter!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "La contraseña debe contener almenos una mayúscula", Toast.LENGTH_SHORT).show();
         } else if (!containsNumber(passwordValue)) {
-            Toast.makeText(getContext(), "The password has to contain a number!", Toast.LENGTH_SHORT).show();
-        } else if (!passwordValue.equals(confirmValue)) {
-            Toast.makeText(getContext(), "The password field has to match with the repeat password field!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "La contraseña debe contener almenos un número", Toast.LENGTH_SHORT).show();
         } else if (passwordValue.length() < 8) {
-            Toast.makeText(getContext(), "The password must have at least 8 characters!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "La contraseña debe contener almenos 8 carácteres", Toast.LENGTH_SHORT).show();
+        } else if (!passwordValue.equals(confirmValue)) {
+            Toast.makeText(getContext(), "Los campos de contraseña deben coincidir", Toast.LENGTH_SHORT).show();
         } else {
             return true;
         }
@@ -150,6 +152,8 @@ public class RegisterFragment extends AppFragment {
         String usernameValue = Objects.requireNonNull(username.getText()).toString();
         String emailValue = Objects.requireNonNull(email.getText()).toString();
         String passwordValue = Objects.requireNonNull(password.getText()).toString();
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailValue, passwordValue).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -161,8 +165,8 @@ public class RegisterFragment extends AppFragment {
                 } else {
                     saveUser(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid(), usernameValue, emailValue, passwordValue, null);
                 }
-
-                setFragment(new PreferencesFragment());
+                Toast.makeText(requireContext(), "Cuenta creada con éxito", Toast.LENGTH_SHORT).show();
+                setFragment(new LoginFragment());
             } else {
                 Toast.makeText(requireContext(), Objects.requireNonNull(task.getException()).getLocalizedMessage(),
                         Toast.LENGTH_SHORT).show();
