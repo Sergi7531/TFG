@@ -98,7 +98,7 @@ public class EditProfileFragment extends AppFragment {
             if (sharedPreferences.getString("logType","").equals("mail")){
                 setFragment(new PasswordFragment());
             } else {
-                Toast.makeText(requireContext(), "You cannot change the password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "No puedes modificar la contraña", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -127,8 +127,10 @@ public class EditProfileFragment extends AppFragment {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     break;
                 case Configuration.UI_MODE_NIGHT_NO:
-                case Configuration.UI_MODE_NIGHT_UNDEFINED:
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    break;
+                case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     break;
             }
         });

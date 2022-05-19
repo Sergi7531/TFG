@@ -457,16 +457,37 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerFollowedUsers"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="40dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            </androidx.recyclerview.widget.RecyclerView>
+                <Button
+                    android:id="@+id/followingButton"
+                    android:layout_width="80dp"
+                    android:layout_height="93dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:alpha="0"
+                    android:backgroundTint="?attr/colorPrimaryVariant"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:text="Button"
+                    android:textColor="?attr/colorOnSecondary"
+                    app:cornerRadius="50dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerFollowedUsers"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="40dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
 
         </LinearLayout>
 

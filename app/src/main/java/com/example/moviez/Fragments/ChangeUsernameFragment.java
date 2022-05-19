@@ -72,7 +72,7 @@ public class ChangeUsernameFragment extends AppFragment {
         Objects.requireNonNull(auth.getCurrentUser()).updateProfile(profileUpdates)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), "Username updated!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Usuario Actualizado!", Toast.LENGTH_SHORT).show();
                         DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
 
                         db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
