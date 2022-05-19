@@ -31,8 +31,8 @@
     <string name="info">Información</string>
     <string name="commentary">Comentarios</string>
     <string name="related_movies">Películas similares:</string>
-    <string name="search_for_users">Search for users</string>
-    <string name="search_for_movies">Search for movies</string>
+    <string name="search_for_users">Buscar usuarios</string>
+    <string name="search_for_movies">Buscar películas</string>
     <string name="friend_act">Actividad de tus amigos</string>
     <string name="para_ti">Para ti</string>
     <string name="cines">Nuestros cines</string>
