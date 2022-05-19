@@ -67,6 +67,12 @@ public class GenreAdapter extends BaseAdapter {
         blueLayer = view2.findViewById(R.id.blueLayer);
         genre_image = view2.findViewById(R.id.genre_image);
 
+        if(PreferencesFragment.selectedGenres.size() > 0) {
+            if (isSelected(genresList.get(i).getId())) {
+                blueLayer.setAlpha(1f);
+            }
+        }
+
         Glide.with(context).load(genresList.get(i).getImageUrl()).centerCrop().into(genre_image);
 
         titleGenreHolder.setText(genresList.get(i).getName());
