@@ -105,7 +105,7 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="?attr/colorSecondary"
             android:fontFamily="@font/satoshi"
-            android:text="@string/log_in"
+            android:text="@string/cambiar_nombre_de_perfil"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="14sp"

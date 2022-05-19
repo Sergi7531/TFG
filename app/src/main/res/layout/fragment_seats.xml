@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/satoshi"
             android:gravity="center"
-            android:text="@string/end_buy"
+            android:text="Seleccionar asientos"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -136,7 +136,8 @@
                 android:layout_marginTop="20dp"
                 android:backgroundTint="?attr/colorSecondary"
                 android:fontFamily="@font/satoshi"
-                android:text="@string/buy"
+                android:text="Finalizar compra"
+                android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
                 app:cornerRadius="14dp" />
