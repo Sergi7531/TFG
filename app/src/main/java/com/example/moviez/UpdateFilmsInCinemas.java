@@ -61,10 +61,10 @@ public class UpdateFilmsInCinemas {
                     if(!LocalDate.parse(dates.maximum).isAfter(LocalDate.now())) {
                         localDate.plusDays(daysUntilDateEnd);
                         daysUntilDateEnd = 10;
-                        dateEnd.postValue(LocalDate.now().plusDays(daysUntilDateEnd).toString());
                     } else {
                         daysUntilDateEnd = localDate.getDayOfYear() - localDate2.getDayOfYear();
                     }
+                    dateEnd.postValue(LocalDate.now().plusDays(daysUntilDateEnd).toString());
                 }
                 getCinemas();
                 createMovieSessions(daysUntilDateEnd);

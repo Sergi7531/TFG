@@ -75,6 +75,9 @@ public class ChangeUsernameFragment extends AppFragment {
                         Toast.makeText(getContext(), "Usuario Actualizado!", Toast.LENGTH_SHORT).show();
                         DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
 
+//                        update all references
+
+
                         db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
                             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
 
