@@ -65,7 +65,9 @@ public class MovieDetailedFragment extends AppFragment {
     private List<Responses.CastResult> actorItems = new ArrayList<>();
     public static RecyclerView commentsFragmentMovieDetail;
     private final List<Models.Comment> comments = new ArrayList<>();
-    
+
+    public CardView similarCard;
+
     Models.Film film;
 
 
@@ -123,7 +125,10 @@ public class MovieDetailedFragment extends AppFragment {
             int hours = movie.runtime / 60;
             int minutes = movie.runtime % 60;
 
-            movieDuration.setText(hours + "h " + minutes + "m");
+
+            if(minutes != 0 && hours != 0) {
+                movieDuration.setText(hours + "h " + minutes + "m");
+            }
 
             String date = movie.release_date;
             String[] parts = date.split("-");
@@ -180,12 +185,9 @@ public class MovieDetailedFragment extends AppFragment {
                 }
             });
 
-            AppViewModel.similarMovies.observe(getViewLifecycleOwner(), similarMovies -> {
-                if (similarMovies != null) {
-                    similarFilmsRecyclerView.setAdapter(new FilmAdapter(similarMovies.results, requireContext(), MovieDetailedFragment.this));
-                    similarFilmsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
-                }
-            });
+            loadSimilarMovies(AppViewModel.similarMovies.getValue());
+
+            AppViewModel.similarMovies.observe(getViewLifecycleOwner(), this::loadSimilarMovies);
         });
 
         addCommentMovie.setOnClickListener(v -> {
@@ -420,5 +422,20 @@ public class MovieDetailedFragment extends AppFragment {
         spinner = view.findViewById(R.id.spinner);
         heartImage = view.findViewById(R.id.heartImage);
         infoMovie = view.findViewById(R.id.infoPeli);
+        similarCard = view.findViewById(R.id.similarCard);
+    }
+
+    private void loadSimilarMovies(Responses.SearchResponse similarMovies) {
+        if(similarMovies != null) {
+            if (similarMovies.results.size() != 0) {
+                similarCard.setVisibility(View.VISIBLE);
+                similarFilmsRecyclerView.setAdapter(new FilmAdapter(similarMovies.results, requireContext(), MovieDetailedFragment.this));
+                similarFilmsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+            } else {
+                similarCard.setVisibility(View.GONE);
+            }
+        } else {
+            similarCard.setVisibility(View.GONE);
+        }
     }
 }
