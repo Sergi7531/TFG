@@ -57,9 +57,13 @@ public class LandingActivity extends AppCompatActivity {
         googleLogin = true;
 
         UpdateFilmsInCinemas.initDates();
+        Handler handler = new Handler();
+        Runnable run = () -> {
+            firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(this));
+            if (!googleLogin) logWithMail();
+        };
+        handler.postDelayed(run, 2200);
 
-        firebaseAuthWithGoogle(GoogleSignIn.getLastSignedInAccount(this));
-        if (!googleLogin) logWithMail();
 
     }
 
@@ -87,14 +91,7 @@ public class LandingActivity extends AppCompatActivity {
                 }
             });
         } else {
-
-
-
-            Handler handler = new Handler();
-            Runnable run = () -> setFragment(loginFragment);
-            handler.postDelayed(run, 2200);
-
-
+            setFragment(loginFragment);
         }
     }
 

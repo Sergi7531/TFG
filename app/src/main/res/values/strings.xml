@@ -116,6 +116,10 @@
     <string name="Seguir">Seguir</string>
     <string name="EditarPerfil">Editar perfil</string>
     <string name="DejarDeSeguir">Dejar de seguir</string>
+    <string name="No_Peliculas">No hay películas</string>
+    <string name="No_Te_Siguen">Nadie te sigue 😔</string>
+    <string name="No_Sigues">Este usuario no sigue a nadie</string>
+    <string name="No_Seguidores">Nadie sigue a este usuario 😔</string>
     <string-array name="movie_status">
         <item>Vista</item>
         <item>Ver más tarde</item>

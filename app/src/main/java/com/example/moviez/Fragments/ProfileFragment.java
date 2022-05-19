@@ -35,6 +35,11 @@ public class ProfileFragment extends AppFragment {
     private TextView watchedNumber;
     private TextView wantToWatchNumber;
     private TextView favoriteNumber;
+    private TextView textNoMovies1;
+    private TextView textNoMovies2;
+    private TextView textNoMovies3;
+    private TextView textNoUsers1;
+    private TextView textNoUsers2;
 
     private ImageView profilepic;
     private RecyclerView recyclerLastViewed;
@@ -201,7 +206,7 @@ public class ProfileFragment extends AppFragment {
                 }
             }
             adaptUsersToRecycler(users, recyclerFollowing);
-            checkVoidList(users, followingButton);
+            checkVoidList(users, followingButton, textNoUsers2, getString(R.string.No_Sigues));
             followingNumber.setText(this.users.size() + "");
         });
 
@@ -218,6 +223,16 @@ public class ProfileFragment extends AppFragment {
             }
 
             adaptUsersToRecycler(this.followers, recyclerFollowers);
+            if (this.followers.isEmpty()) {
+                textNoUsers1.setAlpha(1);
+                if (isOtherUser) {
+                    textNoUsers1.setText(getString(R.string.No_Seguidores));
+                } else {
+                    textNoUsers1.setText(getString(R.string.No_Te_Siguen));
+                }
+            } else {
+                textNoUsers1.setAlpha(0);
+            }
             followersNumber.setText(this.followers.size() + "");
         });
 
@@ -233,7 +248,7 @@ public class ProfileFragment extends AppFragment {
             lastViewedFilms.addAll(favoriteFilms);
             adaptFilmsToRecycler(lastViewedFilms, recyclerLastViewed);
             watchedNumber.setText(String.valueOf(lastViewedFilms.size()));
-            checkVoidList(lastViewedFilms, watchedButton);
+            checkVoidList(lastViewedFilms, watchedButton, textNoMovies1, getString(R.string.No_Peliculas));
         });
     }
 
@@ -247,7 +262,7 @@ public class ProfileFragment extends AppFragment {
             toWatch.addAll(moviesToWatch);
             adaptFilmsToRecycler(toWatch, recyclerMoviesToWatch);
             wantToWatchNumber.setText(String.valueOf(toWatch.size()));
-            checkVoidList(toWatch, toWatchButton);
+            checkVoidList(toWatch, toWatchButton, textNoMovies2, getString(R.string.No_Peliculas));
         });
     }
 
@@ -261,21 +276,27 @@ public class ProfileFragment extends AppFragment {
             favoritedFilms.addAll(favoriteFilms);
             adaptFilmsToRecycler(favoritedFilms, recyclerFavorites);
             favoriteNumber.setText(String.valueOf(favoritedFilms.size()));
-            checkVoidList(favoritedFilms, favoritedButton);
+            checkVoidList(favoritedFilms, favoritedButton, textNoMovies3, getString(R.string.No_Peliculas));
         });
     }
 
-    private void checkVoidList(List<?> films, Button button) {
+    private void checkVoidList(List<?> films, Button button, TextView textView, String texto) {
+
+
         if (films.isEmpty()) {
-            button.setAlpha(1f);
+            button.setAlpha(0f);
              if (isOtherUser) {
-                button.setText("");
+                 textView.setAlpha(1);
+                 textView.setText(texto);
              } else {
+                textView.setAlpha(0);
+                button.setAlpha(1);
                 button.setEnabled(true);
                 button.setClickable(true);
                 button.setText("+");
              }
         } else {
+            textView.setAlpha(0);
             button.setAlpha(0f);
             button.setEnabled(false);
             button.setClickable(false);
@@ -293,6 +314,13 @@ public class ProfileFragment extends AppFragment {
     }
 
     private void hook(View view) {
+        /*
+        TextView textNoMovies1;
+    private TextView textNoMovies2;
+    private TextView textNoMovies3;
+    private TextView textNoUsers1;
+    private TextView textNoUsers2;
+         */
         usuario = view.findViewById(R.id.usuario);
         correo = view.findViewById(R.id.correo);
         editarPerfil = view.findViewById(R.id.editarPerfil);
@@ -311,6 +339,11 @@ public class ProfileFragment extends AppFragment {
         toWatchButton = view.findViewById(R.id.toWatchButton);
         favoritedButton = view.findViewById(R.id.favoritedButton);
         followingButton = view.findViewById(R.id.followingButton);
+        textNoMovies1 = view.findViewById(R.id.textNoMovies1);
+        textNoMovies2 = view.findViewById(R.id.textNoMovies2);
+        textNoMovies3 = view.findViewById(R.id.textNoMovies3);
+        textNoUsers1 = view.findViewById(R.id.textNoUsers1);
+        textNoUsers2 = view.findViewById(R.id.textNoUsers2);
     }
 
     private void setUserDetails(String userid) {
