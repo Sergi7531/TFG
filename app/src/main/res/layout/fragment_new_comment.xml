@@ -142,7 +142,7 @@
             app:cornerRadius="14dp" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/logoAnimation"
             android:layout_width="100dp"
             android:layout_height="80dp"
             android:layout_gravity="center"

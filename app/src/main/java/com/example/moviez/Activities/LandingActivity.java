@@ -3,11 +3,14 @@ package com.example.moviez.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -38,6 +41,7 @@ public class LandingActivity extends AppCompatActivity {
 
     public FirebaseFirestore db;
     public FirebaseAuth auth;
+
 
     private boolean googleLogin;
 
@@ -83,9 +87,14 @@ public class LandingActivity extends AppCompatActivity {
                 }
             });
         } else {
+
+
+
             Handler handler = new Handler();
             Runnable run = () -> setFragment(loginFragment);
-            handler.postDelayed(run, 2000);
+            handler.postDelayed(run, 2200);
+
+
         }
     }
 
@@ -98,13 +107,12 @@ public class LandingActivity extends AppCompatActivity {
         else {
             FirebaseAuth.getInstance().signInWithCredential(GoogleAuthProvider.getCredential(account.getIdToken(), null))
                     .addOnCompleteListener(task -> {
+                        googleLogin = false;
                         if (task.isSuccessful()) {
                             googleLogin = true;
                             editor.putString("logType", "google");
                             editor.commit();
                             createGoogleAccount();
-                        } else {
-                            setFragment(loginFragment);
                         }
                     });
         }

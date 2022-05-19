@@ -8,9 +8,10 @@
     tools:context=".Fragments.AnimationFragment">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/logoAnimation"
         android:layout_width="190dp"
         android:layout_height="190dp"
         android:layout_gravity="center"
+        android:scaleType="centerInside"
         android:src="@drawable/moviez_logo" />
 </FrameLayout>
