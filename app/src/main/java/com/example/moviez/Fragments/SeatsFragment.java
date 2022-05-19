@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +32,7 @@ public class SeatsFragment extends AppFragment {
     public static int hour;
 
     Models.Cinema cinema = new Models.Cinema();
-
+    private ImageView backButton;
     private RecyclerView seatsGrid;
     private Button buyButton2;
     List<Models.Seats> seats = new ArrayList<>();
@@ -65,6 +66,7 @@ public class SeatsFragment extends AppFragment {
     private void hook(View view) {
         seatsGrid = view.findViewById(R.id.seatsGrid);
         buyButton2 = view.findViewById(R.id.buyButton2);
+        backButton = view.findViewById(R.id.backButton);
     }
 
     @Override
@@ -78,6 +80,7 @@ public class SeatsFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
         hook(view);
         insertDefaultSeats();
+        backButton.setOnClickListener(view1 -> getActivity().onBackPressed());
         buyButton2.setOnClickListener(view1 -> createTicketsForSelectedSeats());
     }
 
