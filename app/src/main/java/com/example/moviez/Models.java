@@ -228,9 +228,19 @@ public class Models {
 
     public static class Video {
         public String name;
+        public String key;
         public String site;
         public int size;
         public String type;
+
+        public Video() {}
+
+        public Video(String name, String site, int size, String type) {
+            this.name = name;
+            this.site = site;
+            this.size = size;
+            this.type = type;
+        }
     }
 
     public static class Comment {

@@ -15,7 +15,9 @@ public class Responses {
         public int id;
         public String job;
     }
-    static class Videos {
+    public static class Videos {
+        public int id;
+        public List<Models.Video> results = new ArrayList<>();
     }
 
     public static class BillboardResponse {

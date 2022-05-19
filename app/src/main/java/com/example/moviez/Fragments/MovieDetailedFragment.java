@@ -31,6 +31,9 @@ import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.example.moviez.Responses;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -68,6 +71,9 @@ public class MovieDetailedFragment extends AppFragment {
     private final List<Models.Comment> comments = new ArrayList<>();
 
     public CardView similarCard;
+    public CardView youtubeCard;
+
+    public YouTubePlayerView youtubeView;
 
     Models.Film film;
 
@@ -110,8 +116,10 @@ public class MovieDetailedFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
 
         hook(view);
-
         AppViewModel.getMovieDetails(filmId);
+
+        getLifecycle().addObserver(youtubeView);
+        getTrailer(filmId);
 
         AppViewModel.movieDetails.observe(getViewLifecycleOwner(), movie -> {
 
@@ -293,6 +301,38 @@ public class MovieDetailedFragment extends AppFragment {
 
     }
 
+    private void getTrailer(int filmId) {
+        IMDB.api.getVideos(filmId, IMDB.apiKey).enqueue(new Callback<Responses.Videos>() {
+            @Override
+            public void onResponse(@NonNull Call<Responses.Videos> call, @NonNull Response<Responses.Videos> response) {
+                if (response.body() != null) {
+                    if (response.body().results.size() > 0) {
+//                        Iterate through the results and find the first one that is a trailer:
+                        for (int i = 0; i < response.body().results.size(); i++) {
+                            Models.Video video = response.body().results.get(i);
+                            if (video.type.equals("Trailer") && video.site.equals("YouTube")) {
+                                youtubeCard.setVisibility(View.VISIBLE);
+                                youtubeView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+                                    @Override
+                                    public void onReady(YouTubePlayer youTubePlayer) {
+                                        youtubeView.setVisibility(View.VISIBLE);
+                                        youTubePlayer.loadVideo(video.key, 0);
+                                        youTubePlayer.pause();
+                                    }
+                                });
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<Responses.Videos> call, @NonNull Throwable t) {
+                Toast.makeText(getActivity(), "Error al obtener el trailer", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void removeFromWatchedAndToWatch() {
         db.collection("users")
@@ -410,6 +450,8 @@ public class MovieDetailedFragment extends AppFragment {
         heartImage = view.findViewById(R.id.heartImage);
         infoMovie = view.findViewById(R.id.infoPeli);
         similarCard = view.findViewById(R.id.similarCard);
+        youtubeCard = view.findViewById(R.id.youtubeCard);
+        youtubeView = view.findViewById(R.id.youtubeView);
     }
 
     private void loadSimilarMovies(Responses.SearchResponse similarMovies) {

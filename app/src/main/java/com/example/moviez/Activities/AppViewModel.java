@@ -120,13 +120,7 @@ public class AppViewModel extends ViewModel {
             public void onResponse(Call<Responses.SearchResponse> call, Response<Responses.SearchResponse> response) {
                 if (response.body() != null) {
                     Responses.SearchResponse moviesForYouResponse = response.body();
-//                    If user has no genre preferences, we will show the most popular movies:
-                    if (genresUser.isEmpty()) {
-                        forYouMovies.postValue(moviesForYouResponse);
-                        return;
-                    }
                     LinkedHashSet<Models.Film> filmsToShow = new LinkedHashSet<>();
-
 //                    For each film, we need to check if any of the user's favorite genres is in the film's genres:
                     for (Models.Film movie : moviesForYouResponse.results) {
                         System.out.println("Checkeamos " + movie.title);
