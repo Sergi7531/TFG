@@ -102,7 +102,7 @@
                     android:fontFamily="@font/satoshi"
                     android:gravity="center|end"
                     android:paddingEnd="3dp"
-                    android:text="@string/_0_0"
+                    android:text="@string/__5_0"
                     android:textColor="?attr/colorOnSecondary"
                     android:textSize="24sp"
                     android:textStyle="bold" />
