@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.moviez.Fragments.HomeFragment;
 import com.example.moviez.Fragments.MovieDetailedFragment;
+import com.example.moviez.Fragments.ProfileFragment;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 
@@ -56,12 +57,20 @@ public class UserActivityAdapter extends RecyclerView.Adapter<UserActivityAdapte
 
         holder.textToShow.setText(userActivity.getTextToShow());
 
-        holder.userActivityCard.setOnClickListener(view -> {
+        holder.movieImage.setOnClickListener(view -> {
             if(userActivity.movieId != 0) {
                 MovieDetailedFragment movieDetailedFragment = new MovieDetailedFragment(userActivity.getMovieId());
                 setFragment(movieDetailedFragment);
             }
         });
+
+        holder.userImage.setOnClickListener(view -> {
+            if(userActivity.userId != "") {
+                ProfileFragment profileFragment = new ProfileFragment(userActivity.userId);
+                setFragment(profileFragment);
+            }
+        });
+
     }
 
     private void setFragment(Fragment fragment) {

@@ -339,6 +339,7 @@ public class Models {
         public String username;
         public String movieImage;
         public int movieId;
+        public String userId;
         public String movieName;
         public String textToShow;
 

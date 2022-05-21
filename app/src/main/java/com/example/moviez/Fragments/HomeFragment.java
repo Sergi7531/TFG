@@ -136,6 +136,7 @@ public class HomeFragment extends AppFragment {
                                 userActivity.username = document.toObject(Models.User.class).username;
                                 userActivity.movieName = documentActivity.toObject(Models.Film.class).title;
                                 userActivity.movieId = documentActivity.toObject(Models.Film.class).id;
+                                userActivity.userId = document.getId().toString();
                                 userActivity.textToShow = "El usuario " + userActivity.username + " ha marcado como favorita " + userActivity.movieName;
                                 userActivities.add(userActivity);
                             }
