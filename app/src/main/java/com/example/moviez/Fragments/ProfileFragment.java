@@ -20,6 +20,9 @@ import com.example.moviez.Adapters.UserAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -161,6 +164,7 @@ public class ProfileFragment extends AppFragment {
         db.collection("users").document(userId).collection("followers").document(auth.getCurrentUser().getUid()).delete();
         adaptUsersToRecycler(this.followers, recyclerFollowers);
         editarPerfil.setText(R.string.Seguir);
+        isFollowing = false;
         editarPerfil.setOnClickListener(v -> {
             addToFollowing(userId);
             isFollowing = true;
@@ -311,6 +315,7 @@ public class ProfileFragment extends AppFragment {
     private void adaptUsersToRecycler(List<?> list, RecyclerView recyclerView) {
         recyclerView.setAdapter(new UserAdapter((List<Models.User>) list, requireContext(), ProfileFragment.this));
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+
     }
 
     private void hook(View view) {
