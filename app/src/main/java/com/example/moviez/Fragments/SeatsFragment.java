@@ -86,7 +86,7 @@ public class SeatsFragment extends AppFragment {
         super.onViewCreated(view, savedInstanceState);
         hook(view);
         insertDefaultSeats();
-        backButton.setOnClickListener(view1 -> getActivity().onBackPressed());
+        backButton.setOnClickListener(view1 -> backFragment());
         buyButton2.setOnClickListener(view1 -> createTicketsForSelectedSeats());
     }
 
@@ -173,6 +173,13 @@ public class SeatsFragment extends AppFragment {
                 }
                 showSeats();
             });
+    }
+
+    private void backFragment() {
+        if (getFragmentManager() != null) {
+            getFragmentManager()
+                    .popBackStackImmediate();
+        }
     }
 
     private void setFragment(Fragment fragment) {
