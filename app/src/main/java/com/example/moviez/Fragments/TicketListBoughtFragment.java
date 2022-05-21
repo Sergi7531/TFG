@@ -31,7 +31,7 @@ public class TicketListBoughtFragment extends AppFragment {
 
     Button goTicketButton;
     private RecyclerView ticketRecycler;
-    private ImageView backButton;
+    private ImageView endBuyButton;
     private TextView numberTicketsText;
     private TextView totalPriceTickets;
 
@@ -71,7 +71,7 @@ public class TicketListBoughtFragment extends AppFragment {
         adaptTickets();
         numberTicketsText.setText(String.valueOf(ticketsToBuy.size()));
         totalPriceTickets.setText(String.valueOf(ticketsToBuy.size()*10));
-
+        endBuyButton.setOnClickListener(view1 -> getActivity().onBackPressed());
         goTicketButton.setOnClickListener(view1 -> setFragment(new TicketBoughtFinishedFragment(ticketsToBuy, cinemaid, frameComingFrom)));
 
     }
@@ -84,7 +84,7 @@ public class TicketListBoughtFragment extends AppFragment {
     private void hook(View view) {
         goTicketButton = view.findViewById(R.id.buyButton);
         ticketRecycler = view.findViewById(R.id.ticketRecycler);
-        backButton = view.findViewById(R.id.backButton);
+        endBuyButton = view.findViewById(R.id.endBuyButton);
         numberTicketsText = view.findViewById(R.id.numberTicketsText);
         totalPriceTickets = view.findViewById(R.id.totalPriceTickets);
     }
