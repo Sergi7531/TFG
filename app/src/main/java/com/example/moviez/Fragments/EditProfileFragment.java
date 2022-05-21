@@ -54,7 +54,7 @@ public class EditProfileFragment extends AppFragment {
     public CardView theme;
     public CardView editPicture;
     public CardView credits;
-    public Button closeSession;
+    public Button logout;
     public ImageView goBackButtonEdit;
     public TextView textViewSergio;
     public CardView creditsCard;
@@ -102,7 +102,7 @@ public class EditProfileFragment extends AppFragment {
             }
         });
 
-        closeSession.setOnClickListener(v -> {
+        logout.setOnClickListener(v -> {
             editor.putString("userMail", "");
             editor.putString("password", "");
             editor.putBoolean("autoLogGoogle", false);
@@ -169,14 +169,14 @@ public class EditProfileFragment extends AppFragment {
                     FirebaseStorage.getInstance().getReference("/profileimgs/" + UUID.randomUUID() + ".jpg")
                             .putFile(uri)
                             .continueWithTask(task2 -> task2.getResult().getStorage().getDownloadUrl())
-                            .addOnSuccessListener(this::saveUser);
+                            .addOnSuccessListener(this::updateUserPic);
                 }
             });
         });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void saveUser(Uri imageUri) {
+    private void updateUserPic(Uri imageUri) {
 
         String imageUrl = "";
 
@@ -184,11 +184,11 @@ public class EditProfileFragment extends AppFragment {
             imageUrl = imageUri.toString();
         }
 
-        db.collection("users")
-                .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
-                .update("profileImageURL", imageUrl);
+        db.collection("users").document(Objects.requireNonNull(auth.getCurrentUser()).getUid()).update("profileImageURL", imageUrl);
 
         String finalImageUrl = imageUrl;
+
+//        Update in auth:
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setPhotoUri(Uri.parse(imageUrl))
@@ -197,6 +197,7 @@ public class EditProfileFragment extends AppFragment {
         auth.getCurrentUser().updateProfile(profileUpdates).addOnCompleteListener(task -> {
             Toast.makeText(getContext(), "Imagen actualizada!", Toast.LENGTH_SHORT).show();
             DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
+
 
             db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
                 for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
@@ -221,6 +222,48 @@ public class EditProfileFragment extends AppFragment {
             });
             userDoc.update("profileImageURL", finalImageUrl);
         });
+
+//        Update all references in followers and following:
+
+        db.collection("users").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                db.collection("users").document(documentSnapshot.getId()).collection("followers").get().addOnSuccessListener(documentSnapshots -> {
+                    for (DocumentSnapshot documentSnapshot1 : documentSnapshots) {
+                        if (Objects.requireNonNull(documentSnapshot1.toObject(Models.User.class)).userid.equals(auth.getCurrentUser().getUid())) {
+                                Models.User user = documentSnapshot1.toObject(Models.User.class);
+                                if (user != null) {
+                                    user.profileImageURL = String.valueOf(auth.getCurrentUser().getPhotoUrl());
+                                }
+                                if (user != null) {
+                                    db.collection("users")
+                                            .document(documentSnapshot.getId())
+                                            .collection("followers")
+                                            .document(documentSnapshot1.getId())
+                                            .update("profileImageURL", finalImageUrl);
+                                }
+                        }
+                    }
+                });
+
+                db.collection("users").document(documentSnapshot.getId()).collection("following").get().addOnSuccessListener(documentSnapshots -> {
+                    for (DocumentSnapshot documentSnapshot1 : documentSnapshots) {
+                        if (Objects.requireNonNull(documentSnapshot1.toObject(Models.User.class)).userid.equals(auth.getCurrentUser().getUid())) {
+                            Models.User user = documentSnapshot1.toObject(Models.User.class);
+                            if (user != null) {
+                                user.profileImageURL = String.valueOf(auth.getCurrentUser().getPhotoUrl());
+                            }
+                            if (user != null) {
+                                db.collection("users")
+                                        .document(documentSnapshot.getId())
+                                        .collection("following")
+                                        .document(documentSnapshot1.getId())
+                                        .update("profileImageURL", finalImageUrl);
+                            }
+                        }
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -235,7 +278,7 @@ public class EditProfileFragment extends AppFragment {
         theme = view.findViewById(R.id.changeDarkLightTheme);
         credits = view.findViewById(R.id.credits);
         editPicture = view.findViewById(R.id.changePicture);
-        closeSession = view.findViewById(R.id.closeSession);
+        logout = view.findViewById(R.id.closeSession);
         goBackButtonEdit = view.findViewById(R.id.goBackButtonEdit);
         textViewSergio = view.findViewById(R.id.textViewSergio);
         creditsCard = view.findViewById(R.id.creditsCard);

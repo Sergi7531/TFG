@@ -95,7 +95,6 @@ public class ChangeUsernameFragment extends AppFragment {
                                                         .document(documentSnapshot1.getId())
                                                         .set(comment);
                                             }
-
                                         }
                                     }
                                 });

@@ -57,9 +57,8 @@ public class UpdateFilmsInCinemas {
                     dateStart.postValue(dates.minimum);
 
                     LocalDate localDate = LocalDate.parse(dates.maximum);
-                    LocalDate localDate2 = LocalDate.now();
                     localDate.plusDays(daysUntilDateEnd);
-                    daysUntilDateEnd = 10;
+                    daysUntilDateEnd = 15;
                     dateEnd.postValue(LocalDate.now().plusDays(daysUntilDateEnd).toString());
                 }
                 getCinemas();

@@ -205,13 +205,13 @@ public class HomeFragment extends AppFragment {
 
         users.clear();
 
-        db.collection("users").orderBy("username").startAt(query).get().addOnCompleteListener(task -> {
+        db.collection("users").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     Models.User user = document.toObject(Models.User.class);
-                        if (user.username.contains(query) && !user.userid.equals(Objects.requireNonNull(auth.getCurrentUser()).getUid())) {
-                            users.add(user);
-                        }
+                    if (user.username.toUpperCase().contains(query.toUpperCase()) && !user.userid.equals(Objects.requireNonNull(auth.getCurrentUser()).getUid())) {
+                        users.add(user);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             } else {
