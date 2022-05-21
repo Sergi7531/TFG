@@ -74,7 +74,12 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
             context.startActivity(intent);
         });
 
-        holder.filmNameTicketDetail.setText(ticket.filmName);
+//        if filmname is too long, cut it:
+        if (ticket.filmName.length() > 22){
+            holder.filmNameTicketDetail.setText(ticket.filmName.substring(0, 20) + "...");
+        } else {
+            holder.filmNameTicketDetail.setText(ticket.filmName);
+        }
         holder.taglineTicket.setText(ticket.tagline);
         holder.cinemaNameTicketDetail.setText(ticket.cinemaName);
         holder.dayTicketDetail.setText(ticket.date);
@@ -89,10 +94,6 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.TicketVi
         } catch (WriterException e) {
             e.printStackTrace();
         }
-
-        String[] time = ticket.time.split(":");
-        int hour = Integer.parseInt(time[0]);
-        int minute = Integer.parseInt(time[1]);
 
     }
 
