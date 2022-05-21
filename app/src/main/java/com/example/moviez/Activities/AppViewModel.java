@@ -123,7 +123,6 @@ public class AppViewModel extends ViewModel {
                     LinkedHashSet<Models.Film> filmsToShow = new LinkedHashSet<>();
 //                    For each film, we need to check if any of the user's favorite genres is in the film's genres:
                     for (Models.Film movie : moviesForYouResponse.results) {
-                        System.out.println("Checkeamos " + movie.title);
                         for (Integer genre : genresUser) {
                             if (movie.genre_ids.contains(genre)) {
                                 filmsToShow.add(movie);
@@ -133,21 +132,17 @@ public class AppViewModel extends ViewModel {
                     moviesForYouResponse.results.clear();
                     moviesForYouResponse.results.addAll(filmsToShow);
                     forYouMovies.postValue(moviesForYouResponse);
-                } else {
-                    System.out.println("respuesta nula papá");
                 }
             }
 
             @Override
             public void onFailure(Call<Responses.SearchResponse> call, Throwable t) {
-                System.out.println("He fallao");
-
+                t.getMessage();
             }
         });
     }
 
     private static void getMoviesForYouByCollection (String collection) {
-        System.out.println("entro al metodoooo" + collection);
 
         db.collection("users").document(auth.getCurrentUser().getUid()).collection(collection).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
@@ -155,9 +150,7 @@ public class AppViewModel extends ViewModel {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onResponse (@NonNull Call<Responses.SearchResponse> call, @NonNull Response<Responses.SearchResponse> response) {
-                        System.out.println("collection: " + collection);
                         if (response.body() != null) {
-                            System.out.println("RESPONSE FROM collection: " + collection + " size: " + response.body().results.size());
                             List<Models.Film> moviesToShow = response.body().results;
                             if (moviesToShow.size() > 5) {
                                 moviesToShow = moviesToShow.subList(0, 5);
@@ -172,7 +165,6 @@ public class AppViewModel extends ViewModel {
                     }
                     @Override
                     public void onFailure (@NonNull Call<Responses.SearchResponse> call, @NonNull Throwable t) {
-                        System.out.println("onfailure: " + collection );
                         t.getMessage();
                     }
                 });

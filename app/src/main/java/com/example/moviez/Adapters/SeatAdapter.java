@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviez.Fragments.SeatsFragment;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 
@@ -49,9 +50,11 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatViewHolder
 
         holder.seatImage.setOnClickListener(view -> {
             if (seat.state.equals(Models.SeatState.FREE)) {
+                SeatsFragment.selectedSeats++;
                 holder.seatImage.setImageResource(R.drawable.ic_rectangle_selected);
                 selectSeat(seat);
             } else if (seat.state.equals(Models.SeatState.SELECTED)) {
+                SeatsFragment.selectedSeats--;
                 holder.seatImage.setImageResource(R.drawable.ic_rectangle_void);
                 enableSeat(seat, holder);
             }
