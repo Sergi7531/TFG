@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,9 +40,13 @@ public class SeatsFragment extends AppFragment {
 
     List<Models.Ticket> ticketsToBuy = new ArrayList<>();
 
+//    Will be modificd on the adapter:
+    public static int selectedSeats = 0;
+
     public SeatsFragment() { }
 
     public SeatsFragment(int frameComingFrom, int movieid, String cinemaid, int roomid, int day, int month, int hour) {
+        selectedSeats = 0;
         SeatsFragment.frameComingFrom = frameComingFrom;
         SeatsFragment.movieid = movieid;
         SeatsFragment.cinemaid = cinemaid;
@@ -53,6 +58,7 @@ public class SeatsFragment extends AppFragment {
 
     public static SeatsFragment newInstance() {
         SeatsFragment fragment = new SeatsFragment();
+        selectedSeats = 0;
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -85,25 +91,17 @@ public class SeatsFragment extends AppFragment {
     }
 
     private void createTicketsForSelectedSeats() {
+        if(selectedSeats == 0) {
+            Toast.makeText(requireContext(), "No has seleccionado asientos!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         for (Models.Seats seat : seats) {
             if (seat.state.equals(Models.SeatState.SELECTED)) {
                 Models.Ticket ticket = new Models.Ticket();
-                db.collection("cinemas").document(cinemaid).get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if (task.getResult().exists()) {
-                            cinema = task.getResult().toObject(Models.Cinema.class);
-                            if (cinema != null) {
-                                ticket.cinemaCoords = cinema.coords;
-                            }
-                            if (cinema != null) {
-                                ticket.cinemaName = cinema.name;
-                            }
-                        }
-                    }
-                });
 
                 ticket.filmid = movieid;
                 ticket.userid = Objects.requireNonNull(auth.getCurrentUser()).getUid();
+
 
                 ticket.date = day + "/" + month;
                 ticket.time = hour + ":00";
@@ -114,10 +112,30 @@ public class SeatsFragment extends AppFragment {
                 ticket.ticketid = movieid + ":" + roomid + ":" + seat.row + ":" + seat.seat;
 
                 ticketsToBuy.add(ticket);
+
+                db.collection("cinemas").document(cinemaid).get().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        if (task.getResult().exists()) {
+                            cinema = task.getResult().toObject(Models.Cinema.class);
+                            if (cinema != null) {
+                                ticket.cinemaCoords = cinema.coords;
+                                ticket.cinemaName = cinema.name;
+                            }
+                        }
+                    }
+                }).addOnSuccessListener(
+                        documentSnapshot -> {
+                            TicketListBoughtFragment ticketListBoughtFragment = new TicketListBoughtFragment(ticketsToBuy, cinemaid, frameComingFrom);
+                            setFragment(ticketListBoughtFragment);
+                        }
+                );
+
             }
         }
-        TicketListBoughtFragment ticketListBoughtFragment = new TicketListBoughtFragment(ticketsToBuy, cinemaid, frameComingFrom);
-        setFragment(ticketListBoughtFragment);
+
+
+
+
     }
 
     private void showSeats() {
