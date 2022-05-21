@@ -97,8 +97,7 @@ public class TicketListBoughtFragment extends AppFragment {
 
         PayPalConfiguration config = new PayPalConfiguration()
 
-                // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
-                // or live (ENVIRONMENT_PRODUCTION)
+//              Mock environment:
                 .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
 
                 .clientId("AdXipsWWcX1eflD7kWWwGBp5EnRASB8hUG3vUkGJg4kPevHPF1L4cWMnd7IQ8usU9BH9kBnWLCpGtgbU");
