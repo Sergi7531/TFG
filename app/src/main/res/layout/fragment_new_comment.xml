@@ -24,7 +24,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/backButton"
+                android:id="@+id/backButton4"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:rotation="180"

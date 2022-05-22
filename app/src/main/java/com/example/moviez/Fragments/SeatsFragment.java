@@ -133,9 +133,6 @@ public class SeatsFragment extends AppFragment {
             }
         }
 
-
-
-
     }
 
     private void showSeats() {
@@ -176,10 +173,8 @@ public class SeatsFragment extends AppFragment {
     }
 
     private void backFragment() {
-        if (getFragmentManager() != null) {
             getFragmentManager()
                     .popBackStackImmediate();
-        }
     }
 
     private void setFragment(Fragment fragment) {

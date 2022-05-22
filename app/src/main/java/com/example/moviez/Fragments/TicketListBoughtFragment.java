@@ -104,6 +104,8 @@ public class TicketListBoughtFragment extends AppFragment {
 
         // Create a PayPalPayment
 
+        backButton.setOnClickListener(v -> { backFragment(); });
+
         goTicketButton.setOnClickListener(V -> {
             if (ticketsToBuy.size() > 0) {
                 onBuyPressed(view, config);
@@ -119,6 +121,10 @@ public class TicketListBoughtFragment extends AppFragment {
 
     }
 
+    private void backFragment() {
+        getFragmentManager()
+                .popBackStackImmediate();
+    }
 
     //-------------------------------- START PAYPAL SERVICES --------------------------------------------------
 
@@ -178,7 +184,7 @@ public class TicketListBoughtFragment extends AppFragment {
     private void hook(View view) {
         goTicketButton = view.findViewById(R.id.buyButton);
         ticketRecycler = view.findViewById(R.id.ticketRecycler);
-        backButton = view.findViewById(R.id.backButton);
+        backButton = view.findViewById(R.id.backButton2);
         numberTicketsText = view.findViewById(R.id.numberTicketsText);
         totalPriceTickets = view.findViewById(R.id.totalPriceTickets);
     }

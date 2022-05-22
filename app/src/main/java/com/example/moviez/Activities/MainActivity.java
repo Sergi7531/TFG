@@ -19,6 +19,7 @@ import com.example.moviez.Fragments.NewCommentFragment;
 import com.example.moviez.Fragments.PasswordFragment;
 import com.example.moviez.Fragments.ProfileFragment;
 import com.example.moviez.Fragments.QRScanFragment;
+import com.example.moviez.Fragments.SeatsFragment;
 import com.example.moviez.Fragments.TicketsFragment;
 import com.example.moviez.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -125,6 +126,12 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (fragment instanceof NewCommentFragment) {
             setFragment(movieDetailedFragment);
+        }
+        else if (fragment instanceof SeatsFragment) {
+            if (getFragmentManager() != null) {
+                getFragmentManager()
+                        .popBackStackImmediate();
+            }
         }
     }
 
