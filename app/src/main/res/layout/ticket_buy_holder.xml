@@ -14,8 +14,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/imageCard"
-            android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:layout_width="84dp"
+            android:layout_height="150dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
@@ -27,7 +27,7 @@
                 android:id="@+id/movieImageTicket"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/moviez_logo" />
         </androidx.cardview.widget.CardView>
 
@@ -35,7 +35,8 @@
             android:id="@+id/imageView2"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_alignBottom="@id/imageCard"
+            android:layout_below="@+id/tagline"
+            android:layout_marginTop="12dp"
             android:layout_toEndOf="@id/imageCard"
             app:srcCompat="@drawable/ic_baseline_location_on_24" />
 
@@ -43,8 +44,9 @@
             android:id="@+id/ticketCinemaName"
             android:layout_width="match_parent"
             android:layout_height="26dp"
-            android:layout_alignBottom="@id/imageCard"
+            android:layout_below="@+id/tagline"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="12dp"
             android:layout_toEndOf="@id/imageView2"
             android:fontFamily="@font/satoshi"
             android:gravity="bottom"
@@ -55,17 +57,32 @@
         <TextView
             android:id="@+id/ticketMovieName"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_above="@id/imageView2"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageCard"
+            android:layout_marginTop="0dp"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="10dp"
             android:layout_toEndOf="@id/imageCard"
             android:fontFamily="@font/satoshi"
-            android:gravity="bottom"
+            android:gravity="top"
             android:text="@string/textview"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="28sp"
-            app:autoSizeTextType="uniform" />
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ticketMovieName"
+            android:layout_alignStart="@id/ticketMovieName"
+            android:layout_alignEnd="@id/ticketMovieName"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/satoshi"
+            android:text="TextView"
+            android:textColor="?attr/colorOnSecondary" />
 
         <LinearLayout
             android:layout_width="match_parent"

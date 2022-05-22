@@ -53,7 +53,13 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
                     tickets.get(holder.getAdapterPosition()).filmImage = film.poster_path;
                     tickets.get(holder.getAdapterPosition()).tagline = film.tagline;
                     tickets.get(holder.getAdapterPosition()).filmName = film.title;
+                    tickets.get(holder.getAdapterPosition()).tagline = film.tagline;
                     holder.movieName.setText(film.title);
+                    if (film.title.length() > 22) {
+                        holder.movieName.setText(film.title.substring(0, 20) + "...");
+                    } else {
+                        holder.movieName.setText(film.title);
+                    }
                     Glide.with(context).load("https://image.tmdb.org/t/p/original" + film.poster_path).into(holder.movieImage);
                 }
             }
@@ -114,6 +120,12 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
         holder.seat.setText(tickets.get(position).seat+1 + "");
         holder.row.setText(tickets.get(position).row+1 + "");
         holder.room.setText(tickets.get(position).room + "");
+        if(tickets.get(position).tagline == null) {
+            holder.tagline.setVisibility(View.GONE);
+        } else {
+            holder.tagline.setVisibility(View.VISIBLE);
+            holder.tagline.setText(tickets.get(position).tagline);
+        }
     }
 
     @Override
@@ -131,6 +143,7 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
         public TextView seat;
         public TextView time;
         public TextView day;
+        public TextView tagline;
 
         public BuyTicketViewHolder(View itemView) {
             super(itemView);
@@ -142,6 +155,7 @@ public class BuyTicketAdapter extends RecyclerView.Adapter<BuyTicketAdapter.BuyT
             seat = itemView.findViewById(R.id.ticketAsiento);
             time = itemView.findViewById(R.id.ticketHora);
             day = itemView.findViewById(R.id.ticketDia);
+            tagline = itemView.findViewById(R.id.tagline);
         }
     }
 }
