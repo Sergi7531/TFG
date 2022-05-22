@@ -6,92 +6,102 @@
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
     tools:context=".Fragments.TicketBoughtFinishedFragment">
-
-    <RelativeLayout
-        android:layout_width="340dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp">
-
-        <ImageView
-            android:id="@+id/backButton3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:rotation="180"
-            app:srcCompat="@drawable/ic_arrow" />
-
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/satoshi"
-            android:gravity="center"
-            android:text="@string/end_buy"
-            android:textColor="?attr/colorOnSecondary"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/textView12"
-            android:layout_marginTop="60dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="340dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
 
                 <ImageView
-                    android:id="@+id/imageView10"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:src="@drawable/ic_baseline_circle_24"
-                    app:tint="?attr/colorSecondary" />
+                    android:id="@+id/backButton3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:rotation="180"
+                    app:srcCompat="@drawable/ic_arrow" />
 
-                <ImageView
-                    android:id="@+id/imageView13"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="30dp"
-                    android:src="@drawable/ic_baseline_check_24"
-                    app:tint="@android:color/white" />
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/satoshi"
+                    android:gravity="center"
+                    android:text="@string/end_buy"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/textView12"
+                    android:layout_marginTop="60dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/imageView10"
+                            android:layout_width="140dp"
+                            android:layout_height="140dp"
+                            android:src="@drawable/ic_baseline_circle_24"
+                            app:tint="?attr/colorSecondary" />
+
+                        <ImageView
+                            android:id="@+id/imageView13"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/ic_baseline_check_24"
+                            app:tint="@android:color/white" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/textView23"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="@string/buy_done"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="24sp" />
+
+                    <ImageView
+                        android:id="@+id/imageView9"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="160dp"
+                        android:src="@drawable/moviez_logo" />
+
+                    <Button
+                        android:id="@+id/buyButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="64dp"
+                        android:backgroundTint="?attr/colorSecondary"
+                        android:fontFamily="@font/satoshi"
+                        android:text="@string/go_tickets"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="14dp" />
+
+                </LinearLayout>
+
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/textView23"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="@string/buy_done"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="24sp" />
-
-            <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="160dp"
-                android:src="@drawable/moviez_logo" />
-
-            <Button
-                android:id="@+id/buyButton"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="64dp"
-                android:backgroundTint="?attr/colorSecondary"
-                android:fontFamily="@font/satoshi"
-                android:text="@string/go_tickets"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                app:cornerRadius="14dp" />
-
         </LinearLayout>
+    </ScrollView>
 
-    </RelativeLayout>
 </FrameLayout>
