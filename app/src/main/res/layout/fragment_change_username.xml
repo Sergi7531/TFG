@@ -29,86 +29,96 @@
             app:tint="?attr/colorOnSecondary" />
     </RelativeLayout>
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/LoginTextInputLayoutStyle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:textColorHint="?attr/colorOnSecondary"
-            app:boxBackgroundColor="?attr/colorPrimaryVariant"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="?attr/colorPrimaryVariant"
-            app:boxStrokeWidth="0dp"
-            app:hintTextColor="?attr/colorOnSecondary">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/newName"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/satoshi"
-                android:hint="@string/nuevo_nombre"
-                android:textColorHint="?attr/colorOnSecondary" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/LoginTextInputLayoutStyle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColorHint="?attr/colorOnSecondary"
-            app:boxBackgroundColor="?attr/colorPrimaryVariant"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="?attr/colorPrimaryVariant"
-            app:boxStrokeWidth="0dp"
-            app:hintTextColor="?attr/colorOnSecondary">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:textColorHint="?attr/colorOnSecondary"
+                    app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="?attr/colorPrimaryVariant"
+                    app:boxStrokeWidth="0dp"
+                    app:hintTextColor="?attr/colorOnSecondary">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/confirmName"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/newName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/satoshi"
+                        android:hint="@string/nuevo_nombre"
+                        android:textColorHint="?attr/colorOnSecondary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColorHint="?attr/colorOnSecondary"
+                    app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="?attr/colorPrimaryVariant"
+                    app:boxStrokeWidth="0dp"
+                    app:hintTextColor="?attr/colorOnSecondary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/confirmName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/satoshi"
+                        android:hint="@string/confirmar_nombre"
+                        android:textColorHint="?attr/colorOnSecondary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/satoshi"
-                android:hint="@string/confirmar_nombre"
-                android:textColorHint="?attr/colorOnSecondary" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="200dp"
+                android:layout_marginBottom="200dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/confirm_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="34dp"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="?attr/colorSecondary"
+                    android:fontFamily="@font/satoshi"
+                    android:text="@string/cambiar_nombre_de_perfil"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:cornerRadius="14dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
-        android:layout_marginBottom="200dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/confirm_button"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="34dp"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="?attr/colorSecondary"
-            android:fontFamily="@font/satoshi"
-            android:text="@string/cambiar_nombre_de_perfil"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:cornerRadius="14dp" />
-    </LinearLayout>
 </FrameLayout>
