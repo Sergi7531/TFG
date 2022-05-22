@@ -14,7 +14,7 @@
         android:layout_marginTop="50dp">
 
         <ImageView
-            android:id="@+id/endBuyButton"
+            android:id="@+id/backButton2"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:rotation="180"

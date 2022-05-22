@@ -60,13 +60,14 @@ public class TicketBoughtFinishedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        backButton = view.findViewById(R.id.backButton);
+        backButton = view.findViewById(R.id.backButton3);
 
         for(Models.Ticket ticket : ticketsToCreate) {
             createFirebaseTicket(ticket);
             setUnavailableInSession(ticket);
         }
 
+        backButton.setOnClickListener(v -> { backFragment(); });
         goTicketButton = view.findViewById(R.id.buyButton);
         goTicketButton.setOnClickListener(view1 -> setFragment(new TicketsFragment(frameComingFrom)));
     }
@@ -118,6 +119,11 @@ public class TicketBoughtFinishedFragment extends Fragment {
                 .collection("tickets")
                 .document(ticket.filmid + ":" + ticket.room + ":" + ticket.row + ":" + ticket.seat)
                 .set(ticket);
+    }
+
+    private void backFragment() {
+        getFragmentManager()
+                .popBackStackImmediate();
     }
 
     private void setFragment(Fragment fragment) {

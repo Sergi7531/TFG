@@ -67,7 +67,7 @@ public class NewCommentFragment extends AppFragment {
 
         hook(view);
 
-        backButton.setOnClickListener(view1 -> getActivity().getSupportFragmentManager().popBackStack());
+        backButton.setOnClickListener(view1 -> getActivity().getSupportFragmentManager().popBackStackImmediate());
 
         userRatingBar.setRating(5);
 
@@ -123,7 +123,7 @@ public class NewCommentFragment extends AppFragment {
         actualRating = view.findViewById(R.id.actualRating);
         publishButton = view.findViewById(R.id.publishButton);
         spoilerCheckBox = view.findViewById(R.id.spoilerCheckBox);
-        backButton = view.findViewById(R.id.backButton);
+        backButton = view.findViewById(R.id.backButton4);
     }
 
 }
