@@ -7,96 +7,121 @@
     android:background="?attr/colorOnPrimary"
     tools:context=".Fragments.MoviesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/searchBar"
-            style="@style/LoginTextInputLayoutStyle"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageView5"
-            android:layout_marginTop="20dp"
-            android:textColorHint="?attr/colorOnSecondary"
-            app:boxBackgroundColor="?attr/colorPrimaryVariant"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="?attr/colorPrimaryVariant"
-            app:boxStrokeWidth="0dp"
-            app:hintTextColor="?attr/colorOnSecondary">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/searchInputFilm"
+            android:orientation="vertical" >
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_baseline_search"
-                android:fontFamily="@font/satoshi"
-                android:hint="@string/search_for_movies"
-                android:textColorHint="?attr/colorOnSecondary" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewMovieSearch"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@id/searchBar"
-            android:elevation="10dp">
+                <LinearLayout
+                    android:id="@+id/logoLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-        </androidx.recyclerview.widget.RecyclerView>
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:src="@drawable/moviez_logo" />
+                </LinearLayout>
 
-        <TextView
-            android:id="@+id/text1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/searchBar"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/satoshi"
-            android:text="@string/cartelera"
-            android:textColor="?attr/colorOnSecondary"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/searchBar"
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/logoLayout"
+                    android:layout_marginTop="20dp"
+                    android:textColorHint="?attr/colorOnSecondary"
+                    app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="?attr/colorPrimaryVariant"
+                    app:boxStrokeWidth="0dp"
+                    app:hintTextColor="?attr/colorOnSecondary">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerMoviesInCinemas"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text1"
-            android:layout_gravity="top"
-            android:layout_marginTop="10dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/searchInputFilm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_baseline_search"
+                        android:fontFamily="@font/satoshi"
+                        android:hint="@string/search_for_movies"
+                        android:textColorHint="?attr/colorOnSecondary" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/text22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recyclerMoviesInCinemas"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/satoshi"
-            android:gravity="center_vertical"
-            android:text="@string/pr_ximamente_en_cines"
-            android:textColor="?attr/colorOnSecondary"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewMovieSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_below="@id/searchBar"
+                    android:elevation="10dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerUpcomingMovies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text22"
-            android:layout_gravity="top"
-            android:layout_marginTop="10dp"
-            android:elevation="1dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
+                </androidx.recyclerview.widget.RecyclerView>
 
-        </androidx.recyclerview.widget.RecyclerView>
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/searchBar"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/satoshi"
+                    android:text="@string/cartelera"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
-    </RelativeLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerMoviesInCinemas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text1"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="10dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+                <TextView
+                    android:id="@+id/text22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/recyclerMoviesInCinemas"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/satoshi"
+                    android:gravity="center_vertical"
+                    android:text="@string/pr_ximamente_en_cines"
+                    android:textColor="?attr/colorOnSecondary"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerUpcomingMovies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/text22"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="10dp"
+                    android:elevation="1dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </FrameLayout>
