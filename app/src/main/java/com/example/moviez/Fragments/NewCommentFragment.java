@@ -67,7 +67,7 @@ public class NewCommentFragment extends AppFragment {
 
         hook(view);
 
-        backButton.setOnClickListener(view1 -> getActivity().getSupportFragmentManager().popBackStack());
+        backButton.setOnClickListener(view1 -> getActivity().getSupportFragmentManager().popBackStackImmediate());
 
         userRatingBar.setRating(5);
 
