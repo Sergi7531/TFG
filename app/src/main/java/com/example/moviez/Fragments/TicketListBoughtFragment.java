@@ -35,19 +35,7 @@ import java.util.List;
 
 public class TicketListBoughtFragment extends AppFragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-//    STRIPE CONFIG VARIABLES:
-    private static final String CURRENT_STATE_APP = "PRODUCTION";
-    private static final String PUBLISHABLE_KEY = "pk_test_51L1cHSIXjyZSXV5IA52njaxxUaML0iT59J4DU3NNtfxrJ9hYKrMXa4ZfCy9tSMXt5NIKeaQIjjGocJOFBhNtwTiw00X1SQtO6J";
-    private String clientSecret = "sk_test_51L1cHSIXjyZSXV5Ivz2ueZkBQj2xiKYPMq9g7IBnb8qtJo6G5jpSqvDdgLcklhVy03ujHdV5EbrD6LgjN9N8JY9200wXdn2Oh0";
-//    private PaymentLauncher paymentLauncher;
-
-//    PaymentButton payPalButton;
-
-
-    private List<Models.Ticket> ticketsToBuy = new ArrayList<>();
+    private static List<Models.Ticket> ticketsToBuy = new ArrayList<>();
     private String cinemaid;
     private int frameComingFrom = 0;
 
@@ -56,7 +44,6 @@ public class TicketListBoughtFragment extends AppFragment {
     private ImageView backButton;
     private TextView numberTicketsText;
     private TextView totalPriceTickets;
-//    private CardInputWidget cardInputWidget;
 
     public TicketListBoughtFragment() {}
 
@@ -68,10 +55,6 @@ public class TicketListBoughtFragment extends AppFragment {
 
     public static TicketListBoughtFragment newInstance(String param1, String param2) {
         TicketListBoughtFragment fragment = new TicketListBoughtFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -122,6 +105,7 @@ public class TicketListBoughtFragment extends AppFragment {
     }
 
     private void backFragment() {
+        ticketsToBuy.clear();
         getFragmentManager()
                 .popBackStackImmediate();
     }

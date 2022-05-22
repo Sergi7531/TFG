@@ -38,15 +38,19 @@ public class SeatsFragment extends AppFragment {
     private Button buyButton2;
     List<Models.Seats> seats = new ArrayList<>();
 
-    List<Models.Ticket> ticketsToBuy = new ArrayList<>();
+    public static List<Models.Ticket> ticketsToBuy = new ArrayList<>();
 
 //    Will be modificd on the adapter:
     public static int selectedSeats = 0;
 
-    public SeatsFragment() { }
+    public SeatsFragment() {
+        selectedSeats = 0;
+        ticketsToBuy.clear();
+    }
 
     public SeatsFragment(int frameComingFrom, int movieid, String cinemaid, int roomid, int day, int month, int hour) {
         selectedSeats = 0;
+        ticketsToBuy.clear();
         SeatsFragment.frameComingFrom = frameComingFrom;
         SeatsFragment.movieid = movieid;
         SeatsFragment.cinemaid = cinemaid;
@@ -59,6 +63,7 @@ public class SeatsFragment extends AppFragment {
     public static SeatsFragment newInstance() {
         SeatsFragment fragment = new SeatsFragment();
         selectedSeats = 0;
+        ticketsToBuy.clear();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -67,6 +72,8 @@ public class SeatsFragment extends AppFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        selectedSeats = 0;
+        ticketsToBuy.clear();
     }
 
     private void hook(View view) {
@@ -123,16 +130,11 @@ public class SeatsFragment extends AppFragment {
                             }
                         }
                     }
-                }).addOnSuccessListener(
-                        documentSnapshot -> {
-                            TicketListBoughtFragment ticketListBoughtFragment = new TicketListBoughtFragment(ticketsToBuy, cinemaid, frameComingFrom);
-                            setFragment(ticketListBoughtFragment);
-                        }
-                );
-
+                });
             }
         }
-
+        TicketListBoughtFragment ticketListBoughtFragment = new TicketListBoughtFragment(ticketsToBuy, cinemaid, frameComingFrom);
+        setFragment(ticketListBoughtFragment);
     }
 
     private void showSeats() {
