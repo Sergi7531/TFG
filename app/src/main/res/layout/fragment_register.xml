@@ -6,190 +6,199 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.RegisterFragment">
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/linearImage"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="45dp"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <Button
-                    android:id="@+id/setImageProfile"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@drawable/ic_profile_picture"
-                    android:text="@string/sum"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="28sp" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardBackgroundColor="#00FFFFFF"
-                    app:cardCornerRadius="60dp">
-
-                    <ImageView
-                        android:id="@+id/profilePic"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="center" />
-                </androidx.cardview.widget.CardView>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/text22"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/satoshi"
-            android:text="@string/profile_photo"
-            android:textAlignment="center" />
-
-        <LinearLayout
-            android:id="@+id/linearInputs"
-            android:layout_width="340dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginTop="15dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/usernameLayout"
-                style="@style/LoginTextInputLayoutStyle"
+            android:orientation="vertical" >
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColorHint="?attr/colorOnSecondary"
-                app:boxBackgroundColor="?attr/colorPrimaryVariant"
-                app:boxStrokeWidth="0dp"
-                app:hintTextColor="?attr/colorOnSecondary">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/usernameMyUserHolder"
+                <LinearLayout
+                    android:id="@+id/linearImage"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="45dp"
+                    android:gravity="center|center_horizontal|center_vertical"
+                    android:orientation="horizontal">
 
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <Button
+                            android:id="@+id/setImageProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:background="@drawable/ic_profile_picture"
+                            android:text="@string/sum"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="28sp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:cardBackgroundColor="#00FFFFFF"
+                            app:cardCornerRadius="60dp">
+
+                            <ImageView
+                                android:id="@+id/profilePic"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="center" />
+                        </androidx.cardview.widget.CardView>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text22"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="@font/satoshi"
-                    android:hint="@string/username"
-                    android:text=""
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textColorHint="?attr/colorOnSecondary"
-                    app:boxStrokeColor="?attr/colorOnSecondary" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:text="@string/profile_photo"
+                    android:textAlignment="center" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/mailLayout"
-                style="@style/LoginTextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:inputType="textEmailAddress"
-                android:textColorHint="?attr/colorOnSecondary"
-                app:boxBackgroundColor="?attr/colorPrimaryVariant"
-                app:boxStrokeWidth="0dp"
-                app:hintTextColor="?attr/colorOnSecondary"
-                app:passwordToggleEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/mail"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/linearInputs"
+                    android:layout_width="340dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/satoshi"
-                    android:hint="@string/email"
-                    android:text=""
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textColorHint="?attr/colorOnSecondary" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/passwordLayout"
-                style="@style/LoginTextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:inputType="textPassword"
-                android:textColorHint="?attr/colorOnSecondary"
-                app:boxBackgroundColor="?attr/colorPrimaryVariant"
-                app:boxStrokeWidth="0dp"
-                app:hintTextColor="?attr/colorOnSecondary"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="?attr/colorOnSecondary">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/usernameLayout"
+                        style="@style/LoginTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColorHint="?attr/colorOnSecondary"
+                        app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                        app:boxStrokeWidth="0dp"
+                        app:hintTextColor="?attr/colorOnSecondary">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/satoshi"
-                    android:hint="@string/password"
-                    android:password="true"
-                    android:text=""
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textColorHint="?attr/colorOnSecondary" />
-            </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/usernameMyUserHolder"
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/confirmPassword"
-                style="@style/LoginTextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:ems="10"
-                android:inputType="textPassword"
-                android:textColorHint="?attr/colorOnSecondary"
-                app:boxBackgroundColor="?attr/colorPrimaryVariant"
-                app:boxStrokeWidth="0dp"
-                app:hintTextColor="?attr/colorOnSecondary"
-                app:passwordToggleEnabled="true"
-                app:passwordToggleTint="?attr/colorOnSecondary">
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/satoshi"
+                            android:hint="@string/username"
+                            android:text=""
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textColorHint="?attr/colorOnSecondary"
+                            app:boxStrokeColor="?attr/colorOnSecondary" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/confirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/satoshi"
-                    android:hint="@string/confirm_password"
-                    android:password="true"
-                    android:text=""
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textColorHint="?attr/colorOnSecondary" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/mailLayout"
+                        style="@style/LoginTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:inputType="textEmailAddress"
+                        android:textColorHint="?attr/colorOnSecondary"
+                        app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                        app:boxStrokeWidth="0dp"
+                        app:hintTextColor="?attr/colorOnSecondary"
+                        app:passwordToggleEnabled="false">
 
-            <Button
-                android:id="@+id/buyButton"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="104dp"
-                android:backgroundTint="?attr/colorSecondary"
-                android:fontFamily="@font/satoshi"
-                android:text="@string/register"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                app:cornerRadius="14dp" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/mail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/satoshi"
+                            android:hint="@string/email"
+                            android:text=""
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textColorHint="?attr/colorOnSecondary" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/passwordLayout"
+                        style="@style/LoginTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:inputType="textPassword"
+                        android:textColorHint="?attr/colorOnSecondary"
+                        app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                        app:boxStrokeWidth="0dp"
+                        app:hintTextColor="?attr/colorOnSecondary"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="?attr/colorOnSecondary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/satoshi"
+                            android:hint="@string/password"
+                            android:password="true"
+                            android:text=""
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textColorHint="?attr/colorOnSecondary" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/confirmPassword"
+                        style="@style/LoginTextInputLayoutStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:textColorHint="?attr/colorOnSecondary"
+                        app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                        app:boxStrokeWidth="0dp"
+                        app:hintTextColor="?attr/colorOnSecondary"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="?attr/colorOnSecondary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/confirm"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/satoshi"
+                            android:hint="@string/confirm_password"
+                            android:password="true"
+                            android:text=""
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textColorHint="?attr/colorOnSecondary" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/buyButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="104dp"
+                        android:backgroundTint="?attr/colorSecondary"
+                        android:fontFamily="@font/satoshi"
+                        android:text="@string/register"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="14dp" />
 
 
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
