@@ -30,117 +30,129 @@
             android:textColor="?attr/colorOnSecondary"
             android:textSize="24sp"
             android:textStyle="bold" />
-
-        <LinearLayout
-            android:id="@+id/seats"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/textView12"
-            android:layout_marginTop="30dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_marginTop="30dp">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
 
-                <ImageView
-                    android:id="@+id/imageView16"
+                android:orientation="vertical" >
+                <LinearLayout
+                    android:id="@+id/seats"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/screen_seats" />
+                    android:layout_height="match_parent"
 
-                <TextView
-                    android:id="@+id/textView29"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/satoshi"
-                    android:text="@string/screen"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="12sp" />
-            </RelativeLayout>
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/seatsGrid"
-                android:layout_width="300dp"
-                android:layout_height="330dp"
-                android:layout_marginTop="30dp"
-                android:clipToPadding="true"
-                android:nestedScrollingEnabled="false"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/imageView16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/screen_seats" />
 
-                <ImageView
-                    android:id="@+id/imageView18"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/ic_rectangle_void" />
+                        <TextView
+                            android:id="@+id/textView29"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/satoshi"
+                            android:text="@string/screen"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="12sp" />
+                    </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/textView30"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
-                    android:text="@string/available" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/seatsGrid"
+                        android:layout_width="300dp"
+                        android:layout_height="330dp"
+                        android:layout_marginTop="30dp"
+                        android:clipToPadding="true"
+                        android:nestedScrollingEnabled="false"/>
 
-                <ImageView
-                    android:id="@+id/imageView19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/ic_rectangle_taken" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textView31"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/busy" />
+                        <ImageView
+                            android:id="@+id/imageView18"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/ic_rectangle_void" />
+
+                        <TextView
+                            android:id="@+id/textView30"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:text="@string/available" />
+
+                        <ImageView
+                            android:id="@+id/imageView19"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/ic_rectangle_taken" />
+
+                        <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="@string/busy" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/imageView71"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/ic_rectangle_selected" />
+
+                        <TextView
+                            android:id="@+id/textView72"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:text="@string/selected" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/buyButton2"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="20dp"
+                        android:backgroundTint="?attr/colorSecondary"
+                        android:fontFamily="@font/satoshi"
+                        android:text="Reservar asientos"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="14dp" />
+                </LinearLayout>
             </LinearLayout>
+        </ScrollView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/imageView71"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/ic_rectangle_selected" />
-
-                <TextView
-                    android:id="@+id/textView72"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
-                    android:text="@string/selected" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/buyButton2"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="20dp"
-                android:backgroundTint="?attr/colorSecondary"
-                android:fontFamily="@font/satoshi"
-                android:text="Reservar asientos"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                app:cornerRadius="14dp" />
-        </LinearLayout>
     </RelativeLayout>
 </FrameLayout>
