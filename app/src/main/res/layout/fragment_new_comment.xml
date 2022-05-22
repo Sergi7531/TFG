@@ -11,143 +11,154 @@
         android:layout_height="match_parent"
         android:background="?attr/colorOnPrimary"
         android:clickable="true" />
-    <LinearLayout
-        android:layout_width="360dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/backButton4"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:rotation="180"
-                android:src="@drawable/ic_arrow" />
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/satoshi"
-                android:textAlignment="center"
-                android:textColor="?attr/colorOnSecondary"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/commentBox"
-            style="@style/LoginTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="start"
-            android:inputType="textEmailAddress"
-            android:textColorHint="?attr/colorOnSecondary"
-            app:boxBackgroundColor="?attr/colorPrimaryVariant"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeWidth="0dp"
-            app:hintTextColor="?attr/colorOnSecondary">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/commentText"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:fontFamily="@font/satoshi"
-                android:gravity="start|top"
-                android:textAlignment="viewStart"
-                android:textColor="?attr/colorOnSecondary"
-                android:textColorHint="?attr/hintTextColor" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:cardBackgroundColor="?attr/backgroundColor"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="0dp">
-
+            android:orientation="vertical" >
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimaryVariant"
-                android:orientation="horizontal">
+                android:layout_width="360dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:orientation="vertical">
 
-                <RatingBar
-                    android:id="@+id/userRatingBar"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/backButton4"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:rotation="180"
+                        android:src="@drawable/ic_arrow" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="300dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/satoshi"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/commentBox"
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:stepSize="0.5"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    android:gravity="start"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="?attr/colorOnSecondary"
+                    app:boxBackgroundColor="?attr/colorPrimaryVariant"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxStrokeWidth="0dp"
+                    app:hintTextColor="?attr/colorOnSecondary">
 
-                <TextView
-                    android:id="@+id/actualRating"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="2dp"
-                    android:fontFamily="@font/satoshi"
-                    android:gravity="center|end"
-                    android:paddingEnd="3dp"
-                    android:text="@string/__5_0"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/commentText"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:fontFamily="@font/satoshi"
+                        android:gravity="start|top"
+                        android:textAlignment="viewStart"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textColorHint="?attr/hintTextColor" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/actualRating2"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="0.6dp"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:cardBackgroundColor="?attr/backgroundColor"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/colorPrimaryVariant"
+                        android:orientation="horizontal">
+
+                        <RatingBar
+                            android:id="@+id/userRatingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:stepSize="0.5"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                        <TextView
+                            android:id="@+id/actualRating"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="2dp"
+                            android:fontFamily="@font/satoshi"
+                            android:gravity="center|end"
+                            android:paddingEnd="3dp"
+                            android:text="@string/__5_0"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/actualRating2"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="0.6dp"
+                            android:fontFamily="@font/satoshi"
+                            android:gravity="center|start"
+                            android:text="@string/_5_0"
+                            android:textColor="?attr/colorOnSecondary"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <CheckBox
+                    android:id="@+id/spoilerCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/spoiler" />
+
+                <Button
+                    android:id="@+id/publishButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="?attr/colorSecondary"
                     android:fontFamily="@font/satoshi"
-                    android:gravity="center|start"
-                    android:text="@string/_5_0"
-                    android:textColor="?attr/colorOnSecondary"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:text="@string/add_comment_button"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    app:cornerRadius="14dp" />
+
+                <ImageView
+                    android:id="@+id/logoAnimation"
+                    android:layout_width="100dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/moviez_logo" />
+
             </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
-        </androidx.cardview.widget.CardView>
-
-        <CheckBox
-            android:id="@+id/spoilerCheckBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/spoiler" />
-
-        <Button
-            android:id="@+id/publishButton"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="?attr/colorSecondary"
-            android:fontFamily="@font/satoshi"
-            android:text="@string/add_comment_button"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            app:cornerRadius="14dp" />
-
-        <ImageView
-            android:id="@+id/logoAnimation"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/moviez_logo" />
-
-    </LinearLayout>
 </FrameLayout>
