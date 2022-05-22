@@ -9,6 +9,7 @@
     android:layout_marginBottom="15dp"
     android:background="?attr/backgroundColor"
     android:elevation="5dp"
+    android:stateListAnimator="@null"
     android:padding="5dp">
 
     <androidx.cardview.widget.CardView

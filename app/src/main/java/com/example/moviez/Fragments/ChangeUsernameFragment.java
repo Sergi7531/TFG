@@ -63,10 +63,10 @@ public class ChangeUsernameFragment extends AppFragment {
 
     private void changeUsername() {
 
-        String name = newName.getText().toString();
+        String newName = this.newName.getText().toString();
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(name)
+                .setDisplayName(newName)
                 .build();
 
         Objects.requireNonNull(auth.getCurrentUser()).updateProfile(profileUpdates)
@@ -74,8 +74,6 @@ public class ChangeUsernameFragment extends AppFragment {
                     if (task.isSuccessful()) {
                         Toast.makeText(getContext(), "Usuario Actualizado!", Toast.LENGTH_SHORT).show();
                         DocumentReference userDoc = db.collection("users").document(auth.getCurrentUser().getUid());
-
-//                        update all references
 
 
                         db.collection("comments").get().addOnSuccessListener(queryDocumentSnapshots -> {
@@ -86,7 +84,7 @@ public class ChangeUsernameFragment extends AppFragment {
                                         if (Objects.requireNonNull(documentSnapshot1.toObject(Models.Comment.class)).userid.equals(auth.getCurrentUser().getUid())) {
                                             Models.Comment comment = documentSnapshot1.toObject(Models.Comment.class);
                                             if (comment != null) {
-                                                comment.username = name;
+                                                comment.username = newName;
                                             }
                                             if (comment != null) {
                                                 db.collection("comments")
@@ -100,9 +98,56 @@ public class ChangeUsernameFragment extends AppFragment {
                                 });
                             }
                         });
-                        userDoc.update("username", name);
+                        userDoc.update("username", newName);
                     }
                 });
+
+        udpateNameInFollowersAndFollowing(newName);
+
+
+    }
+
+    private void udpateNameInFollowersAndFollowing(String newName) {
+        db.collection("users").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                db.collection("users").document(documentSnapshot.getId()).collection("followers").get().addOnSuccessListener(documentSnapshots -> {
+                    for (DocumentSnapshot documentSnapshot1 : documentSnapshots) {
+                        if (Objects.requireNonNull(documentSnapshot1.toObject(Models.User.class)).userid.equals(auth.getCurrentUser().getUid())) {
+                            Models.User user = documentSnapshot1.toObject(Models.User.class);
+                            if (user != null) {
+                                user.username = newName;
+                            }
+                            if (user != null) {
+                                db.collection("users")
+                                        .document(documentSnapshot.getId())
+                                        .collection("followers")
+                                        .document(documentSnapshot1.getId())
+                                        .update("username", newName);
+                            }
+                        }
+                    }
+                });
+
+                db.collection("users").document(documentSnapshot.getId()).collection("following").get().addOnSuccessListener(documentSnapshots -> {
+                    for (DocumentSnapshot documentSnapshot1 : documentSnapshots) {
+                        if (Objects.requireNonNull(documentSnapshot1.toObject(Models.User.class)).userid.equals(auth.getCurrentUser().getUid())) {
+                            Models.User user = documentSnapshot1.toObject(Models.User.class);
+                            if (user != null) {
+                                user.username = newName;
+                            }
+                            if (user != null) {
+                                db.collection("users")
+                                        .document(documentSnapshot.getId())
+                                        .collection("following")
+                                        .document(documentSnapshot1.getId())
+                                        .update("username", newName);
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
     }
 
     public boolean validateData() {

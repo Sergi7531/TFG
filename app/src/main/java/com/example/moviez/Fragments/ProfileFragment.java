@@ -20,9 +20,6 @@ import com.example.moviez.Adapters.UserAdapter;
 import com.example.moviez.Models;
 import com.example.moviez.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
@@ -356,7 +353,11 @@ public class ProfileFragment extends AppFragment {
             if (documentSnapshot.exists()) {
                 Models.User user = documentSnapshot.toObject(Models.User.class);
                 if (user != null) {
-                    usuario.setText(user.username);
+                    if(user.username.length() > 20) {
+                        usuario.setText(user.username.substring(0, 20) + "...");
+                    } else {
+                        usuario.setText(user.username);
+                    }
                 }
                 if (user != null) {
                     correo.setText(user.email);

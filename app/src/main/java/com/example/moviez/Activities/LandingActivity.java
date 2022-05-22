@@ -3,14 +3,11 @@ package com.example.moviez.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -72,7 +69,7 @@ public class LandingActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         String usernameLog = sharedPreferences.getString("userMail", "");
         String passwordLog = sharedPreferences.getString("password", "");
-        if (!usernameLog.isEmpty() && !passwordLog.isEmpty()){
+        if (!usernameLog.isEmpty() && !passwordLog.isEmpty()) {
             FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(
                             usernameLog.trim(),
@@ -89,7 +86,12 @@ public class LandingActivity extends AppCompatActivity {
                     Toast.makeText(this, Objects.requireNonNull(task.getException()).getLocalizedMessage(),
                             Toast.LENGTH_SHORT).show();
                 }
-            });
+            }).addOnFailureListener(
+                    e -> {
+                        Toast.makeText(this, "No se ha podido iniciar sesión automáticamente.", Toast.LENGTH_SHORT).show();
+                        setFragment(loginFragment);
+                    }
+            );
         } else {
             setFragment(loginFragment);
         }
